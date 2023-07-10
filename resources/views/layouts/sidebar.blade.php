@@ -8,13 +8,13 @@
                 <img src="{{ URL::asset('assets/images/logo-sm.svg') }}" alt="" height="22">
             </span>
             <span class="logo-lg">
-                <img src="{{ URL::asset('assets/images/logo-sm.svg') }}" alt="" height="22"> <span class="logo-txt">@lang('translation.Symox')</span>
+                <img src="{{ URL::asset('assets/images/logo-sm.svg') }}" alt="" height="22"> <span class="logo-txt">@lang('translation.Nonskin')</span>
             </span>
         </a>
 
         <a href="{{ url('/') }}" class="logo logo-light">
             <span class="logo-lg">
-                <img src="{{ URL::asset('assets/images/logo-sm.svg') }}" alt="" height="22"> <span class="logo-txt">@lang('translation.Symox')</span>
+                <img src="{{ URL::asset('assets/images/logo-sm.svg') }}" alt="" height="22"> <span class="logo-txt">@lang('translation.Nonskin')</span>
             </span>
             <span class="logo-sm">
                 <img src="{{ URL::asset('assets/images/logo-sm.svg') }}" alt="" height="22">
@@ -27,13 +27,11 @@
     </button>
 
     <div data-simplebar class="sidebar-menu-scroll">
-
         <!--- Sidemenu -->
         <div id="sidebar-menu">
             <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
-                <li class="menu-title" data-key="t-menu">Menu</li>
-
+                <li class="menu-title" data-key="t-menu">{{ auth::user()->ranking_name }}</li>
                 <li>
                     <a href="{{ url('/') }}">
                         <i class="bx bx-tachometer icon nav-icon"></i>
@@ -42,22 +40,46 @@
                     </a>
                 </li>
 
-                <li class="menu-title" data-key="t-applications">@lang('translation.Applications')</li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i class="bx bxs-user-detail icon nav-icon"></i>
+                        <span class="menu-item" data-key="t-users">Users</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="users-grid" data-key="t-user-grid">@lang('translation.User_Grid') </a></li>
+                        <li><a href="users-list" data-key="t-user-list">@lang('translation.User_List')</a></li>
+                        {{-- <li><a href="users-profile" data-key="t-user-settings">@lang('translation.Profile')</a></li> --}}
+                    </ul>
+                </li>
 
                 <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i class="bx bxs-user-detail icon nav-icon"></i>
+                        <span class="menu-item" data-key="t-customers">Customers</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="customers-grid" data-key="t-user-grid">Customer Grid </a></li>
+                        <li><a href="customers-list" data-key="t-user-list">Customer List</a></li>
+                        {{-- <li><a href="customers-profile" data-key="t-user-settings">@lang('translation.Profile')</a></li> --}}
+                    </ul>
+                </li>
+
+                <li class="menu-title" data-key="t-applications">@lang('translation.Applications')</li>
+
+                {{-- <li>
                     <a href="apps-calendar">
                         <i class="bx bx-calendar icon nav-icon"></i>
                         <span class="menu-item" data-key="t-calendar">@lang('translation.Calendar')</span>
                     </a>
-                </li>
+                </li> --}}
 
-                <li>
+                {{-- <li>
                     <a href="apps-chat">
                         <i class="bx bx-chat icon nav-icon"></i>
                         <span class="menu-item" data-key="t-chat">@lang('translation.Chat')</span>
                         <span class="badge rounded-pill bg-danger" data-key="t-hot">@lang('translation.Hot')</span>
                     </a>
-                </li>
+                </li> --}}
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
@@ -98,18 +120,8 @@
                     </ul>
                 </li>
 
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow">
-                        <i class="bx bxs-user-detail icon nav-icon"></i>
-                        <span class="menu-item" data-key="t-contacts">@lang('translation.Contacts')</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="contacts-grid" data-key="t-user-grid">@lang('translation.User_Grid') </a></li>
-                        <li><a href="contacts-list" data-key="t-user-list">@lang('translation.User_List')</a></li>
-                        <li><a href="contacts-profile" data-key="t-user-settings">@lang('translation.Profile')</a></li>
-                    </ul>
-                </li>
 
+                @hasanyrole('superadmin')
                 <li class="menu-title" data-key="t-pages">@lang('translation.Pages')</li>
 
                 <li>
@@ -273,6 +285,7 @@
                         </li>
                     </ul>
                 </li>
+                @endhasanyrole
 
             </ul>
         </div>

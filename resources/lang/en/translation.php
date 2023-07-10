@@ -1,6 +1,6 @@
 <?php
    return [
-"Symox" => "Symox",
+"Nonskin" => "Nonskin",
 "Dashboard" => "Dashboard",
 "Apps" => "Apps",
 "Bootstrap" => "Bootstrap",

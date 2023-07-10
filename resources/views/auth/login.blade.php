@@ -35,7 +35,7 @@
 
                                     <div class="mb-3">
                                         <label class="form-label" for="username">Email</label>
-                                        <input name="email" type="email" class="form-control @error('email') is-invalid @enderror" id="username" value="{{ old('email', 'superadmin@currenttech') }}"  placeholder="Enter Email" autocomplete="email" autofocus>
+                                        <input name="email" type="email" class="form-control @error('email') is-invalid @enderror" id="username"  placeholder="Enter Email" autocomplete="email" autofocus>
                                         @error('email')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -52,7 +52,7 @@
                                             @endif
                                         </div>
                                         <label class="form-label" for="userpassword">Password</label>
-                                        <input type="password" name="password" class="form-control  @error('password') is-invalid @enderror" id="userpassword" value="secret" placeholder="Enter password" aria-label="Password" aria-describedby="password-addon">
+                                        <input type="password" name="password" class="form-control  @error('password') is-invalid @enderror" id="userpassword" placeholder="Enter password" aria-label="Password" aria-describedby="password-addon">
                                         @error('password')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>

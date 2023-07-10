@@ -7,8 +7,8 @@
 
     @section('content')
     @component('components.breadcrumb')
-    @slot('li_1') Contacts @endslot
-    @slot('title') User List @endslot
+    @slot('li_1') Customers @endslot
+    @slot('title') Customer List @endslot
     @endcomponent
 
                 <div class="row">
@@ -21,7 +21,7 @@
                                     </div>
                                 </div>
 
-                                <div id="table-contacts-list"></div>
+                                <div id="table-customers-list"></div>
 
                             </div>
                         </div>
@@ -96,6 +96,6 @@
 @endsection
 @section('script')
     <script src="{{ URL::asset('assets/libs/gridjs/gridjs.min.js') }}"></script>
-    <script src="{{ URL::asset('assets/js/pages/contacts-list.init.js') }}"></script>
+    <script src="{{ URL::asset('assets/js/pages/customers-list.init.js') }}"></script>
     <script src="{{ URL::asset('assets/js/app.js') }}"></script>
 @endsection

@@ -3,8 +3,8 @@
 
     @section('content')
     @component('components.breadcrumb')
-    @slot('li_1') Contacts @endslot
-    @slot('title') User Profile @endslot
+    @slot('li_1') Customers @endslot
+    @slot('title') Customer Profile @endslot
     @endcomponent
 
         <div class="row mb-4">

@@ -143,8 +143,8 @@ new gridjs.Grid({
 
 // Hidden Columns
 new gridjs.Grid({
-    columns: ["Name", "Email", "Position", "Company", 
-    { 
+    columns: ["Name", "Email", "Position", "Company",
+    {
         name: 'Country',
         hidden: true
     },],
