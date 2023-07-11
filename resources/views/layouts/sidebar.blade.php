@@ -42,12 +42,12 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i class="bx bxs-user-detail icon nav-icon"></i>
+                        <i class="bx bxs-user-rectangle icon nav-icon"></i>
                         <span class="menu-item" data-key="t-users">Members</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="users-grid" data-key="t-user-grid">@lang('translation.User_Grid') </a></li>
-                        <li><a href="users-list" data-key="t-user-list">@lang('translation.User_List')</a></li>
+                        <li><a href="../users-grid" data-key="t-user-grid">@lang('translation.User_Grid') </a></li>
+                        <li><a href="../users-list" data-key="t-user-list">@lang('translation.User_List')</a></li>
                         {{-- <li><a href="users-profile" data-key="t-user-settings">@lang('translation.Profile')</a></li> --}}
                     </ul>
                 </li>
@@ -58,15 +58,15 @@
                         <span class="menu-item" data-key="t-customers">Customers</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="customers-grid" data-key="t-user-grid">Customer Grid </a></li>
-                        <li><a href="customers-list" data-key="t-user-list">Customer List</a></li>
+                        <li><a href="../customers-grid" data-key="t-user-grid">Customer Grid </a></li>
+                        <li><a href="../customers-list" data-key="t-user-list">Customer List</a></li>
                         {{-- <li><a href="customers-profile" data-key="t-user-settings">@lang('translation.Profile')</a></li> --}}
                     </ul>
                 </li>
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i class="bx bx-share-alt icon nav-icon"></i>
+                        <i class="bx bx-line-chart icon nav-icon"></i>
                         <span class="menu-item" data-key="t-multi-level">Sales History</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
@@ -78,7 +78,7 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i class="bx bx-share-alt icon nav-icon"></i>
+                        <i class="bx bx-dollar-circle icon nav-icon"></i>
                         <span class="menu-item" data-key="t-multi-level">Commission</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
@@ -87,7 +87,7 @@
                 </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i class="bx bx-share-alt icon nav-icon"></i>
+                        <i class="bx bxs-report icon nav-icon"></i>
                         <span class="menu-item" data-key="t-multi-level">Reports</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="true">

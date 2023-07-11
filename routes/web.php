@@ -39,17 +39,12 @@ Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang'
 // });
 Route::controller(ProductController::class)->prefix('manage/products')->as('manage.products.')->group(function () {
     Route::get('/', 'index')->name('index');
-    Route::get('/url', 'method')->name('name');
-    Route::get('/url', 'method')->name('name');
-    Route::get('/url', 'method')->name('name');
-    Route::get('/url', 'method')->name('name');
-    Route::get('/url', 'method')->name('name');
 });
-// Route::controller(OrderController::class)->prefix('manage/orders')->as('manage.orders.')->group(function () {
-//     Route::get('/', 'index')->name('index');
+Route::controller(OrderController::class)->prefix('manage/orders')->as('manage.orders.')->group(function () {
+    Route::get('/', 'index')->name('index');
 //     Route::get('/url', 'method')->name('name');
 //     Route::get('/url', 'method')->name('name');
 //     Route::get('/url', 'method')->name('name');
 //     Route::get('/url', 'method')->name('name');
 //     Route::get('/url', 'method')->name('name');
-// });
+});
