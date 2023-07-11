@@ -1,1 +1,41 @@
-!function(){var e=1;document.querySelectorAll(".two-step").forEach((function(t){t.addEventListener("keyup",(function(t){0==e&&(e=1),8===t.keyCode?(5==e&&(e=3),document.querySelector("#digit"+e+"-input")&&document.querySelector("#digit"+e+"-input").focus(),e--):e>0&&(e++,document.querySelector("#digit"+e+"-input")&&document.querySelector("#digit"+e+"-input").focus())}))}))}();
+/******/ (function() { // webpackBootstrap
+var __webpack_exports__ = {};
+/*!**********************************************************!*\
+  !*** ./resources/js/pages/two-step-verification.init.js ***!
+  \**********************************************************/
+/*
+Template Name: Symox - Admin & Dashboard Template
+Author: Themesbrand
+Website: https://Themesbrand.com/
+Contact: Themesbrand@gmail.com
+File: two step verification Init Js File
+*/
+
+function moveToNext(elem, count) {
+  if (elem.value.length > 0) {
+    document.querySelector("#digit" + count + "-input").focus();
+  }
+}
+var count = 1;
+var value = document.querySelectorAll(".two-step");
+value.forEach(function (el) {
+  el.addEventListener('keyup', function (e) {
+    if (count == 0) {
+      count = 1;
+    }
+    if (e.keyCode === 8) {
+      if (count == 5) {
+        count = 3;
+      }
+      if (document.querySelector("#digit" + count + "-input")) document.querySelector("#digit" + count + "-input").focus();
+      count--;
+    } else {
+      if (count > 0) {
+        count++;
+        if (document.querySelector("#digit" + count + "-input")) document.querySelector("#digit" + count + "-input").focus();
+      }
+    }
+  });
+});
+/******/ })()
+;

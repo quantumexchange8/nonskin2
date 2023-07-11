@@ -43,7 +43,7 @@
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bx bxs-user-detail icon nav-icon"></i>
-                        <span class="menu-item" data-key="t-users">Users</span>
+                        <span class="menu-item" data-key="t-users">Members</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="users-grid" data-key="t-user-grid">@lang('translation.User_Grid') </a></li>
@@ -63,6 +63,48 @@
                         {{-- <li><a href="customers-profile" data-key="t-user-settings">@lang('translation.Profile')</a></li> --}}
                     </ul>
                 </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i class="bx bx-share-alt icon nav-icon"></i>
+                        <span class="menu-item" data-key="t-multi-level">Sales History</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="true">
+                        <li><a href="javascript: void(0);" data-key="t-level-1.1">Personal</a></li>
+                        <li><a href="javascript: void(0);" data-key="t-level-1.1">Group</a></li>
+                        <li><a href="javascript: void(0);" data-key="t-level-1.1">Overall</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i class="bx bx-share-alt icon nav-icon"></i>
+                        <span class="menu-item" data-key="t-multi-level">Commission</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="true">
+                        <li><a href="javascript: void(0);" data-key="t-level-1.1">Personal</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i class="bx bx-share-alt icon nav-icon"></i>
+                        <span class="menu-item" data-key="t-multi-level">Reports</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="true">
+                        <li><a href="javascript: void(0);" data-key="t-level-1.1">Personal</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i class="bx bx-share-alt icon nav-icon"></i>
+                        <span class="menu-item" data-key="t-multi-level">Network Tree</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="true">
+                        <li><a href="javascript: void(0);" data-key="t-level-1.1">Personal</a></li>
+                    </ul>
+                </li>
+
+
 
                 <li class="menu-title" data-key="t-applications">@lang('translation.Applications')</li>
 

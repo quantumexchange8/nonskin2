@@ -1,1 +1,29 @@
-!function(){var e=document.getElementById("priceslider");noUiSlider.create(e,{start:[250,800],connect:!0,tooltips:!0,range:{min:0,max:1e3},pips:{mode:"count",values:5}})}();
+/******/ (function() { // webpackBootstrap
+var __webpack_exports__ = {};
+/*!*********************************************************!*\
+  !*** ./resources/js/pages/product-filter-range.init.js ***!
+  \*********************************************************/
+/*
+Template Name: Symox - Admin & Dashboard Template
+Author: Themesbrand
+Website: https://Themesbrand.com/
+Contact: Themesbrand@gmail.com
+File: product range slider init js
+*/
+
+var slider = document.getElementById('priceslider');
+noUiSlider.create(slider, {
+  start: [250, 800],
+  connect: true,
+  tooltips: true,
+  range: {
+    'min': 0,
+    'max': 1000
+  },
+  pips: {
+    mode: 'count',
+    values: 5
+  }
+});
+/******/ })()
+;

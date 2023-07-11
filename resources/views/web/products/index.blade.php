@@ -268,7 +268,7 @@
                                                         <i class="mdi mdi-heart-outline"></i>
                                                     </a>
                                                 </div>
-                                                <img src="assets/images/product/img-1.png" alt=""
+                                                <img src="{{ URL::asset('assets/images/nonskin/1.jpg') }}" alt=""
                                                     class="img-fluid mx-auto d-block">
                                             </div>
                                             <div class="product-content p-4">
@@ -311,7 +311,7 @@
                                                         <i class="mdi mdi-heart-outline"></i>
                                                     </a>
                                                 </div>
-                                                <img src="{{ URL::asset('assets/images/product/img-2.png') }}"
+                                                <img src="{{ URL::asset('assets/images/nonskin/2.jpg') }}"
                                                     alt="" class="img-fluid mx-auto d-block">
                                             </div>
                                             <div class="product-content p-4">
@@ -352,7 +352,7 @@
                                                         <i class="mdi mdi-heart-outline"></i>
                                                     </a>
                                                 </div>
-                                                <img src="{{ URL::asset('assets/images/product/img-3.png') }}"
+                                                <img src="{{ URL::asset('assets/images/nonskin/1.jpg') }}"
                                                     alt="" class="img-fluid mx-auto d-block">
                                             </div>
                                             <div class="product-content p-4">
@@ -392,7 +392,7 @@
                                                         <i class="mdi mdi-heart-outline"></i>
                                                     </a>
                                                 </div>
-                                                <img src="{{ URL::asset('assets/images/product/img-4.png') }}"
+                                                <img src="{{ URL::asset('assets/images/nonskin/3.jpg') }}"
                                                     alt="" class="img-fluid mx-auto d-block">
                                             </div>
                                             <div class="product-content p-4">
@@ -429,7 +429,7 @@
                                                         <i class="mdi mdi-heart-outline"></i>
                                                     </a>
                                                 </div>
-                                                <img src="{{ URL::asset('assets/images/product/img-5.png') }}"
+                                                <img src="{{ URL::asset('assets/images/nonskin/4.jpg') }}"
                                                     alt="" class="img-fluid mx-auto d-block">
                                             </div>
                                             <div class="product-content p-4">
@@ -472,7 +472,7 @@
                                                         <i class="mdi mdi-heart-outline"></i>
                                                     </a>
                                                 </div>
-                                                <img src="{{ URL::asset('assets/images/product/img-6.png') }}"
+                                                <img src="{{ URL::asset('assets/images/nonskin/5.jpg') }}"
                                                     alt="" class="img-fluid mx-auto d-block">
                                             </div>
                                             <div class="product-content p-4">
@@ -517,7 +517,7 @@
                                                         <i class="mdi mdi-heart-outline"></i>
                                                     </a>
                                                 </div>
-                                                <img src="{{ URL::asset('assets/images/product/img-3.png') }}"
+                                                <img src="{{ URL::asset('assets/images/nonskin/6.jpg') }}"
                                                     alt="" class="img-fluid mx-auto d-block">
                                             </div>
                                             <div class="product-content p-4">
@@ -560,7 +560,7 @@
                                                         <i class="mdi mdi-heart-outline"></i>
                                                     </a>
                                                 </div>
-                                                <img src="{{ URL::asset('assets/images/product/img-4.png') }}"
+                                                <img src="{{ URL::asset('assets/images/nonskin/7.jpg') }}"
                                                     alt="" class="img-fluid mx-auto d-block">
                                             </div>
                                             <div class="product-content p-4">
@@ -600,7 +600,7 @@
                                                         <i class="mdi mdi-heart-outline"></i>
                                                     </a>
                                                 </div>
-                                                <img src="{{ URL::asset('assets/images/product/img-5.png') }}"
+                                                <img src="{{ URL::asset('assets/images/nonskin/8.jpg') }}"
                                                     alt="" class="img-fluid mx-auto d-block">
                                             </div>
                                             <div class="product-content p-4">
@@ -643,7 +643,7 @@
                                                         <i class="mdi mdi-heart-outline"></i>
                                                     </a>
                                                 </div>
-                                                <img src="{{ URL::asset('assets/images/product/img-2.png') }}"
+                                                <img src="{{ URL::asset('assets/images/nonskin/9.jpg') }}"
                                                     alt="" class="img-fluid mx-auto d-block">
                                             </div>
                                             <div class="product-content p-4">
@@ -692,7 +692,7 @@
                                                         <i class="mdi mdi-heart-outline"></i>
                                                     </a>
                                                 </div>
-                                                <img src="{{ URL::asset('assets/images/product/img-1.png') }}"
+                                                <img src="{{ URL::asset('assets/images/nonskin/10.jpg') }}"
                                                     alt="" class="img-fluid mx-auto d-block">
                                             </div>
                                             <div class="product-content p-4">
@@ -735,7 +735,7 @@
                                                         <i class="mdi mdi-heart-outline"></i>
                                                     </a>
                                                 </div>
-                                                <img src="{{ URL::asset('assets/images/product/img-2.png') }}"
+                                                <img src="{{ URL::asset('assets/images/nonskin/11.jpg') }}"
                                                     alt="" class="img-fluid mx-auto d-block">
                                             </div>
                                             <div class="product-content p-4">
@@ -779,7 +779,7 @@
                                                         <i class="mdi mdi-heart-outline"></i>
                                                     </a>
                                                 </div>
-                                                <img src="{{ URL::asset('assets/images/product/img-6.png') }}"
+                                                <img src="{{ URL::asset('assets/images/nonskin/12.jpg') }}"
                                                     alt="" class="img-fluid mx-auto d-block">
                                             </div>
                                             <div class="product-content p-4">
