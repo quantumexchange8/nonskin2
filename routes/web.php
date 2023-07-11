@@ -29,7 +29,7 @@ Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name
 //Language Translation
 Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
 
-// Route::controller(CustomerController::class)->prefix('customers')->as('customers.')->group(function () {
+// Route::controller(CustomerController::class)->prefix('manage/customers')->as('manage.customers.')->group(function () {
 //     Route::get('/', 'index')->name('index');
 //     Route::get('/url', 'method')->name('name');
 //     Route::get('/url', 'method')->name('name');
@@ -37,15 +37,15 @@ Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang'
 //     Route::get('/url', 'method')->name('name');
 //     Route::get('/url', 'method')->name('name');
 // });
-// Route::controller(ProductController::class)->prefix('products')->as('products.')->group(function () {
-//     Route::get('/', 'index')->name('index');
-//     Route::get('/url', 'method')->name('name');
-//     Route::get('/url', 'method')->name('name');
-//     Route::get('/url', 'method')->name('name');
-//     Route::get('/url', 'method')->name('name');
-//     Route::get('/url', 'method')->name('name');
-// });
-// Route::controller(OrderController::class)->prefix('orders')->as('orders.')->group(function () {
+Route::controller(ProductController::class)->prefix('manage/products')->as('manage.products.')->group(function () {
+    Route::get('/', 'index')->name('index');
+    Route::get('/url', 'method')->name('name');
+    Route::get('/url', 'method')->name('name');
+    Route::get('/url', 'method')->name('name');
+    Route::get('/url', 'method')->name('name');
+    Route::get('/url', 'method')->name('name');
+});
+// Route::controller(OrderController::class)->prefix('manage/orders')->as('manage.orders.')->group(function () {
 //     Route::get('/', 'index')->name('index');
 //     Route::get('/url', 'method')->name('name');
 //     Route::get('/url', 'method')->name('name');

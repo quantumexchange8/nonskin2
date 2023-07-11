@@ -100,7 +100,7 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="ecommerce-shops" data-key="t-shops">@lang('translation.Shops')</a></li>
-                        <li><a href="{{ url('../web/products/ecommerce-products') }}" data-key="t-products">@lang('translation.Products')</a></li>
+                        <li><a href="{{ route('manage.products.index') }}" data-key="t-products">@lang('translation.Products')</a></li>
                         <li><a href="ecommerce-orders" data-key="t-orders">@lang('translation.Orders')</a></li>
                         <li><a href="ecommerce-customers" data-key="t-customers">@lang('translation.Customers')</a></li>
                         <li><a href="ecommerce-add-product" data-key="t-add-product">@lang('translation.Add_Product')</a></li>
