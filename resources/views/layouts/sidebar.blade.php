@@ -59,7 +59,7 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="../customers-grid" data-key="t-user-grid">Customer Grid </a></li>
-                        <li><a href="{{ route('manage.customers.index') }}" data-key="t-user-list">Customer List</a></li>
+                        <li><a href="{{ url('manage/customers') }}" data-key="t-user-list">Customer List</a></li>
                         {{-- <li><a href="customers-profile" data-key="t-user-settings">@lang('translation.Profile')</a></li> --}}
                     </ul>
                 </li>

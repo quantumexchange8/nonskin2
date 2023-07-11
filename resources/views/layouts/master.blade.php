@@ -11,7 +11,7 @@
         @include('layouts.head-css')
     </head>
 
-<body data-layout="vertical" data-sidebar="dark">
+<body data-layout="vertical" data-sidebar="light">
     <div id="layout-wrapper">
         @include('layouts.topbar')
         @include('layouts.sidebar')
