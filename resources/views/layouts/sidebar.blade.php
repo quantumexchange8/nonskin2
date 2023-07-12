@@ -39,28 +39,31 @@
                         <span class="badge rounded-pill bg-success">@lang('translation.5+')</span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('members.index') }}">
+                        <i class='bx bxs-user-rectangle icon nav-icon' ></i>
+                        <span class="menu-item" data-key="t-members">Members</span>
+                    </a>
+                </li>
 
                 <li>
-                    <a href="javascript: void(0);" class="has-arrow">
-                        <i class="bx bxs-user-rectangle icon nav-icon"></i>
-                        <span class="menu-item" data-key="t-users">Members</span>
+                    <a href="{{ route('customers.index') }}">
+                        <i class="bx bxs-user-detail icon nav-icon"></i>
+                        <span class="menu-item" data-key="t-customers">Customers</span>
                     </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="../users-grid" data-key="t-user-grid">@lang('translation.User_Grid') </a></li>
-                        <li><a href="../users-list" data-key="t-user-list">@lang('translation.User_List')</a></li>
-                        {{-- <li><a href="users-profile" data-key="t-user-settings">@lang('translation.Profile')</a></li> --}}
-                    </ul>
                 </li>
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i class="bx bxs-user-detail icon nav-icon"></i>
-                        <span class="menu-item" data-key="t-customers">Customers</span>
+                        <i class="bx bxs-package icon nav-icon"></i>
+                        <span class="menu-item" data-key="t-ecommerce">Products</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="../customers-grid" data-key="t-user-grid">Customer Grid </a></li>
-                        <li><a href="{{ url('manage/customers') }}" data-key="t-user-list">Customer List</a></li>
-                        {{-- <li><a href="customers-profile" data-key="t-user-settings">@lang('translation.Profile')</a></li> --}}
+                        <li><a href="../ecommerce-shops" data-key="t-shops">@lang('translation.Shops')</a></li>
+                        <li><a href="{{ route('products.index') }}" data-key="t-products">@lang('translation.Products')</a></li>
+                        <li><a href="../ecommerce-orders" data-key="t-orders">@lang('translation.Orders')</a></li>
+                        <li><a href="../ecommerce-customers" data-key="t-customers">@lang('translation.Customers')</a></li>
+                        <li><a href="../ecommerce-add-product" data-key="t-add-product">@lang('translation.Add_Product')</a></li>
                     </ul>
                 </li>
 
@@ -142,7 +145,7 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="ecommerce-shops" data-key="t-shops">@lang('translation.Shops')</a></li>
-                        <li><a href="{{ route('manage.products.index') }}" data-key="t-products">@lang('translation.Products')</a></li>
+                        <li><a href="{{ route('products.index') }}" data-key="t-products">@lang('translation.Products')</a></li>
                         <li><a href="ecommerce-orders" data-key="t-orders">@lang('translation.Orders')</a></li>
                         <li><a href="ecommerce-customers" data-key="t-customers">@lang('translation.Customers')</a></li>
                         <li><a href="ecommerce-add-product" data-key="t-add-product">@lang('translation.Add_Product')</a></li>

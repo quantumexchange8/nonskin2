@@ -29,7 +29,7 @@
                         </div>
                     </div>
 
-                    <div id="table-users-list"></div>
+                    <div id="table-customers-list"></div>
 
                 </div>
             </div>
@@ -109,6 +109,6 @@
 @endsection
 @section('script')
     <script src="{{ URL::asset('assets/libs/gridjs/gridjs.min.js') }}"></script>
-    <script src="{{ URL::asset('assets/js/pages/users-list.init.js') }}"></script>
+    <script src="{{ URL::asset('assets/js/pages/customers-list.init.js') }}"></script>
     <script src="{{ URL::asset('assets/js/app.js') }}"></script>
 @endsection
