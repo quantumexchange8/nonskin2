@@ -15,6 +15,8 @@ class CreateShippingChargesTable extends Migration
     {
         Schema::create('shipping_charges', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->nullable();
+            $table->double('amount')->nullable();
             $table->timestamps();
             $table->integer('created_by')->unsigned()->nullable();
             $table->integer('updated_by')->unsigned()->nullable();
