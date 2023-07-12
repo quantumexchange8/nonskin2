@@ -18,7 +18,7 @@
     @endcomponent
 
     <div class="row">
-        <div class="col-xl-3 col-lg-4">
+        {{-- <div class="col-xl-3 col-lg-4">
             <div class="card">
                 <div class="card-header bg-transparent border-bottom">
                     <h5 class="mb-0">Filters</h5>
@@ -208,8 +208,8 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-xl-9 col-lg-8">
+        </div> --}}
+        <div class="col-xl-12 col-lg-8">
             <div class="card">
                 <div class="card-body">
                     <div>
@@ -257,7 +257,9 @@
                         <div class="tab-content p-3 text-muted">
                             <div class="tab-pane active" id="popularity" role="tabpanel">
                                 <div class="row">
-                                    <div class="col-xl-4 col-sm-6">
+                                    @if (isset($products))
+                                    @foreach ($products as $product)
+                                    <div class="col-xl-3 col-sm-6">
                                         <div class="product-box">
                                             <div class="product-ribbon">
                                                 - 20 %
@@ -300,7 +302,52 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xl-4 col-sm-6">
+                                    @endforeach
+                                    @endif
+                                    <div class="col-xl-3 col-sm-6">
+                                        <div class="product-box">
+                                            <div class="product-ribbon">
+                                                - 20 %
+                                            </div>
+                                            <div class="product-img pt-4 px-4">
+                                                <div class="product-wishlist">
+                                                    <a href="#">
+                                                        <i class="mdi mdi-heart-outline"></i>
+                                                    </a>
+                                                </div>
+                                                <img src="{{ URL::asset('assets/images/nonskin/1.jpg') }}" alt=""
+                                                    class="img-fluid mx-auto d-block">
+                                            </div>
+                                            <div class="product-content p-4">
+                                                <div class="d-flex justify-content-between align-items-end">
+                                                    <div>
+                                                        <h5 class="mb-1"><a href="ecommerce-product-detail"
+                                                                class="text-dark font-size-16">Nike N012 Shoes</a></h5>
+                                                        <p class="text-muted font-size-13">Gray, Shoes</p>
+                                                        <h5 class="mt-3 mb-0"><span
+                                                                class="text-muted me-2"><del>$280</del></span> $260</h5>
+                                                    </div>
+                                                    <div>
+                                                        <ul class="list-inline mb-0 text-muted product-color">
+                                                            <li class="list-inline-item">
+                                                                Colors :
+                                                            </li>
+                                                            <li class="list-inline-item">
+                                                                <i class="mdi mdi-circle text-dark"></i>
+                                                            </li>
+                                                            <li class="list-inline-item">
+                                                                <i class="mdi mdi-circle text-light"></i>
+                                                            </li>
+                                                            <li class="list-inline-item">
+                                                                <i class="mdi mdi-circle text-primary"></i>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-3 col-sm-6">
                                         <div class="product-box">
                                             <div class="product-ribbon">
                                                 - 20 %
@@ -344,7 +391,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xl-4 col-sm-6">
+                                    <div class="col-xl-3 col-sm-6">
                                         <div class="product-box">
                                             <div class="product-img pt-4 px-4">
                                                 <div class="product-wishlist">
@@ -384,7 +431,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xl-4 col-sm-6">
+                                    <div class="col-xl-3 col-sm-6">
                                         <div class="product-box">
                                             <div class="product-img pt-4 px-4">
                                                 <div class="product-wishlist">
@@ -421,7 +468,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xl-4 col-sm-6">
+                                    <div class="col-xl-3 col-sm-6">
                                         <div class="product-box">
                                             <div class="product-img pt-4 px-4">
                                                 <div class="product-wishlist">
@@ -461,7 +508,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xl-4 col-sm-6">
+                                    <div class="col-xl-3 col-sm-6">
                                         <div class="product-box">
                                             <div class="product-ribbon">
                                                 - 20 %
@@ -506,7 +553,7 @@
                             </div>
                             <div class="tab-pane" id="newest" role="tabpanel">
                                 <div class="row">
-                                    <div class="col-xl-4 col-sm-6">
+                                    <div class="col-xl-3 col-sm-6">
                                         <div class="product-box">
                                             <div class="product-ribbon">
                                                 New
@@ -549,7 +596,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xl-4 col-sm-6">
+                                    <div class="col-xl-3 col-sm-6">
                                         <div class="product-box">
                                             <div class="product-ribbon">
                                                 New
@@ -589,7 +636,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xl-4 col-sm-6">
+                                    <div class="col-xl-3 col-sm-6">
                                         <div class="product-box">
                                             <div class="product-ribbon">
                                                 New
@@ -632,7 +679,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xl-4 col-sm-6">
+                                    <div class="col-xl-3 col-sm-6">
                                         <div class="product-box">
                                             <div class="product-ribbon">
                                                 New
@@ -681,7 +728,7 @@
                             </div>
                             <div class="tab-pane" id="discount" role="tabpanel">
                                 <div class="row">
-                                    <div class="col-xl-4 col-sm-6">
+                                    <div class="col-xl-3 col-sm-6">
                                         <div class="product-box">
                                             <div class="product-ribbon">
                                                 - 20 %
@@ -724,7 +771,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xl-4 col-sm-6">
+                                    <div class="col-xl-3 col-sm-6">
                                         <div class="product-box">
                                             <div class="product-ribbon">
                                                 - 20 %
@@ -768,7 +815,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xl-4 col-sm-6">
+                                    <div class="col-xl-3 col-sm-6">
                                         <div class="product-box">
                                             <div class="product-ribbon">
                                                 - 20 %
@@ -812,6 +859,7 @@
                                 <!-- end row -->
                             </div>
                         </div>
+                        <!-- Pagination Start -->
                         <div class="row mt-4">
                             <div class="col-sm-6">
                                 <div>
@@ -846,6 +894,7 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- Pagination End -->
                     </div>
                 </div>
             </div>

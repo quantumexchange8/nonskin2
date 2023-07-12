@@ -70,7 +70,7 @@
                                             In</button>
                                     </div>
 
-                                    <div class="mt-4 text-center">
+                                    {{-- <div class="mt-4 text-center">
                                         <div class="signin-other-title">
                                             <h5 class="font-size-14 mb-3 title">Sign in with</h5>
                                         </div>
@@ -92,7 +92,7 @@
                                                 </a>
                                             </li>
                                         </ul>
-                                    </div>
+                                    </div> --}}
 
                                     <div class="mt-4 text-center">
                                         <p class="mb-0">Do not have an account ? <a href="{{ url('register') }}" class="fw-medium text-primary"> Signup
@@ -110,10 +110,11 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="text-center text-muted p-4">
+                        ©
                         <script>
                             document.write(new Date().getFullYear())
 
-                        </script> Symox. Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesbrand</p>
+                        </script> Nonskin. Designed by Current Tech</p>
                     </div>
                 </div>
             </div>

@@ -13,7 +13,7 @@
 
                     <div class="text-center mb-4">
                         <a href="index">
-                            <img src="{{ URL::asset('assets/images/logo-sm.svg') }}" alt="" height="22"> <span class="logo-txt">Symox</span>
+                            <img src="{{ URL::asset('assets/images/logo-sm.svg') }}" alt="" height="22"> <span class="logo-txt">Nonskin</span>
                         </a>
                     </div>
 
@@ -21,7 +21,7 @@
                         <div class="card-body p-4">
                             <div class="text-center mt-2">
                                 <h5 class="text-primary">Register Account</h5>
-                                <p class="text-muted">Get your free Symox account now.</p>
+                                <p class="text-muted">Get your free Nonskin account now.</p>
                             </div>
                             <div class="p-2 mt-4">
 
@@ -35,8 +35,48 @@
                                     @csrf
 
                                     <div class="mb-3">
+                                        <label class="form-label" for="referral">Referral</label>
+                                        <input type="text" class="form-control @error('referral') is-invalid @enderror" id="referral" value="{{ old('referral') }}" name="referral" placeholder="e.g: NON000100" autofocus>
+                                        @error('referral')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label" for="userfull_name">Full Name</label>
+                                        <input type="text" class="form-control @error('full_name') is-invalid @enderror" id="userfull_name" value="{{ old('full_name') }}" name="full_name" placeholder="e.g: john.doe@yahoo.com" autofocus>
+                                        @error('full_name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label" for="userid_no">Identification / Passport No.</label>
+                                        <input type="text" class="form-control @error('id_no') is-invalid @enderror" id="userid_no" value="{{ old('id_no') }}" name="id_no" placeholder="e.g: 920102038888" autofocus>
+                                        @error('id_no')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label" for="usercontact">Contact</label>
+                                        <input type="text" class="form-control @error('contact') is-invalid @enderror" id="usercontact" value="{{ old('contact') }}" name="contact" placeholder="e.g: john.doe@yahoo.com" autofocus>
+                                        @error('contact')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="mb-3">
                                         <label class="form-label" for="useremail">Email</label>
-                                        <input type="email" class="form-control @error('email') is-invalid @enderror" id="useremail" value="{{ old('email') }}" name="email" placeholder="Enter email" autofocus>
+                                        <input type="email" class="form-control @error('email') is-invalid @enderror" id="useremail" value="{{ old('email') }}" name="email" placeholder="e.g: john.doe@yahoo.com" autofocus>
                                         @error('email')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -46,8 +86,8 @@
 
                                     <div class="mb-3">
                                         <label class="form-label" for="username">Username</label>
-                                        <input type="text" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" id="username" name="name" autofocus placeholder="Enter username">
-                                        @error('name')
+                                        <input type="text" class="form-control @error('username') is-invalid @enderror" value="{{ old('username') }}" id="username" name="username" autofocus placeholder="Enter username">
+                                        @error('username')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -74,7 +114,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="mb-3">
+                                    {{-- <div class="mb-3">
                                         <label for="avatar">Profile Picture</label>
                                         <div class="input-group">
                                             <input type="file" class="form-control @error('avatar') is-invalid @enderror" id="inputGroupFile02" name="avatar" autofocus>
@@ -85,11 +125,11 @@
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
-                                    </div>
+                                    </div> --}}
 
                                     <div class="form-check">
                                         <input type="checkbox" class="form-check-input @error('checkbox') is-invalid @enderror" name="checkbox" id="auth-terms-condition-check">
-                                        <label class="form-check-label" for="auth-terms-condition-check">I accept <a href="javascript: void(0);" class="text-dark">Terms and Conditions</a></label>
+                                        <label class="form-check-label" for="auth-terms-condition-check">I accept <a href="javascript: void(0);" class="fw-medium text-primary">Terms and Conditions</a></label>
                                         @error('checkbox')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -100,7 +140,7 @@
                                         <button class="btn btn-primary w-sm waves-effect waves-light" type="submit">Register</button>
                                     </div>
 
-                                    <div class="mt-4 text-center">
+                                    {{-- <div class="mt-4 text-center">
                                         <div class="signin-other-title">
                                             <h5 class="font-size-14 mb-3 title">Sign in with</h5>
                                         </div>
@@ -122,7 +162,7 @@
                                                 </a>
                                             </li>
                                         </ul>
-                                    </div>
+                                    </div> --}}
 
                                     <div class="mt-4 text-center">
                                         <p class="text-muted mb-0">Already have an account ? <a href="{{ url('login') }}" class="fw-medium text-primary"> Login</a></p>
@@ -142,7 +182,7 @@
                         <p class="text-white-50">© <script>
                                 document.write(new Date().getFullYear())
 
-                            </script> Symox. Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesbrand</p>
+                            </script> Nonskin. Designed by Current Tech</p>
                     </div>
                 </div>
             </div>

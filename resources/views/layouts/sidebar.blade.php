@@ -31,43 +31,118 @@
         <div id="sidebar-menu">
             <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
-                <li class="menu-title" data-key="t-menu">{{ auth::user()->ranking_name }}</li>
+                {{-- <li class="menu-title" data-key="t-menu">{{ auth::user()->ranking_name }}</li> --}}
                 <li>
                     <a href="{{ url('/') }}">
                         <i class="bx bx-tachometer icon nav-icon"></i>
                         <span class="menu-item" data-key="t-dashboards">@lang('translation.Dashboard')</span>
-                        <span class="badge rounded-pill bg-success">@lang('translation.5+')</span>
+                    </a>
+                </li>
+                @unlessrole('superadmin|admin')
+                <li>
+                    <a href="#">
+                        <i class="bx bxs-volume-full icon nav-icon"></i>
+                        <span class="menu-item" data-key="t-dashboards">Announcement</span>
+                        <span class="badge rounded-pill bg-danger">@lang('translation.5+')</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('members.index') }}">
-                        <i class='bx bxs-user-rectangle icon nav-icon' ></i>
-                        <span class="menu-item" data-key="t-members">Members</span>
+                    <a href="#">
+                        <i class="bx bxs-dollar-circle icon nav-icon"></i>
+                        <span class="menu-item" data-key="t-multi-level">Commission</span>
                     </a>
                 </li>
-
-                <li>
-                    <a href="{{ route('customers.index') }}">
-                        <i class="bx bxs-user-detail icon nav-icon"></i>
-                        <span class="menu-item" data-key="t-customers">Customers</span>
-                    </a>
-                </li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bx bxs-package icon nav-icon"></i>
                         <span class="menu-item" data-key="t-ecommerce">Products</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="../ecommerce-shops" data-key="t-shops">@lang('translation.Shops')</a></li>
+                        {{-- <li><a href="../ecommerce-shops" data-key="t-shops">@lang('translation.Shops')</a></li> --}}
                         <li><a href="{{ route('products.index') }}" data-key="t-products">@lang('translation.Products')</a></li>
                         <li><a href="../ecommerce-orders" data-key="t-orders">@lang('translation.Orders')</a></li>
                         <li><a href="../ecommerce-customers" data-key="t-customers">@lang('translation.Customers')</a></li>
                         <li><a href="../ecommerce-add-product" data-key="t-add-product">@lang('translation.Add_Product')</a></li>
                     </ul>
                 </li>
-
                 <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i class="bx bxs-truck icon nav-icon"></i>
+                        <span class="menu-item" data-key="t-multi-level">My Orders</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="true">
+                        <li><a href="javascript: void(0);" data-key="t-level-1.1">Pending</a></li>
+                        <li><a href="javascript: void(0);" data-key="t-level-1.1">History</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i class="bx bx-dollar icon nav-icon"></i>
+                        <span class="menu-item" data-key="t-multi-level">Top Up</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="true">
+                        <li><a href="javascript: void(0);" data-key="t-level-1.1">Pending</a></li>
+                        <li><a href="javascript: void(0);" data-key="t-level-1.1">History</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i class="bx bx-dollar icon nav-icon"></i>
+                        <span class="menu-item" data-key="t-multi-level">Withdrawal</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="true">
+                        <li><a href="javascript: void(0);" data-key="t-level-1.1">Pending</a></li>
+                        <li><a href="javascript: void(0);" data-key="t-level-1.1">History</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i class="bx bx-dollar icon nav-icon"></i>
+                        <span class="menu-item" data-key="t-multi-level">Internal Transfer</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="true">
+                        <li><a href="javascript: void(0);" data-key="t-level-1.1">New Internal Transfer</a></li>
+                        <li><a href="javascript: void(0);" data-key="t-level-1.1">History</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i class="bx bx-share-alt icon nav-icon"></i>
+                        <span class="menu-item" data-key="t-multi-level">Member</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="true">
+                        <li><a href="javascript: void(0);" data-key="t-level-1.1">Network</a></li>
+                        <li><a href="javascript: void(0);" data-key="t-level-1.1">Tree</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i class="bx bxs-report icon nav-icon"></i>
+                        <span class="menu-item" data-key="t-multi-level">Report</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="true">
+                        <li><a href="javascript: void(0);" data-key="t-level-1.1">Downline Sales</a></li>
+                        <li><a href="javascript: void(0);" data-key="t-level-1.1">Sales</a></li>
+                        <li><a href="javascript: void(0);" data-key="t-level-1.1">Leadership</a></li>
+                        <li><a href="javascript: void(0);" data-key="t-level-1.1">Levelling</a></li>
+                        <li><a href="javascript: void(0);" data-key="t-level-1.1">Wallet</a></li>
+                    </ul>
+                </li>
+                @endunlessrole
+
+                {{-- <li>
+                    <a href="{{ route('members.index') }}">
+                        <i class='bx bxs-user-rectangle icon nav-icon' ></i>
+                        <span class="menu-item" data-key="t-members">Members</span>
+                    </a>
+                </li> --}}
+                {{-- <li>
+                    <a href="{{ route('customers.index') }}">
+                        <i class="bx bxs-user-detail icon nav-icon"></i>
+                        <span class="menu-item" data-key="t-customers">Customers</span>
+                    </a>
+                </li> --}}
+                {{-- <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bx bx-line-chart icon nav-icon"></i>
                         <span class="menu-item" data-key="t-multi-level">Sales History</span>
@@ -77,37 +152,7 @@
                         <li><a href="javascript: void(0);" data-key="t-level-1.1">Group</a></li>
                         <li><a href="javascript: void(0);" data-key="t-level-1.1">Overall</a></li>
                     </ul>
-                </li>
-
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow">
-                        <i class="bx bx-dollar-circle icon nav-icon"></i>
-                        <span class="menu-item" data-key="t-multi-level">Commission</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="true">
-                        <li><a href="javascript: void(0);" data-key="t-level-1.1">Personal</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow">
-                        <i class="bx bxs-report icon nav-icon"></i>
-                        <span class="menu-item" data-key="t-multi-level">Reports</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="true">
-                        <li><a href="javascript: void(0);" data-key="t-level-1.1">Personal</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow">
-                        <i class="bx bx-share-alt icon nav-icon"></i>
-                        <span class="menu-item" data-key="t-multi-level">Network Tree</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="true">
-                        <li><a href="javascript: void(0);" data-key="t-level-1.1">Personal</a></li>
-                    </ul>
-                </li>
-
-
+                </li> --}}
 
                 <li class="menu-title" data-key="t-applications">@lang('translation.Applications')</li>
 
@@ -158,7 +203,7 @@
                     </ul>
                 </li>
 
-                <li>
+                {{-- <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bx bx-receipt icon nav-icon"></i>
                         <span class="menu-item" data-key="t-invoices">@lang('translation.Invoices')</span>
@@ -167,7 +212,7 @@
                         <li><a href="invoices-list" data-key="t-invoice-list">@lang('translation.Invoice_List')</a></li>
                         <li><a href="invoices-detail" data-key="t-invoice-detail">@lang('translation.Invoice_Detail')</a></li>
                     </ul>
-                </li>
+                </li> --}}
                 @hasanyrole('superadmin|admin')
                 <li class="menu-title" data-key="">Settings</li>
                 <li>

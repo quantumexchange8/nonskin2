@@ -8,44 +8,38 @@ use App\Models\RankingSetting;
 
 class RankingSeeder extends Seeder
 {
-    public $rankings = [
+    public $ranks = [
         [
             'name' => 'Chief Distributor',
+            'desc' => 'Chief Distributor',
             'created_by' => 1,
-            'updated_by' => 1
         ],
         [
             'name' => 'Exclusive Distributor',
+            'desc' => 'Exclusive Distributor',
             'created_by' => 1,
-            'updated_by' => 1
         ],
         [
             'name' => 'General Distributor',
+            'desc' => 'General Distributor',
             'created_by' => 1,
-            'updated_by' => 1
         ],
         [
             'name' => 'Member',
+            'desc' => 'Member',
             'created_by' => 1,
-            'updated_by' => 1
         ],
         [
             'name' => 'Nonmember',
+            'desc' => 'Nonmember',
             'created_by' => 1,
-            'updated_by' => 1
         ]
     ];
 
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
-
     public function run()
     {
-        foreach ($this->rankings as $ranking) {
-            RankingSetting::create($ranking);
+        foreach ($this->ranks as $rank) {
+            RankingSetting::create($rank);
         }
     }
 }
