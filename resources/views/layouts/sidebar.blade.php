@@ -129,32 +129,18 @@
                     </ul>
                 </li>
                 @endunlessrole
-
-                {{-- <li>
-                    <a href="{{ route('members.index') }}">
-                        <i class='bx bxs-user-rectangle icon nav-icon' ></i>
-                        <span class="menu-item" data-key="t-members">Members</span>
-                    </a>
-                </li> --}}
-                {{-- <li>
-                    <a href="{{ route('customers.index') }}">
-                        <i class="bx bxs-user-detail icon nav-icon"></i>
-                        <span class="menu-item" data-key="t-customers">Customers</span>
-                    </a>
-                </li> --}}
-                {{-- <li>
+                @hasanyrole('superadmin|admin')
+                <li class="menu-title" data-key="t-applications">Administration</li>
+                <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i class="bx bx-line-chart icon nav-icon"></i>
-                        <span class="menu-item" data-key="t-multi-level">Sales History</span>
+                        <i class="bx bxs-package icon nav-icon"></i>
+                        <span class="menu-item" data-key="t-ecommerce">Products</span>
                     </a>
-                    <ul class="sub-menu" aria-expanded="true">
-                        <li><a href="javascript: void(0);" data-key="t-level-1.1">Personal</a></li>
-                        <li><a href="javascript: void(0);" data-key="t-level-1.1">Group</a></li>
-                        <li><a href="javascript: void(0);" data-key="t-level-1.1">Overall</a></li>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('products.list') }}" data-key="t-add-product">List</a></li>
                     </ul>
-                </li> --}}
-
-                <li class="menu-title" data-key="t-applications">@lang('translation.Applications')</li>
+                </li>
+                @endhasanyrole
 
                 {{-- <li>
                     <a href="apps-calendar">
@@ -193,7 +179,7 @@
                         <li><a href="{{ route('products.index') }}" data-key="t-products">@lang('translation.Products')</a></li>
                         <li><a href="ecommerce-orders" data-key="t-orders">@lang('translation.Orders')</a></li>
                         <li><a href="ecommerce-customers" data-key="t-customers">@lang('translation.Customers')</a></li>
-                        <li><a href="ecommerce-add-product" data-key="t-add-product">@lang('translation.Add_Product')</a></li>
+                        <li><a href="{{ route('products.create') }}" data-key="t-add-product">@lang('translation.Add_Product')</a></li>
                         @endhasanyrole
                         @hasanyrole('superadmin')
                         <li><a href="ecommerce-product-detail" data-key="t-product-detail">@lang('translation.Product_Detail')</a></li>

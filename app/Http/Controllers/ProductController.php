@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+
 
 class ProductController extends Controller
 {
@@ -11,78 +15,72 @@ class ProductController extends Controller
     {
         $this->middleware('auth');
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $products = Product::latest()->get();
         return view('web.products.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function list()
+    {
+        $products = Product::latest()->get();
+        return view('web.admin.products.list');
+    }
+
     public function create()
     {
-        //
+        return view('web.admin.products.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request) {
+        // try {
+            Product::create(
+                [
+                    'code' => $request->code,
+                    'name_en' => $request->name_en,
+                    'name_cn' => $request->name_cn,
+                    'desc_en' => $request->desc_en,
+                    'desc_cn' => $request->desc_cn,
+                    'price' => $request->price,
+                    'category_id' => $request->category_id,
+                    'shipping_quantity' => $request->shipping_quantity,
+                    'image_1' => $request->image_1,
+                    'image_2' => $request->image_2,
+                    'image_3' => $request->image_3,
+                    'image_4' => $request->image_4,
+                    'image_5' => $request->image_5,
+                    'status' => $request->status,
+                    'created_by' => Auth::id(),
+                ]
+            );
+            return redirect()
+                ->route('products.list')
+                ->with("added", "Product successfully created!");
+        // } catch (\Exception $e) {
+            // Handle the exception here, for example:
+            return redirect()
+                ->back()
+                ->with("error", "An error occurred: " . $e->getMessage());
+        // }
+
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
     public function show(Product $product)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Product $product)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Product $product)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Product $product)
     {
         //

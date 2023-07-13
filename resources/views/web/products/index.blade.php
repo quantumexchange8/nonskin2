@@ -17,6 +17,8 @@
         @endslot
     @endcomponent
 
+    @include('web.admin.products.modal-update-product')
+
     <div class="row">
         {{-- <div class="col-xl-3 col-lg-4">
             <div class="card">
@@ -230,6 +232,7 @@
                                             <input type="text" class="form-control bg-light border-light rounded"
                                                 placeholder="Search...">
                                             <i class="bx bx-search search-icon"></i>
+                                            <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".modal-update-product"><i class='bx bx-plus-circle'></i> Add Product</button>
                                         </div>
                                     </div>
                                 </div>
