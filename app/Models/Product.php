@@ -25,8 +25,14 @@ class Product extends Model
         'image_4',
         'image_5',
         'status',
+        'remarks',
         'created_by',
         'updated_by',
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 
 }

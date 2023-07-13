@@ -218,11 +218,11 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div>
-                                    <h5>Showing result for "Shoes"</h5>
+                                    {{-- <h5>Showing result for "Shoes"</h5>
                                     <ol class="breadcrumb p-0 bg-transparent mb-2">
                                         <li class="breadcrumb-item"><a href="javascript: void(0);">Footwear</a></li>
                                         <li class="breadcrumb-item active">Shoes</li>
-                                    </ol>
+                                    </ol> --}}
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -232,13 +232,12 @@
                                             <input type="text" class="form-control bg-light border-light rounded"
                                                 placeholder="Search...">
                                             <i class="bx bx-search search-icon"></i>
-                                            <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".modal-update-product"><i class='bx bx-plus-circle'></i> Add Product</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <ul class="nav nav-tabs nav-tabs-custom mt-3 mb-2 ecommerce-sortby-list">
+                        {{-- <ul class="nav nav-tabs nav-tabs-custom mt-3 mb-2 ecommerce-sortby-list">
                             <li class="nav-item">
                                 <a class="nav-link disabled fw-medium" href="#" tabindex="-1"
                                     aria-disabled="true">Sort by:</a>
@@ -255,38 +254,50 @@
                                 <a class="nav-link" data-bs-toggle="tab" href="#discount" role="tab"
                                     href="#">Discount</a>
                             </li>
-                        </ul>
+                        </ul> --}}
                         <!-- Tab panes -->
                         <div class="tab-content p-3 text-muted">
                             <div class="tab-pane active" id="popularity" role="tabpanel">
                                 <div class="row">
                                     @if (isset($products))
                                     @foreach ($products as $product)
-                                    <div class="col-xl-3 col-sm-6">
+                                    <div class="col-xl-2 col-sm-6">
                                         <div class="product-box">
+                                            @if ($product->discount != 0)
                                             <div class="product-ribbon">
-                                                - 20 %
+                                                - {{ $product->discount }} %
                                             </div>
+                                            @endif
                                             <div class="product-img pt-4 px-4">
                                                 <div class="product-wishlist">
                                                     <a href="#">
                                                         <i class="mdi mdi-heart-outline"></i>
                                                     </a>
                                                 </div>
-                                                <img src="{{ URL::asset('assets/images/nonskin/1.jpg') }}" alt=""
-                                                    class="img-fluid mx-auto d-block">
+                                                <a href="{{ route('products.show', $product->id) }}">
+                                                    <img src="{{ URL::asset('assets/images/nonskin/7.jpg') }}" alt=""
+                                                    class="img-fluid mx-auto d-block" style="width: 70% !important;">
+                                                </a>
                                             </div>
                                             <div class="product-content p-4">
                                                 <div class="d-flex justify-content-between align-items-end">
                                                     <div>
-                                                        <h5 class="mb-1"><a href="ecommerce-product-detail"
-                                                                class="text-dark font-size-16">Nike N012 Shoes</a></h5>
-                                                        <p class="text-muted font-size-13">Gray, Shoes</p>
-                                                        <h5 class="mt-3 mb-0"><span
-                                                                class="text-muted me-2"><del>$280</del></span> $260</h5>
+                                                        <h5 class="mb-1"><a href="{{ route('products.show', $product->id) }}"
+                                                                class="text-dark font-size-14">{{ Str::limit($product->name_en, 21, '...') }}</a></h5>
+                                                        {{-- <p class="text-muted font-size-13">{{ $product->desc_en }}</p> --}}
+                                                        <h5 class="mt-3 mb-0 font-size-16">
+                                                            @if ($product->discount != 0)
+                                                                <span class="text-muted me-2 font-size-12">
+                                                                    <del>RM{{ number_format($product->price,2,".",",") }}</del>
+                                                                </span>
+                                                                    RM{{ number_format($product->price - ($product->price * $product->discount/100),2,".",",") }}
+                                                            @else
+                                                                RM{{ number_format($product->price,2,".",",") }}
+                                                            @endif
+                                                        </h5>
                                                     </div>
                                                     <div>
-                                                        <ul class="list-inline mb-0 text-muted product-color">
+                                                        {{-- <ul class="list-inline mb-0 text-muted product-color">
                                                             <li class="list-inline-item">
                                                                 Colors :
                                                             </li>
@@ -299,262 +310,22 @@
                                                             <li class="list-inline-item">
                                                                 <i class="mdi mdi-circle text-primary"></i>
                                                             </li>
-                                                        </ul>
+                                                        </ul> --}}
                                                     </div>
+                                                </div>
+                                                <div class="row pt-4">
+                                                    <button type="submit" class="btn btn-primary btn"><i class='bx bx-cart' ></i> Add to Cart</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     @endforeach
                                     @endif
-                                    <div class="col-xl-3 col-sm-6">
-                                        <div class="product-box">
-                                            <div class="product-ribbon">
-                                                - 20 %
-                                            </div>
-                                            <div class="product-img pt-4 px-4">
-                                                <div class="product-wishlist">
-                                                    <a href="#">
-                                                        <i class="mdi mdi-heart-outline"></i>
-                                                    </a>
-                                                </div>
-                                                <img src="{{ URL::asset('assets/images/nonskin/1.jpg') }}" alt=""
-                                                    class="img-fluid mx-auto d-block">
-                                            </div>
-                                            <div class="product-content p-4">
-                                                <div class="d-flex justify-content-between align-items-end">
-                                                    <div>
-                                                        <h5 class="mb-1"><a href="ecommerce-product-detail"
-                                                                class="text-dark font-size-16">Nike N012 Shoes</a></h5>
-                                                        <p class="text-muted font-size-13">Gray, Shoes</p>
-                                                        <h5 class="mt-3 mb-0"><span
-                                                                class="text-muted me-2"><del>$280</del></span> $260</h5>
-                                                    </div>
-                                                    <div>
-                                                        <ul class="list-inline mb-0 text-muted product-color">
-                                                            <li class="list-inline-item">
-                                                                Colors :
-                                                            </li>
-                                                            <li class="list-inline-item">
-                                                                <i class="mdi mdi-circle text-dark"></i>
-                                                            </li>
-                                                            <li class="list-inline-item">
-                                                                <i class="mdi mdi-circle text-light"></i>
-                                                            </li>
-                                                            <li class="list-inline-item">
-                                                                <i class="mdi mdi-circle text-primary"></i>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-3 col-sm-6">
-                                        <div class="product-box">
-                                            <div class="product-ribbon">
-                                                - 20 %
-                                            </div>
-                                            <div class="product-img pt-4 px-4">
-                                                <div class="product-wishlist">
-                                                    <a href="#">
-                                                        <i class="mdi mdi-heart-outline"></i>
-                                                    </a>
-                                                </div>
-                                                <img src="{{ URL::asset('assets/images/nonskin/2.jpg') }}"
-                                                    alt="" class="img-fluid mx-auto d-block">
-                                            </div>
-                                            <div class="product-content p-4">
-                                                <div class="d-flex justify-content-between align-items-end">
-                                                    <div>
-                                                        <h5 class="mb-1"><a href="ecommerce-product-detail"
-                                                                class="text-dark font-size-16">Adidas Running Shoes</a>
-                                                        </h5>
-                                                        <p class="text-muted font-size-13">Black, Shoes</p>
-                                                        <h5 class="mt-3 mb-0"><span
-                                                                class="text-muted me-2"><del>$250</del></span> $240</h5>
-                                                    </div>
-                                                    <div>
-                                                        <ul class="list-inline mb-0 text-muted product-color">
-                                                            <li class="list-inline-item">
-                                                                Colors :
-                                                            </li>
-                                                            <li class="list-inline-item">
-                                                                <i class="mdi mdi-circle text-danger"></i>
-                                                            </li>
-                                                            <li class="list-inline-item">
-                                                                <i class="mdi mdi-circle text-dark"></i>
-                                                            </li>
-                                                            <li class="list-inline-item">
-                                                                <i class="mdi mdi-circle text-light"></i>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-3 col-sm-6">
-                                        <div class="product-box">
-                                            <div class="product-img pt-4 px-4">
-                                                <div class="product-wishlist">
-                                                    <a href="#">
-                                                        <i class="mdi mdi-heart-outline"></i>
-                                                    </a>
-                                                </div>
-                                                <img src="{{ URL::asset('assets/images/nonskin/1.jpg') }}"
-                                                    alt="" class="img-fluid mx-auto d-block">
-                                            </div>
-                                            <div class="product-content p-4">
-                                                <div class="d-flex justify-content-between align-items-end">
-                                                    <div>
-                                                        <h5 class="mb-1"><a href="ecommerce-product-detail"
-                                                                class="text-dark font-size-16">Puma P103 Shoes</a></h5>
-                                                        <p class="text-muted font-size-13">Purple, Shoes</p>
-                                                        <h5 class="mt-3 mb-0"><span
-                                                                class="text-muted me-2"><del>$260</del></span> $250</h5>
-                                                    </div>
-                                                    <div>
-                                                        <ul class="list-inline mb-0 text-muted product-color">
-                                                            <li class="list-inline-item">
-                                                                Colors :
-                                                            </li>
-                                                            <li class="list-inline-item">
-                                                                <i class="mdi mdi-circle text-purple"></i>
-                                                            </li>
-                                                            <li class="list-inline-item">
-                                                                <i class="mdi mdi-circle text-light"></i>
-                                                            </li>
-                                                            <li class="list-inline-item">
-                                                                <i class="mdi mdi-circle text-dark"></i>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-3 col-sm-6">
-                                        <div class="product-box">
-                                            <div class="product-img pt-4 px-4">
-                                                <div class="product-wishlist">
-                                                    <a href="#">
-                                                        <i class="mdi mdi-heart-outline"></i>
-                                                    </a>
-                                                </div>
-                                                <img src="{{ URL::asset('assets/images/nonskin/3.jpg') }}"
-                                                    alt="" class="img-fluid mx-auto d-block">
-                                            </div>
-                                            <div class="product-content p-4">
-                                                <div class="d-flex justify-content-between align-items-end">
-                                                    <div>
-                                                        <h5 class="mb-1"><a href="ecommerce-product-detail"
-                                                                class="text-dark font-size-16">Sports S120 Shoes</a></h5>
-                                                        <p class="text-muted font-size-13">Cyan, Shoes</p>
-                                                        <h5 class="mt-3 mb-0"><span
-                                                                class="text-muted me-2"><del>$240</del></span> $230</h5>
-                                                    </div>
-                                                    <div>
-                                                        <ul class="list-inline mb-0 text-muted product-color">
-                                                            <li class="list-inline-item">
-                                                                Colors :
-                                                            </li>
-                                                            <li class="list-inline-item">
-                                                                <i class="mdi mdi-circle text-info"></i>
-                                                            </li>
-                                                            <li class="list-inline-item">
-                                                                <i class="mdi mdi-circle text-success"></i>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-3 col-sm-6">
-                                        <div class="product-box">
-                                            <div class="product-img pt-4 px-4">
-                                                <div class="product-wishlist">
-                                                    <a href="#">
-                                                        <i class="mdi mdi-heart-outline"></i>
-                                                    </a>
-                                                </div>
-                                                <img src="{{ URL::asset('assets/images/nonskin/4.jpg') }}"
-                                                    alt="" class="img-fluid mx-auto d-block">
-                                            </div>
-                                            <div class="product-content p-4">
-                                                <div class="d-flex justify-content-between align-items-end">
-                                                    <div>
-                                                        <h5 class="mb-1"><a href="ecommerce-product-detail"
-                                                                class="text-dark font-size-16">Adidas AB23 Shoes</a></h5>
-                                                        <p class="text-muted font-size-13">Blue, Shoes</p>
-                                                        <h5 class="mt-3 mb-0"><span
-                                                                class="text-muted me-2"><del>$240</del></span> $250</h5>
-                                                    </div>
-                                                    <div>
-                                                        <ul class="list-inline mb-0 text-muted product-color">
-                                                            <li class="list-inline-item">
-                                                                Colors :
-                                                            </li>
-                                                            <li class="list-inline-item">
-                                                                <i class="mdi mdi-circle text-dark"></i>
-                                                            </li>
-                                                            <li class="list-inline-item">
-                                                                <i class="mdi mdi-circle text-light"></i>
-                                                            </li>
-                                                            <li class="list-inline-item">
-                                                                <i class="mdi mdi-circle text-primary"></i>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-3 col-sm-6">
-                                        <div class="product-box">
-                                            <div class="product-ribbon">
-                                                - 20 %
-                                            </div>
-                                            <div class="product-img pt-4 px-4">
-                                                <div class="product-wishlist">
-                                                    <a href="#">
-                                                        <i class="mdi mdi-heart-outline"></i>
-                                                    </a>
-                                                </div>
-                                                <img src="{{ URL::asset('assets/images/nonskin/5.jpg') }}"
-                                                    alt="" class="img-fluid mx-auto d-block">
-                                            </div>
-                                            <div class="product-content p-4">
-                                                <div class="d-flex justify-content-between align-items-end">
-                                                    <div>
-                                                        <h5 class="mb-1"><a href="ecommerce-product-detail"
-                                                                class="text-dark font-size-16">Nike N012 Shoes</a></h5>
-                                                        <p class="text-muted font-size-13">Gray, Shoes</p>
-                                                        <h5 class="mt-3 mb-0"><span
-                                                                class="text-muted me-2"><del>$270</del></span> $260</h5>
-                                                    </div>
-                                                    <div>
-                                                        <ul class="list-inline mb-0 text-muted product-color">
-                                                            <li class="list-inline-item">
-                                                                Colors :
-                                                            </li>
-                                                            <li class="list-inline-item">
-                                                                <i class="mdi mdi-circle text-dark"></i>
-                                                            </li>
-                                                            <li class="list-inline-item">
-                                                                <i class="mdi mdi-circle text-light"></i>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+
                                 </div>
                                 <!-- end row -->
                             </div>
-                            <div class="tab-pane" id="newest" role="tabpanel">
+                            {{-- <div class="tab-pane" id="newest" role="tabpanel">
                                 <div class="row">
                                     <div class="col-xl-3 col-sm-6">
                                         <div class="product-box">
@@ -860,7 +631,7 @@
                                     </div>
                                 </div>
                                 <!-- end row -->
-                            </div>
+                            </div> --}}
                         </div>
                         <!-- Pagination Start -->
                         <div class="row mt-4">

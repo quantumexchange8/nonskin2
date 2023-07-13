@@ -15,7 +15,13 @@ class CreateCategoriesTable extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
+            $table->string('name_en', 100)->nullable();
+            $table->string('name_cn', 100)->nullable();
+            $table->string('status', 10)->nullable();
+            $table->string('remarks', 10)->nullable()->default('Nonskin');
             $table->timestamps();
+            $table->integer('created_by')->unsigned()->nullable()->comment('Refers to user id');
+            $table->integer('updated_by')->unsigned()->nullable()->comment('Refers to user id');
         });
     }
 

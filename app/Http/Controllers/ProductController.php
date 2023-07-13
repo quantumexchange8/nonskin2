@@ -19,7 +19,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::latest()->get();
-        return view('web.products.index');
+        return view('web.products.index', compact('products'));
     }
 
     public function list()
@@ -68,7 +68,8 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
-        //
+        $products = Product::with('category')->get();
+        return view('web.products.show', compact('product'));
     }
 
     public function edit(Product $product)

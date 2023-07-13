@@ -21,7 +21,7 @@ class CreateProductsTable extends Migration
             $table->longText('desc_en')->nullable()->comment('Product description in English');
             $table->longText('desc_cn')->nullable()->comment('Product description in Chinese');
             $table->double('price')->nullable();
-            $table->double('discount')->nullable();
+            $table->double('discount')->default(0);
             $table->tinyInteger('category_id');
             $table->tinyInteger('shipping_quantity');
             $table->string('image_1')->nullable();
@@ -30,6 +30,7 @@ class CreateProductsTable extends Migration
             $table->string('image_4')->nullable();
             $table->string('image_5')->nullable();
             $table->string('status', 10)->nullable()->default('Active')->comment('Product Active/Inactive');
+            $table->string('remarks', 10)->nullable()->default('Nonskin')->comment('Product remarks');
             $table->timestamps();
             $table->integer('created_by')->unsigned()->nullable()->comment('Refers to user id');
             $table->integer('updated_by')->unsigned()->nullable()->comment('Refers to user id');

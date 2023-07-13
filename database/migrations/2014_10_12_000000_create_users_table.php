@@ -48,8 +48,8 @@ class CreateUsersTable extends Migration
             $table->string('delivery_state')->nullable()->default('-');
             $table->string('delivery_country')->nullable()->default('-');
             $table->timestamps();
-            $table->integer('created_by')->unsigned()->nullable();
-            $table->integer('updated_by')->unsigned()->nullable();
+            $table->integer('created_by')->unsigned()->nullable()->comment('Refers to user id');
+            $table->integer('updated_by')->unsigned()->nullable()->comment('Refers to user id');
         });
 
         // DB::table('users')->insert(array('name'=>'default','email'=>'default@currenttech', 'avatar' => '', 'password'=>Hash::make('defaultsecret')));
