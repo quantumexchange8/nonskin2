@@ -105,11 +105,11 @@
 
 
             <div class="dropdown d-inline-block">
-                <button type="button" class="btn header-item noti-icon" id="page-header-notifications-dropdown"
-                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class='bx bx-cart' ></i>
-                <span class="noti-dot bg-danger rounded-pill">10</span>
-            </button>
+                <button class="btn header-item noti-icon" id="page-header-notifications-dropdown"
+                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class='bx bx-cart' ></i>
+                    <span class="noti-dot bg-danger rounded-pill">10</span>
+                </button>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
                     aria-labelledby="page-header-notifications-dropdown">
                     <div class="p-3">
@@ -124,6 +124,8 @@
                     </div>
                     <div data-simplebar style="max-height: 250px;">
                         <h6 class="dropdown-header bg-light">Recently added products</h6>
+                        <div id="ajax-data">
+                        </div>
                         <a href="" class="text-reset notification-item">
                             <div class="d-flex border-bottom align-items-start">
                                 <div class="flex-shrink-0">
@@ -131,10 +133,9 @@
                                     class="me-3 rounded-circle avatar-sm" alt="user-pic">
                                 </div>
                                 <div class="flex-grow-1">
-                                    <h6 class="mb-1">Justin Verduzco</h6>
+                                    <h6 class="mb-1">Name of product</h6>
                                     <div class="text-muted">
-                                        <p class="mb-1 font-size-13">Your task changed an issue from "In Progress" to <span class="badge badge-soft-success">@lang('translation.Review')</span></p>
-                                        <p class="mb-0 font-size-10 text-uppercase fw-bold"><i class="mdi mdi-clock-outline"></i> @lang('translation.1_hour_ago')</p>
+                                        <p class="mb-1 font-size-13">Product price</p>
                                     </div>
                                 </div>
                             </div>
@@ -149,52 +150,16 @@
                                     </div>
                                 </div>
                                 <div class="flex-grow-1">
-                                    <h6 class="mb-1">New order has been placed</h6>
+                                    <h6 class="mb-1">Name of product</h6>
                                     <div class="text-muted">
-                                        <p class="mb-1 font-size-13">Open the order confirmation or shipment confirmation.</p>
-                                        <p class="mb-0 font-size-10 text-uppercase fw-bold"><i class="mdi mdi-clock-outline"></i> @lang('translation.5_hours_ago')</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                        <h6 class="dropdown-header bg-light">Earlier</h6>
-                        <a href="" class="text-reset notification-item">
-                            <div class="d-flex border-bottom align-items-start">
-                                <div class="flex-shrink-0">
-                                    <div class="avatar-sm me-3">
-                                        <span class="avatar-title bg-soft-success text-success rounded-circle font-size-16">
-                                            <i class="bx bx-cart"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h6 class="mb-1">Your item is shipped</h6>
-                                    <div class="text-muted">
-                                        <p class="mb-1 font-size-13">Here is somthing that you might light like to know.</p>
-                                        <p class="mb-0 font-size-10 text-uppercase fw-bold"><i class="mdi mdi-clock-outline"></i> @lang('translation.1_day_ago')</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-
-                        <a href="" class="text-reset notification-item">
-                            <div class="d-flex border-bottom align-items-start">
-                                <div class="flex-shrink-0">
-                                    <img src="{{ URL::asset('assets/images/users/avatar-4.jpg') }}"
-                                        class="me-3 rounded-circle avatar-sm" alt="user-pic">
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h6 class="mb-1">Salena Layfield</h6>
-                                    <div class="text-muted">
-                                        <p class="mb-1 font-size-13">Yay ! Everything worked!</p>
-                                        <p class="mb-0 font-size-10 text-uppercase fw-bold"><i class="mdi mdi-clock-outline"></i> @lang('translation.3_days_ago')</p>
+                                        <p class="mb-1 font-size-13">Product price</p>
                                     </div>
                                 </div>
                             </div>
                         </a>
                     </div>
                     <div class="p-2 border-top d-grid">
-                        <a class="btn btn-sm btn-link font-size-14 btn-block text-center" href="javascript:void(0)">
+                        <a class="btn btn-sm btn-link font-size-14 btn-block text-center" href="{{ route('member.checkout') }}">
                             <i class="uil-arrow-circle-right me-1"></i> <span>@lang('translation.View_More')</span>
                         </a>
                     </div>
@@ -231,3 +196,12 @@
         </div>
     </div>
 </header>
+@section('script')
+    @include('web.partials._fetch_cart')
+@endsection
+<script>
+    $(document).on('click', '#page-header-notifications-dropdown', function() {
+    alert('Alert');
+    console.log('TEST');
+});
+</script>

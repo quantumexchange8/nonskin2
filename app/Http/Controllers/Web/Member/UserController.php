@@ -15,6 +15,9 @@ class UserController extends Controller
     public function announcement() {
         return view('member.announcement');
     }
+    public function checkout() {
+        return view('member.checkout');
+    }
     public function commission() {
         return view('member.commission');
     }
@@ -89,4 +92,13 @@ class UserController extends Controller
 
         return response()->json(['message' => 'Item added to cart successfully']);
     }
+
+    public function getCartRecords() {
+
+        $cartRecords = Cart::where('user_id', Auth::id())->latest()->take(5)->get(); // Assuming your cart records are stored in the "carts" table
+
+        return response()->json($cartRecords);
+    }
+
+
 }

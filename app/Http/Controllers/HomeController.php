@@ -36,7 +36,7 @@ class HomeController extends Controller
 
     public function root()
     {
-        return view('index');
+        return view('web.dashboard');
     }
 
     /*Language Translation*/
@@ -69,7 +69,7 @@ class HomeController extends Controller
             if(@file_exists(public_path(Auth::user()->avatar))){
                 @unlink(public_path(Auth::user()->avatar));
             }
-            
+
             $avatar = $request->file('avatar');
             $avatarName = time() . '.' . $avatar->getClientOriginalExtension();
             $avatarPath = public_path('/images/');
@@ -81,7 +81,7 @@ class HomeController extends Controller
         if ($user) {
             Session::flash('message', 'User Details Updated successfully!');
             Session::flash('alert-class', 'alert-success');
- 
+
         } else {
             Session::flash('message', 'Something went wrong!');
             Session::flash('alert-class', 'alert-danger');

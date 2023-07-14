@@ -5,6 +5,7 @@ use App\Http\Controllers\Web\Member\UserController;
 
 Route::group(['prefix' => 'member/', 'as' => 'member.',  'middleware' => 'auth', 'middleware' => 'role:user'], function () {
     Route::get('announcement', [UserController::class, 'announcement'])->name('announcement');
+    Route::get('checkout', [UserController::class, 'checkout'])->name('checkout');
     Route::get('commission', [UserController::class, 'commission'])->name('commission');
     Route::get('internal-transfer-history', [UserController::class, 'internalTransferHistory'])->name('internal-transfer-history');
     Route::get('internal-transfer-new', [UserController::class, 'internalTransferNew'])->name('internal-transfer-new');
@@ -28,4 +29,5 @@ Route::group(['prefix' => 'member/', 'as' => 'member.',  'middleware' => 'auth',
 // AJAX
 Route::group(['prefix' => 'member/',  'middleware' => 'auth', 'middleware' => 'role:user'], function () {
     Route::post('/products/cart/add', [UserController::class, 'addToCart'])->name('cart.add');
+    Route::get('/cart/records', [UserController::class, 'getCartRecords'])->name('cart.fetch');
 });
