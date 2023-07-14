@@ -314,7 +314,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="row pt-4">
-                                                    <button type="submit" class="btn btn-primary btn"><i class='bx bx-cart' ></i> Add to Cart</button>
+                                                    <button class="btn btn-primary btn add-to-cart-btn" data-product-id="{{ $product->id }}" data-product-price="{{ $product->price }}"><i class='bx bx-cart-alt' ></i> Add to Cart</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -681,4 +681,43 @@
     <script src="{{ URL::asset('assets/libs/wnumb/wNumb.min.js') }}"></script>
     <script src="{{ URL::asset('assets/js/pages/product-filter-range.init.js') }}"></script>
     <script src="{{ URL::asset('assets/js/app.js') }}"></script>
+    <script>
+    $(document).ready(function() {
+        // Set the CSRF token for all AJAX requests
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $('.add-to-cart-btn').click(function(e) {
+            e.preventDefault(); // Prevent default form submission
+
+            // Get the product ID from the data attribute
+            var productId = $(this).data('product-id');
+            var productPrice = $(this).data('product-price');
+            var quantity = 1;
+            console.log("Clicked 'Add to Cart' button. Product ID:", productId);
+
+            // Send an AJAX request to add the product to the cart
+            $.ajax({
+                url: '/cart/add',
+                method: 'POST',
+                data: {
+                    product_id: productId,
+                    price: productPrice,
+                    quantity: quantity
+                },
+                success: function(response) {
+                    // Handle the successful response, such as displaying a success message or updating the cart UI
+                    console.log('Item added to cart successfully!');
+                },
+                error: function(xhr, status, error) {
+                    // Handle any errors that occur during the AJAX request
+                    console.log('Error adding item to cart:', error);
+                }
+            });
+        });
+    });
+    </script>
 @endsection

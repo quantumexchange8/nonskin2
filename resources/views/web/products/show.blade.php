@@ -115,7 +115,8 @@
                                 <div class="row text-center mt-3">
                                     <div class="col-lg-3 col-sm-6">
                                         <div class="d-grid">
-                                            <button type="button" class="btn btn-primary waves-effect waves-light mt-2 me-1">
+                                            <button class="btn btn-primary waves-effect waves-light mt-2 me-1 add-to-cart-btn"
+                                                    data-product-id="{{ $product->id }}" data-product-price="{{ $product->price }}">
                                                     <i class="bx bx-cart-alt me-2"></i> Add to cart
                                                 </button>
                                         </div>
@@ -279,7 +280,6 @@
     <script src="{{ URL::asset('assets/libs/swiper/swiper.min.js') }}"></script>
     <script src="{{ URL::asset('assets/js/pages/ecommerce-product-detail.init.js') }}"></script>
     <script src="{{ URL::asset('assets/js/app.js') }}"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
             // Get the input field and buttons
@@ -301,5 +301,45 @@
                 quantityInput.val(currentValue + 1);
             });
         });
-        </script>
+    </script>
+    <script>
+        $(document).ready(function() {
+            // Set the CSRF token for all AJAX requests
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $('.add-to-cart-btn').click(function(e) {
+                e.preventDefault(); // Prevent default form submission
+
+                // Get the product ID from the data attribute
+                var productId = $(this).data('product-id');
+                var productPrice = $(this).data('product-price');
+                var quantity = $('#quantity').val();
+                console.log("Clicked 'Add to Cart' button. Product ID:", productId);
+                console.log("Quantity:", quantity);
+
+                // Send an AJAX request to add the product to the cart
+                $.ajax({
+                    url: '/cart/add',
+                    method: 'POST',
+                    data: {
+                        product_id: productId,
+                        price: productPrice,
+                        quantity: quantity
+                    },
+                    success: function(response) {
+                        // Handle the successful response, such as displaying a success message or updating the cart UI
+                        console.log('Item added to cart successfully!');
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle any errors that occur during the AJAX request
+                        console.log('Error adding item to cart:', error);
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

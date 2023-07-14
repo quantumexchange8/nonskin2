@@ -6,6 +6,7 @@ use App\Http\Controllers\MemberController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\CartController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -80,3 +81,6 @@ Route::group(['prefix' => 'manage/products',  'middleware' => 'auth'], function 
     Route::post('/update/{product}', [ProductController::class, 'update'])->name('products.update');                // update
     Route::post('/destroy/{product}', [ProductController::class, 'destroy'])->name('products.destroy');             // destroy
 });
+
+
+Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');

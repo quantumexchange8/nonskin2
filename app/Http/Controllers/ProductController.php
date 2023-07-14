@@ -18,7 +18,7 @@ class ProductController extends Controller
 
     public function index()
     {
-        $products = Product::latest()->get();
+        $products = Product::latest()->where('status', 'Active')->get();
         return view('web.products.index', compact('products'));
     }
 
