@@ -7,6 +7,8 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\Web\Member\Product;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -83,4 +85,4 @@ Route::group(['prefix' => 'manage/products',  'middleware' => 'auth'], function 
 });
 
 
-Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+

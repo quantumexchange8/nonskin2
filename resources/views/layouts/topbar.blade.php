@@ -107,23 +107,23 @@
             <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item noti-icon" id="page-header-notifications-dropdown"
                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="icon-sm" data-feather="bell"></i>
-                <span class="noti-dot bg-danger rounded-pill">3</span>
+                <i class='bx bx-cart' ></i>
+                <span class="noti-dot bg-danger rounded-pill">10</span>
             </button>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
                     aria-labelledby="page-header-notifications-dropdown">
                     <div class="p-3">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h5 class="m-0 font-size-15"> Notifications </h5>
+                                <h5 class="m-0 font-size-15"> Cart </h5>
                             </div>
-                            <div class="col-auto">
+                            {{-- <div class="col-auto">
                                 <a href="#!" class="small"> Mark all as read</a>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                     <div data-simplebar style="max-height: 250px;">
-                        <h6 class="dropdown-header bg-light">New</h6>
+                        <h6 class="dropdown-header bg-light">Recently added products</h6>
                         <a href="" class="text-reset notification-item">
                             <div class="d-flex border-bottom align-items-start">
                                 <div class="flex-shrink-0">
@@ -201,12 +201,12 @@
                 </div>
             </div>
 
-            <div class="dropdown d-none d-sm-inline-block">
+            {{-- <div class="dropdown d-none d-sm-inline-block">
                 <button type="button" class="btn header-item light-dark" id="mode-setting-btn">
                     <i data-feather="moon" class="icon-sm layout-mode-dark"></i>
                     <i data-feather="sun" class="icon-sm layout-mode-light"></i>
                 </button>
-            </div>
+            </div> --}}
 
             <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item user text-start d-flex align-items-center" id="page-header-user-dropdown"

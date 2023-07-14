@@ -318,7 +318,7 @@
                 var productId = $(this).data('product-id');
                 var productPrice = $(this).data('product-price');
                 var quantity = $('#quantity').val();
-                console.log("Clicked 'Add to Cart' button. Product ID:", productId);
+                console.log("Product ID:", productId);
                 console.log("Quantity:", quantity);
 
                 // Send an AJAX request to add the product to the cart
