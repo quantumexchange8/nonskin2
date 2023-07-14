@@ -10,7 +10,7 @@
 @section('content')
     @component('components.breadcrumb')
         @slot('li_1')
-        @lang('translation.Home')
+        Home
         @endslot
         @slot('title')
         Product List
@@ -272,7 +272,7 @@
                                                         <i class="mdi mdi-heart-outline"></i>
                                                     </a>
                                                 </div>
-                                                <a href="{{ route('products.show', $product->id) }}">
+                                                <a href="{{ route('member.product-detail', $product->id) }}">
                                                     <img src="{{ URL::asset('assets/images/nonskin/7.jpg') }}" alt=""
                                                     class="img-fluid mx-auto d-block" style="width: 70% !important;">
                                                 </a>
@@ -280,7 +280,7 @@
                                             <div class="product-content p-4">
                                                 <div class="d-flex justify-content-between align-items-end">
                                                     <div>
-                                                        <h5 class="mb-1"><a href="{{ route('products.show', $product->id) }}"
+                                                        <h5 class="mb-1"><a href="{{ route('member.product-detail', $product->id) }}"
                                                                 class="text-dark font-size-14">{{ Str::limit($product->name_en, 21, '...') }}</a></h5>
                                                         {{-- <p class="text-muted font-size-13">{{ $product->desc_en }}</p> --}}
                                                         <h5 class="mt-3 mb-0 font-size-16">
@@ -695,11 +695,13 @@
             var productId = $(this).data('product-id');
             var productPrice = $(this).data('product-price');
             var quantity = 1;
-            console.log("Clicked 'Add to Cart' button. Product ID:", productId);
+            console.log("Product:", productId);
+            console.log("Price:", productId);
+            console.log("Quantity:", productId);
 
             // Send an AJAX request to add the product to the cart
             $.ajax({
-                url: 'cart/add',
+                url: 'products/cart/add',
                 method: 'POST',
                 data: {
                     product_id: productId,

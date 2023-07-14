@@ -40,29 +40,26 @@
                 </li>
                 @unlessrole('superadmin|admin')
                 <li>
-                    <a href="#">
+                    <a href="{{ route('member.announcement') }}">
                         <i class="bx bxs-volume-full icon nav-icon"></i>
-                        <span class="menu-item" data-key="t-dashboards">Announcement</span>
+                        <span class="menu-item" data-key="t-announcement">Announcement</span>
                         <span class="badge rounded-pill bg-danger">@lang('translation.5+')</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="{{ route('member.commission') }}">
                         <i class="bx bxs-dollar-circle icon nav-icon"></i>
-                        <span class="menu-item" data-key="t-multi-level">Commission</span>
+                        <span class="menu-item" data-key="t-commission">Commission</span>
                     </a>
                 </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bx bxs-package icon nav-icon"></i>
-                        <span class="menu-item" data-key="t-ecommerce">Products</span>
+                        <span class="menu-item">Products</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         {{-- <li><a href="../ecommerce-shops" data-key="t-shops">@lang('translation.Shops')</a></li> --}}
-                        <li><a href="{{ route('products.index') }}" data-key="t-products">@lang('translation.Products')</a></li>
-                        <li><a href="../ecommerce-orders" data-key="t-orders">@lang('translation.Orders')</a></li>
-                        <li><a href="../ecommerce-customers" data-key="t-customers">@lang('translation.Customers')</a></li>
-                        <li><a href="../ecommerce-add-product" data-key="t-add-product">@lang('translation.Add_Product')</a></li>
+                        <li><a href="{{ route('member.product-list') }}" data-key="t-product-list">@lang('translation.Products')</a></li>
                     </ul>
                 </li>
                 <li>
@@ -71,8 +68,8 @@
                         <span class="menu-item" data-key="t-multi-level">My Orders</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
-                        <li><a href="javascript: void(0);" data-key="t-level-1.1">Pending</a></li>
-                        <li><a href="javascript: void(0);" data-key="t-level-1.1">History</a></li>
+                        <li><a href="{{ route('member.order-pending') }}" data-key="t-order-pending">Pending</a></li>
+                        <li><a href="{{ route('member.order-history') }}" data-key="t-order-history">History</a></li>
                     </ul>
                 </li>
                 <li>
@@ -81,8 +78,8 @@
                         <span class="menu-item" data-key="t-multi-level">Top Up</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
-                        <li><a href="javascript: void(0);" data-key="t-level-1.1">Pending</a></li>
-                        <li><a href="javascript: void(0);" data-key="t-level-1.1">History</a></li>
+                        <li><a href="{{ route('member.topup-pending') }}" data-key="t-topup-pending">Pending</a></li>
+                        <li><a href="{{ route('member.topup-history') }}" data-key="t-topup-history">History</a></li>
                     </ul>
                 </li>
                 <li>
@@ -91,8 +88,8 @@
                         <span class="menu-item" data-key="t-multi-level">Withdrawal</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
-                        <li><a href="javascript: void(0);" data-key="t-level-1.1">Pending</a></li>
-                        <li><a href="javascript: void(0);" data-key="t-level-1.1">History</a></li>
+                        <li><a href="{{ route('member.withdrawal-pending') }}" data-key="t-withdrawal-pending">Pending</a></li>
+                        <li><a href="{{ route('member.withdrawal-history') }}" data-key="t-withdrawal-history">History</a></li>
                     </ul>
                 </li>
                 <li>
@@ -101,8 +98,8 @@
                         <span class="menu-item" data-key="t-multi-level">Internal Transfer</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
-                        <li><a href="javascript: void(0);" data-key="t-level-1.1">New Internal Transfer</a></li>
-                        <li><a href="javascript: void(0);" data-key="t-level-1.1">History</a></li>
+                        <li><a href="{{ route('member.internal-transfer-new') }}" data-key="t-internal-transfer-new">New Internal Transfer</a></li>
+                        <li><a href="{{ route('member.internal-transfer-history') }}" data-key="t-internal-transfer-history">History</a></li>
                     </ul>
                 </li>
                 <li>
@@ -111,8 +108,8 @@
                         <span class="menu-item" data-key="t-multi-level">Member</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
-                        <li><a href="javascript: void(0);" data-key="t-level-1.1">Network</a></li>
-                        <li><a href="javascript: void(0);" data-key="t-level-1.1">Tree</a></li>
+                        <li><a href="{{ route('member.member-network') }}" data-key="t-member-network">Network</a></li>
+                        <li><a href="{{ route('member.member-tree') }}" data-key="t-member-tree">Tree</a></li>
                     </ul>
                 </li>
                 <li>
@@ -121,11 +118,11 @@
                         <span class="menu-item" data-key="t-multi-level">Report</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
-                        <li><a href="javascript: void(0);" data-key="t-level-1.1">Downline Sales</a></li>
-                        <li><a href="javascript: void(0);" data-key="t-level-1.1">Sales</a></li>
-                        <li><a href="javascript: void(0);" data-key="t-level-1.1">Leadership</a></li>
-                        <li><a href="javascript: void(0);" data-key="t-level-1.1">Levelling</a></li>
-                        <li><a href="javascript: void(0);" data-key="t-level-1.1">Wallet</a></li>
+                        <li><a href="{{ route('member.report-downline-sales') }}" data-key="t-report-downline-sales">Downline Sales</a></li>
+                        <li><a href="{{ route('member.report-sales') }}" data-key="t-report-sales">Sales</a></li>
+                        <li><a href="{{ route('member.report-leadership') }}" data-key="t-report-leadership">Leadership</a></li>
+                        <li><a href="{{ route('member.report-levelling') }}" data-key="t-report-levelling">Levelling</a></li>
+                        <li><a href="{{ route('member.report-wallet') }}" data-key="t-report-wallet">Wallet</a></li>
                     </ul>
                 </li>
                 @endunlessrole
