@@ -196,7 +196,7 @@
                         <li><a href="invoices-detail" data-key="t-invoice-detail">@lang('translation.Invoice_Detail')</a></li>
                     </ul>
                 </li> --}}
-                @hasanyrole('superadmin|admin')
+                @hasanyrole('superadmin')
                 <li class="menu-title" data-key="">Settings</li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">

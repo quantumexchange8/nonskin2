@@ -17,8 +17,6 @@
         @endslot
     @endcomponent
 
-    @include('admin.products.modal-update-product')
-
     <div class="row">
         {{-- <div class="col-xl-3 col-lg-4">
             <div class="card">
@@ -275,7 +273,7 @@
                                                     </a>
                                                 </div>
                                                 <a href="{{ route('products.show', $product->id) }}">
-                                                    <img src="{{ URL::asset('assets/images/nonskin/7.jpg') }}" alt=""
+                                                    <img src="images/{{ $product->image_1 }}" alt=""
                                                     class="img-fluid mx-auto d-block" style="width: 70% !important;">
                                                 </a>
                                             </div>

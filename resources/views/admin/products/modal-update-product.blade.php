@@ -9,7 +9,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('products.store') }}" method="post">
+                <form action="{{ route('products.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="col-lg-12">
@@ -40,36 +40,14 @@
                                             <div class="row">
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
-                                                        <label class="form-label" for="name-en">Product Name (EN)</label>
-                                                        <input id="name-en" name="name_en" placeholder="Enter Product Name" type="text" class="form-control">
+                                                        <label class="form-label required" for="code">Product Code</label>
+                                                        <input id="code" name="code" placeholder="e.g Br2" type="text" class="form-control">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
-                                                        <label class="form-label" for="name-cn">Product Name (CN)</label>
-                                                        <input id="name-cn" name="name_cn" placeholder="Enter Product Name" type="text" class="form-control">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-lg-6">
-                                                    <div class="mb-3">
-                                                        <label class="form-label" for="desc-en">Description (EN)</label>
-                                                        <textarea class="form-control" id="desc_en" placeholder="Enter English Description" rows="4"></textarea>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6">
-                                                    <div class="mb-3">
-                                                        <label class="form-label" for="desc-cn">Description (CN)</label>
-                                                        <textarea class="form-control" name="desc_cn" id="desc-cn" placeholder="Enter Chinese Description" rows="4"></textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-lg-4">
-                                                    <div class="mb-3">
-                                                        <label for="choices-single-default" class="form-label">Category</label>
-                                                        <select class="form-control" name="category_id"
+                                                        <label for="choices-single-default" class="form-label required">Category</label>
+                                                        <select class="form-select" name="category_id"
                                                             id="category">
                                                             <option value="{{ null }}">Select Category</option>
                                                             <option value="1">Retail Products</option>
@@ -78,15 +56,54 @@
                                                         </select>
                                                     </div>
                                                 </div>
+                                                <div class="col-lg-6">
+                                                    <div class="mb-3">
+                                                        <label class="form-label required" for="name-en">Product Name (EN)</label>
+                                                        <input id="name-en" name="name_en" placeholder="Enter Product Name" type="text" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="mb-3">
+                                                        <label class="form-label required" for="name-cn">Product Name (CN)</label>
+                                                        <input id="name-cn" name="name_cn" placeholder="Enter Product Name" type="text" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="mb-3">
+                                                        <label class="form-label required" for="desc-en">Description (EN)</label>
+                                                        <textarea class="form-control" name="desc_en" id="desc_en" placeholder="Enter English Description" rows="4"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="mb-3">
+                                                        <label class="form-label required" for="desc-cn">Description (CN)</label>
+                                                        <textarea class="form-control" name="desc_cn" id="desc-cn" placeholder="Enter Chinese Description" rows="4"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
                                                 <div class="col-lg-4">
                                                     <div class="mb-3">
-                                                        <label class="form-label" for="shipping_quantity">Shipping Quantity</label>
+                                                        <label for="choices-single-default" class="form-label required">Status</label>
+                                                        <select class="form-select" name="status"
+                                                            id="category">
+                                                            <option value="{{ null }}">Select Category</option>
+                                                            <option selected value="Active">Active</option>
+                                                            <option value="Inactive">Inactive</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="mb-3">
+                                                        <label class="form-label required" for="shipping_quantity">Shipping Quantity</label>
                                                         <input id="shipping_quantity" name="shipping_quantity" placeholder="e.g. 2" type="number" class="form-control">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-4">
                                                     <div class="mb-3">
-                                                        <label class="form-label" for="price">Price</label>
+                                                        <label class="form-label required" for="price">Price</label>
                                                         <div class="input-group">
                                                             <div class="input-group-text">RM</div>
                                                             <input id="price" name="price" placeholder="e.g. 388.50" type="number" class="form-control">
@@ -122,7 +139,7 @@
                                         <div class="p-4 border-top">
                                             <div class="mt-4 mt-xl-0">
                                                 <div class="mt-4">
-                                                    <label for="formFile" class="form-label">Upload Main Image</label>
+                                                    <label for="formFile" class="form-label required">Upload Main Image</label>
                                                     <input name="image_1" class="form-control" type="file" id="formFile">
                                                 </div>
                                             </div>

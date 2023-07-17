@@ -40,11 +40,10 @@ class UserController extends Controller
         return view('member.order_pending');
     }
     public function productList() {
-        $products = Product::latest()->where('status', 'Active')->get();
-        return view('member.product_list', compact('products'));
+        // ProductController
     }
-    public function productDetail(Product $product) {
-        return view('member.product_detail', compact('product'));
+    public function productDetail() {
+        // ProductController
     }
     public function reportDownlineSales() {
         return view('member.report_downline_sales');

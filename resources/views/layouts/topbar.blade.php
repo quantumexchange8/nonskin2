@@ -105,11 +105,13 @@
 
 
             <div class="dropdown d-inline-block">
-                <button class="btn header-item noti-icon" id="page-header-notifications-dropdown"
-                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class='bx bx-cart' ></i>
-                    <span class="noti-dot bg-danger rounded-pill">10</span>
-                </button>
+                @unlessrole('superadmin|admin')
+                    <button class="btn header-item noti-icon" id="page-header-notifications-dropdown"
+                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class='bx bx-cart' ></i>
+                        <span class="noti-dot bg-danger rounded-pill">10</span>
+                    </button>
+                @endunlessrole
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
                     aria-labelledby="page-header-notifications-dropdown">
                     <div class="p-3">

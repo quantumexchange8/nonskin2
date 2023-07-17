@@ -273,7 +273,7 @@
                                                     </a>
                                                 </div>
                                                 <a href="{{ route('member.product-detail', $product->id) }}">
-                                                    <img src="{{ URL::asset('assets/images/nonskin/7.jpg') }}" alt=""
+                                                    <img src="{{ asset('images/'.$product->image_1) }}" alt=""
                                                     class="img-fluid mx-auto d-block" style="width: 70% !important;">
                                                 </a>
                                             </div>
