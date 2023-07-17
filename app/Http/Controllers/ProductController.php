@@ -24,8 +24,8 @@ class ProductController extends Controller
 
     public function list()
     {
-        $products = Product::latest()->get();
-        return view('admin.products.list');
+        $products = Product::all();
+        return view('admin.products.list', ['products' => $products]);
     }
 
     public function create()
