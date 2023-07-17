@@ -17,7 +17,7 @@
         @endslot
     @endcomponent
 
-    @include('web.admin.products.modal-update-product')
+    @include('admin.products.modal-update-product')
 
     <div class="row">
         {{-- <div class="col-xl-3 col-lg-4">

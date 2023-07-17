@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="{{ URL::asset('assets/libs/gridjs/gridjs.min.css') }}">
 @endsection
 
-@include('web.admin.products.modal-update-product')
+@include('admin.products.modal-update-product')
 
     <div class="col-xl-12 col-lg-8">
         <div class="card">

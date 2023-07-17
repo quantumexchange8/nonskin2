@@ -25,7 +25,7 @@ class ProductController extends Controller
     public function list()
     {
         $products = Product::latest()->get();
-        return view('web.admin.products.list');
+        return view('admin.products.list');
     }
 
     public function create()
@@ -34,6 +34,13 @@ class ProductController extends Controller
     }
 
     public function store(Request $request) {
+        $request->validate([
+            // Validation rules for other fields
+
+            'image_1' => 'required|image|max:2048', // Ensure it's an image file with a maximum size of 2MB
+            'image_2' => 'required|image|max:2048',
+            // Add validation rules for other image fields
+        ]);
         // try {
             Product::create(
                 [

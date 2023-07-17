@@ -123,7 +123,7 @@
                                             <div class="mt-4 mt-xl-0">
                                                 <div class="mt-4">
                                                     <label for="formFile" class="form-label">Upload Main Image</label>
-                                                    <input class="form-control" type="file" id="formFile">
+                                                    <input name="image_1" class="form-control" type="file" id="formFile">
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -131,7 +131,7 @@
                                                     <div class="mt-4 mt-xl-0">
                                                         <div class="mt-4">
                                                             <label for="formFile" class="form-label">Upload Image 2</label>
-                                                            <input class="form-control" type="file" id="formFile">
+                                                            <input name="image_2" class="form-control" type="file" id="formFile">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -139,7 +139,7 @@
                                                     <div class="mt-4 mt-xl-0">
                                                         <div class="mt-4">
                                                             <label for="formFile" class="form-label">Upload Image 3</label>
-                                                            <input class="form-control" type="file" id="formFile">
+                                                            <input name="image_3" class="form-control" type="file" id="formFile">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -147,7 +147,7 @@
                                                     <div class="mt-4 mt-xl-0">
                                                         <div class="mt-4">
                                                             <label for="formFile" class="form-label">Upload Image 4</label>
-                                                            <input class="form-control" type="file" id="formFile">
+                                                            <input name="image_4" class="form-control" type="file" id="formFile">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -155,7 +155,7 @@
                                                     <div class="mt-4 mt-xl-0">
                                                         <div class="mt-4">
                                                             <label for="formFile" class="form-label">Upload Image 5</label>
-                                                            <input class="form-control" type="file" id="formFile">
+                                                            <input name="image_5" class="form-control" type="file" id="formFile">
                                                         </div>
                                                     </div>
                                                 </div>
