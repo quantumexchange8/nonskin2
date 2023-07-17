@@ -24,7 +24,7 @@ class ProductController extends Controller
 
     public function list()
     {
-        $products = Product::all();
+        $products = Product::with('category')->get();
         return view('admin.products.list', ['products' => $products]);
     }
 

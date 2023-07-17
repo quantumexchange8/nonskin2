@@ -48,29 +48,40 @@
 <script src="{{ URL::asset('assets/js/app.js') }}"></script>
 
 <script>
+    var products = {!! $products->map(function($product) {
+        $formattedPrice = number_format($product->price, 2);
+        $formattedPriceWithCurrency = 'RM ' . $formattedPrice;
+        $actionButton = '';
+        return [
+            $product->code,
+            $product->name_en,
+            $product->category->name_en,
+            $product->shipping_quantity,
+            $formattedPriceWithCurrency,
+            $product->image,
+            $product->status,
+            $actionButton,
+        ];
+    })->toJson() !!};
+
     (function() {
-        var products = {!! json_encode($products) !!};
         var __webpack_exports__ = {};
+
         // Basic Table
         new gridjs.Grid({
             columns: ["Product Code", "Product Name", "Category", "Shipping Quantity", "Price", "Image",
-                "Action"
+                "Status", "Action"
             ],
             pagination: {
                 limit: 5
             },
             sort: true,
             search: true,
-            data: products.map(product => [
-                product.code,
-                product.name,
-                product.category,
-                product.shipping_quantity,
-                product.price,
-                product.image,
-                "Action" // Replace this with the appropriate action for each row
-            ])
+            data: products,
         }).render(document.getElementById("table-product-list"));
     })();
 </script>
+
+
+
 @endsection
