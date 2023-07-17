@@ -17,4 +17,12 @@ class Cart extends Model
         'created_by',
         'updated_by'
     ];
+
+    public function product() {
+        return $this->belongsTo(Product::class);
+    }
+
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
 }

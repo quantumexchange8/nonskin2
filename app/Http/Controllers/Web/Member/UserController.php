@@ -16,7 +16,12 @@ class UserController extends Controller
         return view('member.announcement');
     }
     public function checkout() {
-        return view('member.checkout');
+        $carts = Cart::with('user', 'product')
+        ->where('user_id', Auth::id())
+        ->latest()
+        ->get();
+        // dd($carts);
+        return view('member.checkout', compact('carts'));
     }
     public function commission() {
         return view('member.commission');

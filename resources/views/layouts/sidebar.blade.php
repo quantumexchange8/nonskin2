@@ -60,6 +60,7 @@
                     <ul class="sub-menu" aria-expanded="false">
                         {{-- <li><a href="../ecommerce-shops" data-key="t-shops">@lang('translation.Shops')</a></li> --}}
                         <li><a href="{{ route('member.product-list') }}" data-key="t-product-list">List</a></li>
+                        <li><a href="{{ route('member.checkout') }}" data-key="t-checkout">Checkout</a></li>
                     </ul>
                 </li>
                 <li>
