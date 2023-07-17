@@ -130,6 +130,17 @@
                 <li class="menu-title" data-key="t-applications">Administration</li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
+                        <i class="bx bx-share-alt icon nav-icon"></i>
+                        <span class="menu-item" data-key="t-multi-level">Member</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="true">
+                        <li><a href="{{ route('admin.member-list') }}" data-key="t-member-list">List</a></li>
+                        {{-- <li><a href="{{ route('member.member-network') }}" data-key="t-member-network">Network</a></li> --}}
+                        {{-- <li><a href="{{ route('member.member-tree') }}" data-key="t-member-tree">Tree</a></li> --}}
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
                         <i class="bx bxs-package icon nav-icon"></i>
                         <span class="menu-item" data-key="t-ecommerce">Products</span>
                     </a>
@@ -165,7 +176,7 @@
                     </ul>
                 </li>
                 @endhasanyrole
-                @hasanyrole('superadmin|admin')
+                @hasanyrole('superadmin')
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bx bx-store icon nav-icon"></i>

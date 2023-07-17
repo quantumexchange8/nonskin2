@@ -7,7 +7,6 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CartController;
-use App\Http\Controllers\Web\Member\Product;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,19 +54,6 @@ Route::group(['prefix' => 'manage/members',  'middleware' => 'auth'], function (
     Route::post('/', [MemberController::class, 'store'])->name('members.store');                                    // store
     Route::post('/update/{customer}', [MemberController::class, 'update'])->name('members.update');                 // update
     Route::post('/destroy/{customer}', [MemberController::class, 'destroy'])->name('members.destroy');              // destroy
-});
-/**
- * CUSTOMERS
- */
-Route::group(['prefix' => 'manage/customers',  'middleware' => 'auth'], function () {
-    Route::get('/', [CustomerController::class, 'index'])->name('customers.index');                                 // customer Index
-    Route::get('/create', [CustomerController::class, 'create'])->name('customers.create');                         // customer CREATE
-    Route::get('/delete/{customer}', [CustomerController::class, 'delete'])->name('customers.delete');              // customer DELETE
-    Route::get('/show/{customer}', [CustomerController::class, 'show'])->name('customers.show');                    // customer SHOW
-    Route::get('/edit/{customer}', [CustomerController::class, 'edit'])->name('customers.edit');                    // customer EDIT
-    Route::post('/', [CustomerController::class, 'store'])->name('customers.store');                                // store
-    Route::post('/update/{customer}', [CustomerController::class, 'update'])->name('customers.update');             // update
-    Route::post('/destroy/{customer}', [CustomerController::class, 'destroy'])->name('customers.destroy');          // destroy
 });
 /**
  * PRODUCTS

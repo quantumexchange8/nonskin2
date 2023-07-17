@@ -1,15 +1,15 @@
 @extends('layouts.master')
 @section('title')
-    Product List
+    Member List
 @endsection
 
 @section('content')
     @component('components.breadcrumb')
         @slot('li_1')
-            Products
+            Home
         @endslot
         @slot('title')
-            Product List
+            Member List
         @endslot
     @endcomponent
 
@@ -17,18 +17,16 @@
     <link rel="stylesheet" href="{{ URL::asset('assets/libs/gridjs/gridjs.min.css') }}">
 @endsection
 
-@include('admin.products.modal-update-product')
-
 <div class="col-xl-12 col-lg-8">
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
                     <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal"
-                        data-bs-target=".modal-update-product"><i class='bx bx-plus-circle'></i> Add Product</button>
+                        data-bs-target=".modal-update-member"><i class='bx bx-plus-circle'></i> Add member</button>
                 </div>
                 <div class="card-body">
-                    <div id="table-product-list"></div>
+                    <div id="table-member-list"></div>
                 </div>
             </div>
         </div>
@@ -42,18 +40,16 @@
 <script src="{{ URL::asset('assets/js/app.js') }}"></script>
 
 <script>
-    var products = {!! $products->map(function ($product) {
-            $formattedPrice = number_format($product->price, 2);
-            $formattedPriceWithCurrency = 'RM ' . $formattedPrice;
-
+    var members = {!! $members->map(function ($member) {
             return [
-                $product->code,
-                $product->name_en,
-                $product->category->name_en,
-                $product->shipping_quantity,
-                $formattedPriceWithCurrency,
-                $product->image,
-                $product->status,
+                $member->referral ?? '-N/A-',
+                $member->name,
+                $member->email,
+                $member->ranking_name,
+                $member->city,
+                $member->postcode,
+                $member->state,
+                `{{ formatDate($member->created_at) }}`, // Format the date as dd/mm/yyyy
             ];
         })->toJson() !!};
 
@@ -62,13 +58,15 @@
 
         // Basic Table
         new gridjs.Grid({
-            columns: ["Product Code",
-                "Product Name",
-                "Category",
-                "Shipping Quantity",
-                "Price",
-                "Image",
-                "Status",
+            columns: [
+                "Referral",
+                "Name",
+                "Email",
+                "Ranking",
+                "City",
+                "Postcode",
+                "State",
+                "Joined Date",
                 "Action"
             ],
             pagination: {
@@ -76,8 +74,17 @@
             },
             sort: true,
             search: true,
-            data: products,
-        }).render(document.getElementById("table-product-list"));
+            data: members,
+        }).render(document.getElementById("table-member-list"));
     })();
 </script>
+
+@php
+function formatDate($dateString) {
+    return date('d/m/Y', strtotime($dateString));
+}
+@endphp
+
+
+
 @endsection
