@@ -69,12 +69,12 @@ class ShippingChargeSeeder extends Seeder
             'created_by' => 1,
         ],
         [
-            'name' => 'WP. Kuala Lumpur',
+            'name' => 'WP Kuala Lumpur',
             'amount' => 0,
             'created_by' => 1,
         ],
         [
-            'name' => 'WP. Labuan',
+            'name' => 'WP Labuan',
             'amount' => 0,
             'created_by' => 1,
         ],
