@@ -9,7 +9,9 @@ use App\Models\User;
 class UserController extends Controller
 {
     public function memberList(){
-        $members = User::where('role', 'user')->get();
+        $members = User::where('role', 'user')
+        ->orWhere('role', 'admin')
+        ->get();
         // dd($members);
         return view('admin.members.list', compact('members'));
     }

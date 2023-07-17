@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="{{ URL::asset('assets/libs/gridjs/gridjs.min.css') }}">
 @endsection
 
+@include('admin.members.modal-update-member')
+
 <div class="col-xl-12 col-lg-8">
     <div class="row">
         <div class="col-lg-12">
@@ -43,13 +45,14 @@
     var members = {!! $members->map(function ($member) {
             return [
                 $member->referral ?? '-N/A-',
+                $member->referrer ?? '-N/A-',
                 $member->name,
                 $member->email,
                 $member->ranking_name,
                 $member->city,
                 $member->postcode,
                 $member->state,
-                `{{ formatDate($member->created_at) }}`, // Format the date as dd/mm/yyyy
+                formatDate($member->created_at), // Format the date as dd/mm/yyyy
             ];
         })->toJson() !!};
 
@@ -60,6 +63,7 @@
         new gridjs.Grid({
             columns: [
                 "Referral",
+                "Referrer",
                 "Name",
                 "Email",
                 "Ranking",

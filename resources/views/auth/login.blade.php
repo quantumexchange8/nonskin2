@@ -4,6 +4,8 @@
 
 @section('content')
 
+@include('modals.create-member')
+
 <div class="authentication-bg min-vh-100">
     <div class="bg-overlay"></div>
     <div class="container">
@@ -95,7 +97,8 @@
                                     </div> --}}
 
                                     <div class="mt-4 text-center">
-                                        <p class="mb-0">Do not have an account ? <a href="{{ url('register') }}" class="fw-medium text-primary"> Signup
+                                        <p class="mb-0">Do not have an account ? <a href="" data-bs-toggle="modal"
+                                            data-bs-target=".modal-update-member" class="fw-medium text-primary"> Signup
                                                 now </a> </p>
                                     </div>
                                 </form>
@@ -123,4 +126,17 @@
     </div><!-- end container -->
 </div>
 
+@endsection
+
+@section('script')
+    <script src="{{ URL::asset('assets/js/pages/modal.init.js') }}"></script>
+    <script>
+        var myModal = document.getElementById('myModal')
+        var myInput = document.getElementById('myInput')
+
+        myModal.addEventListener('shown.bs.modal', function () {
+        myInput.focus()
+        })
+    </script>
+    <script src="{{ URL::asset('assets/js/app.js') }}"></script>
 @endsection

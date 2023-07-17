@@ -65,7 +65,7 @@
             columns: ["Product Code",
                 "Product Name",
                 "Category",
-                "Shipping Quantity",
+                "Shipping Qty.",
                 "Price",
                 "Image",
                 "Status",

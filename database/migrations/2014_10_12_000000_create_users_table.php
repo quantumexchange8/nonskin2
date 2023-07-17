@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('referrer')->nullable();
             $table->string('hierarchyList')->nullable();
             $table->string('username')->nullable()->unique();
+            $table->string('contact')->nullable()->unique();
             $table->string('email')->unique();
             $table->string('name');
             $table->timestamp('email_verified_at')->nullable();

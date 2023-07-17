@@ -18,6 +18,7 @@ class AdminSeeder extends Seeder
         User::create(
         [
             'name'          =>'default',
+            'contact'       => null,
             'email'         =>'default@currenttech',
             'avatar'        => '',
             'password'      =>Hash::make('defaultsecret'),
@@ -30,6 +31,7 @@ class AdminSeeder extends Seeder
         User::create(
         [
             'name'          =>'Superadmin',
+            'contact'       =>null,
             'email'         =>'superadmin@currenttech',
             'avatar'        => '',
             'password'      =>Hash::make('secret'),
@@ -43,6 +45,7 @@ class AdminSeeder extends Seeder
         User::create(
         [
             'name'          =>'Admin',
+            'contact'       =>null,
             'email'         =>'admin@nonskin',
             'avatar'        => '',
             'password'      =>Hash::make('admin'),
@@ -56,6 +59,7 @@ class AdminSeeder extends Seeder
         User::create(
         [
             'name'          =>'Chief Distributor',
+            'contact'       =>'01122223333',
             'email'         =>'chief@nonskin',
             'avatar'        => '',
             'password'      =>Hash::make('secret'),
@@ -70,6 +74,7 @@ class AdminSeeder extends Seeder
         User::create(
         [
             'name'          =>'Exclusive Distributor',
+            'contact'       =>'0108888777',
             'email'         =>'exclusive@nonskin',
             'avatar'        => '',
             'password'      =>Hash::make('secret'),
@@ -84,6 +89,7 @@ class AdminSeeder extends Seeder
         User::create(
         [
             'name'          =>'General Distributor',
+            'contact'       =>'0116668888',
             'email'         =>'general@nonskin',
             'avatar'        => '',
             'password'      =>Hash::make('secret'),
@@ -98,6 +104,7 @@ class AdminSeeder extends Seeder
         User::create(
         [
             'name'          =>'Member',
+            'contact'       =>'01055668989',
             'email'         =>'member@nonskin',
             'avatar'        => '',
             'password'      =>Hash::make('secret'),
@@ -112,6 +119,7 @@ class AdminSeeder extends Seeder
         User::create(
         [
             'name'          =>'User',
+            'contact'       =>'01147478888',
             'email'         =>'nonmember@nonskin',
             'avatar'        => '',
             'password'      =>Hash::make('secret'),

@@ -36,7 +36,7 @@
 
                                     <div class="mb-3">
                                         <label class="form-label" for="referral">Referral (Optional)</label>
-                                        <input type="text" class="form-control @error('referral') is-invalid @enderror" id="referral" value="{{ old('referral') }}" name="referral" placeholder="e.g: NON000100" autofocus>
+                                        <input type="text" class="form-control @error('referral') is-invalid @enderror" id="referral" value="{{ old('referral') }}" name="referral" placeholder="e.g. NON000100" autofocus>
                                         @error('referral')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -46,7 +46,7 @@
 
                                     <div class="mb-3">
                                         <label class="form-label required" for="userfull_name">Full Name</label>
-                                        <input type="text" class="form-control @error('full_name') is-invalid @enderror" id="userfull_name" value="{{ old('full_name') }}" name="full_name" placeholder="e.g: john.doe@yahoo.com" autofocus>
+                                        <input type="text" class="form-control @error('full_name') is-invalid @enderror" id="userfull_name" value="{{ old('full_name') }}" name="full_name" placeholder="e.g. John Lee Doe" autofocus>
                                         @error('full_name')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -56,7 +56,7 @@
 
                                     <div class="mb-3">
                                         <label class="form-label required" for="userid_no">Identification / Passport No.</label>
-                                        <input type="text" class="form-control @error('id_no') is-invalid @enderror" id="userid_no" value="{{ old('id_no') }}" name="id_no" placeholder="e.g: 920102038888" autofocus>
+                                        <input type="text" class="form-control @error('id_no') is-invalid @enderror" id="userid_no" value="{{ old('id_no') }}" name="id_no" placeholder="e.g. 920102038888" autofocus>
                                         @error('id_no')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -66,7 +66,7 @@
 
                                     <div class="mb-3">
                                         <label class="form-label required" for="usercontact">Contact</label>
-                                        <input type="text" class="form-control @error('contact') is-invalid @enderror" id="usercontact" value="{{ old('contact') }}" name="contact" placeholder="e.g: john.doe@yahoo.com" autofocus>
+                                        <input type="text" class="form-control @error('contact') is-invalid @enderror" id="usercontact" value="{{ old('contact') }}" name="contact" placeholder="e.g. 01177778888" autofocus>
                                         @error('contact')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -76,7 +76,7 @@
 
                                     <div class="mb-3">
                                         <label class="form-label required" for="useremail">Email</label>
-                                        <input type="email" class="form-control @error('email') is-invalid @enderror" id="useremail" value="{{ old('email') }}" name="email" placeholder="e.g: john.doe@yahoo.com" autofocus>
+                                        <input type="email" class="form-control @error('email') is-invalid @enderror" id="useremail" value="{{ old('email') }}" name="email" placeholder="e.g. john.doe@yahoo.com" autofocus>
                                         @error('email')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
