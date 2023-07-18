@@ -1,5 +1,3 @@
-<!-- Extra Large modal button -->
-
 <!--  Extra Large modal example -->
 <div class="modal fade modal-update-member" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">

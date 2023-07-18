@@ -1,15 +1,16 @@
-<!-- Extra Large modal button -->
-
-<!--  Extra Large modal example -->
+@php
+use App\Models\State;
+    $states = State::select('id', 'name')->get();
+@endphp
 <div class="modal fade modal-update-member" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="myExtraLargeModalLabel">Registration</h5>
+                <h5 class="modal-title" id="myExtraLargeModalLabel">Add Member</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('members.store') }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('add.member') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="col-lg-12">
@@ -191,6 +192,9 @@
                                                     <div class="mb-3">
                                                         <label class="form-label required" for="city">City</label>
                                                         <input type="text" class="form-control @error('contact') is-invalid @enderror" id="city" value="{{ old('city') }}" name="city" placeholder="e.g. Johor Bahru" autofocus>
+                                                        {{-- <select class="form-select" id="city-dd" class="form-control" name="city" id="city">
+                                                            <option value="">Select City</option>
+                                                        </select> --}}
                                                         @error('city')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
@@ -202,7 +206,13 @@
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
                                                         <label class="form-label required" for="state">State</label>
-                                                        <input type="text" class="form-control @error('contact') is-invalid @enderror" id="state" value="{{ old('state') }}" name="state" placeholder="e.g. Johor" autofocus>
+                                                        {{-- <input type="text" class="form-control @error('contact') is-invalid @enderror" id="state" value="{{ old('state') }}" name="state" placeholder="e.g. Johor" autofocus> --}}
+                                                        <select class="form-select" id="state-dd" class="form-control" name="state" id="state">
+                                                            <option value="">Select State</option>
+                                                            @foreach ($states as $state)
+                                                                <option value="{{ $state->name }}">{{ $state->name }}</option>
+                                                            @endforeach
+                                                        </select>
                                                         @error('contact')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
@@ -224,7 +234,11 @@
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
                                                         <label class="form-label required" for="country">Country</label>
-                                                        <input type="text" class="form-control @error('contact') is-invalid @enderror" id="country" value="{{ old('country') }}" name="country" placeholder="e.g. Johor" autofocus>
+                                                        {{-- <input type="text" class="form-control @error('country') is-invalid @enderror" id="country" value="{{ old('country') }}" name="country" placeholder="e.g. Malaysia" autofocus> --}}
+                                                        <select class="form-select @error('country') is-invalid @enderror" name="country" id="country">
+                                                            <option value="Select Country">Select Country</option>
+                                                            <option selected value="Malaysia">Malaysia</option>
+                                                        </select>
                                                         @error('country')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
@@ -382,6 +396,9 @@
                                                     <div class="mb-3">
                                                         <label class="form-label required" for="delivery_city">City</label>
                                                         <input type="text" class="form-control @error('delivery_city') is-invalid @enderror" id="delivery_city" value="{{ old('delivery_city') }}" name="delivery_city" placeholder="e.g. Johor Bahru" autofocus>
+                                                        {{-- <select class="form-select" id="city-dd" class="form-control">
+                                                            <option value="">Select City</option>
+                                                        </select> --}}
                                                         @error('delivery_city')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
@@ -393,7 +410,13 @@
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
                                                         <label class="form-label required" for="delivery_state">State</label>
-                                                        <input type="text" class="form-control @error('delivery_state') is-invalid @enderror" id="delivery_state" value="{{ old('delivery_state') }}" name="delivery_state" placeholder="e.g. Johor" autofocus>
+                                                        {{-- <input type="text" class="form-control @error('delivery_state') is-invalid @enderror" id="delivery_state" value="{{ old('delivery_state') }}" name="delivery_state" placeholder="e.g. Johor" autofocus> --}}
+                                                        <select class="form-select" id="state-dd" class="form-control" name="delivery_state" id="delivery_state">
+                                                            <option value="">Select State</option>
+                                                            @foreach ($states as $state)
+                                                                <option value="{{ $state->name }}">{{ $state->name }}</option>
+                                                            @endforeach
+                                                        </select>
                                                         @error('delivery_state')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
@@ -414,8 +437,12 @@
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
-                                                        <label class="form-label required" for="country">Country</label>
-                                                        <input type="text" class="form-control @error('contact') is-invalid @enderror" id="country" value="{{ old('country') }}" name="country" placeholder="e.g. Johor" autofocus>
+                                                        <label class="form-label required" for="delivery_country">Country</label>
+                                                        {{-- <input type="text" class="form-control @error('contact') is-invalid @enderror" id="delivery_country" value="{{ old('delivery_country') }}" name="delivery_country" placeholder="e.g. Johor" autofocus> --}}
+                                                        <select class="form-select @error('delivery_country') is-invalid @enderror" name="delivery_country" id="delivery_country">
+                                                            <option value="">Select Country</option>
+                                                            <option selected value="Malaysia">Malaysia</option>
+                                                        </select>
                                                         @error('contact')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
@@ -452,3 +479,4 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+

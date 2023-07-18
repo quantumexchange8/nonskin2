@@ -72,7 +72,7 @@ Route::group(['prefix' => 'manage/products',  'middleware' => 'auth'], function 
     Route::post('/destroy/{product}', [ProductController::class, 'destroy'])->name('products.destroy');             // destroy
 });
 
-Route::post('/add-member', [RegisterController::class, 'create'])->name('add.member');
+Route::post('/add-member', [RegisterController::class, 'store'])->name('add.member');
 
 Route::get('dependent-dropdown', [DropdownController::class, 'index']);
 Route::post('api/fetch-states', [DropdownController::class, 'fetchState']);

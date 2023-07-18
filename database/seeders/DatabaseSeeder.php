@@ -19,8 +19,10 @@ class DatabaseSeeder extends Seeder
         $this->call(CategorySeeder::class);
         $this->call(ProductSeeder::class);
         $this->call(ShippingChargeSeeder::class);
-        $this->call(AdminSeeder::class);
         $this->call(CountrySeeder::class);
         $this->call(StateSeeder::class);
+        $this->call(BankSettingSeeder::class);
+        $this->call(AdminSeeder::class);
+
     }
 }

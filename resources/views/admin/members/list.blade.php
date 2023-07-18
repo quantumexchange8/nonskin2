@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="{{ URL::asset('assets/libs/gridjs/gridjs.min.css') }}">
 @endsection
 
-@include('admin.members.modal-update-member')
+@include('modals.create-member')
 
 <div class="col-xl-12 col-lg-8">
     <div class="row">

@@ -69,10 +69,10 @@ class RegisterController extends Controller
             'state' => ['required', 'string', 'max:2'],
             'country' => ['required', 'string', 'max:3'],
 
-            'bank_name' => ['required', 'string', 'max:255'],
-            'bank_holder_name' => ['required', 'string', 'max:255'],
-            'bank_acc_no' => ['required', 'numeric', 'max:255'],
-            'bank_ic' => ['required', 'string', 'max:255'],
+            'bank_name' => ['required', 'string', 'max:100'],
+            'bank_holder_name' => ['required', 'string', 'max:100'],
+            'bank_acc_no' => ['required', 'numeric', 'max:20'],
+            'bank_ic' => ['required', 'string', 'max:20'],
 
             'delivery_address_1' => ['required', 'string', 'max:255'],
             'delivery_address_2' => ['required', 'string', 'max:255'],
@@ -91,6 +91,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        // dd($data);
         if (request()->has('avatar')) {
             $avatar = request()->file('avatar');
             $avatarName = time() . '.' . $avatar->getClientOriginalExtension();
@@ -128,5 +129,54 @@ class RegisterController extends Controller
             'delivery_state' => $data['delivery_state'],
             'delivery_country' => $data['delivery_country'],
         ]);
+    }
+
+    public function store(Request $request){
+        // if (request()->has('avatar')) {
+        //     $avatar = request()->file('avatar');
+        //     $avatarName = time() . '.' . $avatar->getClientOriginalExtension();
+        //     $avatarPath = public_path('/images/');
+        //     $avatar->move($avatarPath, $avatarName);
+        // }
+
+        $user = User::create([
+            'code'          => $request->code,
+            'email'         => $request->email,
+            'password'      => Hash::make($request->password),
+            // 'avatar'     => "/images/" . $avatarName,
+            'avatar'        => '',
+            'referral'      => $request->referral,
+            'name'          => $request->name,
+            'id_no'         => $request->id_no,
+            'contact'       => $request->contact,
+            'username'      => $request->username,
+            'role_id'       => 4,
+            'role'          =>'user',
+            'ranking_id'    => 5,
+            'ranking_name'  => 'Nonmember',
+
+            'address_1'     => $request->address_1,
+            'address_2'     => $request->address_2,
+            'city'          => $request->city,
+            'postcode'      => $request->postcode,
+            'state'         => $request->state,
+            'country'       => $request->country,
+
+            'bank_name'         => $request->bank_name,
+            'bank_holder_name'  => $request->bank_holder_name,
+            'bank_acc_no'       => $request->bank_acc_no,
+            'bank_ic'           => $request->bank_ic,
+
+            'delivery_address_1'=> $request->delivery_address_1,
+            'delivery_address_2'=> $request->delivery_address_2,
+            'delivery_city'     => $request->delivery_city,
+            'delivery_postcode' => $request->delivery_postcode,
+            'delivery_state'    => $request->delivery_state,
+            'delivery_country'  => $request->delivery_country,
+        ]);
+
+        return redirect()
+                ->route('login')
+                ->with("added", "User successfully created!");
     }
 }
