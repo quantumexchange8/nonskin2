@@ -175,6 +175,8 @@ class RegisterController extends Controller
             'delivery_country'  => $request->delivery_country,
         ]);
 
+        $user->assignRole('user');
+
         return redirect()
                 ->route('login')
                 ->with("added", "User successfully created!");

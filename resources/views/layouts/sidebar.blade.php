@@ -38,31 +38,49 @@
                         <span class="menu-item" data-key="t-dashboards">@lang('translation.Dashboard')</span>
                     </a>
                 </li>
-                @unlessrole('superadmin|admin')
-                <li>
-                    <a href="{{ route('member.announcement') }}">
+                @hasanyrole('user')
+                <li><a href="{{ route('member.announcement') }}">
                         <i class="bx bxs-volume-full icon nav-icon"></i>
                         <span class="menu-item" data-key="t-announcement">Announcement</span>
                         <span class="badge rounded-pill bg-danger">@lang('translation.5+')</span>
                     </a>
                 </li>
+                @endhasanyrole
+                @hasanyrole('superadmin|admin')
                 <li>
-                    <a href="{{ route('member.commission') }}">
-                        <i class="bx bxs-dollar-circle icon nav-icon"></i>
-                        <span class="menu-item" data-key="t-commission">Commission</span>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i class="bx bxs-volume-full icon nav-icon"></i>
+                        <span class="menu-item">Announcement</span>
                     </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('announcements.index') }}">User View</a></li>
+                        <li><a href="{{ route('announcements.list') }}">List</a></li>
+                        <li><a href="{{ route('announcements.create') }}">Add</a></li>
+                    </ul>
                 </li>
+                @endhasanyrole
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bx bxs-package icon nav-icon"></i>
                         <span class="menu-item">Products</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        {{-- <li><a href="../ecommerce-shops" data-key="t-shops">@lang('translation.Shops')</a></li> --}}
+                        @hasanyrole('superadmin|admin')
+                        <li><a href="{{ route('products.list') }}" data-key="t-add-product">Table View</a></li>
+                        @endhasanyrole
                         <li><a href="{{ route('member.product-list') }}" data-key="t-product-list">List</a></li>
                         <li><a href="{{ route('member.checkout') }}" data-key="t-checkout">Checkout</a></li>
                     </ul>
                 </li>
+
+                @unlessrole('superadmin|admin')
+                <li>
+                    <a href="{{ route('member.commission') }}">
+                        <i class="bx bxs-dollar-circle icon nav-icon"></i>
+                        <span class="menu-item" data-key="t-commission">Commission</span>
+                    </a>
+                </li>
+
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bx bxs-truck icon nav-icon"></i>
@@ -140,15 +158,7 @@
                         {{-- <li><a href="{{ route('member.member-tree') }}" data-key="t-member-tree">Tree</a></li> --}}
                     </ul>
                 </li>
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow">
-                        <i class="bx bxs-package icon nav-icon"></i>
-                        <span class="menu-item" data-key="t-ecommerce">Products</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{ route('products.list') }}" data-key="t-add-product">List</a></li>
-                    </ul>
-                </li>
+
                 @endhasanyrole
 
                 {{-- <li>
@@ -198,7 +208,8 @@
                     </ul>
                 </li>
 
-                {{-- <li>
+                @hasanyrole('superadmin')
+                <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bx bx-receipt icon nav-icon"></i>
                         <span class="menu-item" data-key="t-invoices">@lang('translation.Invoices')</span>
@@ -207,8 +218,7 @@
                         <li><a href="invoices-list" data-key="t-invoice-list">@lang('translation.Invoice_List')</a></li>
                         <li><a href="invoices-detail" data-key="t-invoice-detail">@lang('translation.Invoice_Detail')</a></li>
                     </ul>
-                </li> --}}
-                @hasanyrole('superadmin')
+                </li>
                 <li class="menu-title" data-key="">Settings</li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
@@ -227,6 +237,7 @@
                     </ul>
                 </li>
                 @endhasanyrole
+
                 @hasanyrole('superadmin')
                 <li class="menu-title" data-key="t-pages">@lang('translation.Pages')</li>
 

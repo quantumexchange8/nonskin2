@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\Member\UserController;
 use App\Http\Controllers\ProductController;
 
-Route::group(['prefix' => 'member/', 'as' => 'member.',  'middleware' => 'auth', 'middleware' => 'role:user'], function () {
+Route::group(['prefix' => 'member/', 'as' => 'member.',  'middleware' => ['auth', 'role:superadmin|user',]], function () {
     Route::get('announcement', [UserController::class, 'announcement'])->name('announcement');
     Route::get('checkout', [UserController::class, 'checkout'])->name('checkout');
     Route::get('commission', [UserController::class, 'commission'])->name('commission');
