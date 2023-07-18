@@ -69,7 +69,9 @@
                         <li><a href="{{ route('products.list') }}" data-key="t-add-product">Table View</a></li>
                         @endhasanyrole
                         <li><a href="{{ route('member.product-list') }}" data-key="t-product-list">List</a></li>
+                        @hasanyrole('user')
                         <li><a href="{{ route('member.checkout') }}" data-key="t-checkout">Checkout</a></li>
+                        @endhasanyrole
                     </ul>
                 </li>
 
