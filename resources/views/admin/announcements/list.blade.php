@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    Announcement
+    Announcement List
 @endsection
 
 @section('content')
@@ -9,7 +9,7 @@
             Home
         @endslot
         @slot('title')
-            Announcement
+            Announcement List
         @endslot
     @endcomponent
 

@@ -60,4 +60,33 @@ class CartController extends Controller
 
         return response()->json(['message' => 'Item added to cart successfully']);
     }
+
+    public function updateCart(Request $request) {
+        $itemId = $request->input('itemId');
+        $quantity = $request->input('quantity');
+
+        // Update the cart item in the database using the $itemId and $quantity
+
+        return response()->json(['message' => 'Cart updated successfully']);
+    }
+
+    public function updateQty(Request $request) {
+        $itemId = $request->input('itemId');
+        $action = $request->input('action');
+
+        $cart = Cart::find($itemId);
+
+        if ($cart) {
+            if ($action === 'minus') {
+                $cart->quantity--;
+            } elseif ($action === 'plus') {
+                $cart->quantity++;
+            }
+
+            $cart->save();
+        }
+
+        return redirect()->route('cart');
+    }
+
 }

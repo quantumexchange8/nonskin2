@@ -1,11 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Web\Member\UserController;
+use App\Http\Controllers\Member\UserController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CartController;
 
 Route::group(['prefix' => 'member/', 'as' => 'member.',  'middleware' => ['auth', 'role:superadmin|user',]], function () {
     Route::get('announcement', [UserController::class, 'announcement'])->name('announcement');
+    Route::get('cart', [UserController::class, 'cart'])->name('cart');
     Route::get('checkout', [UserController::class, 'checkout'])->name('checkout');
     Route::get('commission', [UserController::class, 'commission'])->name('commission');
     Route::get('internal-transfer-history', [UserController::class, 'internalTransferHistory'])->name('internal-transfer-history');
@@ -26,9 +28,12 @@ Route::group(['prefix' => 'member/', 'as' => 'member.',  'middleware' => ['auth'
     Route::get('withdrawal-history', [UserController::class, 'withdrawalHistory'])->name('withdrawal-history');
     Route::get('withdrawal-pending', [UserController::class, 'withdrawalPending'])->name('withdrawal-pending');
 });
+Route::post('/updateQty/{itemId}/{action}', [CartController::class, 'updateQty'])->name('updateQty');
 
 // AJAX
 Route::group(['prefix' => 'member/',  'middleware' => 'auth', 'middleware' => 'role:user'], function () {
-    Route::post('/products/cart/add', [UserController::class, 'addToCart'])->name('cart.add');
     Route::get('/cart/records', [UserController::class, 'getCartRecords'])->name('cart.fetch');
+    Route::post('/products/cart/add', [UserController::class, 'addToCart'])->name('cart.add');
+    Route::post('/update-cart', [CartController::class, 'updateCart'])->name('cart.update');
+
 });

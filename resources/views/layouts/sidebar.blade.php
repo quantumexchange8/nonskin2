@@ -70,7 +70,7 @@
                         @endhasanyrole
                         <li><a href="{{ route('member.product-list') }}" data-key="t-product-list">List</a></li>
                         @hasanyrole('user')
-                        <li><a href="{{ route('member.checkout') }}" data-key="t-checkout">Checkout</a></li>
+                        <li><a href="{{ route('member.cart') }}" data-key="t-cart">Cart</a></li>
                         @endhasanyrole
                     </ul>
                 </li>

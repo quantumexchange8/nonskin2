@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Web\Member;
+namespace App\Http\Controllers\Member;
 
 use App\Models\Cart;
 use App\Models\Order;
@@ -14,6 +14,20 @@ class UserController extends Controller
 {
     public function announcement() {
         return view('member.announcement');
+    }
+    public function cart() {
+        $carts = Cart::with('user', 'product')
+        ->where('user_id', Auth::id())
+        ->select('user_id', 'product_id', 'quantity', 'price')
+        ->latest()
+        ->get();
+
+        $subtotal = 0;
+        foreach ($carts as $item) {
+            $subtotal += $item->price * $item->quantity;
+        }
+
+        return view('member.cart', compact('carts', 'subtotal'));
     }
     public function checkout() {
         $carts = Cart::with('user', 'product')

@@ -1,10 +1,10 @@
 @extends('layouts.master')
-@section('title') Announcement @endsection
+@section('title') Add Announcement @endsection
 
 @section('content')
     @component('components.breadcrumb')
     @slot('li_1') Home @endslot
-    @slot('title') Create Announcement @endslot
+    @slot('title') Add Announcement @endslot
     @endcomponent
 
 @endsection
