@@ -66,41 +66,43 @@ class CartController extends Controller
     {
         $productId = $request->input('product_id');
         $productPrice = $request->input('price');
-        $quantity = $request->input('quantity');
 
+        // Retrieve the user's cart
         $cart = Cart::where('user_id', Auth::id())->first();
 
+        // If the user doesn't have a cart, create one
         if (!$cart) {
             $cart = Cart::create([
                 'user_id' => Auth::id(),
                 'created_by' => Auth::id(),
-                'created_at' => now(),
                 'updated_by' => Auth::id(),
-                'updated_at' => now(),
             ]);
         }
-        $cart->update([
-            'updated_by' => Auth::id(),
-            'updated_at' => now(),
-        ]);
-        $cart->save();
 
-        // Create a new cart item and associate it with the user's cart
-        $cartItem = CartItem::updateOrCreate(
-            [
+        // Find the cart item for the product
+        $cartItem = CartItem::where('cart_id', $cart->id)
+            ->where('product_id', $productId)
+            ->first();
+
+        // If the cart item already exists, increment the quantity
+        if ($cartItem) {
+            $cartItem->increment('quantity');
+        } else {
+            // Create a new cart item for the product with a quantity of 1
+            CartItem::create([
                 'cart_id' => $cart->id,
                 'product_id' => $productId,
-            ],
-            [
                 'price' => $productPrice,
-                'quantity' => $quantity,
+                'quantity' => 1,
                 'created_by' => Auth::id(),
-            ]
-        );
-        $cartItem->save();
+            ]);
+        }
 
         return response()->json(['message' => 'Item added to cart successfully']);
     }
+
+
+
 
     public function updateCart(Request $request) {
         $itemId = $request->input('itemId');
