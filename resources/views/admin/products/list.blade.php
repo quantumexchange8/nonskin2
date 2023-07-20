@@ -5,12 +5,9 @@
 
 @section('content')
     @component('components.breadcrumb')
-        @slot('li_1')
-            Products
-        @endslot
-        @slot('title')
-            Product List
-        @endslot
+    @slot('url') {{ route('products.list') }} @endslot
+        @slot('li_1') Products @endslot
+        @slot('title') Product List @endslot
     @endcomponent
 
 @section('css')

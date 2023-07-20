@@ -9,12 +9,9 @@
 
 @section('content')
     @component('components.breadcrumb')
-        @slot('li_1')
-            Home
-        @endslot
-        @slot('title')
-            Product List
-        @endslot
+        @slot('url') {{ url('/') }} @endslot
+        @slot('li_1') Home @endslot
+        @slot('title') Product List @endslot
     @endcomponent
 
     <div class="row">

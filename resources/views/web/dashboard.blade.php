@@ -3,8 +3,9 @@
 
 @section('content')
     @component('components.breadcrumb')
+    @slot('url') {{ url('/') }} @endslot
     @slot('li_1') Nonskin @endslot
-    @slot('title') Welcome ! @endslot
+    @slot('title') Dashboard @endslot
     @endcomponent
 
             <div class="row">

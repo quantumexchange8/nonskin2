@@ -7,10 +7,11 @@
 @endsection
 
 @section('content')
-@component('components.breadcrumb')
-@slot('li_1') Ecommerce @endslot
-@slot('title') Add Product @endslot
-@endcomponent
+    @component('components.breadcrumb')
+        @slot('url') {{ url('/') }} @endslot
+        @slot('li_1') Home @endslot
+        @slot('title') Add Product @endslot
+    @endcomponent
 
     <div class="row">
         <div class="col-lg-12">

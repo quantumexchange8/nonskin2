@@ -5,12 +5,9 @@
 
 @section('content')
     @component('components.breadcrumb')
-        @slot('li_1')
-            Home
-        @endslot
-        @slot('title')
-            Member List
-        @endslot
+        @slot('url') {{ url('/') }} @endslot
+        @slot('li_1') Home @endslot
+        @slot('title') Member List @endslot
     @endcomponent
 
 @section('css')

@@ -3,6 +3,7 @@
 
 @section('content')
     @component('components.breadcrumb')
+    @slot('url') {{ url('/') }} @endslot
     @slot('li_1') Home @endslot
     @slot('title') Downline Sales Report @endslot
     @endcomponent

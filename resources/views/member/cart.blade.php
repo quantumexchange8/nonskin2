@@ -3,6 +3,7 @@
 
     @section('content')
     @component('components.breadcrumb')
+    @slot('url') {{ url('/') }} @endslot
     @slot('li_1') Home @endslot
     @slot('title') Cart @endslot
     @endcomponent
@@ -10,6 +11,13 @@
 
             <div class="row">
                 <div class="col-xl-8">
+                    @if(session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <i class="mdi mdi-check-all me-2"></i>
+                        {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    @endif
                     @If(session('error'))
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                         <i class="mdi mdi-block-helper me-2"></i>
@@ -38,7 +46,7 @@
                                         <ul class="list-inline mb-0 font-size-16">
                                                 <!-- Delete button -->
                                             <li class="list-inline-item">
-                                                <button class="btn text-muted px-1" data-bs-toggle="modal" data-bs-target=".cart-remove-item">
+                                                <button class="btn text-muted px-1 font-size-20" data-bs-toggle="modal" data-bs-target=".cart-remove-item">
                                                     <i class="mdi mdi-trash-can-outline"></i>
                                                 </button>
                                                 @include('member.modals.cart-remove-item')
