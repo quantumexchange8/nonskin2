@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Member;
 
 use App\Models\Cart;
+use App\Models\CartItem;
 use App\Models\Order;
 use App\Models\Product;
 use App\Http\Controllers\Controller;
@@ -16,18 +17,21 @@ class UserController extends Controller
         return view('member.announcement');
     }
     public function cart() {
-        $carts = Cart::with('user', 'product')
-        ->where('user_id', Auth::id())
-        ->select('id', 'user_id', 'product_id', 'quantity', 'price')
+        $cartItems = CartItem::with('cart', 'product')
+        ->whereHas('cart', function ($query) {
+            $query->where('user_id', Auth::id());
+        })
         ->latest()
         ->get();
-        // dd($carts);
-        $subtotal = 0;
-        foreach ($carts as $item) {
-            $subtotal += $item->price * $item->quantity;
-        }
 
-        return view('member.cart', compact('carts', 'subtotal'));
+        // dd($cartItems);
+
+        $subtotal = 0;
+        // foreach ($carts as $item) {
+        //     $subtotal += $item->price * $item->quantity;
+        // }
+
+        return view('member.cart', compact('cartItems', 'subtotal'));
     }
     public function checkout() {
         $carts = Cart::with('user', 'product')

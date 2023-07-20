@@ -17,79 +17,82 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                     @endif
-                    @foreach ($carts as $k => $v)
-                    <div class="card border shadow-none">
-                        <div class="card-body">
-                            <div class="d-flex align-items-start border-bottom pb-3">
-                                <div class="me-4">
-                                    <img src="{{ URL::asset('./assets/images/product/img-1.png') }}" alt="" class="avatar-md">
-                                </div>
-                                <div class="flex-grow-1 align-self-center overflow-hidden">
-                                    <div>
-                                        <h5 class="text-truncate font-size-16"><a href="{{ route('member.product-detail', $v->product->id) }}" class="text-dark">{{ $v->product->name_en }}</a></h5>
-                                        {{-- <p class="mb-1">Color : <span class="fw-medium">Gray</span></p>
-                                        <p>Size : <span class="fw-medium">08</span></p> --}}
+                    @foreach ($cartItems as $k => $v)
+                    @php
+                        // dd($v);
+                    @endphp
+                        <div class="card border shadow-none">
+                            <div class="card-body">
+                                <div class="d-flex align-items-start border-bottom pb-3">
+                                    <div class="me-4">
+                                        <img src="{{ URL::asset('./assets/images/product/img-1.png') }}" alt="" class="avatar-md">
                                     </div>
-                                </div>
-                                <div class="flex-shrink-0 ms-2">
-                                    <ul class="list-inline mb-0 font-size-16">
-                                            <!-- Delete button -->
-                                        <li class="list-inline-item">
-                                            <button class="btn text-muted px-1" data-bs-toggle="modal" data-bs-target=".cart-remove-item">
-                                                <i class="mdi mdi-trash-can-outline"></i>
-                                            </button>
-                                            @include('member.modals.cart-remove-item')
-                                        </li>
-                                        <!-- Like button -->
-                                        {{-- <li class="list-inline-item">
-                                            <a href="#" class="text-muted px-1">
-                                                <i class="mdi mdi-heart-outline"></i>
-                                            </a>
-                                        </li> --}}
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="mt-3">
-                                            <p class="text-muted mb-2">Price</p>
-                                            <h5 class="font-size-16">RM {{ number_format($v->price,2,'.',',') }}</h5>
+                                    <div class="flex-grow-1 align-self-center overflow-hidden">
+                                        <div>
+                                            <h5 class="text-truncate font-size-16"><a href="{{ route('member.product-detail', $v->product->id) }}" class="text-dark">{{ $v->product->name_en }}</a></h5>
+                                            {{-- <p class="mb-1">Color : <span class="fw-medium">Gray</span></p>
+                                            <p>Size : <span class="fw-medium">08</span></p> --}}
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="mt-3">
-                                            <p class="text-muted mb-2">Quantity</p>
-                                            <div class="d-inline-flex">
-                                                <div class="input-group">
-                                                    {{-- <form action="{{ route('updateQty', ['itemId' => $v->id, 'action' => 'minus']) }}" method="POST" class="update-quantity-form"> --}}
-                                                        @csrf
-                                                        <button type="submit" class="btn btn-light btn-sm minus-btn">
-                                                            <i class="bx bx-minus"></i>
-                                                        </button>
-                                                    {{-- </form> --}}
-                                                    <input type="text" class="form-control quantity-input" name="quantity" value="{{ $v->quantity }}">
-                                                    {{-- <form action="{{ route('updateQty', ['itemId' => $v->id, 'action' => 'plus']) }}" method="POST" class="update-quantity-form"> --}}
-                                                        @csrf
-                                                        <button type="submit" class="btn btn-light btn-sm plus-btn">
-                                                            <i class="bx bx-plus"></i>
-                                                        </button>
-                                                    {{-- </form> --}}
+                                    <div class="flex-shrink-0 ms-2">
+                                        <ul class="list-inline mb-0 font-size-16">
+                                                <!-- Delete button -->
+                                            <li class="list-inline-item">
+                                                <button class="btn text-muted px-1" data-bs-toggle="modal" data-bs-target=".cart-remove-item">
+                                                    <i class="mdi mdi-trash-can-outline"></i>
+                                                </button>
+                                                @include('member.modals.cart-remove-item')
+                                            </li>
+                                            <!-- Like button -->
+                                            {{-- <li class="list-inline-item">
+                                                <a href="#" class="text-muted px-1">
+                                                    <i class="mdi mdi-heart-outline"></i>
+                                                </a>
+                                            </li> --}}
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="mt-3">
+                                                <p class="text-muted mb-2">Price</p>
+                                                <h5 class="font-size-16">RM {{ number_format($v->product->price,2,'.',',') }}</h5>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="mt-3">
+                                                <p class="text-muted mb-2">Quantity</p>
+                                                <div class="d-inline-flex">
+                                                    <div class="input-group">
+                                                        {{-- <form action="{{ route('updateQty', ['itemId' => $v->id, 'action' => 'minus']) }}" method="POST" class="update-quantity-form"> --}}
+                                                            @csrf
+                                                            <button type="submit" class="btn btn-light btn-sm minus-btn">
+                                                                <i class="bx bx-minus"></i>
+                                                            </button>
+                                                        {{-- </form> --}}
+                                                        <input type="text" class="form-control quantity-input" name="quantity" value="{{ $v->quantity }}">
+                                                        {{-- <form action="{{ route('updateQty', ['itemId' => $v->id, 'action' => 'plus']) }}" method="POST" class="update-quantity-form"> --}}
+                                                            @csrf
+                                                            <button type="submit" class="btn btn-light btn-sm plus-btn">
+                                                                <i class="bx bx-plus"></i>
+                                                            </button>
+                                                        {{-- </form> --}}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="mt-3">
-                                            <p class="text-muted mb-2">Total</p>
-                                            <h5 class="font-size-16">RM {{ number_format($v->price*$v->quantity,2,'.',',') }}</h5>
+                                        <div class="col-md-4">
+                                            <div class="mt-3">
+                                                <p class="text-muted mb-2">Total</p>
+                                                <h5 class="font-size-16">RM {{ number_format($v->product->price*$v->quantity,2,'.',',') }}</h5>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     @endforeach
                     <!-- end card -->
                 </div>

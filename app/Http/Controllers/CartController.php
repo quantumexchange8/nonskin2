@@ -66,6 +66,7 @@ class CartController extends Controller
     {
         $productId = $request->input('product_id');
         $productPrice = $request->input('price');
+        $quantity = $request->input('quantity');
 
         // Retrieve the user's cart
         $cart = Cart::where('user_id', Auth::id())->first();
@@ -84,22 +85,23 @@ class CartController extends Controller
             ->where('product_id', $productId)
             ->first();
 
-        // If the cart item already exists, increment the quantity
+        // If the cart item already exists, increment the quantity by the input quantity
         if ($cartItem) {
-            $cartItem->increment('quantity');
+            $cartItem->increment('quantity', $quantity);
         } else {
-            // Create a new cart item for the product with a quantity of 1
+            // Create a new cart item for the product with the input quantity
             CartItem::create([
                 'cart_id' => $cart->id,
                 'product_id' => $productId,
                 'price' => $productPrice,
-                'quantity' => 1,
+                'quantity' => $quantity,
                 'created_by' => Auth::id(),
             ]);
         }
 
         return response()->json(['message' => 'Item added to cart successfully']);
     }
+
 
 
 

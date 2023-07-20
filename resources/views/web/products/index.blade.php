@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    @lang('translation.Products')
+    Product List
 @endsection
 
 @section('css')
@@ -10,10 +10,10 @@
 @section('content')
     @component('components.breadcrumb')
         @slot('li_1')
-            Ecommerce
+            Home
         @endslot
         @slot('title')
-            Products
+            Product List
         @endslot
     @endcomponent
 
@@ -258,44 +258,47 @@
                             <div class="tab-pane active" id="popularity" role="tabpanel">
                                 <div class="row">
                                     @if (isset($products))
-                                    @foreach ($products as $product)
-                                    <div class="col-xl-2 col-sm-6">
-                                        <div class="product-box">
-                                            @if ($product->discount != 0)
-                                            <div class="product-ribbon">
-                                                - {{ $product->discount }} %
-                                            </div>
-                                            @endif
-                                            <div class="product-img pt-4 px-4">
-                                                <div class="product-wishlist">
-                                                    <a href="#">
-                                                        <i class="mdi mdi-heart-outline"></i>
-                                                    </a>
-                                                </div>
-                                                <a href="{{ route('products.show', $product->id) }}">
-                                                    <img src="images/{{ $product->image_1 }}" alt=""
-                                                    class="img-fluid mx-auto d-block" style="width: 70% !important;">
-                                                </a>
-                                            </div>
-                                            <div class="product-content p-4">
-                                                <div class="d-flex justify-content-between align-items-end">
-                                                    <div>
-                                                        <h5 class="mb-1"><a href="{{ route('products.show', $product->id) }}"
-                                                                class="text-dark font-size-14">{{ Str::limit($product->name_en, 21, '...') }}</a></h5>
-                                                        {{-- <p class="text-muted font-size-13">{{ $product->desc_en }}</p> --}}
-                                                        <h5 class="mt-3 mb-0 font-size-16">
-                                                            @if ($product->discount != 0)
-                                                                <span class="text-muted me-2 font-size-12">
-                                                                    <del>RM{{ number_format($product->price,2,".",",") }}</del>
-                                                                </span>
-                                                                    RM{{ number_format($product->price - ($product->price * $product->discount/100),2,".",",") }}
-                                                            @else
-                                                                RM{{ number_format($product->price,2,".",",") }}
-                                                            @endif
-                                                        </h5>
+                                        @foreach ($products as $product)
+                                            <div class="col-xl-2 col-sm-6">
+                                                <div class="product-box">
+                                                    @if ($product->discount != 0)
+                                                        <div class="product-ribbon">
+                                                            - {{ $product->discount }} %
+                                                        </div>
+                                                    @endif
+                                                    <div class="product-img pt-4 px-4">
+                                                        <div class="product-wishlist">
+                                                            <a href="#">
+                                                                <i class="mdi mdi-heart-outline"></i>
+                                                            </a>
+                                                        </div>
+                                                        <a href="{{ route('member.product-detail', $product->id) }}">
+                                                            <img src="{{ asset('images/' . $product->image_1) }}"
+                                                                alt="" class="img-fluid mx-auto d-block"
+                                                                style="width: 70% !important;">
+                                                        </a>
                                                     </div>
-                                                    <div>
-                                                        {{-- <ul class="list-inline mb-0 text-muted product-color">
+                                                    <div class="product-content p-4">
+                                                        <div class="d-flex justify-content-between align-items-end">
+                                                            <div>
+                                                                <h5 class="mb-1"><a
+                                                                        href="{{ route('member.product-detail', $product->id) }}"
+                                                                        class="text-dark font-size-14">{{ Str::limit($product->name_en, 21, '...') }}</a>
+                                                                </h5>
+                                                                {{-- <p class="text-muted font-size-13">{{ $product->desc_en }}</p> --}}
+                                                                <h5 class="mt-3 mb-0 font-size-16">
+                                                                    @if ($product->discount != 0)
+                                                                        <span class="text-muted me-2 font-size-12">
+                                                                            <del>RM{{ number_format($product->price, 2, '.', ',') }}</del>
+                                                                        </span>
+                                                                        RM{{ number_format($product->price - ($product->price * $product->discount) / 100, 2, '.', ',') }}
+                                                                    @else
+                                                                        RM{{ number_format($product->price, 2, '.', ',') }}
+                                                                    @endif
+                                                                </h5>
+                                                            </div>
+                                                            <div>
+                                                                {{-- <ul class="list-inline mb-0 text-muted product-color">
                                                             <li class="list-inline-item">
                                                                 Colors :
                                                             </li>
@@ -309,15 +312,18 @@
                                                                 <i class="mdi mdi-circle text-primary"></i>
                                                             </li>
                                                         </ul> --}}
+                                                            </div>
+                                                        </div>
+                                                        <div class="row pt-4">
+                                                            <button class="btn btn-primary btn add-to-cart-btn"
+                                                                data-product-id="{{ $product->id }}"
+                                                                data-product-price="{{ $product->price }}"><i
+                                                                    class='bx bx-cart-alt'></i> Add to Cart</button>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="row pt-4">
-                                                    <button class="btn btn-primary btn add-to-cart-btn" data-product-id="{{ $product->id }}" data-product-price="{{ $product->price }}"><i class='bx bx-cart-alt' ></i> Add to Cart</button>
-                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    @endforeach
+                                        @endforeach
                                     @endif
 
                                 </div>
@@ -680,42 +686,44 @@
     <script src="{{ URL::asset('assets/js/pages/product-filter-range.init.js') }}"></script>
     <script src="{{ URL::asset('assets/js/app.js') }}"></script>
     <script>
-    $(document).ready(function() {
-        // Set the CSRF token for all AJAX requests
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        $('.add-to-cart-btn').click(function(e) {
-            e.preventDefault(); // Prevent default form submission
-
-            // Get the product ID from the data attribute
-            var productId = $(this).data('product-id');
-            var productPrice = $(this).data('product-price');
-            var quantity = 1;
-            console.log("Clicked 'Add to Cart' button. Product ID:", productId);
-
-            // Send an AJAX request to add the product to the cart
-            $.ajax({
-                url: '/cart/add',
-                method: 'POST',
-                data: {
-                    product_id: productId,
-                    price: productPrice,
-                    quantity: quantity
-                },
-                success: function(response) {
-                    // Handle the successful response, such as displaying a success message or updating the cart UI
-                    console.log('Item added to cart successfully!');
-                },
-                error: function(xhr, status, error) {
-                    // Handle any errors that occur during the AJAX request
-                    console.log('Error adding item to cart:', error);
+        $(document).ready(function() {
+            // Set the CSRF token for all AJAX requests
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+
+            $('.add-to-cart-btn').click(function(e) {
+                e.preventDefault(); // Prevent default form submission
+
+                // Get the product ID from the data attribute
+                var productId = $(this).data('product-id');
+                var productPrice = $(this).data('product-price');
+                var quantity = 1;
+                console.log("Product:", productId);
+                console.log("Price:", productId);
+                console.log("Quantity:", productId);
+
+                // Send an AJAX request to add the product to the cart
+                $.ajax({
+                    url: 'products/cart/add',
+                    method: 'POST',
+                    data: {
+                        product_id: productId,
+                        price: productPrice,
+                        quantity: quantity
+                    },
+                    success: function(response) {
+                        // Handle the successful response, such as displaying a success message or updating the cart UI
+                        console.log('Item added to cart successfully!');
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle any errors that occur during the AJAX request
+                        console.log('Error adding item to cart:', error);
+                    }
+                });
+            });
         });
-    });
     </script>
 @endsection

@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title') @lang('translation.Product_Detail') @endsection
+@section('title') {{ $product->name_en }} @endsection
 
 @section('css')
     <link rel="stylesheet" href="{{ URL::asset('assets/libs/swiper/swiper.min.css') }}">
@@ -7,8 +7,8 @@
 
 @section('content')
 @component('components.breadcrumb')
-@slot('li_1') Ecommerce @endslot
-@slot('title') Product Detail @endslot
+@slot('li_1') Products @endslot
+@slot('title') {{ $product->name_en }} @endslot
 @endcomponent
 
     <div class="row">
@@ -323,7 +323,7 @@
 
                 // Send an AJAX request to add the product to the cart
                 $.ajax({
-                    url: '/cart/add',
+                    url: "{{ route('cart.add') }}",
                     method: 'POST',
                     data: {
                         product_id: productId,

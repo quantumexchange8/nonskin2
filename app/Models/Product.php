@@ -34,4 +34,9 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function cartItem(): HasOne
+    {
+        return $this->hasOne(CartItem::class, 'product_id', 'id');
+    }
+
 }
