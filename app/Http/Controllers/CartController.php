@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\CartItem;
 use Illuminate\Http\Request;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
@@ -38,10 +39,28 @@ class CartController extends Controller
         //
     }
 
-    public function destroy(Cart $cart)
+    public function destroy(Cart $cart, $productId)
     {
-        //
+        // Make sure the cart belongs to the currently authenticated user
+        if ($cart->user_id !== auth()->id()) {
+            return redirect()->back()->with('error', 'Error: Could not remove item from cart.');
+        }
+
+        // Find the cart item in the specified cart with the given product ID
+        $cartItem = $cart->items->firstWhere('product_id', $productId);
+
+        // Check if the cart item exists and belongs to the specified cart
+        if ($cartItem) {
+            // Delete the cart item from the database
+            $cartItem->delete();
+
+            return redirect()->back()->with('success', 'Item removed from cart successfully.');
+        }
+
+        return redirect()->back()->with('error', 'Error: Could not remove item from cart.');
     }
+
+
 
     public function addToCart(Request $request)
     {
@@ -49,14 +68,36 @@ class CartController extends Controller
         $productPrice = $request->input('price');
         $quantity = $request->input('quantity');
 
-        Cart::create([
-            'user_id'       => Auth::id(),
-            'product_id'    => $productId,
-            'price'         => $productPrice,
-            'quantity'      => $quantity,
-            'updated_at'    => null,
-            'created_by'    => Auth::id(),
+        $cart = Cart::where('user_id', Auth::id())->first();
+
+        if (!$cart) {
+            $cart = Cart::create([
+                'user_id' => Auth::id(),
+                'created_by' => Auth::id(),
+                'created_at' => now(),
+                'updated_by' => Auth::id(),
+                'updated_at' => now(),
+            ]);
+        }
+        $cart->update([
+            'updated_by' => Auth::id(),
+            'updated_at' => now(),
         ]);
+        $cart->save();
+
+        // Create a new cart item and associate it with the user's cart
+        $cartItem = CartItem::updateOrCreate(
+            [
+                'cart_id' => $cart->id,
+                'product_id' => $productId,
+            ],
+            [
+                'price' => $productPrice,
+                'quantity' => $quantity,
+                'created_by' => Auth::id(),
+            ]
+        );
+        $cartItem->save();
 
         return response()->json(['message' => 'Item added to cart successfully']);
     }

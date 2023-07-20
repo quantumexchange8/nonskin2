@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use App\Models\Cart;
 use Illuminate\Support\Facades\Hash;
 
 class AdminSeeder extends Seeder
@@ -44,7 +45,7 @@ class AdminSeeder extends Seeder
             'role_id'       => 1,
             'role'          => 'default',
             'created_by'    => 1,
-            'updated_by'    => 1,
+            'updated_at' => null,
         ])->assignRole('default', 'superadmin');
 
         User::create(
@@ -77,7 +78,7 @@ class AdminSeeder extends Seeder
             'role_id'       => 2,
             'role'          => 'superadmin',
             'created_by'    => 1,
-            'updated_by'    => 1,
+            'updated_at' => null,
         ])->assignRole('superadmin');
 
         User::create(
@@ -110,7 +111,7 @@ class AdminSeeder extends Seeder
             'role_id'       => 3,
             'role'          => 'admin',
             'created_by'    => 1,
-            'updated_by'    => 1,
+            'updated_at' => null,
         ])->assignRole('admin');
 
         User::create(
@@ -144,8 +145,13 @@ class AdminSeeder extends Seeder
             'role_id'       => 4,
             'role'          => 'user',
             'created_by'    => 1,
-            'updated_by'    => 1,
+            'updated_at' => null,
         ])->assignRole('user');
+        Cart::create([
+            'user_id' => 4,
+            'updated_at' => null,
+            'created_by' => 1
+        ]);
 
         User::create(
         [
@@ -178,8 +184,13 @@ class AdminSeeder extends Seeder
             'role_id'       => 4,
             'role'          => 'user',
             'created_by'    => 1,
-            'updated_by'    => 1,
+            'updated_at' => null,
         ])->assignRole('user');
+        Cart::create([
+            'user_id' => 5,
+            'updated_at' => null,
+            'created_by' => 1
+        ]);
 
         User::create(
         [
@@ -212,8 +223,13 @@ class AdminSeeder extends Seeder
             'role_id'       => 4,
             'role'          => 'user',
             'created_by'    => 1,
-            'updated_by'    => 1,
+            'updated_at' => null,
         ])->assignRole('user');
+        Cart::create([
+            'user_id' => 6,
+            'updated_at' => null,
+            'created_by' => 1
+        ]);
 
         User::create(
         [
@@ -246,8 +262,13 @@ class AdminSeeder extends Seeder
             'role_id'       => 4,
             'role'          => 'user',
             'created_by'    => 1,
-            'updated_by'    => 1,
+            'updated_at' => null,
         ])->assignRole('user');
+        Cart::create([
+            'user_id' => 7,
+            'updated_at' => null,
+            'created_by' => 1
+        ]);
 
         User::create(
         [
@@ -280,7 +301,12 @@ class AdminSeeder extends Seeder
             'role_id'       => 4,
             'role'          => 'user',
             'created_by'    => 1,
-            'updated_by'    => 1,
+            'updated_at' => null,
         ])->assignRole('user');
+        Cart::create([
+            'user_id' => 8,
+            'updated_at' => null,
+            'created_by' => 1
+        ]);
     }
 }

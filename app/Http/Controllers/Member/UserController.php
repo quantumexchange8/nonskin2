@@ -18,10 +18,10 @@ class UserController extends Controller
     public function cart() {
         $carts = Cart::with('user', 'product')
         ->where('user_id', Auth::id())
-        ->select('user_id', 'product_id', 'quantity', 'price')
+        ->select('id', 'user_id', 'product_id', 'quantity', 'price')
         ->latest()
         ->get();
-
+        // dd($carts);
         $subtotal = 0;
         foreach ($carts as $item) {
             $subtotal += $item->price * $item->quantity;
@@ -93,23 +93,7 @@ class UserController extends Controller
     }
 
     // AJAX
-    public function addToCart(Request $request)
-    {
-        $productId = $request->input('product_id');
-        $productPrice = $request->input('price');
-        $quantity = $request->input('quantity');
 
-        Cart::create([
-            'user_id'       => Auth::id(),
-            'product_id'    => $productId,
-            'price'         => $productPrice,
-            'quantity'      => $quantity,
-            'updated_at'    => null,
-            'created_by'    => Auth::id(),
-        ]);
-
-        return response()->json(['message' => 'Item added to cart successfully']);
-    }
 
     public function getCartRecords() {
 

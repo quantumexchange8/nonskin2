@@ -7,8 +7,16 @@
     @slot('title') Cart @endslot
     @endcomponent
 
+
             <div class="row">
                 <div class="col-xl-8">
+                    @If(session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="mdi mdi-block-helper me-2"></i>
+                        {{ session('error') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    @endif
                     @foreach ($carts as $k => $v)
                     <div class="card border shadow-none">
                         <div class="card-body">
@@ -27,9 +35,10 @@
                                     <ul class="list-inline mb-0 font-size-16">
                                             <!-- Delete button -->
                                         <li class="list-inline-item">
-                                            <a href="#" class="text-muted px-1">
+                                            <button class="btn text-muted px-1" data-bs-toggle="modal" data-bs-target=".cart-remove-item">
                                                 <i class="mdi mdi-trash-can-outline"></i>
-                                            </a>
+                                            </button>
+                                            @include('member.modals.cart-remove-item')
                                         </li>
                                         <!-- Like button -->
                                         {{-- <li class="list-inline-item">
@@ -54,19 +63,19 @@
                                             <p class="text-muted mb-2">Quantity</p>
                                             <div class="d-inline-flex">
                                                 <div class="input-group">
-                                                    <form action="{{ route('updateQty', ['itemId' => $v->id, 'action' => 'minus']) }}" method="POST" class="update-quantity-form">
+                                                    {{-- <form action="{{ route('updateQty', ['itemId' => $v->id, 'action' => 'minus']) }}" method="POST" class="update-quantity-form"> --}}
                                                         @csrf
                                                         <button type="submit" class="btn btn-light btn-sm minus-btn">
                                                             <i class="bx bx-minus"></i>
                                                         </button>
-                                                    </form>
+                                                    {{-- </form> --}}
                                                     <input type="text" class="form-control quantity-input" name="quantity" value="{{ $v->quantity }}">
-                                                    <form action="{{ route('updateQty', ['itemId' => $v->id, 'action' => 'plus']) }}" method="POST" class="update-quantity-form">
+                                                    {{-- <form action="{{ route('updateQty', ['itemId' => $v->id, 'action' => 'plus']) }}" method="POST" class="update-quantity-form"> --}}
                                                         @csrf
                                                         <button type="submit" class="btn btn-light btn-sm plus-btn">
                                                             <i class="bx bx-plus"></i>
                                                         </button>
-                                                    </form>
+                                                    {{-- </form> --}}
                                                 </div>
                                             </div>
                                         </div>
@@ -79,13 +88,10 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                     @endforeach
                     <!-- end card -->
-
-
                 </div>
 
                 <div class="col-xl-4">
@@ -95,7 +101,6 @@
                                 <h5 class="font-size-16 mb-0">Order Summary <!-- <span class="float-end">#MN0124</span> --></h5>
                             </div>
                             <div class="card-body p-4">
-
                                 <div class="table-responsive">
                                     <table class="table mb-0">
                                         <tbody>
