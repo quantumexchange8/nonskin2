@@ -8,7 +8,7 @@ use App\Http\Controllers\CartController;
 Route::group(['prefix' => 'member/', 'as' => 'member.',  'middleware' => ['auth', 'role:superadmin|user',]], function () {
     Route::get('announcement', [UserController::class, 'announcement'])->name('announcement');
     Route::get('cart', [UserController::class, 'cart'])->name('cart');
-    Route::get('checkout', [UserController::class, 'checkout'])->name('checkout');
+    Route::get('cart/checkout', [UserController::class, 'checkout'])->name('checkout');
     Route::get('commission', [UserController::class, 'commission'])->name('commission');
     Route::get('internal-transfer-history', [UserController::class, 'internalTransferHistory'])->name('internal-transfer-history');
     Route::get('internal-transfer-new', [UserController::class, 'internalTransferNew'])->name('internal-transfer-new');

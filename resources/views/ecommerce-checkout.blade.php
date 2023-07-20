@@ -3,6 +3,7 @@
 
     @section('content')
     @component('components.breadcrumb')
+    @slot('url') {{ url('/') }} @endslot
     @slot('li_1') Ecommerce @endslot
     @slot('title') Checkout @endslot
     @endcomponent

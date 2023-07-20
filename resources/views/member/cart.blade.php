@@ -134,19 +134,19 @@
                                     </table>
                                 </div>
                                 <!-- end table-responsive -->
+                                <div class="row my-4">
+                                    <div class="col-sm-6">
+                                        <a href="{{ route('member.product-list') }}" class="btn btn-link text-muted">
+                                            <i class="mdi mdi-arrow-left me-1"></i> Continue Shopping </a>
+                                    </div> <!-- end col -->
+                                    <div class="col-sm-6">
+                                        <div class="text-sm-end mt-2 mt-sm-0">
+                                            <a href="{{ route('member.checkout') }}" class="btn btn-success">
+                                                <i class="mdi mdi-cart-outline me-1"></i> Checkout </a>
+                                        </div>
+                                    </div> <!-- end col -->
+                                </div> <!-- end row-->
                             </div>
-                            <div class="row my-4 px-4">
-                                <div class="col-sm-6">
-                                    <a href="{{ route('member.product-list') }}" class="btn btn-link text-muted">
-                                        <i class="mdi mdi-arrow-left me-1"></i> Continue Shopping </a>
-                                </div> <!-- end col -->
-                                <div class="col-sm-6">
-                                    <div class="text-sm-end mt-2 mt-sm-0">
-                                        <a href="ecommerce-checkout" class="btn btn-success">
-                                            <i class="mdi mdi-cart-outline me-1"></i> Checkout </a>
-                                    </div>
-                                </div> <!-- end col -->
-                            </div> <!-- end row-->
                         </div>
                     </div>
                 </div>

@@ -1,64 +1,37 @@
 @extends('layouts.master')
-@section('title') Checkout @endsection
+@section('title')
+    Checkout
+@endsection
 
 @section('content')
     @component('components.breadcrumb')
-    @slot('url') {{ url('/') }} @endslot
-    @slot('li_1') Home @endslot
-    @slot('title') Checkout @endslot
+        @slot('url') {{ url('/') }} @endslot
+        @slot('li_1') Home @endslot
+        @slot('title') Checkout @endslot
     @endcomponent
 
     <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">Checkout</h4>
-                    {{-- <p class="card-title-desc">
-                        Create responsive tables by wrapping any <code>.table</code> in <code>.table-responsive</code>
-                        to make them scroll horizontally on small devices (under 768px).
-                    </p> --}}
+        <div class="col-xl-8">
+            <div class="custom-accordion">
+                <div class="card">
+                    @include('member.partials._checkout_billing_info')
                 </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table mb-0">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Image</th>
-                                    <th>Product Code</th>
-                                    <th>Product Name</th>
-                                    <th>Qty.</th>
-                                    <th>Price</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($carts as $k => $v)
-                                    <tr>
-                                        <th scope="row">{{ $loop->iteration }}</th>
-                                        <td>Image Unavailable</td>
-                                        <td>{{ $v->product->code }}</td>
-                                        <td>{{ $v->product->name_en }}</td>
-                                        <td>{{ $v->quantity }}</td>
-                                        <td>RM {{ number_format($v->price, 2,'.',',') }}</td>
-                                        <td>Table cell</td>
-                                    </tr>
-                                @endforeach
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>Total Payment:</td>
-                                    <td>Table cell</td>
-                                </tr>
 
-                            </tbody>
-                        </table>
-                    </div>
-
+                <div class="card">
+                    @include('member.partials._checkout_shipping_info')
                 </div>
+
+                <div class="card">
+                    @include('member.partials._checkout_payment_info')
+                </div>
+
+            </div>
+
+
+        </div>
+        <div class="col-xl-4">
+            <div class="card checkout-order-summary">
+                @include('member.partials._checkout_summary')
             </div>
         </div>
     </div>
