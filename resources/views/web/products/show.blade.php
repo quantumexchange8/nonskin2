@@ -26,7 +26,7 @@
                                 </div>
                                 <div class="swiper product-thumbnail-slider rounded border overflow-hidden position-relative">
                                     <div class="swiper-wrapper">
-                                        <div class="swiper-slide"><img src="{{ URL::asset('assets/images/nonskin/7.jpg') }}" class="img-fluid d-block" /></div>
+                                        <div class="swiper-slide"><img src="{{ asset('images/' . $product->image_1) }}" class="img-fluid d-block" /></div>
                                         <div class="swiper-slide"><img src="{{ URL::asset('assets/images/product/img-2.png') }}" class="img-fluid d-block" /></div>
                                         <div class="swiper-slide"><img src="{{ URL::asset('assets/images/product/img-3.png') }}" class="img-fluid d-block" /></div>
                                         <div class="swiper-slide"><img src="{{ URL::asset('assets/images/product/img-6.png') }}" class="img-fluid d-block" /></div>

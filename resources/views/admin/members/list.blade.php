@@ -53,6 +53,10 @@
             ];
         })->toJson() !!};
 
+    let members2 = @json($members);
+
+    console.log(members);
+
     (function() {
         var __webpack_exports__ = {};
 
@@ -118,8 +122,8 @@
                 success: function (res) {
                     $('#city-dd').html('<option value="">Select City</option>');
                     $.each(res.cities, function (key, value) {
-                        $("#city-dd").append('<option value="' + value
-                            .id + '">' + value.name + '</option>');
+                        $("#city-dd").append('<option value="' + value.id + '">' + value.name + '</option>');
+                        // $("#city-dd").append(`<option value="${value.id}">${value.name}</option>`);
                     });
                 }
             });

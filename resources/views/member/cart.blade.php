@@ -156,128 +156,118 @@
 @section('script')
     <script src="{{ URL::asset('assets/js/app.js') }}"></script>
     <script>
-        $(document).ready(function() {
-        // Set the CSRF token for all AJAX requests
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        var typingTimer; // Timer identifier
-        var doneTypingInterval = 200; // Delay time in milliseconds
-
-        // Handle keyup event on quantity input
-        $('.quantity-input').keyup(function(event) {
-            var quantityInput = $(this);
-            var productId = quantityInput.data('product-id');
-            var productPrice = quantityInput.data('product-price');
-            var currentValue = parseInt(quantityInput.val());
-
-            // Clear the previous timer
-            clearTimeout(typingTimer);
-
-            // Set a new timer to trigger update after the specified delay
-            typingTimer = setTimeout(function() {
-                if (currentValue >= 1) { // Ensure quantity is valid
-                    updateCartItem(productId, currentValue, productPrice);
-                } else {
-                    // You may show an error message here if needed
-                }
-            }, doneTypingInterval);
-        });
-
-        // Handle minus button click
-        $('.minus-btn').click(function() {
-            var quantityInput = $(this).siblings('.quantity-input');
-            var productId = quantityInput.data('product-id');
-            var productPrice = quantityInput.data('product-price');
-            var currentValue = parseInt(quantityInput.val());
-
-            if (currentValue > 1) {
-                quantityInput.val(currentValue - 1);
-                updateCartItem(productId, currentValue - 1, productPrice);
-            }
-            $(document).ready(function() {
-                getCartData();
-            });
-            // window.location.reload();
-        });
-
-        // Handle plus button click
-        $('.plus-btn').click(function() {
-            var quantityInput = $(this).siblings('.quantity-input');
-            var productId = quantityInput.data('product-id');
-            var productPrice = quantityInput.data('product-price');
-            var currentValue = parseInt(quantityInput.val());
-
-            quantityInput.val(currentValue + 1);
-            updateCartItem(productId, currentValue + 1, productPrice);
-            $(document).ready(function() {
-                getCartData();
-            });
-            // window.location.reload();
-        });
-
-        function getCartData() {
-            $.ajax({
-                url: '{{ route("cart.get") }}',
-                method: 'GET',
-                success: function(response) {
-                // Handle the successful response and update the cart view accordingly
-                if (response.cart) {
-                    // Update the Sub Total and Total in the cart view
-                    $('.sub-total').text('RM ' + response.total_price.toFixed(2));
-                    $('.total').text('RM ' + response.total_price.toFixed(2));
-
-                    // Update the quantity and total price for each cart item in the view
-                    $.each(response.cartItems, function(index, item) {
-                        var row = $('.cart-item-row[data-product-id="' + item.product_id + '"]');
-                        row.find('.quantity-input').val(item.quantity);
-                        row.find('.total-price').text('RM ' + item.total_price.toFixed(2));
-
-                        // Update the price and total for each item in the cart view
-                        $('.price[data-product-id="' + item.product_id + '"]').text('RM ' + item.product.price.toFixed(2));
-                        $('.total[data-product-id="' + item.product_id + '"]').text('RM ' + item.total_price.toFixed(2));
-                    });
-                } else {
-                    // Handle the case when the cart data is not found
-                    console.log('Cart not found');
-                }
-            },
-
-                error: function(xhr, status, error) {
-                    // Handle any errors that occur during the AJAX request
-                    console.log('Error fetching cart data:', error);
-                }
-            });
-        }
-
-        // Function to update cart item and cart via AJAX
-        function updateCartItem(productId, quantity, productPrice) {
-            $.ajax({
-                url: '{{ route("cart.update") }}',
-                method: 'POST',
-                data: {
-                    product_id: productId,
-                    quantity: quantity,
-                    price: productPrice
-                },
-                success: function(response) {
-                    // Perform any actions after successful update, if needed
-                },
-                error: function(xhr, status, error) {
-                    // Handle any errors that occur during the AJAX request
-                    console.log('Error updating cart item:', error);
-                }
-            });
-        }
-
-        // Call the function to fetch the cart data when the page loads or whenever needed
-        $(document).ready(function() {
+        $(document).ready(() => {
             getCartData();
+            // Set the CSRF token for all AJAX requests
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            let typingTimer; // Timer identifier
+            let doneTypingInterval = 200; // Delay time in milliseconds
+
+            // Handle keyup event on quantity input
+            $('.quantity-input').keyup((event) => {
+                let quantityInput = $(this);
+                let productId = quantityInput.data('product-id');
+                let productPrice = quantityInput.data('product-price');
+                let currentValue = Number(quantityInput.val());
+
+                // Clear the previous timer
+                clearTimeout(typingTimer);
+
+                // Set a new timer to trigger update after the specified delay
+                typingTimer = setTimeout(() => {
+                    if (currentValue >= 1) { // Ensure quantity is valid
+                        updateCartItem(productId, currentValue, productPrice);
+                    } else {
+                        // You may show an error message here if needed
+                    }
+                }, doneTypingInterval);
+            });
+
+            // Handle minus button click
+            $('.minus-btn').click(function() {
+                let quantityInput = $(this).siblings('.quantity-input');
+                let productId = quantityInput.data('product-id');
+                let productPrice = quantityInput.data('product-price');
+                let currentValue = Number(quantityInput.val());
+
+                if (currentValue > 1) {
+                    quantityInput.val(currentValue - 1);
+                    updateCartItem(productId, currentValue - 1, productPrice);
+                }
+                getCartData();
+            });
+
+            // Handle plus button click
+            $('.plus-btn').click(function() {
+                let quantityInput = $(this).siblings('.quantity-input');
+                let productId = quantityInput.data('product-id');
+                let productPrice = quantityInput.data('product-price');
+                let currentValue = Number(quantityInput.val());
+
+                quantityInput.val(currentValue + 1);
+                updateCartItem(productId, currentValue + 1, productPrice);
+                getCartData();
+            });
+
+            function getCartData() {
+                $.ajax({
+                    url: '{{ route("cart.get") }}',
+                    method: 'GET',
+                    success: function(response) {
+                    // Handle the successful response and update the cart view accordingly
+                    if (response.cart) {
+                        // Update the Sub Total and Total in the cart view
+                        $('.sub-total').text('RM ' + response.total_price.toFixed(2));
+                        $('.total').text('RM ' + response.total_price.toFixed(2));
+
+                        // Update the quantity and total price for each cart item in the view
+                        $.each(response.cartItems, function(index, item) {
+                            var row = $('.cart-item-row[data-product-id="' + item.product_id + '"]');
+                            row.find('.quantity-input').val(item.quantity);
+                            row.find('.total-price').text('RM ' + item.total_price.toFixed(2));
+
+                            // Update the price and total for each item in the cart view
+                            $('.price[data-product-id="' + item.product_id + '"]').text('RM ' + item.product.price.toFixed(2));
+                            $('.total[data-product-id="' + item.product_id + '"]').text('RM ' + item.total_price.toFixed(2));
+                        });
+                    } else {
+                        // Handle the case when the cart data is not found
+                        console.log('Cart not found');
+                    }
+                },
+
+                    error: function(xhr, status, error) {
+                        // Handle any errors that occur during the AJAX request
+                        console.log('Error fetching cart data:', error);
+                    }
+                });
+            }
+
+            // Function to update cart item and cart via AJAX
+            function updateCartItem(productId, quantity, productPrice) {
+                $.ajax({
+                    url: '{{ route("cart.update") }}',
+                    method: 'POST',
+                    data: {
+                        product_id: productId,
+                        quantity: quantity,
+                        price: productPrice
+                    },
+                    success: function(response) {
+                        // Perform any actions after successful update, if needed
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle any errors that occur during the AJAX request
+                        console.log('Error updating cart item:', error);
+                    }
+                });
+            }
         });
-    });
 
     </script>
 

@@ -46,9 +46,12 @@ class ProductController extends Controller
             // Add validation rules for other image fields
         ]);
 
-        $imageName1 = time().'.'.$request->image_1->extension();
+
 
         try {
+            $imageName1 = time().'.'.$request->image_1->extension();
+            $request->image_1->move(public_path('images'), $imageName1);
+
             $product = Product::create([
                 'code' => $request->code,
                 'name_en' => $request->name_en,
@@ -59,7 +62,7 @@ class ProductController extends Controller
                 'category_id' => $request->category_id,
                 'shipping_quantity' => $request->shipping_quantity,
                 'status' => $request->status,
-                'image_1' => $request->image_1->move(public_path('images'), $imageName1),
+                'image_1' => $imageName1,
                 'created_by' => Auth::id(),
             ]);
 
@@ -98,7 +101,6 @@ class ProductController extends Controller
             //     $image5->storeAs('images', $imageName5, 'public');
             //     $product->image_5 = $imageName5;
             // }
-
             $product->save();
 
             return redirect()

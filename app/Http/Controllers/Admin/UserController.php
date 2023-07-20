@@ -18,7 +18,7 @@ class UserController extends Controller
 
         $members = User::where('role', 'user')
         ->orWhere('role', 'admin')
-        ->get();
+        ->get(['referral', 'referrer', 'name', 'email', 'ranking_name', 'city', 'postcode', 'state', 'created_at']);
         // dd($members);
         return view('admin.members.list', compact('members', 'states'));
     }
