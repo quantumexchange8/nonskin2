@@ -41,24 +41,20 @@ class CartController extends Controller
 
     public function destroy(Cart $cart, $productId)
     {
-        // Make sure the cart belongs to the currently authenticated user
-        if ($cart->user_id !== auth()->id()) {
-            return redirect()->back()->with('error', 'Error: Could not remove item from cart.');
-        }
+        // Find the cart item associated with the provided productId and the user's cart
+        $cartItem = CartItem::where('cart_id', $cart->id)
+            ->where('product_id', $productId)
+            ->first();
 
-        // Find the cart item in the specified cart with the given product ID
-        $cartItem = $cart->items->firstWhere('product_id', $productId);
-
-        // Check if the cart item exists and belongs to the specified cart
-        if ($cartItem) {
-            // Delete the cart item from the database
+        // If the cart item exists and belongs to the authenticated user's cart, delete it
+        if ($cartItem && $cartItem->cart_id === $cart->id && $cart->user_id === Auth::id()) {
             $cartItem->delete();
-
             return redirect()->back()->with('success', 'Item removed from cart successfully.');
         }
 
         return redirect()->back()->with('error', 'Error: Could not remove item from cart.');
     }
+
 
 
 
