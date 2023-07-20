@@ -28,14 +28,14 @@ Route::group(['prefix' => 'member/', 'as' => 'member.',  'middleware' => ['auth'
     Route::get('withdrawal-history', [UserController::class, 'withdrawalHistory'])->name('withdrawal-history');
     Route::get('withdrawal-pending', [UserController::class, 'withdrawalPending'])->name('withdrawal-pending');
 });
-// Route::post('/updateQty/{itemId}/{action}', [CartController::class, 'updateQty'])->name('updateQty');
+Route::post('/updateQty/{itemId}/{action}', [CartController::class, 'updateQty'])->name('updateQty');
 
 Route::delete('/cart/{cart}/item/{productId}', [CartController::class, 'destroy'])->name('cart.destroy');
 
 // AJAX
 Route::group(['prefix' => 'member/',  'middleware' => 'auth', 'middleware' => 'role:user'], function () {
     Route::get('/cart/records', [UserController::class, 'getCartRecords'])->name('cart.fetch');
+    Route::get('cart/get', [CartController::class, 'getCartData'])->name('cart.get');
     Route::post('/products/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
-    Route::post('/update-cart', [CartController::class, 'updateCart'])->name('cart.update');
-
+    Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
 });

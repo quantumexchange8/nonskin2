@@ -17,6 +17,8 @@ class UserController extends Controller
         return view('member.announcement');
     }
     public function cart() {
+        $cart = Cart::where('user_id', Auth::id())
+        ->first();
         $cartItems = CartItem::with('cart', 'product')
         ->whereHas('cart', function ($query) {
             $query->where('user_id', Auth::id());
@@ -24,14 +26,14 @@ class UserController extends Controller
         ->latest()
         ->get();
 
-        // dd($cartItems);
+        // dd(auth()->user()->cart);
 
         $subtotal = 0;
         // foreach ($carts as $item) {
         //     $subtotal += $item->price * $item->quantity;
         // }
 
-        return view('member.cart', compact('cartItems', 'subtotal'));
+        return view('member.cart', compact('cartItems', 'subtotal', 'cart'));
     }
     public function checkout() {
         $carts = Cart::with('user', 'product')
