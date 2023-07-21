@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Member\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
 
 Route::group(['prefix' => 'member/', 'as' => 'member.',  'middleware' => ['auth', 'role:superadmin|user',]], function () {
     Route::get('announcement', [UserController::class, 'announcement'])->name('announcement');
@@ -36,6 +37,8 @@ Route::delete('/cart/{cart}/item/{productId}', [CartController::class, 'destroy'
 Route::group(['prefix' => 'member/',  'middleware' => 'auth', 'middleware' => 'role:user'], function () {
     Route::get('/cart/records', [UserController::class, 'getCartRecords'])->name('cart.fetch');
     Route::get('cart/get', [CartController::class, 'getCartData'])->name('cart.get');
+    Route::get('get-cart-count', [CartController::class, 'getCartCount'])->name('cart.count');
     Route::post('/products/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
     Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
+    Route::post('/ajax-place-order', [OrderController::class, 'placeOrder'])->name('place-order');
 });

@@ -9,6 +9,22 @@ use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
+    public function getCartCount(Request $request)
+    {
+        // Assuming you have a one-to-many relationship between User and Cart models,
+        // and you have the 'user_id' column in the carts table
+
+        $user = $request->user();
+        if (!$user) {
+            return response()->json(['success' => false, 'error' => 'User not authenticated.']);
+        }
+
+        $cartCount = CartItem::where('cart_id', auth()->user()->cart->id)
+            ->count();
+
+        return response()->json(['success' => true, 'cartCount' => $cartCount]);
+    }
+
     public function getCartData()
     {
         $cart = Cart::where('user_id', Auth::id())->first();

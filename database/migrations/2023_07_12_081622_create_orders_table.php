@@ -17,11 +17,12 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->integer('user_id')->unsigned()->nullable();
             $table->string('order_num')->nullable();
-            $table->double('total_amount')->nullable();
+            $table->double('total_amount',9,2)->unsigned()->default(0);
             $table->string('receiver')->nullable();
             $table->string('contact')->nullable();
             $table->string('email')->nullable();
-            $table->string('delivery_method')->nullable()->default('delivery');
+            $table->string('delivery_method')->nullable();
+            $table->string('payment_method')->nullable();
             $table->string('delivery_address')->nullable();
             $table->double('delivery_fee')->nullable();
             $table->string('status')->nullable()->default('New');

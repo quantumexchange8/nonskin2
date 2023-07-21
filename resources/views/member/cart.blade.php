@@ -115,10 +115,6 @@
                                                 <td>Discount : </td>
                                                 <td class="text-end">- RM 0</td>
                                             </tr>
-                                            <tr>
-                                                <td>Shipping Charge :</td>
-                                                <td class="text-end">RM 0</td>
-                                            </tr>
                                             <tr class="bg-light">
                                                 <th>Total :</th>
                                                 <td class="text-end total">
@@ -138,7 +134,7 @@
                                     </div> <!-- end col -->
                                     <div class="col-sm-6">
                                         <div class="text-sm-end mt-2 mt-sm-0">
-                                            <a href="{{ route('member.checkout') }}" class="btn btn-success">
+                                            <a href="{{ route('member.checkout') }}" class="btn btn-success {{ $cartItems->count() == 0 ? 'disabled' : '' }}">
                                                 <i class="mdi mdi-cart-outline me-1"></i> Checkout </a>
                                         </div>
                                     </div> <!-- end col -->
@@ -154,7 +150,7 @@
     <script src="{{ URL::asset('assets/js/app.js') }}"></script>
     <script>
         $(document).ready(() => {
-            // getCartData();
+            getCartData();
             // Set the CSRF token for all AJAX requests
             $.ajaxSetup({
                 headers: {

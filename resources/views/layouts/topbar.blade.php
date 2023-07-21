@@ -106,11 +106,11 @@
 
             <div class="dropdown d-inline-block">
                 @unlessrole('superadmin|admin')
-                    <button class="btn header-item noti-icon" id="page-header-notifications-dropdown"
+                <button class="btn header-item noti-icon" id="page-header-notifications-dropdown"
                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class='bx bx-cart' ></i>
-                        <span class="noti-dot bg-danger rounded-pill">10</span>
-                    </button>
+                    <i class='bx bx-cart'></i>
+                    <span class="noti-dot bg-danger rounded-pill" id="cart-item-count">0</span>
+                </button>
                 @endunlessrole
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
                     aria-labelledby="page-header-notifications-dropdown">
@@ -199,6 +199,37 @@
     </div>
 </header>
 @section('script')
-    @include('web.partials._fetch_cart')
+    <script>
+        $(document).ready(function () {
+        getCartCount();
+
+        // Function to get the cart count using AJAX
+        function getCartCount() {
+            $.ajax({
+                url: "{{ route('cart.count') }}",
+                type: "GET",
+                dataType: "json",
+                success: function (response) {
+                    if (response.success) {
+                        updateCartCount(response.cartCount);
+                    } else {
+                        console.error("Failed to get cart count:", response.error);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("AJAX error:", error);
+                }
+            });
+        }
+
+        // Function to update the cart count in the HTML
+        function updateCartCount(count) {
+            $("#cart-item-count").text(count);
+        }
+        console.log(response);
+
+    });
+
+    </script>
 @endsection
 

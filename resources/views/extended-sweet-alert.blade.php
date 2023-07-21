@@ -7,6 +7,7 @@
 
     @section('content')
     @component('components.breadcrumb')
+    @slot('url') {{ url('/') }} @endslot
     @slot('li_1') Extended @endslot
     @slot('title') SweetAlert 2 @endslot
     @endcomponent

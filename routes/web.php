@@ -61,7 +61,7 @@ Route::group(['prefix' => 'manage/members',  'middleware' => 'auth'], function (
 /**
  * PRODUCTS
  */
-Route::group(['prefix' => 'manage/products',  'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'consumer/products',  'middleware' => 'auth'], function () {
     Route::get('/', [ProductController::class, 'index'])->name('products.index');                                   // product Index
     Route::get('/list', [ProductController::class, 'list'])->name('products.list');                                 // product List
     Route::get('/create', [ProductController::class, 'create'])->name('products.create');                           // product CREATE
