@@ -26,14 +26,11 @@
                     </div>
                     @endif
                     @foreach ($cartItems as $k => $v)
-                    @php
-                        // dd($v);
-                    @endphp
                         <div class="card border shadow-none">
                             <div class="card-body">
                                 <div class="d-flex align-items-start border-bottom pb-3">
                                     <div class="me-4">
-                                        <img src="{{ URL::asset('./assets/images/product/img-1.png') }}" alt="" class="avatar-md">
+                                        <img src="{{ asset('images/' . $v->product->image_1) }}" alt="" class="avatar-md">
                                     </div>
                                     <div class="flex-grow-1 align-self-center overflow-hidden">
                                         <div>
@@ -157,7 +154,7 @@
     <script src="{{ URL::asset('assets/js/app.js') }}"></script>
     <script>
         $(document).ready(() => {
-            getCartData();
+            // getCartData();
             // Set the CSRF token for all AJAX requests
             $.ajaxSetup({
                 headers: {

@@ -14,20 +14,15 @@
         <div class="col-xl-8">
             <div class="custom-accordion">
                 <div class="card">
-                    @include('member.partials._checkout_billing_info')
+                    {{-- @include('member.partials._checkout_billing_info') --}}
                 </div>
-
                 <div class="card">
                     @include('member.partials._checkout_shipping_info')
                 </div>
-
                 <div class="card">
                     @include('member.partials._checkout_payment_info')
                 </div>
-
             </div>
-
-
         </div>
         <div class="col-xl-4">
             <div class="card checkout-order-summary">

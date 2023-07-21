@@ -6,7 +6,7 @@
             </div>
             <div class="flex-grow-1 overflow-hidden">
                 <h5 class="font-size-16 mb-1">Shipping Info</h5>
-                <p class="text-muted text-truncate mb-0">Neque porro quisquam est</p>
+                <p class="text-muted text-truncate mb-0">Please select your desired delivery address</p>
             </div>
             <div class="flex-shrink-0">
                 <i class="mdi mdi-chevron-up accor-down-icon font-size-24"></i>
@@ -15,7 +15,7 @@
     </div>
 </a>
 
-<div id="checkout-shippinginfo-collapse" class="collapse">
+<div id="checkout-shippinginfo-collapse" class="collapse show">
     <div class="p-4 border-top">
         <h5 class="font-size-14 mb-3">Shipping Info</h5>
         <div class="row">
@@ -25,18 +25,21 @@
                         <input type="radio" name="address" id="info-address1"
                             class="card-radio-input" checked>
                         <div class="card-radio text-truncate p-3">
+                            @php
+                                // dd($user);
+                            @endphp
                             <span class="fs-14 mb-4 d-block">Address 1</span>
-                            <span class="fs-14 mb-2 d-block">Bradley McMillian</span>
-                            <span class="text-muted fw-normal text-wrap mb-1 d-block">109 Clarksburg Park Road Show Low, AZ 85901</span>
-                            <span class="text-muted fw-normal d-block">Mo. 012-345-6789</span>
+                            <span class="fs-14 mb-2 d-block">{{ $user->name }}</span>
+                            <span class="text-muted fw-normal text-wrap mb-1 d-block">{{ $user->address_1 }}, {{ $user->address_2 }}, {{ $user->postcode }}, {{ $user->city }}, {{ $user->state }}, {{ $user->country }}</span>
+                            <span class="text-muted fw-normal d-block">Contact: {{ $user->contact }}</span>
                         </div>
                     </label>
-                    <div class="edit-btn bg-light  rounded">
+                    {{-- <div class="edit-btn bg-light  rounded">
                         <a href="#" data-bs-toggle="tooltip" data-placement="top"
                             title="" data-bs-original-title="Edit">
                             <i class="bx bx-pencil font-size-16"></i>
                         </a>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
 
@@ -47,17 +50,19 @@
                             class="card-radio-input">
                         <div class="card-radio text-truncate p-3">
                             <span class="fs-14 mb-4 d-block">Address 2</span>
-                            <span class="fs-14 mb-2 d-block">Bradley McMillian</span>
-                            <span class="text-muted fw-normal text-wrap mb-1 d-block">109 Clarksburg Park Road Show Low, AZ 85901</span>
-                            <span class="text-muted fw-normal d-block">Mo. 012-345-6789</span>
+                            <span class="fs-14 mb-2 d-block">{{ $user->name }}</span>
+                            <span class="text-muted fw-normal text-wrap mb-1 d-block">
+                                {{ $user->delivery_address_1 }}, {{ $user->delivery_address_2 }}, {{ $user->delivery_postcode }}, {{ $user->delivery_city }}, {{ $user->delivery_state }}, {{ $user->delivery_country }}
+                            </span>
+                            <span class="text-muted fw-normal d-block">Contact: {{ $user->contact }}</span>
                         </div>
                     </label>
-                    <div class="edit-btn bg-light  rounded">
+                    {{-- <div class="edit-btn bg-light  rounded">
                         <a href="#" data-bs-toggle="tooltip" data-placement="top"
                             title="" data-bs-original-title="Edit">
                             <i class="bx bx-pencil font-size-16"></i>
                         </a>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>

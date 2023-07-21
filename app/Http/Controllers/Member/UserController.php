@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Member;
 
+use App\Models\User;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\Order;
@@ -26,22 +27,22 @@ class UserController extends Controller
         ->latest()
         ->get();
 
-        // dd(auth()->user()->cart);
-
         $subtotal = 0;
-        // foreach ($carts as $item) {
-        //     $subtotal += $item->price * $item->quantity;
-        // }
 
         return view('member.cart', compact('cartItems', 'subtotal', 'cart'));
     }
     public function checkout() {
-        $carts = Cart::with('product')
-        ->where('user_id', Auth::id())
+        $user = User::where('id', Auth::id())
+        ->select('name', 'contact', 'address_1', 'address_2', 'city', 'postcode', 'state', 'country', 'delivery_address_1', 'delivery_address_2', 'delivery_city', 'delivery_postcode', 'delivery_state', 'delivery_country')
+        ->first();
+
+        $cartItems = CartItem::with('cart', 'product')
+        ->whereHas('cart', function ($query) {
+            $query->where('user_id', Auth::id());
+        })
         ->latest()
         ->get();
-        // dd($carts);
-        return view('member.checkout', compact('carts'));
+        return view('member.checkout', compact('cartItems', 'user'));
     }
     public function commission() {
         return view('member.commission');
