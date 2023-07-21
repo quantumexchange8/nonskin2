@@ -4,7 +4,7 @@
 @endsection
 
 @section('css')
-    <link rel="stylesheet" href="{{ URL::asset('assets/libs/nouislider/nouislider.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/libs/nouislider/nouislider.min.css') }}">
 @endsection
 
 @section('content')

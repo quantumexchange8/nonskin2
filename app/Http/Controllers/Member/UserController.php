@@ -36,7 +36,7 @@ class UserController extends Controller
         return view('member.cart', compact('cartItems', 'subtotal', 'cart'));
     }
     public function checkout() {
-        $carts = Cart::with('user', 'product')
+        $carts = Cart::with('product')
         ->where('user_id', Auth::id())
         ->latest()
         ->get();

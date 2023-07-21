@@ -201,9 +201,4 @@
 @section('script')
     @include('web.partials._fetch_cart')
 @endsection
-<script>
-    $(document).on('click', '#page-header-notifications-dropdown', function() {
-    alert('Alert');
-    console.log('TEST');
-});
-</script>
+
