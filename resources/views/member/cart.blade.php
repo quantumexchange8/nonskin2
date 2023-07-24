@@ -8,6 +8,10 @@
     @slot('title') Cart @endslot
     @endcomponent
 
+    @if(session('message'))
+    <input data-bs-toggle="modal" data-bs-target="#staticBackdrop" hidden>
+    @include('member.modals.message-modal')
+    @endif
 
             <div class="row">
                 <div class="col-xl-8">
@@ -262,6 +266,13 @@
             }
         });
 
+    </script>
+    <script>
+        $(document).ready(function() {
+            if ({{ json_encode(session('from_modal', false)) }}) {
+                $('#checkCartItem').modal('show');
+            }
+        });
     </script>
 
 @endsection

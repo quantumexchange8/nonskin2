@@ -9,6 +9,7 @@ use Validator;
 use Response;
 use Redirect;
 use App\Models\{Country, State, City};
+use Illuminate\Support\Facades\DB;
 
 
 class UserController extends Controller
@@ -16,10 +17,19 @@ class UserController extends Controller
     public function memberList(){
         $states = State::select('id', 'name')->get();
 
-        $members = User::where('role', 'user')
+        // $users = DB::table('users')
+        //     ->where('role', 'user')
+        //     ->orWhere('role', 'admin')
+        //     ->get();
+
+
+        // dd($users);
+
+        $users = User::with('address')
+        ->where('role', 'user')
         ->orWhere('role', 'admin')
-        ->get(['referral', 'referrer', 'name', 'email', 'ranking_name', 'city', 'postcode', 'state', 'created_at']);
-        // dd($members);
-        return view('admin.members.list', compact('members', 'states'));
+        ->get(['referral', 'referrer', 'name', 'email', 'ranking_name', 'postcode', 'city', 'state', 'created_at']);
+        // dd($users);
+        return view('admin.members.list', compact('users', 'states'));
     }
 }

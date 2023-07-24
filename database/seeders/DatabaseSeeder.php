@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CountrySeeder::class);
         $this->call(StateSeeder::class);
         $this->call(BankSettingSeeder::class);
+        $this->call(ShippingSettingSeeder::class);
         $this->call(AdminSeeder::class);
 
     }

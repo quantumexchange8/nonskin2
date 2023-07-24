@@ -20,30 +20,20 @@
         <div>
             <h5 class="font-size-14 mb-3 required">Delivery method :</h5>
             <div class="row">
-                <div class="col-lg-3 col-sm-6">
-                    <div data-bs-toggle="collapse">
-                        <label class="card-radio-label">
-                            <input type="radio" name="delivery_method" id="delivery-methodoption1"
-                                class="card-radio-input" value="Delivery">
-                            <span class="card-radio text-center text-truncate">
-                                <i class="bx bxs-truck d-block h2 mb-3"></i>
-                                Delivery
-                            </span>
-                        </label>
+                @foreach ($delivery_methods as $res)
+                    <div class="col-lg-3 col-sm-6">
+                        <div data-bs-toggle="collapse">
+                            <label class="card-radio-label">
+                                <input type="radio" name="delivery_method" id="deliveryMethod"
+                                    class="card-radio-input" value="{{ $res->name }}">
+                                <span class="card-radio text-center text-truncate">
+                                    <i class="{{ $res->icon_class }} d-block h2 mb-3"></i>
+                                    {{ $res->name }}
+                                </span>
+                            </label>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div>
-                        <label class="card-radio-label">
-                            <input type="radio" name="delivery_method" id="delivery-methodoption2"
-                                class="card-radio-input" value="Self-pickup">
-                            <span class="card-radio text-center text-truncate">
-                                <i class="bx bxs-store-alt d-block h2 mb-3"></i>
-                                Self-pickup
-                            </span>
-                        </label>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>
@@ -51,42 +41,20 @@
         <div>
             <h5 class="font-size-14 mb-3 required">Payment method :</h5>
             <div class="row">
-                <div class="col-lg-3 col-sm-6">
-                    <div>
-                        <label class="card-radio-label">
-                            <input type="radio" name="payment_method" id="pay-methodoption2"
-                                class="card-radio-input" value="Manual Transfer">
-                            <span class="card-radio text-center text-truncate">
-                                <i class="bx bxl-paypal d-block h2 mb-3"></i>
-                                Manual Transfer
-                            </span>
-                        </label>
+                @foreach ($payment_methods as $res)
+                    <div class="col-lg-3 col-sm-6">
+                        <div>
+                            <label class="card-radio-label">
+                                <input type="radio" name="payment_method" id="paymentMethod"
+                                    class="card-radio-input" value="{{ $res->name }}">
+                                <span class="card-radio text-center text-truncate">
+                                    <i class="{{ $res->icon_class }} d-block h2 mb-3"></i>
+                                    {{ $res->name }}
+                                </span>
+                            </label>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div data-bs-toggle="collapse">
-                        <label class="card-radio-label">
-                            <input type="radio" name="payment_method" id="pay-methodoption1"
-                                class="card-radio-input" value="Online Banking">
-                            <span class="card-radio text-center text-truncate">
-                                <i class="bx bx-credit-card d-block h2 mb-3"></i>
-                                Online Banking
-                            </span>
-                        </label>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div>
-                        <label class="card-radio-label">
-                            <input type="radio" name="payment_method" id="pay-methodoption3"
-                                class="card-radio-input" value="Payment at Counter">
-                            <span class="card-radio text-center text-truncate">
-                                <i class="bx bx-money d-block h2 mb-3"></i>
-                                <span>Payment at Counter</span>
-                            </span>
-                        </label>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>

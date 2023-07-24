@@ -39,23 +39,23 @@
 <script src="{{ URL::asset('assets/js/app.js') }}"></script>
 
 <script>
-    var members = {!! $members->map(function ($member) {
+    var users = {!! $users->map(function ($user) {
             return [
-                $member->referral ?? '-N/A-',
-                $member->referrer ?? '-N/A-',
-                $member->name,
-                $member->email,
-                $member->ranking_name,
-                $member->city,
-                $member->postcode,
-                $member->state,
-                formatDate($member->created_at), // Format the date as dd/mm/yyyy
+                $user->referral ?? '-N/A-',
+                $user->referrer ?? '-N/A-',
+                $user->name,
+                $user->email,
+                $user->ranking_name,
+                $user->postcode,
+                $user->city,
+                $user->state,
+                formatDate($user->created_at), // Format the date as dd/mm/yyyy
             ];
         })->toJson() !!};
 
-    let members2 = @json($members);
+    let users2 = @json($users);
 
-    console.log(members);
+    console.log(users);
 
     (function() {
         var __webpack_exports__ = {};
@@ -68,8 +68,8 @@
                 "Name",
                 "Email",
                 "Ranking",
-                "City",
                 "Postcode",
+                "City",
                 "State",
                 "Joined Date",
                 "Action"
@@ -79,7 +79,7 @@
             },
             sort: true,
             search: true,
-            data: members,
+            data: users,
         }).render(document.getElementById("table-member-list"));
     })();
 </script>

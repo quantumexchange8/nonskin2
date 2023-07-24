@@ -33,11 +33,18 @@ class CreateUsersTable extends Migration
             $table->string('ranking_name')->nullable();
             $table->integer('role_id');
             $table->string('role');
+            $table->string('address_1', 180);
+            $table->string('address_2', 180)->nullable();
+            $table->string('postcode', 5);
+            $table->string('city', 50);
+            $table->string('state', 50);
+            $table->string('country', 50);
             $table->string('bank_name');
             $table->string('bank_holder_name');
             $table->string('bank_acc_no');
             $table->string('bank_ic');
             $table->string('remarks', 10)->default('New User');
+            $table->tinyInteger('is_active')->default(1)->comment('0 - Inactive, 1 - Active');
             $table->tinyInteger('is_legacy')->default(0)->comment('0 - New User, 1 - Old existing users');
             $table->timestamps();
             $table->integer('created_by')->unsigned()->nullable()->comment('Refers to user id');

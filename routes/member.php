@@ -36,7 +36,9 @@ Route::delete('/cart/{cart}/item/{productId}', [CartController::class, 'destroy'
 // AJAX
 Route::group(['prefix' => 'member/',  'middleware' => 'auth', 'middleware' => 'role:user'], function () {
     Route::get('/cart/records', [UserController::class, 'getCartRecords'])->name('cart.fetch');
-    Route::get('cart/get', [CartController::class, 'getCartData'])->name('cart.get');
+    Route::middleware('check.cart.item')->group(function () {
+        Route::get('cart/get', [CartController::class, 'getCartData'])->name('cart.get');
+    });
     Route::get('get-cart-count', [CartController::class, 'getCartCount'])->name('cart.count');
     Route::post('/products/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
     Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
