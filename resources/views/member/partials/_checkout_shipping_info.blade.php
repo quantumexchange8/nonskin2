@@ -23,15 +23,16 @@
             <div class="col-lg-4 col-sm-6">
                 <div>
                     <label class="card-radio-label mb-0">
-                        <input type="radio" name="address" id="info-address"
+                        <input type="radio" name="address" id="address"
                             class="card-radio-input" {{ $v->is_default == 1 ? 'checked' : '' }}
+                            onchange="updateShippingCharge(this)"
                             value="{{ $v->address_1 }}, {{ $v->address_2 }}, {{ $v->postcode }}, {{ $v->city }}, {{ $v->state }}, {{ $v->country }}">
                         <div class="card-radio text-truncate p-3">
                             {{-- <span class="fs-14 mb-4 d-block">Delivery Address</span> --}}
                             <span class="fs-14 mb-2 d-block">
                                 {{ $v->name }}
                                 @if ($v->is_default == 1)
-                                    <span class="fw-normal btn btn-sm btn-warning">Default</span>
+                                    <span class="btn btn-sm btn-warning">Default</span>
                                 @endif
                             </span>
                             <span class="text-muted fw-normal text-wrap mb-1 d-block">

@@ -16,7 +16,7 @@
             <tbody>
                 @foreach ($cartItems as $k => $v )
                 @php
-                    // dd($user->address[0]->shippingCharge->amount);
+                    // dd($cartItems);
                 @endphp
                 <tr>
                     <th scope="row"><img src="{{ asset('images/' . $v->product->image_1) }}"
@@ -24,16 +24,16 @@
                     <td>
                         <h5 class="font-size-14 text-truncate"><a href="ecommerce-product-detail"
                                 class="text-dark">{{ $v->product->name_en }}</a></h5>
-                        <p class="text-muted mb-0">RM {{ number_format($v->price,2,'.',',') }} x {{ number_format($v->quantity,2,'.',',') }}</p>
+                        <p class="text-muted mb-0">RM {{ number_format($v->price,2,'.',',') }} x {{ $v->quantity,2 }}</p>
                     </td>
-                    <td>RM {{ number_format($v->price*$v->quantity,2,'.',',') }}</td>
+                    <td data-total-amount>RM {{ number_format($v->price*$v->quantity,2,'.',',') }}</td>
                 </tr>
                 @endforeach
                 <tr>
                     <td colspan="2">
                         <h5 class="font-size-14 m-0">Sub Total :</h5>
                     </td>
-                    <td>RM {{ number_format($v->cart->total_price,2,'.',',') }}</td>
+                    <td>RM {{ number_format($totalAmount,2,'.',',') }}</td>
                 </tr>
                 <tr>
                     <td colspan="2">
@@ -46,14 +46,18 @@
                     <td colspan="2">
                         <h5 class="font-size-14 m-0">Shipping Charge :</h5>
                     </td>
-                    {{-- <td>RM {{ number_format($user->address->shippingCharge->amount,2,'.',',') }}</td> --}}
+                    {{-- <td>RM {{  }}</td> --}}
+                    @php
+                        // dd($user->address[0]->shippingCharge)
+                    @endphp
+                    <td data-shipping-charge>RM 0.00</td>
                 </tr>
 
                 <tr class="bg-light" >
                     <td colspan="2">
                         <h5 class="font-size-14 m-0">Total:</h5>
                     </td>
-                    {{-- <td class="fw-bold">RM {{ number_format($v->cart->total_price + $user->address->shippingCharge->amount,2,'.',',') }}</td> --}}
+                    <td id="shipping-charge" class="fw-bold">RM {{ number_format($v->cart->total_price + $user->address[0]->shippingCharge->amount, 2, '.', ',') }}</td>
                 </tr>
             </tbody>
         </table>

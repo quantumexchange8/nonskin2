@@ -63,8 +63,14 @@ class UserController extends Controller
         //     ->get();
         $cartItems = $user->cart ? $user->cart->items : collect();
 
+        $totalAmount = 0;
+        foreach ($cartItems as $item) {
+            $totalAmount += $item->price * $item->quantity;
+        }
+        // dd($totalAmount);
+
         if ($cartItems->count() > 0) {
-            return view('member.checkout', compact('cartItems', 'user', 'payment_methods', 'delivery_methods'));
+            return view('member.checkout', compact('cartItems', 'user', 'payment_methods', 'delivery_methods', 'totalAmount'));
         }
 
         // If the user does not meet the conditions, redirect to the cart page with a message

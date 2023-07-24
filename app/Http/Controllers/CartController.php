@@ -9,6 +9,39 @@ use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
+    public function getShippingCharge(Request $request)
+    {
+        // Get the address fields from the AJAX request
+        $address_1 = $request->input('address_1');
+        $address_2 = $request->input('address_2');
+        $postcode = $request->input('postcode');
+        $city = $request->input('city');
+        $state = $request->input('state');
+        $country = $request->input('country');
+
+        // Find the matching address and retrieve the shipping charge
+        // Adjust this logic based on your database structure and requirements
+        $address = Address::where([
+            'address_1' => $address_1,
+            'address_2' => $address_2,
+            'postcode' => $postcode,
+            'city' => $city,
+            'state' => $state,
+            'country' => $country,
+        ])->first();
+
+        if ($address) {
+            $shippingCharge = $address->shippingCharge->amount;
+        } else {
+            // If no matching address is found, set the shipping charge to 0 or handle it as needed
+            $shippingCharge = 0;
+        }
+
+        // Return the shipping charge amount as a JSON response
+        return response()->json(['shippingCharge' => $shippingCharge]);
+    }
+
+
     public function getCartCount(Request $request)
     {
         // Assuming you have a one-to-many relationship between User and Cart models,

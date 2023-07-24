@@ -39,6 +39,7 @@ Route::group(['prefix' => 'member/',  'middleware' => 'auth', 'middleware' => 'r
     Route::middleware('check.cart.item')->group(function () {
         Route::get('cart/get', [CartController::class, 'getCartData'])->name('cart.get');
     });
+    Route::post('/get-shipping-charge', [CartController::class, 'getShippingCharge'])->name('get-shipping-charge');
     Route::get('get-cart-count', [CartController::class, 'getCartCount'])->name('cart.count');
     Route::post('/products/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
     Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');

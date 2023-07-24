@@ -66,14 +66,14 @@
                 let formData = $('#checkout-form').serializeArray();
 
                 formData.push({
-                    name: '_token', // Add the CSRF token field
-                    value: $('meta[name="csrf-token"]').attr('content') // Extract the CSRF token value from the meta tag
+                    name: '_token',
+                    value: $('meta[name="csrf-token"]').attr('content')
                 }, {
                     name: 'user_id',
                     value: {{ $user->id }}
                 }, {
                     name: 'total_amount',
-                    value: totalAmount // Use the calculated total amount
+                    // value: totalAmount // Use the calculated total amount
                 }, {
                     name: 'receiver',
                     value: '{{ $user->name }}'
@@ -109,10 +109,25 @@
                     },
                     error: function(xhr, status, error) {
                         // Handle any errors that occur during the AJAX request
+                        console.log(formData);
                         console.log('Error placing order:', error);
                     }
                 });
             });
         });
     </script>
+        <script>
+            function updateShippingCharge(radio) {
+                const shippingChargeElement = document.getElementById('shipping-charge');
+                const shippingCharge = radio.value.includes('Sabah') || radio.value.includes('Sarawak') ? 5 : 0;
+                const totalPrice = Number({{ $user->cart->total_price }});
+                const totalAmount = (totalPrice + shippingCharge).toFixed(2);
+
+                shippingChargeElement.innerText = `RM ${totalAmount}`;
+            }
+        </script>
+
+
+
+
 @endsection
