@@ -12,27 +12,32 @@ class RankingSeeder extends Seeder
         [
             'name' => 'Chief Distributor',
             'desc' => 'Chief Distributor',
-            'created_by' => 1,
+            'updated_at' => null,
+            'created_by' => 1
         ],
         [
             'name' => 'Exclusive Distributor',
             'desc' => 'Exclusive Distributor',
-            'created_by' => 1,
+            'updated_at' => null,
+            'created_by' => 1
         ],
         [
             'name' => 'General Distributor',
             'desc' => 'General Distributor',
-            'created_by' => 1,
+            'updated_at' => null,
+            'created_by' => 1
         ],
         [
             'name' => 'Member',
             'desc' => 'Member',
-            'created_by' => 1,
+            'updated_at' => null,
+            'created_by' => 1
         ],
         [
             'name' => 'Nonmember',
             'desc' => 'Nonmember',
-            'created_by' => 1,
+            'updated_at' => null,
+            'created_by' => 1
         ]
     ];
 

@@ -5,18 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ShippingCharge extends Model
+class Address extends Model
 {
     use HasFactory;
 
     public function user()
     {
-        return $this->
-        belongsTo(User::class, 'name', 'state');
+        return $this->belongsTo(User::class, 'id', 'id');
     }
 
-    public function address()
+    public function shippingCharge()
     {
-        return $this->belongsTo(Address::class, 'state', 'name');
+        return $this->hasOne(ShippingCharge::class, 'name', 'state');
     }
 }

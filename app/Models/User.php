@@ -73,8 +73,13 @@ class User extends Authenticatable
         return $this->hasOne(Cart::class);
     }
 
-    public function shipping_charge()
+    public function shippingCharge()
     {
         return $this->hasOne(ShippingCharge::class, 'name', 'delivery_state');
+    }
+
+    public function address()
+    {
+        return $this->hasMany(Address::class, 'user_id', 'id');
     }
 }

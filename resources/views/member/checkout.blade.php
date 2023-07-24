@@ -61,7 +61,6 @@
                 }
 
                 // Calculate the total amount including the shipping charge
-                const totalAmount = {{ $user->cart->total_price }} + {{ $user->shipping_charge->amount }};
 
                 // Serialize the form data
                 let formData = $('#checkout-form').serializeArray();
@@ -95,7 +94,6 @@
                     value: $('input[name="address"]:checked').val()
                 }, {
                     name: 'delivery_fee',
-                    value: '{{ $user->shipping_charge->amount }}'
                 });
 
                 // Use AJAX to post the form data to the server

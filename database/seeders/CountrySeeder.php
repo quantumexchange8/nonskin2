@@ -10,9 +10,13 @@ class CountrySeeder extends Seeder
     public $countries = [
         [
             'name' => 'Malaysia',
+            'updated_at' => null,
+            'created_by' => 1
         ],
         [
             'name' => 'Singapore',
+            'updated_at' => null,
+            'created_by' => 1
         ],
     ];
 

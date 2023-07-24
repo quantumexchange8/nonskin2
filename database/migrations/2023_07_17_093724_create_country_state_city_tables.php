@@ -19,18 +19,24 @@ class CreateCountryStateCityTables extends Migration
             $table->string('sortname')->nullable();
             $table->string('phonecode')->nullable();
             $table->timestamps();
+            $table->integer('created_by')->unsigned()->nullable()->comment('Refers to user id');
+            $table->integer('updated_by')->unsigned()->nullable()->comment('Refers to user id');
         });
         Schema::create('states', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->integer('country_id')->nullable();
             $table->timestamps();
+            $table->integer('created_by')->unsigned()->nullable()->comment('Refers to user id');
+            $table->integer('updated_by')->unsigned()->nullable()->comment('Refers to user id');
         });
         Schema::create('cities', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->integer('state_id')->nullable();
             $table->timestamps();
+            $table->integer('created_by')->unsigned()->nullable()->comment('Refers to user id');
+            $table->integer('updated_by')->unsigned()->nullable()->comment('Refers to user id');
         });
     }
 

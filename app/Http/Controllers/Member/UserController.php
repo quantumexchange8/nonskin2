@@ -32,8 +32,11 @@ class UserController extends Controller
         return view('member.cart', compact('cartItems', 'subtotal', 'cart'));
     }
     public function checkout() {
-        $user = User::with('cart')->where('id', Auth::id())
-        ->select('id', 'name', 'contact', 'email', 'address_1', 'address_2', 'city', 'postcode', 'state', 'country', 'delivery_address_1', 'delivery_address_2', 'delivery_city', 'delivery_postcode', 'delivery_state', 'delivery_country')
+        $user = User::with('cart', 'address.shippingCharge')->where('id', Auth::id())
+        ->whereHas('address', function ($query) {
+            $query->where('user_id', Auth::id());
+        })
+        ->select('id', 'name', 'contact', 'email')
         ->first();
 
         $cartItems = CartItem::with('cart', 'product')

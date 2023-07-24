@@ -19,20 +19,25 @@
     <div class="p-4 border-top">
         <h5 class="font-size-14 mb-3">Shipping Info</h5>
         <div class="row">
-            {{-- <div class="col-lg-4 col-sm-6">
-                <div data-bs-toggle="collapse">
+            @foreach ($user->address as $k => $v)
+            <div class="col-lg-4 col-sm-6">
+                <div>
                     <label class="card-radio-label mb-0">
-                        <input type="radio" name="address" id="info-address1"
-                            class="card-radio-input"
-                            value="{{ $user->address_1 }}, {{ $user->address_2 }}, {{ $user->postcode }}, {{ $user->city }}, {{ $user->state }}, {{ $user->country }}">
+                        <input type="radio" name="address" id="info-address"
+                            class="card-radio-input" {{ $v->is_default == 1 ? 'checked' : '' }}
+                            value="{{ $v->address_1 }}, {{ $v->address_2 }}, {{ $v->postcode }}, {{ $v->city }}, {{ $v->state }}, {{ $v->country }}">
                         <div class="card-radio text-truncate p-3">
-                            @php
-                                // dd($user);
-                            @endphp
-                            <span class="fs-14 mb-4 d-block">Address 1</span>
-                            <span class="fs-14 mb-2 d-block">{{ $user->name }}</span>
-                            <span class="text-muted fw-normal text-wrap mb-1 d-block">{{ $user->address_1 }}, {{ $user->address_2 }}, {{ $user->postcode }}, {{ $user->city }}, {{ $user->state }}, {{ $user->country }}</span>
-                            <span class="text-muted fw-normal d-block">Contact: {{ $user->contact }}</span>
+                            {{-- <span class="fs-14 mb-4 d-block">Delivery Address</span> --}}
+                            <span class="fs-14 mb-2 d-block">
+                                {{ $v->name }}
+                                @if ($v->is_default == 1)
+                                    <span class="fw-normal btn btn-sm btn-warning">Default</span>
+                                @endif
+                            </span>
+                            <span class="text-muted fw-normal text-wrap mb-1 d-block">
+                                {{ $v->address_1 }}, {{ $v->address_2 }}, {{ $v->postcode }}, {{ $v->city }}, {{ $v->state }}, {{ $v->country }}
+                            </span>
+                            <span class="text-muted fw-normal d-block">Contact: {{ $v->contact }}</span>
                         </div>
                     </label>
                     <div class="edit-btn bg-light  rounded">
@@ -42,31 +47,8 @@
                         </a>
                     </div>
                 </div>
-            </div> --}}
-
-            <div class="col-lg-4 col-sm-6">
-                <div>
-                    <label class="card-radio-label mb-0">
-                        <input type="radio" name="address" id="info-address2"
-                            class="card-radio-input" checked
-                            value="{{ $user->delivery_address_1 }}, {{ $user->delivery_address_2 }}, {{ $user->delivery_postcode }}, {{ $user->delivery_city }}, {{ $user->delivery_state }}, {{ $user->delivery_country }}">
-                        <div class="card-radio text-truncate p-3">
-                            <span class="fs-14 mb-4 d-block">Delivery Address</span>
-                            <span class="fs-14 mb-2 d-block">{{ $user->name }}</span>
-                            <span class="text-muted fw-normal text-wrap mb-1 d-block">
-                                {{ $user->delivery_address_1 }}, {{ $user->delivery_address_2 }}, {{ $user->delivery_postcode }}, {{ $user->delivery_city }}, {{ $user->delivery_state }}, {{ $user->delivery_country }}
-                            </span>
-                            <span class="text-muted fw-normal d-block">Contact: {{ $user->contact }}</span>
-                        </div>
-                    </label>
-                    {{-- <div class="edit-btn bg-light  rounded">
-                        <a href="#" data-bs-toggle="tooltip" data-placement="top"
-                            title="" data-bs-original-title="Edit">
-                            <i class="bx bx-pencil font-size-16"></i>
-                        </a>
-                    </div> --}}
-                </div>
             </div>
+            @endforeach
         </div>
     </div>
 </div>
