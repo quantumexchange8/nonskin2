@@ -67,7 +67,12 @@ class CartController extends Controller
 
             // Calculate the total price for each cart item
             foreach ($cartItems as $item) {
-                $item->total_price = $item->product->price * $item->quantity;
+                if($item->product->discount == 0) {
+                    $item->total_price = $item->product->price * $item->quantity;
+                } else {
+                    $discountedPrice = $item->product->price - ($item->product->price * ($item->product->discount/100));
+                    $item->total_price = $discountedPrice * $item->quantity;
+                }
             }
 
             // Calculate the total price of all items in the cart

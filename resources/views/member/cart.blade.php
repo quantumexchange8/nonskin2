@@ -30,6 +30,9 @@
                     </div>
                     @endif
                     @foreach ($cartItems as $k => $v)
+                    @php
+                        // dd($v)
+                    @endphp
                         <div class="card border shadow-none">
                             <div class="card-body">
                                 <div class="d-flex align-items-start border-bottom pb-3">
@@ -89,7 +92,10 @@
                                         <div class="col-md-4">
                                             <div class="mt-3">
                                                 <p class="text-muted mb-2">Total</p>
-                                                <h5 class="font-size-16 total" data-product-id="{{ $v->product->id }}">RM {{ number_format($v->product->price*$v->quantity,2,'.',',') }}</h5>
+                                                <h5 class="font-size-16 total" data-product-id="{{ $v->product->id }}">RM {{ number_format(($v->price*(100-$v->product->discount)/100) * $v->quantity,2,'.') }}</h5>
+                                                @if ($v->product->discount > 0)
+                                                <p class="text-muted">{{ $v->product->discount }}% off</p>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>

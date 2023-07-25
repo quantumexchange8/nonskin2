@@ -678,8 +678,8 @@
 @endsection
 
 @section('script')
-    <script src="{{ asset('assets/libs/wnumb/wNumb.min.js') }}" defer></script>
-    <script src="{{ asset('assets/js/app.js') }}" defer></script>
+    <script src="{{ asset('assets/libs/wnumb/wNumb.min.js') }}"></script>
+    <script src="{{ asset('assets/js/app.js') }}"></script>
     <script>
         $(document).ready(function() {
             // Set the CSRF token for all AJAX requests

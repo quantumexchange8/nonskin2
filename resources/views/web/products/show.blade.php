@@ -279,7 +279,6 @@
 @endsection
 @section('script')
     <script src="{{ URL::asset('assets/libs/swiper/swiper.min.js') }}"></script>
-    <script src="{{ URL::asset('assets/js/pages/ecommerce-product-detail.init.js') }}"></script>
     <script src="{{ URL::asset('assets/js/app.js') }}"></script>
     <script>
         $(document).ready(function() {
