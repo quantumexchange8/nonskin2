@@ -51,10 +51,10 @@
                 const selectedPaymentMethod = $('input[name="payment_method"]:checked').val();
                 const selectedAddressRadio = $('input[name="address"]:checked');
                 const input = document.querySelector("#address");
+
                 const totalElement = document.getElementById('total');
                 const totalAmount = Number(totalElement.innerText.match(/\d+\.\d+/)[0]);
                 const formattedTotal = totalAmount.toFixed(2);
-                console.log(formattedTotal);
                 // Get the data-name and data-contact attributes from the selected radio button
                 const name = selectedAddressRadio.data('name');
                 const contact = selectedAddressRadio.data('contact');
@@ -113,13 +113,37 @@
                     method: 'POST',
                     data: formData,
                     success: function(response) {
-                        console.log(formData);
-                        window.location.href = "{{ route('member.cart') }}";
+                        if (response && response.message) {
+                            var timerInterval;
+                            Swal.fire({
+                            title: response.message,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen:function () {
+                                Swal.showLoading()
+                                timerInterval = setInterval(function() {
+                                var content = Swal.getHtmlContainer()
+                                if (content) {
+                                    var b = content.querySelector('b')
+                                    if (b) {
+                                        b.textContent = Swal.getTimerLeft()
+                                    }
+                                }
+                                }, 100)
+                            },
+                            onClose: function () {
+                                clearInterval(timerInterval);
+                                window.location.href = "{{ route('member.cart') }}";
+                            }
+                            }).then(function (result) {
+                                /* Read more about handling dismissals below */
+                                if (result.dismiss === Swal.DismissReason.timer) {
+                                    window.location.href = "{{ route('member.cart') }}";
+                                }
+                            })
+                        }
                     },
                     error: function(xhr, status, error) {
-                        console.log(formData);
-                        console.log('Error placing order:', error);
-
                         Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
@@ -135,11 +159,11 @@
             const shippingCharge = radio.value.includes('Sabah') || radio.value.includes('Sarawak') ? 5 : 0;
             const shippingElement = document.getElementById('shipping');
             const shippingAmount = shippingCharge.toFixed(2);
-            const totalPrice = Number({{ $user->cart->total_price }});
+            const totalPrice = Number({{ $subtotal }});
             const totalAmount = (totalPrice + shippingCharge).toFixed(2);
 
-            totalElement.innerText = `RM ${totalAmount}`;
             shippingElement.innerText = `RM ${shippingAmount}`;
+            totalElement.innerText = `RM ${totalAmount}`;
 
             // Set the value of the hidden input field
             const deliveryFeeInput = document.getElementById('delivery-fee-input');

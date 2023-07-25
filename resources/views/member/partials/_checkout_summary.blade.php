@@ -54,7 +54,7 @@
                     <td colspan="2">
                         <h5 class="font-size-14 m-0">Total:</h5>
                     </td>
-                    <td id="total" class="fw-bold">RM {{ number_format($v->cart->total_price + $user->address[0]->shippingCharge->amount, 2, '.', ',') }}</td>
+                    <td id="total" class="fw-bold">RM {{ number_format($subtotal + $user->address[0]->shippingCharge->amount, 2, '.', ',') }}</td>
                 </tr>
             </tbody>
         </table>
