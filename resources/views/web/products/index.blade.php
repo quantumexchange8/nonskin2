@@ -264,11 +264,11 @@
                                                         </div>
                                                     @endif
                                                     <div class="product-img pt-4 px-4">
-                                                        <div class="product-wishlist">
+                                                        {{-- <div class="product-wishlist">
                                                             <a href="#">
                                                                 <i class="mdi mdi-heart-outline"></i>
                                                             </a>
-                                                        </div>
+                                                        </div> --}}
                                                         <a href="{{ route('member.product-detail', $product->id) }}">
                                                             <img src="{{ asset('images/' . $product->image_1) }}"
                                                                 alt="" class="img-fluid mx-auto d-block"
@@ -678,10 +678,8 @@
 @endsection
 
 @section('script')
-    <script src="{{ URL::asset('assets/libs/nouislider/nouislider.min.js') }}"></script>
-    <script src="{{ URL::asset('assets/libs/wnumb/wNumb.min.js') }}"></script>
-    <script src="{{ URL::asset('assets/js/pages/product-filter-range.init.js') }}"></script>
-    <script src="{{ URL::asset('assets/js/app.js') }}"></script>
+    <script src="{{ asset('assets/libs/wnumb/wNumb.min.js') }}" defer></script>
+    <script src="{{ asset('assets/js/app.js') }}" defer></script>
     <script>
         $(document).ready(function() {
             // Set the CSRF token for all AJAX requests
@@ -695,12 +693,9 @@
                 e.preventDefault(); // Prevent default form submission
 
                 // Get the product ID from the data attribute
-                var productId = $(this).data('product-id');
-                var productPrice = $(this).data('product-price');
-                var quantity = 1;
-                console.log("Product:", productId);
-                console.log("Price:", productId);
-                console.log("Quantity:", productId);
+                const productId = $(this).data('product-id');
+                const productPrice = $(this).data('product-price');
+                const quantity = 1;
 
                 // Send an AJAX request to add the product to the cart
                 $.ajax({
@@ -712,12 +707,11 @@
                         quantity: quantity
                     },
                     success: function(response) {
-                        // Handle the successful response, such as displaying a success message or updating the cart UI
-                        console.log('Item added to cart successfully!');
+                        alert(response.message);
                     },
                     error: function(xhr, status, error) {
                         // Handle any errors that occur during the AJAX request
-                        console.log('Error adding item to cart:', error);
+                        alert(error);
                     }
                 });
             });

@@ -172,6 +172,8 @@ class CartController extends Controller
         // If the cart item already exists, increment the quantity by the input quantity
         if ($cartItem) {
             $cartItem->increment('quantity', $quantity);
+            $cartItem->updated_by = Auth::id();
+            $cartItem->save();
         } else {
             // Create a new cart item for the product with the input quantity
             CartItem::create([
@@ -180,6 +182,7 @@ class CartController extends Controller
                 'price' => $productPrice,
                 'quantity' => $quantity,
                 'created_by' => Auth::id(),
+                'updated_by' => Auth::id(),
             ]);
         }
 
@@ -195,23 +198,6 @@ class CartController extends Controller
         return response()->json(['message' => 'Cart updated successfully']);
     }
 
-    public function updateQty(Request $request) {
-        $itemId = $request->input('itemId');
-        $action = $request->input('action');
 
-        $cart = Cart::find($itemId);
-
-        if ($cart) {
-            if ($action === 'minus') {
-                $cart->quantity--;
-            } elseif ($action === 'plus') {
-                $cart->quantity++;
-            }
-
-            $cart->save();
-        }
-
-        return redirect()->route('cart');
-    }
 
 }

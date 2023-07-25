@@ -332,12 +332,10 @@
                         quantity: quantity
                     },
                     success: function(response) {
-                        // Handle the successful response, such as displaying a success message or updating the cart UI
-                        console.log('Item added to cart successfully!');
+                        alert(response.message);
                     },
                     error: function(xhr, status, error) {
-                        // Handle any errors that occur during the AJAX request
-                        console.log('Error adding item to cart:', error);
+                        alert(error);
                     }
                 });
             });
