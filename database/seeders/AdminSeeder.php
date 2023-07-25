@@ -144,13 +144,13 @@ class AdminSeeder extends Seeder
 
         User::create(
         [
-            'name'          =>'Lim Guan Eng',
-            'username'      =>'Guan',
+            'name'          =>'Lee Chong Wei',
+            'username'      =>'Chong Wei',
             'id_no'         =>'111111041111',
             'contact'       =>'01411111111',
             'email'         =>'chief@nonskin',
             'bank_name'         =>'MAYBANK',
-            'bank_holder_name'  =>'Lim Guan Eng',
+            'bank_holder_name'  =>'Lee Chong Wei',
             'bank_acc_no'       =>'1111111114',
             'bank_ic'           =>'111111041111',
             'remarks'       => 'testing',
@@ -172,7 +172,7 @@ class AdminSeeder extends Seeder
 
         Address::create([
             'user_id'       =>4,
-            'name'          =>'Lim Guan Eng',
+            'name'          =>'Lee Chong Wei',
             'contact'       =>'01411111111',
             'is_default'    =>1,
             'address_1'     =>'No 4, Jalan Api 4',
@@ -193,13 +193,13 @@ class AdminSeeder extends Seeder
 
         User::create(
         [
-            'name'          =>'Lim Kit Siang',
-            'username'      =>'Kit',
+            'name'          =>'Leonard Hofstadter',
+            'username'      =>'Leonard',
             'id_no'         =>'111111051111',
             'contact'       =>'01511111111',
             'email'         =>'exclusive@nonskin',
             'bank_name'         =>'MAYBANK',
-            'bank_holder_name'  =>'Lim Kit Siang',
+            'bank_holder_name'  =>'Leonard Hofstadter',
             'bank_acc_no'       =>'1111111115',
             'bank_ic'           =>'111111051111',
             'remarks'       => 'testing',
@@ -221,7 +221,7 @@ class AdminSeeder extends Seeder
 
         Address::create([
             'user_id'       =>5,
-            'name'          =>'Lim Kit Siang',
+            'name'          =>'Leonard Hofstadter',
             'contact'       =>'01511111111',
             'is_default'    =>1,
             'address_1'     =>'No 5, Jalan Api 5',
