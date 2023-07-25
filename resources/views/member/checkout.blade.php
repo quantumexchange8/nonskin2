@@ -49,18 +49,40 @@
                 // Check if delivery method and payment method are selected
                 const selectedDeliveryMethod = $('input[name="delivery_method"]:checked').val();
                 const selectedPaymentMethod = $('input[name="payment_method"]:checked').val();
+                const selectedAddressRadio = $('input[name="address"]:checked');
+                const input = document.querySelector("#address");
+                const totalElement = document.getElementById('total');
+                const totalAmount = Number(totalElement.innerText.match(/\d+\.\d+/)[0]);
+                const formattedTotal = totalAmount.toFixed(2);
+                console.log(formattedTotal);
+                // Get the data-name and data-contact attributes from the selected radio button
+                const name = selectedAddressRadio.data('name');
+                const contact = selectedAddressRadio.data('contact');
 
-                if (!selectedDeliveryMethod || !selectedPaymentMethod) {
-                    // Display an error message or alert to inform the user to select both options
+                if (!selectedAddressRadio) {
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
-                        text: 'Please select both delivery method and payment method'
+                        text: 'Please select your delivery address to proceed'
                     })
                     return;
                 }
-
-                // Calculate the total amount including the shipping charge
+                if (!selectedDeliveryMethod) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Please select delivery method to proceed'
+                    })
+                    return;
+                }
+                if (!selectedPaymentMethod) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Please select payment method to proceed'
+                    })
+                    return;
+                }
 
                 // Serialize the form data
                 let formData = $('#checkout-form').serializeArray();
@@ -72,62 +94,56 @@
                     name: 'user_id',
                     value: {{ $user->id }}
                 }, {
-                    name: 'total_amount',
-                    // value: totalAmount // Use the calculated total amount
-                }, {
-                    name: 'receiver',
-                    value: '{{ $user->name }}'
-                }, {
-                    name: 'contact',
-                    value: '{{ $user->contact }}'
-                }, {
                     name: 'email',
                     value: '{{ $user->email }}'
                 }, {
-                    name: 'delivery_method',
-                    value: selectedDeliveryMethod
+                    name: 'total_amount',
+                    value: formattedTotal
                 }, {
-                    name: 'payment_method',
-                    value: selectedPaymentMethod
+                    name: 'receiver',
+                    value: name
                 }, {
-                    name: 'delivery_address',
-                    value: $('input[name="address"]:checked').val()
-                }, {
-                    name: 'delivery_fee',
+                    name: 'contact',
+                    value: contact
                 });
 
                 // Use AJAX to post the form data to the server
                 $.ajax({
-                    url: '{{ route("place-order") }}', // Replace this with the appropriate route for your server
+                    url: '{{ route("place-order") }}',
                     method: 'POST',
                     data: formData,
                     success: function(response) {
                         console.log(formData);
                         window.location.href = "{{ route('member.cart') }}";
-                        // Handle the successful response, if needed
-                        // For example, you can redirect the user to a success page or display a success message
                     },
                     error: function(xhr, status, error) {
-                        // Handle any errors that occur during the AJAX request
                         console.log(formData);
                         console.log('Error placing order:', error);
+
+                        Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: error
+                    })
+                    return;
                     }
                 });
             });
         });
+        function updateShippingCharge(radio) {
+            const totalElement = document.getElementById('total');
+            const shippingCharge = radio.value.includes('Sabah') || radio.value.includes('Sarawak') ? 5 : 0;
+            const shippingElement = document.getElementById('shipping');
+            const shippingAmount = shippingCharge.toFixed(2);
+            const totalPrice = Number({{ $user->cart->total_price }});
+            const totalAmount = (totalPrice + shippingCharge).toFixed(2);
+
+            totalElement.innerText = `RM ${totalAmount}`;
+            shippingElement.innerText = `RM ${shippingAmount}`;
+
+            // Set the value of the hidden input field
+            const deliveryFeeInput = document.getElementById('delivery-fee-input');
+            deliveryFeeInput.value = shippingCharge;
+        }
     </script>
-        <script>
-            function updateShippingCharge(radio) {
-                const shippingChargeElement = document.getElementById('shipping-charge');
-                const shippingCharge = radio.value.includes('Sabah') || radio.value.includes('Sarawak') ? 5 : 0;
-                const totalPrice = Number({{ $user->cart->total_price }});
-                const totalAmount = (totalPrice + shippingCharge).toFixed(2);
-
-                shippingChargeElement.innerText = `RM ${totalAmount}`;
-            }
-        </script>
-
-
-
-
 @endsection

@@ -46,7 +46,6 @@ class UserController extends Controller
         ->get();
         $delivery_methods = DeliverySetting::select('name', 'icon_class')
         ->get();
-        // dd($delivery_methods);
         $user = User::with('cart.items', 'address.shippingCharge')
             ->where('id', Auth::id())
             ->whereHas('address', function ($query) {
@@ -54,23 +53,24 @@ class UserController extends Controller
             })
             ->select('id', 'name', 'contact', 'email')
             ->first();
-
+            // dd($user->address);
         // $cartItems = CartItem::with('cart', 'product')
         //     ->whereHas('cart', function ($query) {
         //         $query->where('user_id', Auth::id());
         //     })
         //     ->latest()
         //     ->get();
+
         $cartItems = $user->cart ? $user->cart->items : collect();
 
-        $totalAmount = 0;
+        $subtotal = 0;
         foreach ($cartItems as $item) {
-            $totalAmount += $item->price * $item->quantity;
+            $subtotal += $item->price * $item->quantity;
         }
-        // dd($totalAmount);
+        // dd($subtotal);
 
         if ($cartItems->count() > 0) {
-            return view('member.checkout', compact('cartItems', 'user', 'payment_methods', 'delivery_methods', 'totalAmount'));
+            return view('member.checkout', compact('cartItems', 'user', 'payment_methods', 'delivery_methods', 'subtotal'));
         }
 
         // If the user does not meet the conditions, redirect to the cart page with a message

@@ -20,7 +20,7 @@ class OrderController extends Controller
         $email              = $request->input('email');
         $deliveryMethod     = $request->input('delivery_method');
         $paymentMethod      = $request->input('payment_method');
-        $deliveryAddress    = $request->input('delivery_address');
+        $deliveryAddress    = $request->input('address');
         $deliveryFee        = $request->input('delivery_fee');
 
         // Save the form data to the Order model
