@@ -18,9 +18,14 @@ class ProductController extends Controller
 
     public function index()
     {
-        $products = Product::latest()->where('status', 'Active')->get();
+        $products = Product::selectRaw('*, CASE WHEN discount > 0 THEN (price - (price * discount / 100)) ELSE price END as selling_price')
+            ->latest()
+            ->where('status', 'Active')
+            ->get();
+        // dd($products);
         return view('web.products.index', compact('products'));
     }
+
 
     public function list()
     {

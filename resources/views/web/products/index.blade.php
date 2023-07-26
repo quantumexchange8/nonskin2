@@ -314,7 +314,7 @@
                                                         <div class="row pt-4">
                                                             <button class="btn btn-primary btn add-to-cart-btn"
                                                                 data-product-id="{{ $product->id }}"
-                                                                data-product-price="{{ $product->price }}"><i
+                                                                data-product-price="{{ $product->selling_price }}"><i
                                                                     class='bx bx-cart-alt'></i> Add to Cart</button>
                                                         </div>
                                                     </div>

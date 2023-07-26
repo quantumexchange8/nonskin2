@@ -64,32 +64,49 @@ class CartController extends Controller
 
         if ($cart) {
             $cartItems = $cart->items;
+            $totalDiscount = 0; // Initialize totalDiscount variable outside the loop
 
-            // Calculate the total price for each cart item
+            // Calculate the total price and discount for each cart item
             foreach ($cartItems as $item) {
-                if($item->product->discount == 0) {
+                // Product price
+                $item->product_price = $item->product->price;
+
+                if ($item->product->discount == 0) {
+                    // Discount price for each product (when no discount is applied)
+                    $item->discount_price = 0;
+                    $item->discounted_price = $item->product->price;
                     $item->total_price = $item->product->price * $item->quantity;
                 } else {
-                    $discountedPrice = $item->product->price - ($item->product->price * ($item->product->discount/100));
+                    // Discount price for each product (when discount is applied)
+                    $discountedPrice = $item->product->price - ($item->product->price * ($item->product->discount / 100));
+                    $discount = $item->product->price - $discountedPrice;
+                    $totalDiscount += $discount * $item->quantity; // Accumulate the discount for each product
+
+                    $item->discount_price = $discount;
+                    $item->discounted_price = $discountedPrice;
                     $item->total_price = $discountedPrice * $item->quantity;
                 }
             }
 
-            // Calculate the total price of all items in the cart
-            $totalPrice = $cartItems->sum('total_price');
+            // Calculate the total price of all items in the cart without discount
+            $totalPriceWithoutDiscount = $cartItems->sum(function ($item) {
+                return $item->product_price * $item->quantity;
+            });
+
+            // Calculate the total price of all items in the cart with discount
+            $totalPriceWithDiscount = $cartItems->sum('total_price');
 
             return response()->json([
                 'cart' => $cart,
                 'cartItems' => $cartItems,
-                'total_price' => $totalPrice,
+                'total_price_without_discount' => $totalPriceWithoutDiscount,
+                'total_price_with_discount' => $totalPriceWithDiscount,
+                'total_discount' => $totalDiscount // Now it will contain the sum of discounts for all products
             ]);
         }
 
         return response()->json(['message' => 'Cart not found'], 404);
     }
-
-
-
 
     public function update(Request $request, Cart $cart)
     {
@@ -98,7 +115,8 @@ class CartController extends Controller
         $productPrice = $request->input('price');
 
         // Find the cart item associated with the provided productId and the user's cart
-        $cartItem = CartItem::where('cart_id', auth()->user()->cart->id)
+        $cartItem = CartItem::with('product')
+            ->where('cart_id', auth()->user()->cart->id)
             ->where('product_id', $productId)
             ->first();
 
@@ -106,13 +124,17 @@ class CartController extends Controller
         if ($cartItem && auth()->user()->cart) {
             // Check if the cart item belongs to the authenticated user's cart
             if ($cartItem->cart_id === auth()->user()->cart->id) {
+                $totalPrice = 0;
+                if ($cartItem->product->discount > 0){
+                    $totalPrice = $productPrice - ($productPrice*($cartItem->product->discount/100));
+                }else{
+                    $totalPrice = $productPrice;
+                }
                 $cartItem->update([
-                    'quantity' => $quantity,
+                    'quantity'  => $quantity,
+                    'price'     => $totalPrice
                     // You may also update other attributes, such as 'price' if needed
                 ]);
-
-                // Calculate subtotal (price * quantity) and update total_price in Cart model
-                $subtotal = $productPrice * $quantity;
 
                 // Retrieve the cart from the authenticated user
                 $cart = auth()->user()->cart;
@@ -121,8 +143,13 @@ class CartController extends Controller
                 if ($cart) {
                     // Update the total_price in the cart model
                     $cart->total_price = 0; // Reset the total_price to recalculate it
+                    $cart->total_discount = 0;
                     foreach ($cart->items as $item) {
-                        $cart->total_price += $item->quantity * $item->product->price;
+                        if($item->product->discount == 0) {
+                            $cart->total_price += $item->quantity * $item->product->price;
+                        }else
+                            $cart->total_price += $item->quantity * ($item->product->price - ($item->product->price*$item->product->discount/100));
+                            $cart->total_discount += $item->quantity * ($item->product->price * $item->product->discount/100);
                     }
                     $cart->save();
 
@@ -170,7 +197,8 @@ class CartController extends Controller
             ]);
         }
 
-        $cartItem = CartItem::where('cart_id', $cart->id)
+        $cartItem = CartItem::with('product')
+            ->where('cart_id', $cart->id)
             ->where('product_id', $productId)
             ->first();
 
@@ -189,6 +217,20 @@ class CartController extends Controller
                 'created_by' => Auth::id(),
                 'updated_by' => Auth::id(),
             ]);
+        }
+        if ($cart) {
+            // Update the total_price in the cart model
+            $cart->total_price = 0; // Reset the total_price to recalculate it
+            $cart->total_discount = 0;
+            foreach ($cart->items as $item) {
+                if($item->product->discount == 0) {
+                    $cart->total_price += $item->quantity * $item->product->price;
+                }else
+                    $cart->total_price += $item->quantity * ($item->product->price - ($item->product->price*$item->product->discount/100));
+                    $cart->total_discount += $item->quantity * ($item->product->price * $item->product->discount/100);
+            }
+            $cart->updated_by = auth()->user()->id;
+            $cart->save();
         }
 
         return response()->json(['message' => 'Item added to cart successfully']);

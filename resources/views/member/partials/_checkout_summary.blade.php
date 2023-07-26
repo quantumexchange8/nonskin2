@@ -16,35 +16,45 @@
             <tbody>
                 @foreach ($cartItems as $k => $v )
                 @php
-                    // dd($cartItems);
+                    // dd($cartItems)
                 @endphp
                 <tr>
                     <th scope="row"><img src="{{ asset('images/' . $v->product->image_1) }}"
                             alt="product-img" title="product-img" class="avatar-md"></th>
                     <td>
-                        <h5 class="font-size-14 text-truncate"><a href="ecommerce-product-detail"
+                        <h5 class="font-size-14 text-truncate"><a href="#"
                                 class="text-dark">{{ $v->product->name_en }}</a></h5>
+                        @if($v->product->discount == 0)
+                            <p class="text-muted mb-0">RM {{ number_format($v->price,2,'.',',') }} x {{ $v->quantity,2 }}</p>
+                        @else
                         <p class="text-muted mb-0">RM {{ number_format($v->price,2,'.',',') }} x {{ $v->quantity,2 }}</p>
+                        <p class="font-size-12">({{ $v->product->discount }}% off)</p>
+                        @endif
                     </td>
-                    <td>RM {{ number_format($v->price*$v->quantity,2,'.',',') }}</td>
+                    @if($v->product->discount > 0)
+                        <td>RM {{ number_format($v->price*$v->quantity,2,'.',',') }}</td>
+                    @else
+                        <td>RM {{ number_format($v->price*$v->quantity,2,'.',',') }}</td>
+                    @endif
+
                 </tr>
                 @endforeach
                 <tr>
                     <td colspan="2">
-                        <h5 class="font-size-14 m-0">Sub Total :</h5>
+                        <h5 class="font-size-14 m-0">Merchandise Sub Total :</h5>
                     </td>
                     <td>RM {{ number_format($subtotal,2,'.',',') }}</td>
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <h5 class="font-size-14 m-0">Discount :</h5>
+                        <h5 class="font-size-14 m-0">Total Discount :</h5>
                     </td>
-                    <td>- RM 0.00</td>
+                    <td>- RM {{ number_format($totalDiscount,2,'.',',') }}</td>
                 </tr>
 
                 <tr>
                     <td colspan="2">
-                        <h5 class="font-size-14 m-0">Shipping Charge :</h5>
+                        <h5 class="font-size-14 m-0">Total Shipping Charge :</h5>
                     </td>
                     <td id="shipping">RM {{ number_format($user->address[0]->shippingCharge->amount, 2, '.', ',') }}</td>
                     <input type="hidden" name="delivery_fee" id="delivery-fee-input">
@@ -52,7 +62,7 @@
 
                 <tr class="bg-light" >
                     <td colspan="2">
-                        <h5 class="font-size-14 m-0">Total:</h5>
+                        <h5 class="font-size-14 m-0">Total Payment:</h5>
                     </td>
                     <td id="total" class="fw-bold">RM {{ number_format($subtotal + $user->address[0]->shippingCharge->amount, 2, '.', ',') }}</td>
                 </tr>

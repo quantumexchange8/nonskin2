@@ -40,7 +40,6 @@
 @endsection
 @section('script')
     <script src="{{ URL::asset('assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
-    <script src="{{ URL::asset('assets/js/pages/sweet-alerts.init.js') }}"></script>
     <script src="{{ URL::asset('assets/js/app.js') }}"></script>
     <script>
         $(document).ready(function() {
@@ -144,6 +143,9 @@
                         }
                     },
                     error: function(xhr, status, error) {
+                        console.log(formData);
+                        console.log(xhr);
+                        console.log(status);
                         Swal.fire({
                         icon: 'error',
                         title: 'Oops...',

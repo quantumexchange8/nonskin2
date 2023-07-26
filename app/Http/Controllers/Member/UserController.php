@@ -26,6 +26,7 @@ class UserController extends Controller
     public function announcement() {
         return view('member.announcement');
     }
+
     public function cart() {
         $cart = Cart::where('user_id', Auth::id())
         ->first();
@@ -40,6 +41,7 @@ class UserController extends Controller
 
         return view('member.cart', compact('cartItems', 'subtotal', 'cart'));
     }
+
     public function checkout()
     {
         $payment_methods = PaymentSetting::select('name', 'icon_class')
@@ -64,13 +66,27 @@ class UserController extends Controller
         $cartItems = $user->cart ? $user->cart->items : collect();
 
         $subtotal = 0;
+        $totalDiscount = 0; // Initialize totalDiscount variable outside the loop
+        $discountedPrice = 0;
+        $discount = 0;
         foreach ($cartItems as $item) {
-            $subtotal += $item->price * $item->quantity;
+            if ($item->product->discount == 0) {
+                $subtotal += $item->product->price * $item->quantity;
+            } else {
+                $discountedPrice = $item->product->price - ($item->product->price * ($item->product->discount / 100));
+                $discount = $item->product->price * ($item->product->discount / 100);
+                $totalDiscount += $discount * $item->quantity; // Accumulate the discount for each product
+                $subtotal += $discountedPrice * $item->quantity;
+            }
         }
-        // dd($subtotal);
+
+        // Calculate the total price with discount
+        $totalPriceWithDiscount = $subtotal - $totalDiscount;
+
+        // ... (existing code)
 
         if ($cartItems->count() > 0) {
-            return view('member.checkout', compact('cartItems', 'user', 'payment_methods', 'delivery_methods', 'subtotal'));
+            return view('member.checkout', compact('cartItems', 'user', 'payment_methods', 'delivery_methods', 'subtotal', 'discountedPrice', 'discount', 'totalDiscount', 'totalPriceWithDiscount'));
         }
 
         // If the user does not meet the conditions, redirect to the cart page with a message

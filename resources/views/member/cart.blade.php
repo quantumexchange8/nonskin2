@@ -30,9 +30,6 @@
                     </div>
                     @endif
                     @foreach ($cartItems as $k => $v)
-                    @php
-                        // dd($v)
-                    @endphp
                         <div class="card border shadow-none">
                             <div class="card-body">
                                 <div class="d-flex align-items-start border-bottom pb-3">
@@ -42,8 +39,11 @@
                                     <div class="flex-grow-1 align-self-center overflow-hidden">
                                         <div>
                                             <h5 class="text-truncate font-size-16"><a href="{{ route('member.product-detail', $v->product->id) }}" class="text-dark">{{ $v->product->name_en }}</a></h5>
-                                            {{-- <p class="mb-1">Color : <span class="fw-medium">Gray</span></p>
-                                            <p>Size : <span class="fw-medium">08</span></p> --}}
+                                            @if ($v->product->discount > 0)
+                                            <p class="mb-1">{{ $v->product->discount }}% off</p>
+                                            @endif
+
+                                            {{-- <p>Size : <span class="fw-medium">08</span></p> --}}
                                         </div>
                                     </div>
                                     <div class="flex-shrink-0 ms-2">
@@ -69,8 +69,11 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="mt-3">
-                                                <p class="text-muted mb-2">Price</p>
-                                                <h5 class="font-size-16 price" data-product-id="{{ $v->product->id }}">RM {{ number_format($v->product->price,2,'.',',') }}</h5>
+                                                <p class="text-muted mb-2">Unit Price</p>
+                                                <h5 class="font-size-16">RM {{ number_format(($v->product->price*(100-$v->product->discount)/100),2,'.') }}</h5>
+                                                @if ($v->product->discount > 0)
+                                                <del class="text-muted">RM {{ number_format($v->product->price,2,'.',',') }}</del>
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="col-md-4">
@@ -92,9 +95,9 @@
                                         <div class="col-md-4">
                                             <div class="mt-3">
                                                 <p class="text-muted mb-2">Total</p>
-                                                <h5 class="font-size-16 total" data-product-id="{{ $v->product->id }}">RM {{ number_format(($v->price*(100-$v->product->discount)/100) * $v->quantity,2,'.') }}</h5>
+                                                <h5 class="font-size-16 total" data-product-id="{{ $v->product->id }}">RM {{ number_format(($v->product->price*(100-$v->product->discount)/100) * $v->quantity,2,'.') }}</h5>
                                                 @if ($v->product->discount > 0)
-                                                <p class="text-muted">{{ $v->product->discount }}% off</p>
+                                                <del class="text-muted product-discount" data-product-id="{{ $v->product->id }}">RM {{ number_format($v->product->price*$v->quantity,2,'.',',') }}</del>
                                                 @endif
                                             </div>
                                         </div>
@@ -119,17 +122,17 @@
                                         <tbody>
                                             <tr>
                                                 <td>Sub Total :</td>
-                                                <td class="text-end sub-total">RM {{ number_format($cart->total_price,2,'.',',') }}</td>
+                                                <td class="text-end sub-total">RM 0.00</td>
                                             </tr>
                                             <tr>
-                                                <td>Discount : </td>
-                                                <td class="text-end">- RM 0</td>
+                                                <td>Total Discount : </td>
+                                                <td class="text-end total-discount">- RM 0</td>
                                             </tr>
                                             <tr class="bg-light">
-                                                <th>Total :</th>
+                                                <th>Total Merchandise:</th>
                                                 <td class="text-end total">
-                                                    <span class="fw-bold">
-                                                        RM {{ number_format($cart->total_price,2,'.',',') }}
+                                                    <span id="total" class="fw-bold">
+                                                        RM 0.00
                                                     </span>
                                                 </td>
                                             </tr>
@@ -145,7 +148,7 @@
                                     <div class="col-sm-6">
                                         <div class="text-sm-end mt-2 mt-sm-0">
                                             <a href="{{ route('member.checkout') }}" class="btn btn-success {{ $cartItems->count() == 0 ? 'disabled' : '' }}">
-                                                <i class="mdi mdi-cart-outline me-1"></i> Checkout </a>
+                                                <i class="mdi mdi-cart-outline me-1 checkout"></i> Checkout </a>
                                         </div>
                                     </div> <!-- end col -->
                                 </div> <!-- end row-->
@@ -217,26 +220,39 @@
                 getCartData();
             });
 
+            $('.checkout').click(function() {
+                let quantityInput = $(this).siblings('.quantity-input');
+                let productId = quantityInput.data('product-id');
+                let productPrice = quantityInput.data('product-price');
+                let currentValue = Number(quantityInput.val());
+                updateCartItem(productId, currentValue, productPrice);
+            })
+
             function getCartData() {
                 $.ajax({
                     url: '{{ route("cart.get") }}',
                     method: 'GET',
                     success: function(response) {
-                    // Handle the successful response and update the cart view accordingly
+                    console.log(response);
                     if (response.cart) {
                         // Update the Sub Total and Total in the cart view
-                        $('.sub-total').text('RM ' + response.total_price.toFixed(2));
-                        $('.total').text('RM ' + response.total_price.toFixed(2));
+                        $('.sub-total').text('RM ' + response.total_price_without_discount.toLocaleString(undefined, { minimumFractionDigits: 2 }));
+                        $('#total').text('RM ' + response.total_price_with_discount.toLocaleString(undefined, { minimumFractionDigits: 2 }));
 
                         // Update the quantity and total price for each cart item in the view
                         $.each(response.cartItems, function(index, item) {
-                            var row = $('.cart-item-row[data-product-id="' + item.product_id + '"]');
+                            let row = $('.cart-item-row[data-product-id="' + item.product_id + '"]');
                             row.find('.quantity-input').val(item.quantity);
-                            row.find('.total-price').text('RM ' + item.total_price.toFixed(2));
+                            row.find('.total-price').text('RM ' + item.total_price.toLocaleString(undefined, { minimumFractionDigits: 2 }));
 
                             // Update the price and total for each item in the cart view
-                            $('.price[data-product-id="' + item.product_id + '"]').text('RM ' + item.product.price.toFixed(2));
-                            $('.total[data-product-id="' + item.product_id + '"]').text('RM ' + item.total_price.toFixed(2));
+                            $('.price[data-product-id="' + item.product_id + '"]').text('RM ' + item.product.price.toLocaleString(undefined, { minimumFractionDigits: 2 }));
+                            $('.total-discount').text('- RM ' + response.total_discount.toLocaleString(undefined, { minimumFractionDigits: 2 }));
+                            $('.total[data-product-id="' + item.product_id + '"]').text('RM ' + item.total_price.toLocaleString(undefined, { minimumFractionDigits: 2 }));
+                            if (item.product.discount > 0) {
+                                let discountedTotalPrice = item.product.price * item.quantity;
+                                $('.product-discount[data-product-id="' + item.product_id + '"]').text('RM ' + discountedTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2 }));
+                            }
                         });
                     } else {
                         // Handle the case when the cart data is not found
@@ -270,6 +286,25 @@
                     }
                 });
             }
+            $('.checkout').click(function() {
+                // Send an AJAX request to handle the checkout process
+                $.ajax({
+                    url: '{{ route("cart.update") }}',
+                    method: 'POST',
+                    data: {
+                        product_id: productId,
+                        quantity: quantity,
+                        price: productPrice
+                    },
+                    success: function(response) {
+                        // Handle success
+                    },
+                    error: function(xhr, status, error) {
+                        // You can also show an error message to the user if needed
+                        alert('Error during checkout. Please try again.');
+                    }
+                });
+            });
         });
 
     </script>

@@ -79,7 +79,7 @@ class ProductSeeder extends Seeder
             'desc_en'               => "An intensive conditioning, pore repairing essence that rebalances the skin's pH levels, regulates sebum production, reduces skin inflammation, eliminates acnes and scars, while providing firming effects.",
             'desc_cn'               => "深层调理，毛孔修复，平衡油性肤质，解脂抗炎，特效消除粉刺和暗疮，紧肤。",
             'price'                 => 332,
-            'discount'              => 0,
+            'discount'              => 5,
             'category_id'           => 7,
             'shipping_quantity'     => 1,
             'image_1'               => '5.jpg',
