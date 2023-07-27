@@ -76,34 +76,14 @@ class OrderController extends Controller
     }
 
     // Admin
-    public function gridData() {
-        return (new DataGrid())
-            ->source(Order::query())
-            ->column('id', 'ID', null, 50)
-            ->column('order_num', 'Order Number')
-            ->column('total_amount', 'Total Amount')
-            ->column('receiver', 'Receiver')
-            ->column('contact', 'Contact')
-            ->column('email', 'Email')
-            ->column('delivery_method', 'Delivery Method')
-            ->column('payment_method', 'Payment Method')
-            ->column('delivery_address', 'Delivery Address')
-            ->column('delivery_fee', 'Delivery Fee')
-            ->column('remarks', 'Remarks')
-            ->toJson();
-    }
-
     public function new() {
-        $orders = Order::all();
+        $orders = Order::where('status', 'New')->get();
         $ordersJson = json_encode($orders);
         // dd($orders);
         return view('admin.orders.new', compact('ordersJson'));
     }
     public function history() {
         return view('admin.orders.history');
-    }
-    public function getNewOrderData() {
-        $orders = Order::all();
     }
 
     public function index()

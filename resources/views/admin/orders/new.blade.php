@@ -216,13 +216,20 @@
     console.log(orders);
     new gridjs.Grid({
         columns: [
-            { id: 'id', name: 'ID', width: '5%' },
+            { id: 'id', name: '#', width: '5%' },
             {
                 id: 'order_num',
                 name: 'Order Number',
                 formatter: (cell) => gridjs.html(`<span class="fw-semibold">#${cell}</span>`),
             },
-            { id: 'total_amount', name: 'Total Amount', width: '9%', },
+            {
+                id: 'total_amount',
+                name: 'Total Amount',
+                width: '9%',
+                formatter: (function (cell) {
+                    return gridjs.html('RM ' + cell.toLocaleString(undefined, { minimumFractionDigits: 2 }))
+                })
+            },
             {
                 id: "payment_method",
                 name: "Payment Method",
@@ -261,7 +268,8 @@
             },
             {
                 id: "contact",
-                name: "Contact"
+                name: "Contact",
+                width: '8%'
             },
             {
                 id: "delivery_address",
@@ -280,7 +288,7 @@
             }
         ],
         pagination: {
-            limit: 10
+            limit: 8
         },
         sort: true,
         search: true,
