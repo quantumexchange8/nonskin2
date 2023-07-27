@@ -14,17 +14,19 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
-        $this->call(PrefixSeeder::class);
-        $this->call(RoleSeeder::class);
-        $this->call(RankingSeeder::class);
-        $this->call(CategorySeeder::class);
-        $this->call(ProductSeeder::class);
-        $this->call(ShippingChargeSeeder::class);
-        $this->call(CountrySeeder::class);
-        $this->call(StateSeeder::class);
-        $this->call(BankSettingSeeder::class);
-        $this->call(ShippingSettingSeeder::class);
-        $this->call(AdminSeeder::class);
+        $this->call([
+            PrefixSeeder::class,
+            RoleSeeder::class,
+            RankingSeeder::class,
+            CategorySeeder::class,
+            ProductSeeder::class,
+            ShippingChargeSeeder::class,
+            CountrySeeder::class,
+            StateSeeder::class,
+            BankSettingSeeder::class,
+            ShippingSettingSeeder::class,
+            AdminSeeder::class,
+        ]);
 
     }
 }
