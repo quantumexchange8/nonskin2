@@ -26,7 +26,7 @@
                 @include('layouts.footer')
             </div>
         </div>
-        @include('layouts.right-sidebar')
+        {{-- @include('layouts.right-sidebar') --}}
         @include('layouts.vendor-scripts')
     </body>
 </html>
