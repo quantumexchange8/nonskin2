@@ -108,11 +108,11 @@ class UserController extends Controller
     public function memberTree() {
         return view('member.member_tree');
     }
+    public function pendingOrder() {
+        return view('member.order_pending');
+    }
     public function orderHistory() {
         return view('member.order_history');
-    }
-    public function orderPending() {
-        return view('member.order_pending');
     }
     public function productList() {
         // ProductController
