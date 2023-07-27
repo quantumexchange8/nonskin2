@@ -66,7 +66,7 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         @hasanyrole('superadmin|admin')
-                        <li><a href="{{ route('products.list') }}" data-key="t-add-product">Table View</a></li>
+                        <li><a href="{{ route('admin.product-list') }}" data-key="t-add-product">Table View</a></li>
                         @endhasanyrole
                         <li><a href="{{ route('member.product-list') }}" data-key="t-product-list">List</a></li>
                         @hasanyrole('user')
@@ -74,25 +74,36 @@
                         @endhasanyrole
                     </ul>
                 </li>
-
-                @unlessrole('superadmin|admin')
+                @hasanyrole('user')
                 <li>
                     <a href="{{ route('member.commission') }}">
                         <i class="bx bxs-dollar-circle icon nav-icon"></i>
                         <span class="menu-item" data-key="t-commission">Commission</span>
                     </a>
                 </li>
-
+                @endhasanyrole
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bx bxs-truck icon nav-icon"></i>
+                        @hasanyrole('user')
                         <span class="menu-item" data-key="t-multi-level">My Orders</span>
+                        @endhasanyrole
+                        @hasanyrole('superadmin|admin')
+                        <span class="menu-item" data-key="t-multi-level">Orders</span>
+                        @endhasanyrole
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
+                        @hasanyrole('user')
                         <li><a href="{{ route('member.order-pending') }}" data-key="t-order-pending">Pending</a></li>
                         <li><a href="{{ route('member.order-history') }}" data-key="t-order-history">History</a></li>
+                        @endhasanyrole
+                        @hasanyrole('superadmin|admin')
+                        <li><a href="{{ route('admin.new-order-list') }}">New Order</a></li>
+                        <li><a href="{{ route('admin.order-history-list') }}">History</a></li>
+                        @endhasanyrole
                     </ul>
                 </li>
+                @hasanyrole('user')
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bx bx-dollar icon nav-icon"></i>
@@ -146,7 +157,7 @@
                         <li><a href="{{ route('member.report-wallet') }}" data-key="t-report-wallet">Wallet</a></li>
                     </ul>
                 </li>
-                @endunlessrole
+                @endhasanyrole
                 @hasanyrole('superadmin|admin')
                 <li class="menu-title" data-key="t-applications">Administration</li>
                 <li>
