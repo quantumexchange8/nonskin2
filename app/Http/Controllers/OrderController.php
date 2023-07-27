@@ -7,11 +7,13 @@ use App\Models\Order;
 use App\Models\Cart;
 use App\Models\CartItem;
 use Illuminate\Http\Request;
+use Okipa\Grid\DataGrid;
 use Auth;
 use DB;
 
 class OrderController extends Controller
 {
+    // Customer
     public function placeOrder(Request $request)
     {
         if(auth()->user()->cart->items->count() == 0){
@@ -71,6 +73,34 @@ class OrderController extends Controller
             // Handle the exception as needed (e.g., log the error, return an error response)
             return response()->json(['error' => 'An error occurred while placing the order'], 500);
         }
+    }
+
+    // Admin
+    public function gridData() {
+        return (new DataGrid())
+            ->source(Order::query())
+            ->column('id', 'ID', null, 50)
+            ->column('order_num', 'Order Number')
+            ->column('total_amount', 'Total Amount')
+            ->column('receiver', 'Receiver')
+            ->column('contact', 'Contact')
+            ->column('email', 'Email')
+            ->column('delivery_method', 'Delivery Method')
+            ->column('payment_method', 'Payment Method')
+            ->column('delivery_address', 'Delivery Address')
+            ->column('delivery_fee', 'Delivery Fee')
+            ->column('remarks', 'Remarks')
+            ->toJson();
+    }
+
+    public function new() {
+        return view('admin.orders.new');
+    }
+    public function history() {
+        return view('admin.orders.history');
+    }
+    public function getNewOrderData() {
+        $orders = Order::all();
     }
 
     public function index()
