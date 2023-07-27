@@ -11,7 +11,6 @@
                 <img src="{{ URL::asset('assets/images/logo-sm.svg') }}" alt="" height="22"> <span class="logo-txt">@lang('translation.Nonskin')</span>
             </span>
         </a>
-
         <a href="{{ url('/') }}" class="logo logo-light">
             <span class="logo-lg">
                 <img src="{{ URL::asset('assets/images/logo-sm.svg') }}" alt="" height="22"> <span class="logo-txt">@lang('translation.Nonskin')</span>
@@ -21,11 +20,9 @@
             </span>
         </a>
     </div>
-
     <button type="button" class="btn btn-sm px-3 font-size-16 header-item vertical-menu-btn">
         <i class="fa fa-fw fa-bars"></i>
     </button>
-
     <div data-simplebar class="sidebar-menu-scroll">
         <!--- Sidemenu -->
         <div id="sidebar-menu">
@@ -171,24 +168,22 @@
                         {{-- <li><a href="{{ route('member.member-tree') }}" data-key="t-member-tree">Tree</a></li> --}}
                     </ul>
                 </li>
-
                 @endhasanyrole
-
-                {{-- <li>
+                @hasanyrole('superadmin')
+                <li class="menu-title" data-key="t-pages">@lang('translation.Pages')</li>
+                <li>
                     <a href="apps-calendar">
                         <i class="bx bx-calendar icon nav-icon"></i>
                         <span class="menu-item" data-key="t-calendar">@lang('translation.Calendar')</span>
                     </a>
-                </li> --}}
-
-                {{-- <li>
+                </li>
+                <li>
                     <a href="apps-chat">
                         <i class="bx bx-chat icon nav-icon"></i>
                         <span class="menu-item" data-key="t-chat">@lang('translation.Chat')</span>
                         <span class="badge rounded-pill bg-danger" data-key="t-hot">@lang('translation.Hot')</span>
                     </a>
-                </li> --}}
-                @hasanyrole('superadmin')
+                </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bx bx-envelope icon nav-icon"></i>
@@ -199,8 +194,6 @@
                         <li><a href="email-read" data-key="t-read-email">@lang('translation.Read_Email')</a></li>
                     </ul>
                 </li>
-                @endhasanyrole
-                @hasanyrole('superadmin')
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bx bx-store icon nav-icon"></i>
@@ -208,20 +201,15 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="ecommerce-shops" data-key="t-shops">@lang('translation.Shops')</a></li>
-                        <li><a href="{{ route('products.index') }}" data-key="t-products">@lang('translation.Products')</a></li>
+                        <li><a href="ecommerce-products" data-key="t-products">@lang('translation.Products')</a></li>
                         <li><a href="ecommerce-orders" data-key="t-orders">@lang('translation.Orders')</a></li>
                         <li><a href="ecommerce-customers" data-key="t-customers">@lang('translation.Customers')</a></li>
-                        <li><a href="{{ route('products.create') }}" data-key="t-add-product">@lang('translation.Add_Product')</a></li>
-                        @endhasanyrole
-                        @hasanyrole('superadmin')
+                        <li><a href="ecommerce-add-product" data-key="t-add-product">@lang('translation.Add_Product')</a></li>
                         <li><a href="ecommerce-product-detail" data-key="t-product-detail">@lang('translation.Product_Detail')</a></li>
                         <li><a href="ecommerce-cart" data-key="t-cart">@lang('translation.Cart')</a></li>
                         <li><a href="ecommerce-checkout" data-key="t-checkout">@lang('translation.Checkout')</a></li>
-                        @endhasanyrole
                     </ul>
                 </li>
-
-                @hasanyrole('superadmin')
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bx bx-receipt icon nav-icon"></i>
@@ -232,7 +220,6 @@
                         <li><a href="invoices-detail" data-key="t-invoice-detail">@lang('translation.Invoice_Detail')</a></li>
                     </ul>
                 </li>
-                <li class="menu-title" data-key="">Settings</li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bx bx-user-circle icon nav-icon"></i>
@@ -249,28 +236,6 @@
                         <li><a href="auth-two-step-verification" data-key="t-two-step-verification">@lang('translation.Two_Step_Verification')</a></li>
                     </ul>
                 </li>
-                @endhasanyrole
-
-                @hasanyrole('superadmin')
-                <li class="menu-title" data-key="t-pages">@lang('translation.Pages')</li>
-
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow">
-                        <i class="bx bx-user-circle icon nav-icon"></i>
-                        <span class="menu-item" data-key="t-authentication">@lang('translation.Authentication')</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="auth-login" data-key="t-login">@lang('translation.Login')</a></li>
-                        <li><a href="auth-register" data-key="t-register">@lang('translation.Register')</a></li>
-                        <li><a href="auth-recoverpw" data-key="t-recover-password">@lang('translation.Recover_Password')</a></li>
-                        <li><a href="auth-lock-screen" data-key="t-lock-screen">@lang('translation.Lock_Screen')</a></li>
-                        <li><a href="auth-logout" data-key="t-logout">@lang('translation.Log_Out')</a></li>
-                        <li><a href="auth-confirm-mail" data-key="t-confirm-mail">@lang('translation.Confirm_Mail')</a></li>
-                        <li><a href="auth-email-verification" data-key="t-email-verification">@lang('translation.Email_Verification')</a></li>
-                        <li><a href="auth-two-step-verification" data-key="t-two-step-verification">@lang('translation.Two_Step_Verification')</a></li>
-                    </ul>
-                </li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bx bx-file icon nav-icon"></i>
@@ -287,16 +252,13 @@
                         <li><a href="pages-500" data-key="t-error-500">@lang('translation.Error_500')</a></li>
                     </ul>
                 </li>
-
                 <li>
                     <a href="layouts-vertical">
                         <i class="bx bx-layout icon nav-icon"></i>
                         <span class="menu-item" data-key="t-vertical">@lang('translation.Vertical')</span>
                     </a>
                 </li>
-
                 <li class="menu-title" data-key="t-components">@lang('translation.Components')</li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bx bxl-bootstrap icon nav-icon"></i>
@@ -321,7 +283,6 @@
                         <li><a href="ui-colors" data-key="t-colors">@lang('translation.Colors')</a></li>
                     </ul>
                 </li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bx bx-disc icon nav-icon"></i>
@@ -335,7 +296,6 @@
                         <li><a href="extended-notifications" data-key="t-notifications">@lang('translation.Notifications')</a></li>
                     </ul>
                 </li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bx bxs-eraser icon nav-icon"></i>
@@ -351,7 +311,6 @@
                         <li><a href="form-mask" data-key="t-mask">@lang('translation.Mask')</a></li>
                     </ul>
                 </li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bx bx-list-ul icon nav-icon"></i>
@@ -362,7 +321,6 @@
                         <li><a href="tables-advanced" data-key="t-advanced-tables">@lang('translation.Advance_Tables')</a></li>
                     </ul>
                 </li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bx bxs-bar-chart-alt-2 icon nav-icon"></i>
@@ -373,7 +331,6 @@
                         <li><a href="charts-chartjs" data-key="t-chartjs-charts">@lang('translation.Chartjs')</a></li>
                     </ul>
                 </li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bx bx-aperture icon nav-icon"></i>
@@ -387,7 +344,6 @@
                         <li><a href="icons-fontawesome" data-key="t-font-awesome">@lang('translation.Font_awesome')</a></li>
                     </ul>
                 </li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bx bx-map icon nav-icon"></i>
@@ -399,7 +355,6 @@
                         <li><a href="maps-leaflet" data-key="t-leaflet">@lang('translation.Leaflet')</a></li>
                     </ul>
                 </li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bx bx-share-alt icon nav-icon"></i>
@@ -416,7 +371,6 @@
                     </ul>
                 </li>
                 @endhasanyrole
-
             </ul>
         </div>
         <!-- Sidebar -->

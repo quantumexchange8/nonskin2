@@ -94,7 +94,10 @@ class OrderController extends Controller
     }
 
     public function new() {
-        return view('admin.orders.new');
+        $orders = Order::all();
+        $ordersJson = json_encode($orders);
+        // dd($orders);
+        return view('admin.orders.new', compact('ordersJson'));
     }
     public function history() {
         return view('admin.orders.history');

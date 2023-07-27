@@ -116,6 +116,7 @@
                             var timerInterval;
                             Swal.fire({
                             title: response.message,
+                            html: 'Please do not click on anywhere while being redirected to the payment page',
                             timer: 3000,
                             timerProgressBar: true,
                             didOpen:function () {
@@ -132,12 +133,12 @@
                             },
                             onClose: function () {
                                 clearInterval(timerInterval);
-                                window.location.href = "{{ route('member.cart') }}";
+                                window.location.href = "{{ route('member.order-pending') }}";
                             }
                             }).then(function (result) {
                                 /* Read more about handling dismissals below */
                                 if (result.dismiss === Swal.DismissReason.timer) {
-                                    window.location.href = "{{ route('member.cart') }}";
+                                    window.location.href = "{{ route('member.order-pending') }}";
                                 }
                             })
                         }

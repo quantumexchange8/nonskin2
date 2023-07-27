@@ -17,7 +17,7 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->integer('user_id')->unsigned()->nullable();
             $table->string('order_num')->nullable();
-            $table->double('total_amount',9,2)->unsigned()->default(0);
+            $table->double('total_amount',9,2)->unsigned();
             $table->string('receiver');
             $table->string('contact');
             $table->string('email')->nullable();

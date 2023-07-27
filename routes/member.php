@@ -16,7 +16,7 @@ Route::group(['prefix' => 'member/', 'as' => 'member.',  'middleware' => ['auth'
     Route::get('member-network', [UserController::class, 'memberNetwork'])->name('member-network');
     Route::get('member-tree', [UserController::class, 'memberTree'])->name('member-tree');
     Route::get('order-history', [UserController::class, 'orderHistory'])->name('order-history');
-    Route::get('order-pending', [UserController::class, 'orderPending'])->name('order-pending');
+    Route::get('pending-orders', [UserController::class, 'orderPending'])->name('order-pending');
     Route::get('products', [ProductController::class, 'index'])->name('product-list');
     Route::get('products/{product}', [ProductController::class, 'show'])->name('product-detail');
     Route::get('report-downline-sales', [UserController::class, 'reportDownlineSales'])->name('report-downline-sales');
