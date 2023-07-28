@@ -5,7 +5,7 @@
 
 @section('content')
     @component('components.breadcrumb')
-    @slot('url') {{ route('products.list') }} @endslot
+    @slot('url') {{ route('admin.product-list') }} @endslot
         @slot('li_1') Products @endslot
         @slot('title') Product List @endslot
     @endcomponent
@@ -20,11 +20,9 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
-                <div class="card-header">
+                <div class="card-body">
                     <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal"
                         data-bs-target=".modal-update-product"><i class='bx bx-plus-circle'></i> Add Product</button>
-                </div>
-                <div class="card-body">
                     <div id="table-product-list"></div>
                 </div>
             </div>
