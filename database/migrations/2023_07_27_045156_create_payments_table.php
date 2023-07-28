@@ -18,7 +18,7 @@ class CreatePaymentsTable extends Migration
             $table->string('payment_num')->nullable();
             $table->string('type')->nullable();
             $table->integer('user_id')->unsigned()->comment('Refers to user id');
-            $table->double('amount',9,2)->unsigned();
+            $table->double('amount',9,2)->unsigned()->comment('Amount that user needs to pay');
             $table->string('gateway')->nullable();
             $table->string('status')->nullable();
             $table->string('remarks')->nullable();
@@ -27,8 +27,10 @@ class CreatePaymentsTable extends Migration
             $table->string('bank_holder_name')->nullable();
             $table->string('bank_acc_no')->nullable();
             $table->string('bank_ic')->nullable();
-            $table->text('reason')->nullable()->default('text');
+            $table->text('reason')->nullable();
             $table->timestamps();
+            $table->integer('created_by')->unsigned()->nullable()->comment('Refers to user id');
+            $table->integer('updated_by')->unsigned()->nullable()->comment('Refers to user id');
         });
     }
 
