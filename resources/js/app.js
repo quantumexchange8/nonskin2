@@ -416,24 +416,16 @@ File: Main Js File
     ) {
       document.getElementsByTagName("html")[0].removeAttribute("dir");
       document.getElementById("layout-direction-rtl").checked = false;
-      document
-        .getElementById("bootstrap-style")
-        .setAttribute("href", "assets/css/bootstrap.min.css");
-      document
-        .getElementById("app-style")
-        .setAttribute("href", "assets/css/app.min.css");
+    //   document .getElementById("bootstrap-style") .setAttribute("href", "assets/css/bootstrap.min.css");
+    //   document .getElementById("app-style") .setAttribute("href", "assets/css/app.min.css");
       sessionStorage.setItem("is_visited", "layout-direction-ltr");
     } else if (
       document.getElementById("layout-direction-rtl").checked == true &&
       id === "layout-direction-rtl"
     ) {
       document.getElementById("layout-direction-ltr").checked = false;
-      document
-        .getElementById("bootstrap-style")
-        .setAttribute("href", "assets/css/bootstrap-rtl.min.css");
-      document
-        .getElementById("app-style")
-        .setAttribute("href", "assets/css/app-rtl.min.css");
+    //   document .getElementById("bootstrap-style") .setAttribute("href", "assets/css/bootstrap-rtl.min.css");
+      document .getElementById("app-style") .setAttribute("href", "assets/css/app-rtl.min.css");
       document.getElementsByTagName("html")[0].setAttribute("dir", "rtl");
       sessionStorage.setItem("is_visited", "layout-direction-rtl");
     }
