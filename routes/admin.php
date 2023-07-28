@@ -14,3 +14,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.',  'middleware' => 'auth'], f
     Route::get('/order-history', [OrderController::class, 'history'])->name('order-history-list');
 
 });
+Route::group(['prefix' => 'admin/products', 'as' => 'admin.products.',  'middleware' => ['auth', 'role:superadmin|admin',]], function () {
+    Route::get('/create', [ProductController::class, 'create'])->name('create');
+});

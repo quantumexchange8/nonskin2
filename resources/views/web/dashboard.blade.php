@@ -30,7 +30,7 @@
 
                                     <h3 class="text-white mb-0"> Welcome Back, {{ Auth::user()->name }}!</h3>
 
-                                    <p class="text-white-50 px-4 mt-4">Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien libero tincidunt.</p>
+                                    <p class="text-white-50 px-4 mt-4">&nbsp;<br>&nbsp;</p>
 
                                     <div class="mt-4 pt-2 mb-2">
                                         <a href="" class="btn btn-success">View Profile <i class="mdi mdi-arrow-right ms-1"></i></a>
@@ -146,7 +146,7 @@
                 </div>
             </div>
 
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col-xl-8">
                     <div class="card">
                         <div class="card-body">
@@ -314,9 +314,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col-xl-8">
                         <div class="row">
                             <div class="col-lg-5">
@@ -793,9 +793,9 @@
                     </div>
                 </div>
                 </div>
-            </div>
+            </div> --}}
 
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col-xl-4">
 
                     <div class="card">
@@ -1070,7 +1070,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
 @endsection
 @section('script')

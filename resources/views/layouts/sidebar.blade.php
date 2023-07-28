@@ -63,6 +63,7 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         @hasanyrole('superadmin|admin')
+                        <li><a href="{{ route('admin.products.create') }}">Add Product</a></li>
                         <li><a href="{{ route('admin.product-list') }}">List View</a></li>
                         <li><a href="{{ route('admin.product-index') }}" >User View</a></li>
                         @endhasanyrole

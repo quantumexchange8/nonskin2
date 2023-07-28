@@ -35,7 +35,7 @@ class ProductController extends Controller
 
     public function create()
     {
-        return view('web.admin.products.create');
+        return view('admin.products.create');
     }
 
     public function store(Request $request) {
@@ -72,12 +72,12 @@ class ProductController extends Controller
             ]);
 
                     // Upload and store the images
-            // if ($request->hasFile('image_1')) {
-            //     $image1 = $request->file('image_1');
-            //     $imageName1 = time() . '.' . $image1->getClientOriginalExtension();
-            //     $image1->storeAs('images', $imageName1, 'public');
-            //     $product->image_1 = $imageName1;
-            // }
+            if ($request->hasFile('image_1')) {
+                $image1 = $request->file('image_1');
+                $imageName1 = time() . '.' . $image1->getClientOriginalExtension();
+                $image1->storeAs('images', $imageName1, 'public');
+                $product->image_1 = $imageName1;
+            }
 
             // if ($request->hasFile('image_2')) {
             //     $image2 = $request->file('image_2');
@@ -109,7 +109,7 @@ class ProductController extends Controller
             $product->save();
 
             return redirect()
-                ->route('products.list')
+                ->route('admin.product-list')
                 ->with("added", "Product successfully created!");
         } catch (\Exception $e) {
             // Handle the exception here, for example:

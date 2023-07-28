@@ -23,7 +23,7 @@ class CreateProductsTable extends Migration
             $table->double('price')->nullable();
             $table->double('discount')->default(0);
             $table->tinyInteger('category_id');
-            $table->tinyInteger('shipping_quantity');
+            $table->tinyInteger('shipping_quantity')->default(1);
             $table->string('image_1')->nullable();
             $table->string('image_2')->nullable();
             $table->string('image_3')->nullable();
