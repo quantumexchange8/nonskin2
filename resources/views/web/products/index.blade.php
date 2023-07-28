@@ -322,7 +322,6 @@
                                             </div>
                                         @endforeach
                                     @endif
-
                                 </div>
                                 <!-- end row -->
                             </div>
@@ -635,10 +634,10 @@
                             </div> --}}
                         </div>
                         <!-- Pagination Start -->
-                        <div class="row mt-4">
+                        {{-- <div class="row mt-4">
                             <div class="col-sm-6">
                                 <div>
-                                    <p class="mb-sm-0">Page 2 of 84</p>
+                                    <p class="mb-sm-0">Page 1 of 5</p>
                                 </div>
                             </div>
                             <div class="col-sm-6">
@@ -668,7 +667,7 @@
                                     </ul>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                         <!-- Pagination End -->
                     </div>
                 </div>
