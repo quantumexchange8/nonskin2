@@ -6,7 +6,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 
-Route::group(['prefix' => 'member/', 'as' => 'member.',  'middleware' => ['auth', 'role:superadmin|user',]], function () {
+Route::group(['prefix' => 'member/', 'as' => 'member.',  'middleware' => ['auth', 'role:superadmin|admin|user',]], function () {
     Route::get('announcement', [UserController::class, 'announcement'])->name('announcement');
     Route::get('cart', [UserController::class, 'cart'])->name('cart');
     Route::get('cart/checkout', [UserController::class, 'checkout'])->name('checkout');

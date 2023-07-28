@@ -269,18 +269,31 @@
                                                                 <i class="mdi mdi-heart-outline"></i>
                                                             </a>
                                                         </div> --}}
+                                                        @hasanyrole('user')
                                                         <a href="{{ route('member.product-detail', $product->id) }}">
                                                             <img src="{{ asset('images/' . $product->image_1) }}"
                                                                 alt="" class="img-fluid mx-auto d-block"
                                                                 style="width: 70% !important;">
                                                         </a>
+                                                        @endhasanyrole
+                                                        @hasanyrole('superadmin|admin')
+                                                        <a href="{{ route('admin.product-show', $product->id) }}">
+                                                            <img src="{{ asset('images/' . $product->image_1) }}"
+                                                                alt="" class="img-fluid mx-auto d-block"
+                                                                style="width: 70% !important;">
+                                                        </a>
+                                                        @endhasanyrole
                                                     </div>
                                                     <div class="product-content p-4">
                                                         <div class="d-flex justify-content-between align-items-end">
                                                             <div>
-                                                                <h5 class="mb-1"><a
-                                                                        href="{{ route('member.product-detail', $product->id) }}"
-                                                                        class="text-dark font-size-14">{{ Str::limit($product->name_en, 21, '...') }}</a>
+                                                                <h5 class="mb-1">
+                                                                    @hasanyrole('user')
+                                                                    <a href="{{ route('member.product-detail', $product->id) }}" class="font-size-14">{{ Str::limit($product->name_en, 21, '...') }}</a>
+                                                                    @endhasanyrole
+                                                                    @hasanyrole('superadmin|admin')
+                                                                    <a href="{{ route('admin.product-show', $product->id) }}" class="font-size-14">{{ Str::limit($product->name_en, 21, '...') }}</a>
+                                                                    @endhasanyrole
                                                                 </h5>
                                                                 {{-- <p class="text-muted font-size-13">{{ $product->desc_en }}</p> --}}
                                                                 <h5 class="mt-3 mb-0 font-size-16">
@@ -313,6 +326,7 @@
                                                         </div>
                                                         <div class="row pt-4">
                                                             <button class="btn btn-primary btn add-to-cart-btn"
+                                                            {{ Auth::user()->role == 'user' ? '' : 'disabled' }}
                                                                 data-product-id="{{ $product->id }}"
                                                                 data-product-price="{{ $product->selling_price }}"><i
                                                                     class='bx bx-cart-alt'></i> Add to Cart</button>

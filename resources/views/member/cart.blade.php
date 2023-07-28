@@ -168,7 +168,7 @@
 
 @endsection
 @section('script')
-    <script src="{{ URL::asset('assets/js/app.js') }}"></script>
+    <script src="{{ asset('assets/js/app.js') }}"></script>
     <script>
         $(document).ready(() => {
             getCartData();

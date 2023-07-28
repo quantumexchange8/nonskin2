@@ -63,10 +63,11 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         @hasanyrole('superadmin|admin')
-                        <li><a href="{{ route('admin.product-list') }}">Table View</a></li>
+                        <li><a href="{{ route('admin.product-list') }}">List View</a></li>
+                        <li><a href="{{ route('admin.product-index') }}" >User View</a></li>
                         @endhasanyrole
-                        <li><a href="{{ route('member.product-list') }}" >List</a></li>
                         @hasanyrole('user')
+                        <li><a href="{{ route('member.product-list') }}" >List</a></li>
                         <li><a href="{{ route('member.cart') }}">Cart</a></li>
                         @endhasanyrole
                     </ul>

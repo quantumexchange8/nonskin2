@@ -19,11 +19,11 @@
                     <div class="row">
                         <div class="col-xl-4">
                             <div class="product-detail" dir="ltr">
-                                <div class="product-wishlist">
+                                {{-- <div class="product-wishlist">
                                     <a href="#">
                                         <i class="mdi mdi-heart-outline"></i>
                                     </a>
-                                </div>
+                                </div> --}}
                                 <div class="swiper product-thumbnail-slider rounded border overflow-hidden position-relative">
                                     <div class="swiper-wrapper">
                                         <div class="swiper-slide"><img src="{{ asset('images/' . $product->image_1) }}" class="img-fluid d-block" /></div>
@@ -117,15 +117,9 @@
                                     <div class="col-lg-3 col-sm-6">
                                         <div class="d-grid">
                                             <button class="btn btn-primary waves-effect waves-light mt-2 me-1 add-to-cart-btn"
+                                                    {{ Auth::user()->role == 'user' ? '' : 'disabled' }}
                                                     data-product-id="{{ $product->id }}" data-product-price="{{ $product->price }}">
                                                     <i class="bx bx-cart-alt me-2"></i> Add to cart
-                                                </button>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 col-sm-6">
-                                        <div class="d-grid">
-                                            <button type="button" class="btn btn-light waves-effect mt-2 waves-light">
-                                                    <i class="bx bx-shopping-bag me-2"></i>Buy now
                                                 </button>
                                         </div>
                                     </div>
