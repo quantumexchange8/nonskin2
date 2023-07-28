@@ -14,6 +14,12 @@
     @endif
 
             <div class="row">
+                @if($cartItems->isEmpty())
+                    <div class="col-xl-12 pt-4 pb-4 d-flex flex-column">
+                        <p class="d-flex justify-content-center align-items-center">This shopping cart is empty</p>
+                        <a href="{{ route('products.index') }}" class="btn btn-md btn-primary d-flex justify-content-center align-items-center align-self-center">CONTINUE SHOPPING</a>
+                    </div>
+                @endif
                 <div class="col-xl-8">
                     @if(session('success'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -29,7 +35,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                     @endif
-                    @foreach ($cartItems as $k => $v)
+                    @forelse ($cartItems as $k => $v)
                         <div class="card border shadow-none">
                             <div class="card-body">
                                 <div class="d-flex align-items-start border-bottom pb-3">
@@ -102,14 +108,15 @@
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
-                    @endforeach
+                        @empty
+                    @endforelse
                     <!-- end card -->
                 </div>
 
+                @if(!$cartItems->isEmpty())
                 <div class="col-xl-4">
                     <div class="mt-5 mt-lg-0">
                         <div class="card border shadow-none">
@@ -156,6 +163,7 @@
                         </div>
                     </div>
                 </div>
+                @endif
             </div>
 
 @endsection
