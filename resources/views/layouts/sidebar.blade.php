@@ -63,11 +63,11 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         @hasanyrole('superadmin|admin')
-                        <li><a href="{{ route('admin.product-list') }}" data-key="t-add-product">Table View</a></li>
+                        <li><a href="{{ route('admin.product-list') }}">Table View</a></li>
                         @endhasanyrole
-                        <li><a href="{{ route('member.product-list') }}" data-key="t-product-list">List</a></li>
+                        <li><a href="{{ route('member.product-list') }}" >List</a></li>
                         @hasanyrole('user')
-                        <li><a href="{{ route('member.cart') }}" data-key="t-cart">Cart</a></li>
+                        <li><a href="{{ route('member.cart') }}">Cart</a></li>
                         @endhasanyrole
                     </ul>
                 </li>
@@ -91,8 +91,8 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
                         @hasanyrole('user')
-                        <li><a href="{{ route('member.order-pending') }}" data-key="t-order-pending">Pending</a></li>
-                        <li><a href="{{ route('member.order-history') }}" data-key="t-order-history">History</a></li>
+                        <li><a href="{{ route('member.order-pending') }}" data-key="t-order-pending">History</a></li>
+                        {{-- <li><a href="{{ route('member.order-history') }}" data-key="t-order-history">History</a></li> --}}
                         @endhasanyrole
                         @hasanyrole('superadmin|admin')
                         <li><a href="{{ route('admin.new-order-list') }}">New Order</a></li>
