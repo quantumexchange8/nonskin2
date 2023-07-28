@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOrderItemsTable extends Migration
+class CreatePaymentStatusesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class CreateOrderItemsTable extends Migration
      */
     public function up()
     {
-        Schema::create('order_items', function (Blueprint $table) {
+        Schema::create('payment_statuses', function (Blueprint $table) {
             $table->id();
-            $table->string('order_num')->nullable();
-            $table->integer('product_id')->unsigned()->comment('Refers to product id');
-            $table->double('price',7,2)->comment('Price of the product from order');
-            $table->double('discount',5,2)->comment('Price of the product from order');
-            $table->integer('quantity')->unsigned()->comment('Refers to quantity from order');
+            $table->string('name'); // Payment status name, e.g., 'Paid', 'Pending', 'Refunded', etc.
+            $table->text('description')->nullable(); // Description or additional details for the payment status (optional).
             $table->timestamps();
             $table->integer('created_by')->unsigned()->nullable()->comment('Refers to user id');
             $table->integer('updated_by')->unsigned()->nullable()->comment('Refers to user id');
@@ -33,6 +30,6 @@ class CreateOrderItemsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('order_items');
+        Schema::dropIfExists('payment_statuses');
     }
 }

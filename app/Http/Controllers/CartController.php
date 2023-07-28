@@ -161,10 +161,6 @@ class CartController extends Controller
         return response()->json(['message' => 'Error updating cart item'], 400);
     }
 
-
-
-
-
     public function destroy(Cart $cart, $productId)
     {
         $cartItem = CartItem::where('cart_id', $cart->id)
@@ -209,7 +205,7 @@ class CartController extends Controller
             $cartItem->save();
         } else {
             // Create a new cart item for the product with the input quantity
-            CartItem::create([
+            $userCartItem = CartItem::create([
                 'cart_id' => $cart->id,
                 'product_id' => $productId,
                 'price' => $productPrice,
@@ -218,6 +214,7 @@ class CartController extends Controller
                 'updated_by' => Auth::id(),
             ]);
         }
+
         if ($cart) {
             // Update the total_price in the cart model
             $cart->total_price = 0; // Reset the total_price to recalculate it

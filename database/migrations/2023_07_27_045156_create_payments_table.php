@@ -22,7 +22,7 @@ class CreatePaymentsTable extends Migration
             $table->string('gateway')->nullable();
             $table->string('status')->nullable();
             $table->string('remarks')->nullable();
-            $table->string('receipt')->nullable();
+            $table->string('receipt')->nullable()->comment('In picture format');
             $table->string('bank_name')->nullable();
             $table->string('bank_holder_name')->nullable();
             $table->string('bank_acc_no')->nullable();
