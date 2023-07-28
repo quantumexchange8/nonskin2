@@ -16,7 +16,7 @@
             <div class="row">
                 @if($cartItems->isEmpty())
                     <div class="col-xl-12 pt-4 pb-4 d-flex flex-column">
-                        <p class="pt-4 pb-4 d-flex justify-content-center align-items-center">This shopping cart is empty</p>
+                        <p class="pt-4 pb-2 d-flex justify-content-center align-items-center">This shopping cart is empty</p>
                         <a href="{{ route('products.index') }}" class="btn btn-md btn-primary d-flex justify-content-center align-items-center align-self-center">CONTINUE SHOPPING</a>
                     </div>
                 @endif
