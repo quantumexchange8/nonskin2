@@ -62,7 +62,7 @@ class ProductController extends Controller
 
         try {
             $imageName1 = time().'.'.$request->image_1->extension();
-            $request->image_1->move(public_path('images'), $imageName1);
+            $request->image_1->move(public_path('/images/products'), $imageName1);
 
             $product = Product::create([
                 'code' => $request->code,

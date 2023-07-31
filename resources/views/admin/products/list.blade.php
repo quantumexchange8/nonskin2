@@ -21,7 +21,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <div class="modal-button mt-2">
+                    <div class="d-flex justify-content-end pt-2">
                         <button type="button" class="btn btn-primary waves-effect waves-light mb-2 me-2" data-bs-toggle="modal" data-bs-target="#updateProduct"><i class="mdi mdi-plus me-1"></i> Add New Product</button>
                     </div>
                 </div>
@@ -36,7 +36,7 @@
                                     <th>Name</th>
                                     <th>Category</th>
                                     <th>Shipping Qty.</th>
-                                    <th>Price</th>
+                                    <th class="text-end">Price</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -45,18 +45,15 @@
                                 @forelse ($products as $product)
                                 <tr>
                                     <th scope="row">{{ $product->id }}</th>
-                                    <td><img class="img-fluid" width="60" src="{{ asset('images/' . $product->image_1) }}" alt="{{ $product->name_en }}"></td>
+                                    <td><img class="img-fluid" width="60" src="{{ asset('images/products/' . $product->image_1) }}" alt="{{ $product->name_en }}"></td>
                                     <td>{{ $product->code }}</td>
                                     <td>{{ $product->name_en }}</td>
                                     <td>{{ $product->category->name_en }}</td>
                                     <td>{{ $product->shipping_quantity }}</td>
-                                    <td>{{ $product->price }}</td>
+                                    <td class="text-end">RM {{ number_format($product->price,2,'.',',') }}</td>
                                     <td>{{ $product->status }}</td>
                                     <td>
                                         <div class="d-flex gap-3">
-                                            <a href="#" class="text-primary" data-bs-placement="top" title="View" data-bs-original-title="View">
-                                                <i class="mdi mdi-eye-outline font-size-18"></i>
-                                            </a>
                                             <a href="{{ route('admin.products.edit', $product->id) }}" class="text-success" data-bs-placement="top" title="Edit" data-bs-original-title="Edit">
                                                 <i class="mdi mdi-pencil font-size-18"></i>
                                             </a>

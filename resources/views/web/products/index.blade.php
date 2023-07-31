@@ -271,14 +271,14 @@
                                                         </div> --}}
                                                         @hasanyrole('user')
                                                         <a href="{{ route('member.product-detail', $product->id) }}">
-                                                            <img src="{{ asset('images/' . $product->image_1) }}"
+                                                            <img src="{{ asset('images/products/' . $product->image_1) }}"
                                                                 alt="" class="img-fluid mx-auto d-block"
                                                                 style="width: 70% !important;">
                                                         </a>
                                                         @endhasanyrole
                                                         @hasanyrole('superadmin|admin')
                                                         <a href="{{ route('admin.products.show', $product->id) }}">
-                                                            <img src="{{ asset('images/' . $product->image_1) }}"
+                                                            <img src="{{ asset('images/products/' . $product->image_1) }}"
                                                                 alt="" class="img-fluid mx-auto d-block"
                                                                 style="width: 70% !important;">
                                                         </a>
