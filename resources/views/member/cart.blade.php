@@ -40,7 +40,7 @@
                             <div class="card-body">
                                 <div class="d-flex align-items-start border-bottom pb-3">
                                     <div class="me-4">
-                                        <img src="{{ asset('images/' . $v->product->image_1) }}" alt="" class="avatar-md">
+                                        <img src="{{ asset('images/products/' . $v->product->image_1) }}" alt="" class="avatar-md">
                                     </div>
                                     <div class="flex-grow-1 align-self-center overflow-hidden">
                                         <div>
@@ -238,7 +238,7 @@
 
             function getCartData() {
                 $.ajax({
-                    url: '{{ route("cart.get") }}',
+                    url: '{{ url("member/cart/get") }}',
                     method: 'GET',
                     success: function(response) {
                     console.log(response);
