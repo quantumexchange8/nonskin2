@@ -19,7 +19,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-1">
-                                        <img src="{{ asset('images/' . $v->product->image_1) }}"
+                                        <img src="{{ asset('images/products/' . $v->product->image_1) }}"
                                             class="img-fluid" alt="{{ $v->product->name_en }}" width="80%">
                                     </div>
                                     <div class="col-md-3 d-flex justify-content-left align-items-center">
@@ -116,7 +116,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-1">
-                                        <img src="{{ asset('images/' . $v->product->image_1) }}"
+                                        <img src="{{ asset('images/products/' . $v->product->image_1) }}"
                                             class="img-fluid" alt="{{ $v->product->name_en }}" width="80%">
                                     </div>
                                     <div class="col-md-3 d-flex justify-content-left align-items-center">
