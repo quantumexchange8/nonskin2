@@ -156,12 +156,6 @@
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="mb-3">
-                                            <label class="form-label" for="discount">Discount in (%) <span class="text-muted">(Optional)</span></label>
-                                            <input id="discount" name="discount" placeholder="e.g. 5 (without %)" type="number" class="form-control ">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="mb-3">
                                             <label class="form-label required" for="price">Price</label>
                                             <div class="input-group">
                                                 <div class="input-group-text">RM</div>
@@ -172,6 +166,12 @@
                                                 </span>
                                             @enderror
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="discount">Discount in (%) <small class="text-muted">(Optional)</small></label>
+                                            <input id="discount" name="discount" placeholder="e.g. 5 (without %)" type="number" class="form-control ">
                                         </div>
                                     </div>
                                 </div>
