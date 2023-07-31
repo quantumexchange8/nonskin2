@@ -234,13 +234,13 @@ use App\Models\{State, BankSetting};
                                                                     <div class="mb-3">
                                                                         <label class="form-label required" for="state">State</label>
                                                                         {{-- <input type="text" class="form-control @error('contact') is-invalid @enderror" id="state" value="{{ old('state') }}" name="state" placeholder="e.g. Johor" autofocus> --}}
-                                                                        <select class="form-select" id="state-dd" class="form-control" name="state" id="state">
+                                                                        <select class="form-select @error('state') is-invalid @enderror" class="form-control" name="state" id="state">
                                                                             <option value="">Select State</option>
                                                                             @foreach ($states as $state)
                                                                                 <option value="{{ $state->name }}">{{ $state->name }}</option>
                                                                             @endforeach
                                                                         </select>
-                                                                        @error('contact')
+                                                                        @error('state')
                                                                         <span class="invalid-feedback" role="alert">
                                                                             <strong>{{ $message }}</strong>
                                                                         </span>
@@ -365,144 +365,18 @@ use App\Models\{State, BankSetting};
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="card">
-                                                    <a href="#delivery-address-collapse" class="text-dark collapsed" data-bs-toggle="collapse" aria-haspopup="true" aria-expanded="false" aria-haspopup="true" aria-controls="delivery-address-collapse">
-                                                        <div class="p-4">
-                                                            <div class="d-flex align-items-center">
-                                                                <div class="flex-shrink-0 me-3">
-                                                                    <div class="avatar-sm">
-                                                                        <div class="avatar-title rounded-circle bg-soft-primary text-primary">
-                                                                            04
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="flex-grow-1 overflow-hidden">
-                                                                    <h5 class="font-size-16 mb-1">Delivery Address</h5>
-                                                                    <p class="text-muted text-truncate mb-0">Fill all information below</p>
-                                                                </div>
-                                                                <div class="flex-shrink-0">
-                                                                    <i class="mdi mdi-chevron-up accor-down-icon font-size-24"></i>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                    <div id="delivery-address-collapse" class="collapse" data-bs-parent="#addmember-accordion">
-                                                        <div class="p-4 border-top">
-                                                            <div class="row">
-                                                                <div class="col-lg-12">
-                                                                    <div class="mb-3">
-                                                                        <label class="form-label required" for="delivery_address_1">Address 1</label>
-                                                                        <input type="text" class="form-control @error('delivery_address_1') is-invalid @enderror" id="delivery_address_1" value="{{ old('delivery_address_1') }}" name="delivery_address_1" placeholder="e.g. No 1, Jalan Kebangsaan 1" autofocus>
-                                                                        @error('delivery_address_1')
-                                                                        <span class="invalid-feedback" role="alert">
-                                                                            <strong>{{ $message }}</strong>
-                                                                        </span>
-                                                                        @enderror
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-12">
-                                                                    <div class="mb-3">
-                                                                        <label class="form-label required" for="delivery_address_2">Address 2</label>
-                                                                        <input type="text" class="form-control @error('delivery_address_2') is-invalid @enderror" id="delivery_address_2" value="{{ old('delivery_address_2') }}" name="delivery_address_2" placeholder="e.g. Taman Universiti" autofocus>
-                                                                        @error('delivery_address_2')
-                                                                        <span class="invalid-feedback" role="alert">
-                                                                            <strong>{{ $message }}</strong>
-                                                                        </span>
-                                                                        @enderror
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-12">
-                                                                    <div class="mb-3">
-                                                                        <label class="form-label required" for="delivery_postcode">Postcode</label>
-                                                                        <input type="text" class="form-control @error('delivery_postcode') is-invalid @enderror" id="delivery_postcode" value="{{ old('delivery_postcode') }}" name="delivery_postcode" placeholder="e.g. 81300" autofocus>
-                                                                        @error('delivery_postcode')
-                                                                        <span class="invalid-feedback" role="alert">
-                                                                            <strong>{{ $message }}</strong>
-                                                                        </span>
-                                                                        @enderror
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-12">
-                                                                    <div class="mb-3">
-                                                                        <label class="form-label required" for="delivery_city">City</label>
-                                                                        <input type="text" class="form-control @error('delivery_city') is-invalid @enderror" id="delivery_city" value="{{ old('delivery_city') }}" name="delivery_city" placeholder="e.g. Johor Bahru" autofocus>
-                                                                        {{-- <select class="form-select" id="city-dd" class="form-control">
-                                                                            <option value="">Select City</option>
-                                                                        </select> --}}
-                                                                        @error('delivery_city')
-                                                                        <span class="invalid-feedback" role="alert">
-                                                                            <strong>{{ $message }}</strong>
-                                                                        </span>
-                                                                        @enderror
-                                                                    </div>
-                                                                </div>
 
-                                                                <div class="col-lg-12">
-                                                                    <div class="mb-3">
-                                                                        <label class="form-label required" for="delivery_state">State</label>
-                                                                        {{-- <input type="text" class="form-control @error('delivery_state') is-invalid @enderror" id="delivery_state" value="{{ old('delivery_state') }}" name="delivery_state" placeholder="e.g. Johor" autofocus> --}}
-                                                                        <select class="form-select" id="state-dd" class="form-control" name="delivery_state" id="delivery_state">
-                                                                            <option value="">Select State</option>
-                                                                            @foreach ($states as $state)
-                                                                                <option value="{{ $state->name }}">{{ $state->name }}</option>
-                                                                            @endforeach
-                                                                        </select>
-                                                                        @error('delivery_state')
-                                                                        <span class="invalid-feedback" role="alert">
-                                                                            <strong>{{ $message }}</strong>
-                                                                        </span>
-                                                                        @enderror
-                                                                    </div>
-                                                                    {{-- <div class="mb-3">
-                                                                        <label class="form-label required" for="state">State</label>
-                                                                        <select class="form-select" name="state" id="state">
-                                                                            <option value="{{ null }}">Select State</option>
-                                                                        </select>
-                                                                        @error('state')
-                                                                        <span class="invalid-feedback" role="alert">
-                                                                            <strong>{{ $message }}</strong>
-                                                                        </span>
-                                                                        @enderror
-                                                                    </div> --}}
-                                                                </div>
-                                                                <div class="col-lg-12">
-                                                                    <div class="mb-3">
-                                                                        <label class="form-label required" for="delivery_country">Country</label>
-                                                                        {{-- <input type="text" class="form-control @error('contact') is-invalid @enderror" id="delivery_country" value="{{ old('delivery_country') }}" name="delivery_country" placeholder="e.g. Johor" autofocus> --}}
-                                                                        <select class="form-select @error('delivery_country') is-invalid @enderror" name="delivery_country" id="delivery_country">
-                                                                            <option value="">Select Country</option>
-                                                                            <option selected value="Malaysia">Malaysia</option>
-                                                                        </select>
-                                                                        @error('contact')
-                                                                        <span class="invalid-feedback" role="alert">
-                                                                            <strong>{{ $message }}</strong>
-                                                                        </span>
-                                                                        @enderror
-                                                                    </div>
-                                                                    {{-- <div class="mb-3">
-                                                                        <label class="form-label required" for="country">Country</label>
-                                                                        <select class="form-select" name="country" id="country">
-                                                                            <option value="{{ null }}">Select Country</option>
-                                                                        </select>
-                                                                        @error('country')
-                                                                        <span class="invalid-feedback" role="alert">
-                                                                            <strong>{{ $message }}</strong>
-                                                                        </span>
-                                                                        @enderror
-                                                                    </div> --}}
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row mb-4">
                                         <div class="col text-end">
-                                            <a href="#" class="btn btn-danger"> <i class="bx bx-x me-1"></i> Cancel </a>
+                                            {{-- <a href="" class="btn btn-danger"> <i class="bx bx-x me-1"></i> Cancel </a> --}}
                                             <button type="submit" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#success-btn"> <i class=" bx bx-file me-1"></i> Save </button>
                                         </div> <!-- end col -->
+                                    </div>
+                                    <div class="mt-4 text-center">
+                                        <p class="mb-0">Already have an account ? <a href="{{ route('login') }}" class="fw-medium text-primary"> Login here </a> </p>
                                     </div>
                                 </form>
                             </div>

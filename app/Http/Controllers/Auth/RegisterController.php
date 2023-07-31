@@ -52,7 +52,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'referral' => ['nullable', 'string', 'max:12'],
-            'full_name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
             'id_no' => ['required', 'numeric', 'digits:12'],
             'contact' => ['required', 'numeric'],
             'username' => ['required', 'string', 'min:6'],
@@ -65,21 +65,14 @@ class RegisterController extends Controller
             'address_1' => ['required', 'string', 'max:255'],
             'address_2' => ['required', 'string', 'max:255'],
             'city' => ['required', 'string', 'max:255'],
-            'postcode' => ['required', 'numeric', 'max:5'],
-            'state' => ['required', 'string', 'max:2'],
-            'country' => ['required', 'string', 'max:3'],
+            'postcode' => ['required', 'numeric'],
+            'state' => ['required', 'string'],
+            'country' => ['required', 'string', 'max:50'],
 
             'bank_name' => ['required', 'string', 'max:100'],
             'bank_holder_name' => ['required', 'string', 'max:100'],
-            'bank_acc_no' => ['required', 'numeric', 'max:20'],
+            'bank_acc_no' => ['required', 'numeric'],
             'bank_ic' => ['required', 'string', 'max:20'],
-
-            'delivery_address_1' => ['required', 'string', 'max:255'],
-            'delivery_address_2' => ['required', 'string', 'max:255'],
-            'delivery_city' => ['required', 'string', 'max:255'],
-            'delivery_postcode' => ['required', 'numeric', 'max:5'],
-            'delivery_state' => ['required', 'string', 'max:2'],
-            'delivery_country' => ['required', 'string', 'max:3'],
         ]);
     }
 
@@ -121,17 +114,19 @@ class RegisterController extends Controller
             'bank_holder_name' => $data['bank_holder_name'],
             'bank_acc_no' => $data['bank_acc_no'],
             'bank_ic' => $data['bank_ic'],
-
-            'delivery_address_1' => $data['delivery_address_1'],
-            'delivery_address_2' => $data['delivery_address_2'],
-            'delivery_city' => $data['delivery_city'],
-            'delivery_postcode' => $data['delivery_postcode'],
-            'delivery_state' => $data['delivery_state'],
-            'delivery_country' => $data['delivery_country'],
         ]);
     }
 
     public function store(Request $request){
+        $validator = $this->validator($request->all());
+
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
         // if (request()->has('avatar')) {
         //     $avatar = request()->file('avatar');
         //     $avatarName = time() . '.' . $avatar->getClientOriginalExtension();
@@ -166,13 +161,6 @@ class RegisterController extends Controller
             'bank_holder_name'  => $request->bank_holder_name,
             'bank_acc_no'       => $request->bank_acc_no,
             'bank_ic'           => $request->bank_ic,
-
-            'delivery_address_1'=> $request->delivery_address_1,
-            'delivery_address_2'=> $request->delivery_address_2,
-            'delivery_city'     => $request->delivery_city,
-            'delivery_postcode' => $request->delivery_postcode,
-            'delivery_state'    => $request->delivery_state,
-            'delivery_country'  => $request->delivery_country,
         ]);
 
         $user->assignRole('user');

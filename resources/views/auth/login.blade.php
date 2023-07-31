@@ -27,17 +27,22 @@
                             </div>
                             <div class="p-2 mt-4">
 
-                                @if (Session::has('success'))
+                                @if (session('added'))
                                 <div class="alert alert-success text-center">
-                                    {{ Session::get('success') }}
+                                    {{ session('added') }}
+                                </div>
+                                @endif
+                                @if (session('success'))
+                                <div class="alert alert-success text-center">
+                                    {{ session('success') }}
                                 </div>
                                 @endif
                                 <form method="POST" action="{{ route('login') }}">
                                     @csrf
 
                                     <div class="mb-3">
-                                        <label class="form-label" for="username">Email</label>
-                                        <input name="email" type="email" class="form-control @error('email') is-invalid @enderror" id="username"  placeholder="Enter Email" autocomplete="email" autofocus>
+                                        <label class="form-label" for="email">Email</label>
+                                        <input name="email" type="email" class="form-control @error('email') is-invalid @enderror" id="email"  placeholder="Enter Email" autocomplete="email" autofocus>
                                         @error('email')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -53,8 +58,8 @@
                                             </a>
                                             @endif
                                         </div>
-                                        <label class="form-label" for="userpassword">Password</label>
-                                        <input type="password" name="password" class="form-control  @error('password') is-invalid @enderror" id="userpassword" placeholder="Enter password" aria-label="Password" aria-describedby="password-addon">
+                                        <label class="form-label" for="password">Password</label>
+                                        <input type="password" name="password" class="form-control  @error('password') is-invalid @enderror" id="password" placeholder="Enter password" aria-label="Password" aria-describedby="password-addon">
                                         @error('password')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>

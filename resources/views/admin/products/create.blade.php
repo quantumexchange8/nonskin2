@@ -46,6 +46,11 @@
                                         <div class="mb-3">
                                             <label class="form-label required" for="code">Product Code</label>
                                             <input id="code" name="code" placeholder="e.g Br2" type="text" class="form-control">
+                                            @error('code')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -163,6 +168,11 @@
                                     <div class="mt-4">
                                         <label for="formFile" class="form-label required">Upload Main Image</label>
                                         <input name="image_1" class="form-control" type="file" id="formFile">
+                                        {{-- @error('image_1') --}}
+                                            <span class="form-text text-danger" role="alert">
+                                                <strong>test</strong>
+                                            </span>
+                                        {{-- @enderror --}}
                                     </div>
                                 </div>
                                 <div class="row">
