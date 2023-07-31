@@ -19,7 +19,7 @@
                     // dd($cartItems)
                 @endphp
                 <tr>
-                    <th scope="row"><img src="{{ asset('images/' . $v->product->image_1) }}"
+                    <th scope="row"><img src="{{ asset('images/products/' . $v->product->image_1) }}"
                             alt="product-img" title="product-img" class="avatar-md"></th>
                     <td>
                         <h5 class="font-size-14 text-truncate"><a href="#"
