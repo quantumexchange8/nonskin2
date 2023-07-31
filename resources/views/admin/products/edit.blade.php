@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title') @lang('translation.Add_Product') @endsection
+@section('title') Edit Product @endsection
 
 @section('css')
     <link href="{{ URL::asset('assets/libs/choices.js/choices.js.min.css') }}" rel="stylesheet" type="text/css" />
@@ -10,10 +10,17 @@
     @component('components.breadcrumb')
         @slot('url') {{ url('/') }} @endslot
         @slot('li_1') Home @endslot
-        @slot('title') Add Product @endslot
+        @slot('title') Edit @endslot
+        @slot('title2') Edit Product @endslot
     @endcomponent
 
-    <form action="{{ route('admin.products.store') }}" method="post" enctype="multipart/form-data">
+    @if(session('updated'))
+    <div class="alert alert-dismissible alert-success" role="alert">
+        {{ session('updated') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
+    <form action="{{ route('admin.products.update', $product->id) }}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="row">
             <div class="col-lg-12">
@@ -45,7 +52,7 @@
                                     <div class="col-lg-6">
                                         <div class="mb-3">
                                             <label class="form-label required" for="code">Product Code</label>
-                                            <input class="form-control @error('code') is-invalid @enderror" id="code" name="code" placeholder="e.g Br2" type="text" value="{{ old('code') }}">
+                                            <input class="form-control @error('code') is-invalid @enderror" id="code" name="code" placeholder="e.g Br2" type="text" value="{{ $product->code }}">
                                             @error('code')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -59,7 +66,7 @@
                                             <select class="form-select @error('category_id') is-invalid @enderror" name="category_id" id="category_id">
                                                 <option value="">Select Category</option>
                                                 @foreach ($categories as $k => $v)
-                                                    <option value="{{ $k }}">{{ $v }}</option>
+                                                    <option value="{{ $k }}" {{ $product->category->id == $k ? 'selected' : '' }}>{{ $v }}</option>
                                                 @endforeach
                                             </select>
                                             @error('category_id')
@@ -72,7 +79,7 @@
                                     <div class="col-lg-6">
                                         <div class="mb-3">
                                             <label class="form-label required" for="name-en">Product Name (EN)</label>
-                                            <input class="form-control @error('name_en') is-invalid @enderror" id="name_en" name="name_en" placeholder="Enter Product Name" type="text" value="{{ old('name_en') }}">
+                                            <input class="form-control @error('name_en') is-invalid @enderror" id="name_en" name="name_en" placeholder="Enter Product Name" type="text" value="{{ $product->name_en }}">
                                             @error('name_en')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -83,7 +90,7 @@
                                     <div class="col-lg-6">
                                         <div class="mb-3">
                                             <label class="form-label required" for="name-cn">Product Name (CN)</label>
-                                            <input class="form-control @error('name_cn') is-invalid @enderror" id="name_cn" name="name_cn" placeholder="Enter Product Name" type="text" value="{{ old('name_cn') }}">
+                                            <input class="form-control @error('name_cn') is-invalid @enderror" id="name_cn" name="name_cn" placeholder="Enter Product Name" type="text" value="{{ $product->name_cn }}">
                                             @error('name_cn')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -96,7 +103,7 @@
                                     <div class="col-lg-6">
                                         <div class="mb-3">
                                             <label class="form-label required" for="desc-en">Description (EN)</label>
-                                            <textarea class="form-control @error('desc_en') is-invalid @enderror" name="desc_en" id="desc_en" placeholder="Enter English Description" rows="4" value="{{ old('desc_en') }}"></textarea>
+                                            <textarea class="form-control @error('desc_en') is-invalid @enderror" name="desc_en" id="desc_en" placeholder="Enter English Description" rows="4">{{ $product->desc_en }}</textarea>
                                             @error('desc_en')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -107,7 +114,7 @@
                                     <div class="col-lg-6">
                                         <div class="mb-3">
                                             <label class="form-label required" for="desc-cn">Description (CN)</label>
-                                            <textarea class="form-control @error('desc_cn') is-invalid @enderror" name="desc_cn" id="desc-cn" placeholder="Enter Chinese Description" rows="4" value="{{ old('desc_cn') }}"></textarea>
+                                            <textarea class="form-control @error('desc_cn') is-invalid @enderror" name="desc_cn" id="desc-cn" placeholder="Enter Chinese Description" rows="4">{{ $product->desc_cn }}</textarea>
                                             @error('desc_cn')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -121,8 +128,9 @@
                                         <div class="mb-3">
                                             <label class="form-label required" for="status">Status</label>
                                             <select name="status" class="form-select @error('status') is-invalid @enderror">
-                                                <option value="Active" selected>Active</option>
-                                                <option value="Inactive">Inactive</option>
+                                                @foreach ($statuses as $status)
+                                                <option value="{{ $status }}" {{ $product->status == $status ? 'selected' : '' }}>{{ $status }}</option>
+                                                @endforeach
                                             </select>
                                             @error('shipping_quantity')
                                                 <span class="invalid-feedback" role="alert">
@@ -136,16 +144,9 @@
                                             <label class="form-label required" for="shipping_quantity">Shipping Quantity</label>
                                             {{-- <input id="shipping_quantity" name="shipping_quantity" placeholder="e.g. 2" type="number" class="form-select"> --}}
                                             <select class="form-select @error('shipping_quantity') is-invalid @enderror" id="shipping_quantity" name="shipping_quantity" >
-                                                <option value="1" selected>1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                                <option value="6">6</option>
-                                                <option value="7">7</option>
-                                                <option value="8">8</option>
-                                                <option value="9">9</option>
-                                                <option value="10">10</option>
+                                                @foreach ($quantities as $qty)
+                                                    <option value="{{ $qty }}" {{ $product->shipping_quantity == $qty ? 'selected' : '' }}>{{ $qty }}</option>
+                                                @endforeach
                                             </select>
                                             @error('shipping_quantity')
                                                 <span class="invalid-feedback" role="alert">
@@ -156,22 +157,22 @@
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="mb-3">
-                                            <label class="form-label" for="discount">Discount in (%) <span class="text-muted">(Optional)</span></label>
-                                            <input id="discount" name="discount" placeholder="e.g. 5 (without %)" type="number" class="form-control ">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="mb-3">
                                             <label class="form-label required" for="price">Price</label>
                                             <div class="input-group">
                                                 <div class="input-group-text">RM</div>
-                                                <input class="form-control @error('price') is-invalid @enderror" id="price" name="price" placeholder="e.g. 388.50" type="number">
+                                                <input class="form-control @error('price') is-invalid @enderror" id="price" name="price" placeholder="e.g. 388.50" type="number" value="{{ $product->price }}">
                                                 @error('price')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="discount">Discount in (%) <small class="text-muted">(Optional)</small></label>
+                                            <input id="discount" name="discount" placeholder="e.g. 5 (without %)" type="number" class="form-control" value="{{ $product->discount }}">
                                         </div>
                                     </div>
                                 </div>
@@ -204,7 +205,10 @@
                                 <div class="mt-4 mt-xl-0">
                                     <div class="mt-4">
                                         <label for="formFile" class="form-label required">Upload Main Image</label>
-                                        <input name="image_1" class="form-control @error('image_1') is-invalid @enderror" type="file" id="formFile">
+                                        <input name="image_1" class="form-control @error('image_1') is-invalid @enderror" type="file" id="formFile" value="{{ $product->image_1 }}">
+                                        @if ($product->image_1)
+                                            <p>Current Image: {{ $product->image_1 }}</p>
+                                        @endif
                                         @error('image_1')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -218,6 +222,9 @@
                                             <div class="mt-4">
                                                 <label for="formFile" class="form-label">Upload Image 2</label>
                                                 <input name="image_2" class="form-control" type="file" id="formFile">
+                                                @if ($product->image_2)
+                                                    <p>Current Image: {{ $product->image_2 }}</p>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -226,6 +233,9 @@
                                             <div class="mt-4">
                                                 <label for="formFile" class="form-label">Upload Image 3</label>
                                                 <input name="image_3" class="form-control" type="file" id="formFile">
+                                                @if ($product->image_3)
+                                                    <p>Current Image: {{ $product->image_3 }}</p>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -234,6 +244,9 @@
                                             <div class="mt-4">
                                                 <label for="formFile" class="form-label">Upload Image 4</label>
                                                 <input name="image_4" class="form-control" type="file" id="formFile">
+                                                @if ($product->image_4)
+                                                    <p>Current Image: {{ $product->image_4 }}</p>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -242,6 +255,9 @@
                                             <div class="mt-4">
                                                 <label for="formFile" class="form-label">Upload Image 5</label>
                                                 <input name="image_5" class="form-control" type="file" id="formFile">
+                                                @if ($product->image_5)
+                                                    <p>Current Image: {{ $product->image_5 }}</p>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>

@@ -66,7 +66,6 @@ Route::group(['prefix' => 'consumer/products',  'middleware' => 'auth'], functio
     Route::get('/delete/{product}', [ProductController::class, 'delete'])->name('products.delete');                 // product DELETE
     Route::get('/{product}', [ProductController::class, 'show'])->name('products.show');                            // product SHOW
     Route::get('/edit/{product}', [ProductController::class, 'edit'])->name('products.edit');                       // product EDIT
-    Route::post('/', [ProductController::class, 'store'])->name('products.store');                                  // store
     Route::post('/update/{product}', [ProductController::class, 'update'])->name('products.update');                // update
     Route::post('/destroy/{product}', [ProductController::class, 'destroy'])->name('products.destroy');             // destroy
 });

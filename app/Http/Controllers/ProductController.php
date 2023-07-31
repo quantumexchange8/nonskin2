@@ -35,23 +35,30 @@ class ProductController extends Controller
 
     public function create()
     {
-        return view('admin.products.create');
+        $categories = Category::where('status', 'Active')->pluck('name_en', 'id');
+        // dd($categories);
+        return view('admin.products.create', compact('categories'));
     }
 
     public function store(Request $request) {
         // dd($request);
         $request->validate([
-            // Validation rules for other fields
-
-            'image_1' => 'required|image|max:2048', // Ensure it's an image file with a maximum size of 2MB
-            'image_2' => 'nullable|image|max:2048',
-            'image_3' => 'nullable|image|max:2048',
-            'image_4' => 'nullable|image|max:2048',
-            'image_5' => 'nullable|image|max:2048',
-            // Add validation rules for other image fields
+            'code'              => 'required',
+            'name_en'           => 'required',
+            'name_cn'           => 'required',
+            'desc_en'           => 'required',
+            'desc_cn'           => 'required',
+            'price'             => 'required',
+            'discount'          => 'nullable|numeric',
+            'category_id'       => 'required',
+            'shipping_quantity' => 'required',
+            'status'            => 'required',
+            'image_1'           => 'required|image|max:2048',
+            'image_2'           => 'nullable|image|max:2048',
+            'image_3'           => 'nullable|image|max:2048',
+            'image_4'           => 'nullable|image|max:2048',
+            'image_5'           => 'nullable|image|max:2048',
         ]);
-
-
 
         try {
             $imageName1 = time().'.'.$request->image_1->extension();
@@ -69,9 +76,10 @@ class ProductController extends Controller
                 'status' => $request->status,
                 'image_1' => $imageName1,
                 'created_by' => Auth::id(),
+                'updated_at' => null
             ]);
 
-                    // Upload and store the images
+            // Upload and store the images
             if ($request->hasFile('image_1')) {
                 $image1 = $request->file('image_1');
                 $imageName1 = time() . '.' . $image1->getClientOriginalExtension();
@@ -109,7 +117,7 @@ class ProductController extends Controller
             $product->save();
 
             return redirect()
-                ->route('admin.product-list')
+                ->route('admin.products.list')
                 ->with("added", "Product successfully created!");
         } catch (\Exception $e) {
             // Handle the exception here, for example:
@@ -127,12 +135,64 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
-        //
+        $categories = Category::where('status', 'Active')->pluck('name_en', 'id');
+        $statuses = ['Active', 'Inactive'];
+        $quantities = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        return view('admin.products.edit', compact('product', 'categories', 'statuses', 'quantities'));
     }
 
     public function update(Request $request, Product $product)
     {
-        //
+        $request->validate([
+            'code' => 'required',
+            'name_en' => 'required',
+            'name_cn' => 'required',
+            'desc_en' => 'required',
+            'desc_cn' => 'required',
+            'price' => 'required',
+            'discount' => 'nullable|numeric',
+            'category_id' => 'required',
+            'shipping_quantity' => 'required',
+            'status' => 'required',
+            'image_1' => 'nullable|image|max:2048',
+            'image_2' => 'nullable|image|max:2048',
+            'image_3' => 'nullable|image|max:2048',
+            'image_4' => 'nullable|image|max:2048',
+            'image_5' => 'nullable|image|max:2048',
+        ]);
+
+        try {
+            if ($request->hasFile('image_1')) {
+                // If a new image is uploaded, store it and update the 'image_1' field
+                $image1 = $request->file('image_1');
+                $imageName1 = time() . '.' . $image1->getClientOriginalExtension();
+                $image1->storeAs('images', $imageName1, 'public');
+                $product->update(['image_1' => $imageName1]);
+            }
+
+            $product->update([
+                'code' => $request->code,
+                'name_en' => $request->name_en,
+                'name_cn' => $request->name_cn,
+                'desc_en' => $request->desc_en,
+                'desc_cn' => $request->desc_cn,
+                'price' => $request->price,
+                'category_id' => $request->category_id,
+                'shipping_quantity' => $request->shipping_quantity,
+                'status' => $request->status,
+                'updated_by' => Auth::id(),
+                'updated_at' => now()
+            ]);
+
+            return redirect()
+                ->route('admin.products.edit', [$product->id])
+                ->with("updated", "Product successfully updated!");
+        } catch (\Exception $e) {
+            // Handle the exception here, for example:
+            return redirect()
+                ->back()
+                ->with("error", "An error occurred: " . $e->getMessage());
+        }
     }
 
     public function destroy(Product $product)

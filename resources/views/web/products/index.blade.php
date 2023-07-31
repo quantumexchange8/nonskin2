@@ -277,7 +277,7 @@
                                                         </a>
                                                         @endhasanyrole
                                                         @hasanyrole('superadmin|admin')
-                                                        <a href="{{ route('admin.product-show', $product->id) }}">
+                                                        <a href="{{ route('admin.products.show', $product->id) }}">
                                                             <img src="{{ asset('images/' . $product->image_1) }}"
                                                                 alt="" class="img-fluid mx-auto d-block"
                                                                 style="width: 70% !important;">
@@ -292,7 +292,7 @@
                                                                     <a href="{{ route('member.product-detail', $product->id) }}" class="font-size-14">{{ Str::limit($product->name_en, 21, '...') }}</a>
                                                                     @endhasanyrole
                                                                     @hasanyrole('superadmin|admin')
-                                                                    <a href="{{ route('admin.product-show', $product->id) }}" class="font-size-14">{{ Str::limit($product->name_en, 21, '...') }}</a>
+                                                                    <a href="{{ route('admin.products.show', $product->id) }}" class="font-size-14">{{ Str::limit($product->name_en, 21, '...') }}</a>
                                                                     @endhasanyrole
                                                                 </h5>
                                                                 {{-- <p class="text-muted font-size-13">{{ $product->desc_en }}</p> --}}
