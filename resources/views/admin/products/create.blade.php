@@ -12,7 +12,12 @@
         @slot('li_1') Home @endslot
         @slot('title') Add Product @endslot
     @endcomponent
-
+    @if(session('error'))
+    <div class="alert alert-dismissible alert-danger" role="alert">
+        {{ session('error') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
     <form action="{{ route('admin.products.store') }}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="row">
