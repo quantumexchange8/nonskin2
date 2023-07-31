@@ -37,7 +37,7 @@ Route::delete('/cart/{cart}/item/{productId}', [CartController::class, 'destroy'
 Route::group(['prefix' => 'member/',  'middleware' => 'auth', 'middleware' => 'role:user'], function () {
     Route::get('/cart/records', [UserController::class, 'getCartRecords'])->name('cart.fetch');
     // Route::middleware('check.cart.item')->group(function () {
-    Route::get('cart/get', [CartController::class, 'getCartData'])->name('cart.get');
+    Route::get('/cart/get', [CartController::class, 'getCartData'])->name('cart.get');
     // });
     Route::post('/get-shipping-charge', [CartController::class, 'getShippingCharge'])->name('get-shipping-charge');
     Route::get('get-cart-count', [CartController::class, 'getCartCount'])->name('cart.count');
