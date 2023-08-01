@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Member;
 
+use App\Models\Announcement;
 use App\Models\User;
 use App\Models\Cart;
 use App\Models\CartItem;
@@ -24,7 +25,8 @@ class UserController extends Controller
     }
 
     public function announcement() {
-        return view('member.announcement');
+        $announcements = Announcement::where('status', 1)->get();
+        return view('member.announcement', compact('announcements'));
     }
 
     public function cart() {

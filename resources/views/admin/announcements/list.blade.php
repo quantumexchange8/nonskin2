@@ -20,8 +20,8 @@
                                 <label for="tradingAccount" class="form-label">@lang('translation.status')</label>
                                 <select class="form-select" name="status">
                                     <option selected disabled>@lang('translation.select status')</option>
-                                    <option value="Active">@lang('translation.active')</option>
-                                    <option value="Inactive">@lang('translation.inactive')</option>
+                                    <option value="1">@lang('translation.active')</option>
+                                    <option value="0">@lang('translation.inactive')</option>
                                 </select>
                             </div>
                             <div class="col-sm mr-n15">

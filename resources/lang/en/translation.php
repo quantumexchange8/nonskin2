@@ -11,6 +11,7 @@
         "select status" => "Select Status",
 
         // Template
+        "Home"  => "Home",
         "Nonskin" => "Nonskin",
         "Dashboard" => "Dashboard",
         "Apps" => "Apps",
