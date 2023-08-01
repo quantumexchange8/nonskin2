@@ -61,7 +61,7 @@
                                     <td>{{ $product->status }}</td>
                                     <td>
                                         <div class="d-flex gap-3">
-                                            <a href="{{ route('admin.products.edit', $product->id) }}" class="text-success" data-bs-placement="top" title="Edit" data-bs-original-title="Edit">
+                                            <a href="{{ route('admin.products.edit', $product->id) }}" class="text-success" data-bs-placement="top" data-bs-toggle="tooltip" title="Edit" data-bs-original-title="Edit">
                                                 <i class="mdi mdi-pencil font-size-18"></i>
                                             </a>
                                             <a href="#" class="text-danger" data-product-id="{{ $product->id }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-bs-original-title="Delete">
