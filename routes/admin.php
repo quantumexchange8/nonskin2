@@ -26,6 +26,7 @@ Route::group(['prefix' => 'admin/products', 'as' => 'admin.products.',  'middlew
 // Settings
 Route::group(['prefix' => 'admin/settings', 'as' => 'admin.settings.',  'middleware' => ['auth', 'role:superadmin|admin',]], function () {
     Route::get('/product-categories', [UserController::class, 'categorySettings'])->name('categories');
-    Route::get('/company-info', [UserController::class, 'companyInfo'])->name('company-info');
+    Route::get('/shipping-charges', [UserController::class, 'shippingCharges'])->name('shipping-charges');
     Route::get('/banks', [UserController::class, 'bankSettings'])->name('banks');
+    Route::get('/company-info', [UserController::class, 'companyInfo'])->name('company-info');
 });

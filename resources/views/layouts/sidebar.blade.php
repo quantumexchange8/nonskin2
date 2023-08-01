@@ -158,20 +158,6 @@
                 </li>
                 @endhasanyrole
                 @hasanyrole('superadmin|admin')
-                <li class="menu-title" data-key="t-applications">@lang('translation.Settings')</li>
-                <li><a href="{{ route('admin.settings.categories') }}">
-                    <i class="bx bxs-category icon nav-icon"></i>
-                    <span class="menu-item">@lang('translation.Product Categories')</span>
-                </a>
-                <li><a href="{{ route('admin.settings.company-info') }}">
-                    <i class="bx bxs-building icon nav-icon"></i>
-                    <span class="menu-item">@lang('translation.Company Info')</span>
-                </a>
-                <li><a href="{{ route('admin.settings.banks') }}">
-                    <i class="bx bxs-bank icon nav-icon"></i>
-                    <span class="menu-item">@lang('translation.Banks')</span>
-                </a>
-            </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bx bx-share-alt icon nav-icon"></i>
@@ -182,6 +168,31 @@
                         {{-- <li><a href="{{ route('member.member-network') }}" data-key="t-member-network">Network</a></li> --}}
                         {{-- <li><a href="{{ route('member.member-tree') }}" data-key="t-member-tree">Tree</a></li> --}}
                     </ul>
+                </li>
+                <li class="menu-title" data-key="t-applications">@lang('translation.Settings')</li>
+                <li>
+                    <a href="{{ route('admin.settings.categories') }}">
+                        <i class="bx bxs-category icon nav-icon"></i>
+                        <span class="menu-item">@lang('translation.Product Categories')</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('admin.settings.shipping-charges') }}">
+                        <i class="bx bxs-ship icon nav-icon"></i>
+                        <span class="menu-item">@lang('translation.Shipping Charges')</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('admin.settings.banks') }}">
+                        <i class="bx bxs-bank icon nav-icon"></i>
+                        <span class="menu-item">@lang('translation.Banks')</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('admin.settings.company-info') }}">
+                        <i class="bx bxs-building icon nav-icon"></i>
+                        <span class="menu-item">@lang('translation.Company Info')</span>
+                    </a>
                 </li>
                 @endhasanyrole
                 @hasanyrole('superadmin')

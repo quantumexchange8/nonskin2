@@ -14,6 +14,8 @@
         "Categories" => 'Categories',
         "Product Categories Setting" => 'Product Categories Setting',
         "Product Categories" => 'Product Categories',
+        "Shipping Charges" => 'Shipping Charges',
+        "Shipping Charges Setting" => 'Shipping Charges Setting',
         "Categories Setting" => 'Categories Setting',
         "Banks Setting" => 'Banks Setting',
         "Banks" => 'Banks',
@@ -24,9 +26,11 @@
         "created at" => "Created At",
         "created by" => "Created By",
         "name" => "Name",
+        "state name" => "State Name",
         "name_en" => "Name (EN)",
         "name_cn" => "Name (CN)",
         "action" => "Action",
+        "amount" => "Amount",
 
         //buttons
         'save changes' => 'Save changes',

@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Category;
 use App\Models\CompanyInfo;
 use App\Models\BankSetting;
+use App\Models\ShippingCharge;
 use Validator;
 use Response;
 use Redirect;
@@ -41,13 +42,18 @@ class UserController extends Controller
         return view('admin.settings.categories', compact('categories'));
     }
 
-    public function companyInfo() {
-        $infos = CompanyInfo::get();
-        return view('admin.settings.company-info', compact('infos'));
+    public function shippingCharges() {
+        $res = ShippingCharge::get();
+        return view('admin.settings.shipping-charges', compact('res'));
     }
 
     public function bankSettings() {
         $banks = BankSetting::get();
         return view('admin.settings.banks', compact('banks'));
+    }
+
+    public function companyInfo() {
+        $infos = CompanyInfo::get();
+        return view('admin.settings.company-info', compact('infos'));
     }
 }

@@ -9,10 +9,14 @@ class ShippingCharge extends Model
 {
     use HasFactory;
 
+    public function userName()
+    {
+        return $this->belongsTo(User::class, 'created_by', 'id');
+    }
+
     public function user()
     {
-        return $this->
-        belongsTo(User::class, 'name', 'state');
+        return $this->belongsTo(User::class, 'name', 'state');
     }
 
     public function address()
