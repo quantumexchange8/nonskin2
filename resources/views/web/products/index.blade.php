@@ -324,13 +324,18 @@
                                                         </ul> --}}
                                                             </div>
                                                         </div>
-                                                        <div class="row pt-4">
-                                                            <button class="btn btn-primary btn add-to-cart-btn"
-                                                            {{ Auth::user()->role == 'user' ? '' : 'disabled' }}
-                                                                data-product-id="{{ $product->id }}"
-                                                                data-product-price="{{ $product->selling_price }}"><i
-                                                                    class='bx bx-cart-alt'></i> Add to Cart</button>
-                                                        </div>
+                                                        <form action="{{ route('cart.add') }}" method="POST">
+                                                            @csrf
+                                                            <div class="row pt-4">
+                                                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                                                <input type="hidden" name="price" value="{{ $product->selling_price }}">
+                                                                <input type="hidden" name="quantity" value="1">
+                                                                <button class="btn btn-primary btn"
+                                                                {{ Auth::user()->role == 'user' ? '' : 'disabled' }}>
+                                                                <i class='bx bx-cart-alt'></i> Add to Cart</button>
+                                                            </div>  
+                                                        </form>
+                                                        
                                                     </div>
                                                 </div>
                                             </div>

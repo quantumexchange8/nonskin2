@@ -4,6 +4,9 @@
     <head>
         <meta charset="utf-8" />
         <title> @yield('title') | Nonskin - Admin & Dashboard</title>
+        @if (App::environment('production'))
+            <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+        @endif
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="Nonskin Admin & Dashboard" name="description" />
         <meta content="Nonskin" name="author" />
@@ -22,6 +25,7 @@
                 <div class="page-content">
                     <div class="container-fluid">
                         @yield('content')
+                        @include('sweetalert::alert')
                     </div>
                 </div>
                 @include('layouts.footer')

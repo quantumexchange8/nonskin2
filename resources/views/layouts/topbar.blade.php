@@ -109,7 +109,14 @@
                 <button class="btn header-item noti-icon" id="page-header-notifications-dropdown"
                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class='bx bx-cart'></i>
-                    <span class="noti-dot bg-danger rounded-pill" id="cart-item-count">0</span>
+                    <span class="noti-dot bg-danger rounded-pill">
+                        @php
+                            $cart = App\Models\Cart::where('user_id', auth()->id())->first();
+
+                            $cartItemsCount = $cart->items->count()
+                        @endphp
+                        {{ $cartItemsCount }}
+                    </span>
                 </button>
                 @endunlessrole
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
@@ -128,41 +135,31 @@
                         <h6 class="dropdown-header bg-light">Recently added products</h6>
                         <div id="ajax-data">
                         </div>
-                        <a href="" class="text-reset notification-item">
-                            <div class="d-flex border-bottom align-items-start">
-                                <div class="flex-shrink-0">
-                                    <img src="{{ URL::asset('assets/images/users/avatar-3.jpg') }}"
-                                    class="me-3 rounded-circle avatar-sm" alt="user-pic">
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h6 class="mb-1">Name of product</h6>
-                                    <div class="text-muted">
-                                        <p class="mb-1 font-size-13">Product price</p>
+                        @foreach(App\Models\CartItem::all() as $row)
+                            <div>
+                                <a href="" class="text-reset notification-item">
+                                    <div class="d-flex border-bottom align-items-start">
+                                        <div class="flex-shrink-0">
+                                            <img src="{{ URL::asset('assets/images/users/avatar-3.jpg') }}"
+                                            class="me-3 rounded-circle avatar-sm" alt="user-pic">
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <div style="display: flex;align-items: center;justify-content: space-between;">
+                                                <h6 class="mb-1">{{$row->product->name_en}}</h6>
+                                                <h6 class="mb-1">qty: {{$row->quantity}}</h6>
+                                            </div>
+                                            <div class="text-muted">
+                                                <p class="mb-1 font-size-13">price: {{$row->product->price}}</p>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
-                        </a>
-                        <a href="" class="text-reset notification-item">
-                            <div class="d-flex border-bottom align-items-start">
-                                <div class="flex-shrink-0">
-                                    <div class="avatar-sm me-3">
-                                        <span class="avatar-title bg-primary rounded-circle font-size-16">
-                                            <i class="bx bx-shopping-bag"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h6 class="mb-1">Name of product</h6>
-                                    <div class="text-muted">
-                                        <p class="mb-1 font-size-13">Product price</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
+                        @endforeach
                     </div>
                     <div class="p-2 border-top d-grid">
-                        <a class="btn btn-sm btn-link font-size-14 btn-block text-center" href="{{ route('member.checkout') }}">
-                            <i class="uil-arrow-circle-right me-1"></i> <span>@lang('translation.View_More')</span>
+                        <a class="btn btn-sm btn-link font-size-14 btn-block text-center" href="{{ route('member.cart') }}">
+                            <i class="uil-arrow-circle-right me-1"></i> <span>@lang('translation.View_cart')</span>
                         </a>
                     </div>
                 </div>
@@ -198,7 +195,7 @@
     </div>
 </header>
 @section('script')
-    <script>
+    {{-- <script>
         $(document).ready(function () {
         getCartCount();
 
@@ -229,6 +226,6 @@
 
     });
 
-    </script>
+    </script> --}}
 @endsection
 
