@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Category;
 use App\Models\CompanyInfo;
+use App\Models\BankSetting;
 use Validator;
 use Response;
 use Redirect;
@@ -43,5 +44,10 @@ class UserController extends Controller
     public function companyInfo() {
         $infos = CompanyInfo::get();
         return view('admin.settings.company-info', compact('infos'));
+    }
+
+    public function bankSettings() {
+        $banks = BankSetting::get();
+        return view('admin.settings.banks', compact('banks'));
     }
 }
