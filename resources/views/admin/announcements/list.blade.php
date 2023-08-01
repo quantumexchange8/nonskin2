@@ -15,9 +15,28 @@
             <div class="card">
                 <div class="card-header">
                     <div class="row">
-                        <div class="d-flex justify-content-between">
-                            <h4 class="card-title">Announcement Listing</h4>
-                            {{-- <button class="btn btn-m btn-success"><i class='bx bx-plus-circle'></i> Add Announcement</button> --}}
+                        <div class="row mb-50">
+                            <div class="col-sm mr-n15">
+                                <label for="tradingAccount" class="form-label">@lang('translation.status')</label>
+                                <select class="form-select" name="status">
+                                    <option selected disabled>@lang('translation.select status')</option>
+                                    <option value="Active">@lang('translation.active')</option>
+                                    <option value="Inactive">@lang('translation.inactive')</option>
+                                </select>
+                            </div>
+                            <div class="col-sm mr-n15">
+                                <label for="From Date" class="form-label">@lang('translation.from date')</label>
+                                <input type="date" class="form-control rounded" id="datepicker3" placeholder="@lang('translation.from date')" name="start_date">
+                            </div>
+                            <div class="col-sm">
+                                <label for="To Date" class="form-label">@lang('translation.to date')</label>
+                                <input type="date" class="form-control rounded" id="datepicker4" placeholder="@lang('translation.to date')" name="end_date">
+                            </div>
+                            <div class="col-sm">
+                                <label for="Search" class="form-label">&nbsp;</label>
+                                <button type="submit" class="w-100 btn btn-primary">@lang('translation.search')</button>
+                            </div>
+
                         </div>
                     </div>
                     {{-- <p class="card-title-desc">
@@ -42,8 +61,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @if (isset($announcements))
-                                @foreach ($announcements as $k => $v)
+                                @forelse ($announcements as $k => $v)
                                     <tr>
                                         <th scope="row">{{ $loop->iteration }}</th>
                                         <td>{{ $v->title }}</td>
@@ -75,12 +93,11 @@
                                             </div>
                                         </td>
                                     </tr>
-                                @endforeach
-                                @else
+                                @empty
                                 <tr>
-                                    <td class="text-center" colspan="7">No data available</td>
+                                    <td class="text-center" colspan="100%">No data available</td>
                                 </tr>
-                                @endif
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
