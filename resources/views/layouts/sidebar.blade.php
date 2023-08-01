@@ -5,18 +5,18 @@
     <div class="navbar-brand-box">
         <a href="{{ url('/') }}" class="logo logo-dark">
             <span class="logo-sm">
-                <img src="{{ URL::asset('assets/images/logo-sm.svg') }}" alt="" height="22">
+                <img src="{{ URL::asset('assets/images/nonskin/non-logo.jpg') }}" alt="" height="22">
             </span>
             <span class="logo-lg">
-                <img src="{{ URL::asset('assets/images/logo-sm.svg') }}" alt="" height="22"> <span class="logo-txt">@lang('translation.Nonskin')</span>
+                <img src="{{ URL::asset('assets/images/nonskin/non-logo.jpg') }}" alt="" height="22"> <span class="logo-txt">@lang('translation.Nonskin')</span>
             </span>
         </a>
         <a href="{{ url('/') }}" class="logo logo-light">
             <span class="logo-lg">
-                <img src="{{ URL::asset('assets/images/logo-sm.svg') }}" alt="" height="22"> <span class="logo-txt">@lang('translation.Nonskin')</span>
+                <img src="{{ URL::asset('assets/images/nonskin/non-logo.jpg') }}" alt="" height="22"> <span class="logo-txt">@lang('translation.Nonskin')</span>
             </span>
             <span class="logo-sm">
-                <img src="{{ URL::asset('assets/images/logo-sm.svg') }}" alt="" height="22">
+                <img src="{{ URL::asset('assets/images/nonskin/non-logo.jpg') }}" alt="" height="22">
             </span>
         </a>
     </div>
@@ -39,7 +39,7 @@
                 <li><a href="{{ route('member.announcement') }}">
                         <i class="bx bxs-volume-full icon nav-icon"></i>
                         <span class="menu-item" data-key="t-announcement">Announcement</span>
-                        <span class="badge rounded-pill bg-danger">@lang('translation.5+')</span>
+                        {{-- <span class="badge rounded-pill bg-danger">@lang('translation.5+')</span> --}}
                     </a>
                 </li>
                 @endhasanyrole
