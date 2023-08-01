@@ -6,7 +6,7 @@
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <meta content="Premium Multipurpose Admin & Dashboard" name="description" />
             <meta content="Themesbrand" name="author" />
-            <link rel="shortcut icon" href="{{ URL::asset('assets/images/favicon.ico') }}">
+            <link rel="shortcut icon" href="{{ URL::asset('assets/images/nonskin/non-logo.jpg') }}">
             @include('layouts.head-css')
         </head>
 

@@ -8,7 +8,7 @@
         <meta content="Nonskin Admin & Dashboard" name="description" />
         <meta content="Nonskin" name="author" />
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <link rel="shortcut icon" href="{{ URL::asset('assets/images/favicon.ico') }}">
+        <link rel="shortcut icon" href="{{ URL::asset('assets/images/nonskin/non-logo.jpg') }}">
         @include('layouts.head-css')
     </head>
 
