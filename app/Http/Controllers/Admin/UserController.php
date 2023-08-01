@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Category;
+use App\Models\CompanyInfo;
 use Validator;
 use Response;
 use Redirect;
@@ -31,5 +33,15 @@ class UserController extends Controller
         ->get(['referral', 'referrer', 'name', 'email', 'ranking_name', 'postcode', 'city', 'state', 'created_at']);
         // dd($users);
         return view('admin.members.list', compact('users', 'states'));
+    }
+
+    public function categorySettings() {
+        $categories = Category::get();
+        return view('admin.settings.categories', compact('categories'));
+    }
+
+    public function companyInfo() {
+        $infos = CompanyInfo::get();
+        return view('admin.settings.company-info', compact('infos'));
     }
 }

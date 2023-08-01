@@ -22,3 +22,9 @@ Route::group(['prefix' => 'admin/products', 'as' => 'admin.products.',  'middlew
     Route::post('/update/{product}', [ProductController::class, 'update'])->name('update');
     Route::post('/destroy/{product}', [ProductController::class, 'destroy'])->name('destroy');
 });
+
+// Settings
+Route::group(['prefix' => 'admin/settings', 'as' => 'admin.settings.',  'middleware' => ['auth', 'role:superadmin|admin',]], function () {
+    Route::get('/categories', [UserController::class, 'categorySettings'])->name('categories');
+    Route::get('/company-info', [UserController::class, 'companyInfo'])->name('company-info');
+});

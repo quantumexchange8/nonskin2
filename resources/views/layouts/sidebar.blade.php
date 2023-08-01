@@ -158,7 +158,16 @@
                 </li>
                 @endhasanyrole
                 @hasanyrole('superadmin|admin')
-                <li class="menu-title" data-key="t-applications">Administration</li>
+                <li class="menu-title" data-key="t-applications">@lang('translation.Settings')</li>
+                <li><a href="{{ route('admin.settings.categories') }}">
+                    <i class="bx bxs-category icon nav-icon"></i>
+                    <span class="menu-item" data-key="t-categories">@lang('translation.Product Categories')</span>
+                </a>
+                <li><a href="{{ route('admin.settings.company-info') }}">
+                    <i class="bx bxs-building icon nav-icon"></i>
+                    <span class="menu-item" data-key="t-categories">@lang('translation.Company Info')</span>
+                </a>
+            </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bx bx-share-alt icon nav-icon"></i>
