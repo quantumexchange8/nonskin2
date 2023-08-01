@@ -23,7 +23,7 @@ use App\Http\Controllers\AnnouncementController;
 */
 
 Auth::routes();
-
+Route::resource('cart', CartController::class);
 Route::get('/', [App\Http\Controllers\HomeController::class, 'root'])->name('root');
 
 //Update User Details

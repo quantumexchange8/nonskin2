@@ -75,7 +75,7 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="mt-3">
-                                                <p class="text-muted mb-2">Unit Price</p>
+                                                <p class="text-muted mb-2">Unit Price {{number_format($v->product->price, 2)}}</p>
                                                 <h5 class="font-size-16">RM {{ number_format(($v->product->price*(100-$v->product->discount)/100),2,'.') }}</h5>
                                                 @if ($v->product->discount > 0)
                                                 <del class="text-muted">RM {{ number_format($v->product->price,2,'.',',') }}</del>
@@ -241,7 +241,7 @@
                     url: '{{ url("member/cart/get") }}',
                     method: 'GET',
                     success: function(response) {
-                    console.log(response);
+                    
                     if (response.cart) {
                         // Update the Sub Total and Total in the cart view
                         $('.sub-total').text('RM ' + response.total_price_without_discount.toLocaleString(undefined, { minimumFractionDigits: 2 }));

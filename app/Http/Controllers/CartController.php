@@ -6,6 +6,7 @@ use App\Models\Cart;
 use App\Models\CartItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+Use Alert;
 
 class CartController extends Controller
 {
@@ -229,8 +230,8 @@ class CartController extends Controller
             $cart->updated_by = auth()->user()->id;
             $cart->save();
         }
-
-        return response()->json(['message' => 'Item added to cart successfully']);
+        Alert::success('Success', 'Item added to cart successfully');
+        return redirect()->back();
     }
 
     public function updateCart(Request $request) {
