@@ -15,7 +15,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex justify-content-end pt-2">
-                        <button type="submit" class="btn btn-primary"><i class='bx bx-plus-circle' ></i> @lang('translation.add category')</button>
+                        <button type="submit" class="btn btn-primary"><i class='bx bx-plus-circle' ></i> @lang('translation.add bank')</button>
                     </div>
                 </div>
                 <div class="card-body">

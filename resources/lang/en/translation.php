@@ -10,6 +10,7 @@
         "status" => "Status",
         "select status" => "Select Status",
         "add category" => "Add Category",
+        "add bank" => "Add Bank",
         "Categories" => 'Categories',
         "Product Categories Setting" => 'Product Categories Setting',
         "Product Categories" => 'Product Categories',
