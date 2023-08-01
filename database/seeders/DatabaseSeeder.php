@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             BankSettingSeeder::class,
             ShippingSettingSeeder::class,
             PaymentStatusSeeder::class,
+            CompanyInfoSeeder::class,
             AdminSeeder::class,
         ]);
 

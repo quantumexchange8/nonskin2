@@ -9,6 +9,22 @@
         "inactive" => "Inactive",
         "status" => "Status",
         "select status" => "Select Status",
+        "add category" => "Add Category",
+        "Categories" => 'Categories',
+        "Product Categories" => 'Product Categories',
+        "Categories Setting" => 'Categories Setting',
+        "Company Info" => 'Company Info',
+        "no data available" => 'No Data Available',
+        "remarks" => "Remarks",
+        "active" => "Active",
+        "created at" => "Created At",
+        "created by" => "Created By",
+        "name_en" => "Name (EN)",
+        "name_cn" => "Name (CN)",
+        "action" => "Action",
+
+        //buttons
+        'save changes' => 'Save changes',
 
         // Template
         "Home"  => "Home",
