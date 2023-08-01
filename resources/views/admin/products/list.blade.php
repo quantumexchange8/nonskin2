@@ -42,6 +42,7 @@
                                     <th>Category</th>
                                     <th>Shipping Qty.</th>
                                     <th class="text-end">Price</th>
+                                    <th>Discount</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -56,6 +57,7 @@
                                     <td>{{ $product->category->name_en }}</td>
                                     <td>{{ $product->shipping_quantity }}</td>
                                     <td class="text-end">RM {{ number_format($product->price,2,'.',',') }}</td>
+                                    <td>{{ number_format($product->discount,1,'.') }} %</td>
                                     <td>{{ $product->status }}</td>
                                     <td>
                                         <div class="d-flex gap-3">

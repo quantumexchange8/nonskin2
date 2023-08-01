@@ -61,8 +61,26 @@ class ProductController extends Controller
         ]);
 
         try {
-            $imageName1 = time().'.'.$request->image_1->extension();
-            $request->image_1->move(public_path('/images/products'), $imageName1);
+            if ($request->hasFile('image_1')){
+                $imageName1 = time().'.'.$request->image_1->extension();
+                $request->image_1->move(public_path('images/products'), $imageName1);
+            }
+            if ($request->hasFile('image_2')){
+                $imageName2 = time().'.'.$request->image_2->extension();
+                $request->image_2->move(public_path('images/products'), $imageName2);
+            }
+            if ($request->hasFile('image_3')){
+                $imageName3 = time().'.'.$request->image_3->extension();
+                $request->image_3->move(public_path('images/products'), $imageName3);
+            }
+            if ($request->hasFile('image_4')){
+                $imageName4 = time().'.'.$request->image_4->extension();
+                $request->image_4->move(public_path('images/products'), $imageName4);
+            }
+            if ($request->hasFile('image_5')){
+                $imageName5 = time().'.'.$request->image_5->extension();
+                $request->image_5->move(public_path('images/products'), $imageName5);
+            }
 
             $product = Product::create([
                 'code' => $request->code,
@@ -71,10 +89,15 @@ class ProductController extends Controller
                 'desc_en' => $request->desc_en,
                 'desc_cn' => $request->desc_cn,
                 'price' => $request->price,
+                'discount' => $request->discount,
                 'category_id' => $request->category_id,
                 'shipping_quantity' => $request->shipping_quantity,
                 'status' => $request->status,
                 'image_1' => $imageName1,
+                'image_2' => $imageName2 ?? null,
+                'image_3' => $imageName3 ?? null,
+                'image_4' => $imageName4 ?? null,
+                'image_5' => $imageName5 ?? null,
                 'created_by' => Auth::id(),
                 'updated_at' => null
             ]);
@@ -82,38 +105,38 @@ class ProductController extends Controller
             // Upload and store the images
             if ($request->hasFile('image_1')) {
                 $image1 = $request->file('image_1');
-                $imageName1 = time() . '.' . $image1->getClientOriginalExtension();
-                $image1->storeAs('images', $imageName1, 'public');
+                // $imageName1 = time() . '.' . $image1->getClientOriginalExtension();
+                // $image1->storeAs('images/products', $imageName1, 'public');
                 $product->image_1 = $imageName1;
             }
 
-            // if ($request->hasFile('image_2')) {
-            //     $image2 = $request->file('image_2');
-            //     $imageName2 = time() . '.' . $image2->getClientOriginalExtension();
-            //     $image2->storeAs('images', $imageName2, 'public');
-            //     $product->image_2 = $imageName2;
-            // }
+            if ($request->hasFile('image_2')) {
+                $image2 = $request->file('image_2');
+                // $imageName2 = time() . '.' . $image2->getClientOriginalExtension();
+                // $image2->storeAs('images', $imageName2, 'public');
+                $product->image_2 = $imageName2;
+            }
 
-            // if ($request->hasFile('image_3')) {
-            //     $image3 = $request->file('image_3');
-            //     $imageName3 = time() . '.' . $image3->getClientOriginalExtension();
-            //     $image3->storeAs('images', $imageName3, 'public');
-            //     $product->image_3 = $imageName3;
-            // }
+            if ($request->hasFile('image_3')) {
+                $image3 = $request->file('image_3');
+                // $imageName3 = time() . '.' . $image3->getClientOriginalExtension();
+                // $image3->storeAs('images', $imageName3, 'public');
+                $product->image_3 = $imageName3;
+            }
 
-            // if ($request->hasFile('image_4')) {
-            //     $image4 = $request->file('image_4');
-            //     $imageName4 = time() . '.' . $image4->getClientOriginalExtension();
-            //     $image4->storeAs('images', $imageName4, 'public');
-            //     $product->image_4 = $imageName4;
-            // }
+            if ($request->hasFile('image_4')) {
+                $image4 = $request->file('image_4');
+                // $imageName4 = time() . '.' . $image4->getClientOriginalExtension();
+                // $image4->storeAs('images', $imageName4, 'public');
+                $product->image_4 = $imageName4;
+            }
 
-            // if ($request->hasFile('image_5')) {
-            //     $image5 = $request->file('image_5');
-            //     $imageName5 = time() . '.' . $image5->getClientOriginalExtension();
-            //     $image5->storeAs('images', $imageName5, 'public');
-            //     $product->image_5 = $imageName5;
-            // }
+            if ($request->hasFile('image_5')) {
+                $image5 = $request->file('image_5');
+                // $imageName5 = time() . '.' . $image5->getClientOriginalExtension();
+                // $image5->storeAs('images', $imageName5, 'public');
+                $product->image_5 = $imageName5;
+            }
             $product->save();
 
             return redirect()
@@ -162,12 +185,25 @@ class ProductController extends Controller
         ]);
 
         try {
-            if ($request->hasFile('image_1')) {
-                // If a new image is uploaded, store it and update the 'image_1' field
-                $image1 = $request->file('image_1');
-                $imageName1 = time() . '.' . $image1->getClientOriginalExtension();
-                $image1->storeAs('images', $imageName1, 'public');
-                $product->update(['image_1' => $imageName1]);
+            if ($request->hasFile('image_1')){
+                $imageName1 = time().'.'.$request->image_1->extension();
+            $request->image_1->move(public_path('images/products'), $imageName1);
+            }
+            if ($request->hasFile('image_2')){
+                $imageName2 = time().'.'.$request->image_2->extension();
+                $request->image_2->move(public_path('images/products'), $imageName2);
+            }
+            if ($request->hasFile('image_3')){
+                $imageName3 = time().'.'.$request->image_3->extension();
+            $request->image_3->move(public_path('images/products'), $imageName3);
+            }
+            if ($request->hasFile('image_4')){
+                $imageName4 = time().'.'.$request->image_4->extension();
+            $request->image_4->move(public_path('images/products'), $imageName4);
+            }
+            if ($request->hasFile('image_5')){
+                $imageName5 = time().'.'.$request->image_5->extension();
+            $request->image_5->move(public_path('images/products'), $imageName5);
             }
 
             $product->update([
@@ -177,12 +213,50 @@ class ProductController extends Controller
                 'desc_en' => $request->desc_en,
                 'desc_cn' => $request->desc_cn,
                 'price' => $request->price,
+                'discount' => $request->discount,
                 'category_id' => $request->category_id,
                 'shipping_quantity' => $request->shipping_quantity,
                 'status' => $request->status,
                 'updated_by' => Auth::id(),
                 'updated_at' => now()
             ]);
+
+            // Upload and store the images
+            if ($request->hasFile('image_1')) {
+                $image1 = $request->file('image_1');
+                // $imageName1 = time() . '.' . $image1->getClientOriginalExtension();
+                // $image1->storeAs('images/products', $imageName1, 'public');
+                $product->image_1 = $imageName1;
+            }
+
+            if ($request->hasFile('image_2')) {
+                $image2 = $request->file('image_2');
+                // $imageName2 = time() . '.' . $image2->getClientOriginalExtension();
+                // $image2->storeAs('images', $imageName2, 'public');
+                $product->image_2 = $imageName2;
+            }
+
+            if ($request->hasFile('image_3')) {
+                $image3 = $request->file('image_3');
+                // $imageName3 = time() . '.' . $image3->getClientOriginalExtension();
+                // $image3->storeAs('images', $imageName3, 'public');
+                $product->image_3 = $imageName3;
+            }
+
+            if ($request->hasFile('image_4')) {
+                $image4 = $request->file('image_4');
+                // $imageName4 = time() . '.' . $image4->getClientOriginalExtension();
+                // $image4->storeAs('images', $imageName4, 'public');
+                $product->image_4 = $imageName4;
+            }
+
+            if ($request->hasFile('image_5')) {
+                $image5 = $request->file('image_5');
+                // $imageName5 = time() . '.' . $image5->getClientOriginalExtension();
+                // $image5->storeAs('images', $imageName5, 'public');
+                $product->image_5 = $imageName5;
+            }
+            $product->save();
 
             return redirect()
                 ->route('admin.products.edit', [$product->id])

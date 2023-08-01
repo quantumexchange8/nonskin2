@@ -19,6 +19,7 @@ class Product extends Model
         'desc_en',
         'desc_cn',
         'price',
+        'discount',
         'category_id',
         'shipping_quantity',
         'image_1',
