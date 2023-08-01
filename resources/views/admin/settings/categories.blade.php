@@ -1,13 +1,13 @@
 @extends('layouts.master')
 @section('title')
-    @lang('translation.Categories Setting')
+    @lang('translation.Product Categories Setting')
 @endsection
 
 @section('content')
     @component('components.breadcrumb')
         @slot('url') {{ url('/') }} @endslot
         @slot('li_1') @lang('translation.Home') @endslot
-        @slot('title') @lang('translation.Categories Setting') @endslot
+        @slot('title') @lang('translation.Product Categories Setting') @endslot
     @endcomponent
 
     <div class="row">
