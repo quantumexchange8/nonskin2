@@ -1,6 +1,30 @@
 <?php
     return [
 
+        // Sidebar
+        "Announcement" => "Announcement",
+        "User View" => "User View",
+        "List" => "List",
+        "List View" => "List View",
+        "New Order" => "New Order",
+        "Add" => "Add",
+        "Commission" => "Commission",
+        "My Orders" => "My Orders",
+        "Top Up" => "Top Up",
+        "Withdrawal" => "Withdrawal",
+        "Internal Transfer" => "Internal Transfer",
+        "Member" => "Member",
+        "Report" => "Report",
+        "History" => "History",
+        "Pending" => "Pending",
+        "Network" => "Network",
+        "Tree" => "Tree",
+        "Downline Sales" => "Downline Sales",
+        "Sales" => "Sales",
+        "Leadership" => "Leadership",
+        "Levelling" => "Levelling",
+        "Wallet" => "Wallet",
+
         // Custom
         "search" => "Search",
         "from date" => "From Date",
@@ -11,6 +35,8 @@
         "select status" => "Select Status",
         "add category" => "Add Category",
         "add bank" => "Add Bank",
+        "bank name" => "Bank Name",
+        "add shipping charge" => 'Add Shipping Charge',
         "Categories" => 'Categories',
         "Product Categories Setting" => 'Product Categories Setting',
         "Product Categories" => 'Product Categories',
@@ -31,6 +57,7 @@
         "name_cn" => "Name (CN)",
         "action" => "Action",
         "amount" => "Amount",
+        "close" => "Close",
 
         //buttons
         'save changes' => 'Save changes',
