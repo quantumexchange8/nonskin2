@@ -8,146 +8,202 @@
     @slot('title') Dashboard @endslot
     @endcomponent
 
-            <div class="row">
-                <div class="col-xl-4">
-                    <div class="card bg-primary">
-                        <div class="card-body">
-                            <div class="text-center py-3">
-                                <ul class="bg-bubbles ps-0">
-                                    <li><i class="bx bx-grid-alt font-size-24"></i></li>
-                                    <li><i class="bx bx-tachometer font-size-24"></i></li>
-                                    <li><i class="bx bx-store font-size-24"></i></li>
-                                    <li><i class="bx bx-cube font-size-24"></i></li>
-                                    <li><i class="bx bx-cylinder font-size-24"></i></li>
-                                    <li><i class="bx bx-command font-size-24"></i></li>
-                                    <li><i class="bx bx-hourglass font-size-24"></i></li>
-                                    <li><i class="bx bx-pie-chart-alt font-size-24"></i></li>
-                                    <li><i class="bx bx-coffee font-size-24"></i></li>
-                                    <li><i class="bx bx-polygon font-size-24"></i></li>
-                                </ul>
-                                <div class="main-wid position-relative">
-                                    <h3 class="text-white">Nonskin Dashboard</h3>
 
-                                    <h3 class="text-white mb-0"> Welcome Back, {{ Auth::user()->name }}!</h3>
 
-                                    <p class="text-white-50 px-4 mt-4">&nbsp;<br>&nbsp;</p>
+    <div class="row">
+        <div class="col-xl-4 mb-4">
+            <div class="card bg-primary h-100">
+                <div class="card-body">
+                    <div class="text-center py-3">
+                        <ul class="bg-bubbles ps-0">
+                            <li><i class="bx bx-grid-alt font-size-24"></i></li>
+                            <li><i class="bx bx-tachometer font-size-24"></i></li>
+                            <li><i class="bx bx-store font-size-24"></i></li>
+                            <li><i class="bx bx-cube font-size-24"></i></li>
+                            <li><i class="bx bx-cylinder font-size-24"></i></li>
+                            <li><i class="bx bx-command font-size-24"></i></li>
+                            <li><i class="bx bx-hourglass font-size-24"></i></li>
+                            <li><i class="bx bx-pie-chart-alt font-size-24"></i></li>
+                            <li><i class="bx bx-coffee font-size-24"></i></li>
+                            <li><i class="bx bx-polygon font-size-24"></i></li>
+                        </ul>
+                        <div class="main-wid position-relative">
+                            <h3 class="text-white">Nonskin Dashboard</h3>
 
-                                    <div class="mt-4 pt-2 mb-2">
-                                        <a href="" class="btn btn-success">View Profile <i class="mdi mdi-arrow-right ms-1"></i></a>
-                                    </div>
-                                </div>
+                            <h3 class="text-white mb-0"> Welcome Back, {{ Auth::user()->name }}!</h3>
+
+                            <p class="text-white-50 px-4 mt-4"></p>
+
+                            <div class="mt-4 pt-2 mb-2">
+                                <a href="" class="btn btn-success">View Profile <i class="mdi mdi-arrow-right ms-1"></i></a>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-xl-8">
-                    <div class="row">
-                        <div class="col-lg-3 col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="avatar">
-                                        <span class="avatar-title bg-soft-primary rounded">
-                                            <i class="mdi mdi-shopping-outline text-primary font-size-24"></i>
-                                        </span>
-                                    </div>
-                                    <p class="text-muted mt-4 mb-0">Today Orders</p>
-                                    <h4 class="mt-1 mb-0">3,89,658 <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup></h4>
-                                    <div>
-                                        <div class="py-3 my-1">
-                                            <div id="mini-1" data-colors='["#3980c0"]'></div>
-                                        </div>
-                                        <ul class="list-inline d-flex justify-content-between justify-content-center mb-0">
-                                            <li class="list-inline-item"><a href="" class="text-muted">Day</a></li>
-                                            <li class="list-inline-item"><a href="" class="text-muted">Week</a></li>
-                                            <li class="list-inline-item"><a href="" class="text-muted">Month</a></li>
-                                            <li class="list-inline-item"><a href="" class="text-muted">Year</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="avatar">
-                                        <span class="avatar-title bg-soft-success rounded">
-                                            <i class="mdi mdi-eye-outline text-success font-size-24"></i>
-                                        </span>
-                                    </div>
-                                    <p class="text-muted mt-4 mb-0">Today Visitor</p>
-                                    <h4 class="mt-1 mb-0">1,648,29 <sup class="text-danger fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 19%</sup></h4>
-                                    <div>
-                                        <div class="py-3 my-1">
-                                            <div id="mini-2" data-colors='["#33a186"]'></div>
-                                        </div>
-                                        <ul class="list-inline d-flex justify-content-between justify-content-center mb-0">
-                                            <li class="list-inline-item"><a href="" class="text-muted">Day</a></li>
-                                            <li class="list-inline-item"><a href="" class="text-muted">Week</a></li>
-                                            <li class="list-inline-item"><a href="" class="text-muted">Month</a></li>
-                                            <li class="list-inline-item"><a href="" class="text-muted">Year</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="avatar">
-                                        <span class="avatar-title bg-soft-primary rounded">
-                                            <i class="mdi mdi-rocket-outline text-primary font-size-24"></i>
-                                        </span>
-                                    </div>
-                                    <p class="text-muted mt-4 mb-0">Total Expense</p>
-                                    <h4 class="mt-1 mb-0">6,48,249 <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 22%</sup></h4>
-                                    <div>
-                                        <div class="py-3 my-1">
-                                            <div id="mini-3" data-colors='["#3980c0"]'></div>
-                                        </div>
-                                        <ul class="list-inline d-flex justify-content-between justify-content-center mb-0">
-                                            <li class="list-inline-item"><a href="" class="text-muted">Day</a></li>
-                                            <li class="list-inline-item"><a href="" class="text-muted">Week</a></li>
-                                            <li class="list-inline-item"><a href="" class="text-muted">Month</a></li>
-                                            <li class="list-inline-item"><a href="" class="text-muted">Year</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="avatar">
-                                        <span class="avatar-title bg-soft-success rounded">
-                                            <i class="mdi mdi-account-multiple-outline text-success font-size-24"></i>
-                                        </span>
-                                    </div>
-                                    <p class="text-muted mt-4 mb-0">New Users</p>
-                                    <h4 class="mt-1 mb-0">$5,265,3 <sup class="text-danger fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 18%</sup></h4>
-                                    <div>
-                                        <div class="py-3 my-1">
-                                            <div id="mini-4" data-colors='["#33a186"]'></div>
-                                        </div>
-                                        <ul class="list-inline d-flex justify-content-between justify-content-center mb-0">
-                                            <li class="list-inline-item"><a href="" class="text-muted">Day</a></li>
-                                            <li class="list-inline-item"><a href="" class="text-muted">Week</a></li>
-                                            <li class="list-inline-item"><a href="" class="text-muted">Month</a></li>
-                                            <li class="list-inline-item"><a href="" class="text-muted">Year</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="col-xl-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="d-flex flex-wrap align-items-center">
+                        <h5 class="card-title mb-0">Purchase Wallet</h5>
+                    </div>
+                    <div class="row mt-4 d-flex align-items-end">
+                        <div class="col">
+                            <div class="d-flex justify-content-between">
+                                <h2>RM 3,888.50</h2>
+                            </div>
+                            <div class="d-flex justify-content-between gap-3">
+                                <button class="btn btn-primary w-100">Deposit</button>
+                                <button class="btn btn-primary w-100">Withdraw</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between my-4 p-3 border border-primary rounded wave-effects" role="button" data-bs-toggle="modal" data-bs-target="">
+                            <h6 class="align-self-center">Cash Wallet</h6>
+                            <h2>RM2,880.50</h2>
+                    </div>
+                    <div class="d-flex justify-content-between my-4 p-3 border border-primary rounded" role="button" data-bs-toggle="modal" data-bs-target="">
+                            <h6 class="align-self-center">Product Wallet</h6>
+                            <h2>RM2,880.50</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-            {{-- <div class="row">
-                <div class="col-xl-8">
+        <div class="col-xl-12">
+            <div class="row">
+                <div class="col-lg-2 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="avatar">
+                                <span class="avatar-title bg-soft-primary rounded">
+                                    <i class="mdi mdi-shopping-outline text-primary font-size-24"></i>
+                                </span>
+                            </div>
+                            <p class="text-muted mt-4 mb-0">Total Commission</p>
+                            <h4 class="mt-1 mb-0">3,89,658 <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup></h4>
+                            <div>
+                                {{-- <div class="py-3 my-1">
+                                    <div id="mini-1" data-colors='["#3980c0"]'></div>
+                                </div> --}}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="avatar">
+                                <span class="avatar-title bg-soft-success rounded">
+                                    <i class="mdi mdi-eye-outline text-success font-size-24"></i>
+                                </span>
+                            </div>
+                            <p class="text-muted mt-4 mb-0">Total Group Sales</p>
+                            <h4 class="mt-1 mb-0">1,648,29 <sup class="text-danger fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 19%</sup></h4>
+                            <div>
+                                {{-- <div class="py-3 my-1">
+                                    <div id="mini-2" data-colors='["#33a186"]'></div>
+                                </div> --}}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="avatar">
+                                <span class="avatar-title bg-soft-primary rounded">
+                                    <i class="mdi mdi-rocket-outline text-primary font-size-24"></i>
+                                </span>
+                            </div>
+                            <p class="text-muted mt-4 mb-0">Total Downline Sales</p>
+                            <h4 class="mt-1 mb-0">6,48,249 <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 22%</sup></h4>
+                            <div>
+                                {{-- <div class="py-3 my-1">
+                                    <div id="mini-3" data-colors='["#3980c0"]'></div>
+                                </div> --}}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="avatar">
+                                <span class="avatar-title bg-soft-success rounded">
+                                    <i class="mdi mdi-account-multiple-outline text-success font-size-24"></i>
+                                </span>
+                            </div>
+                            <p class="text-muted mt-4 mb-0">Total Purchase</p>
+                            <h4 class="mt-1 mb-0">$5,265,3 <sup class="text-danger fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 18%</sup></h4>
+                            <div>
+                                {{-- <div class="py-3 my-1">
+                                    <div id="mini-4" data-colors='["#33a186"]'></div>
+                                </div> --}}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="avatar">
+                                <span class="avatar-title bg-soft-primary rounded">
+                                    <i class="mdi mdi-rocket-outline text-primary font-size-24"></i>
+                                </span>
+                            </div>
+                            <p class="text-muted mt-4 mb-0">Total Commission Withdrawn</p>
+                            <h4 class="mt-1 mb-0">6,48,249 <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 22%</sup></h4>
+                            <div>
+                                {{-- <div class="py-3 my-1">
+                                    <div id="mini-3" data-colors='["#3980c0"]'></div>
+                                </div> --}}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="avatar">
+                                <span class="avatar-title bg-soft-success rounded">
+                                    <i class="mdi mdi-account-multiple-outline text-success font-size-24"></i>
+                                </span>
+                            </div>
+                            <p class="text-muted mt-4 mb-0">New Users</p>
+                            <h4 class="mt-1 mb-0">$5,265,3 <sup class="text-danger fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 18%</sup></h4>
+                            <div>
+                                {{-- <div class="py-3 my-1">
+                                    <div id="mini-4" data-colors='["#33a186"]'></div>
+                                </div> --}}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-8">
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex flex-wrap align-items-center mb-3">
@@ -239,9 +295,9 @@
 
                         </div>
                     </div>
-                </div>
+        </div>
 
-                <div class="col-xl-4">
+        <div class="col-xl-4">
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex flex-wrap align-items-center">
@@ -313,10 +369,10 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div> --}}
+        </div>
+    </div>
 
-            {{-- <div class="row">
+    {{-- <div class="row">
                 <div class="col-xl-8">
                         <div class="row">
                             <div class="col-lg-5">
@@ -793,9 +849,9 @@
                     </div>
                 </div>
                 </div>
-            </div> --}}
+    </div> --}}
 
-            {{-- <div class="row">
+    {{-- <div class="row">
                 <div class="col-xl-4">
 
                     <div class="card">
@@ -1070,12 +1126,12 @@
                         </div>
                     </div>
                 </div>
-            </div> --}}
+    </div> --}}
 
 @endsection
 @section('script')
-    <script src="{{ URL::asset('assets/libs/apexcharts/apexcharts.min.js') }}"></script>
-    <script src="{{ URL::asset('assets/js/pages/chartjs.js') }}"></script>
-    <script src="{{ URL::asset('assets/js/pages/dashboard.init.js') }}"></script>
+    {{-- <script src="{{ URL::asset('assets/libs/apexcharts/apexcharts.min.js') }}"></script> --}}
+    {{-- <script src="{{ URL::asset('assets/js/pages/chartjs.js') }}"></script> --}}
+    {{-- <script src="{{ URL::asset('assets/js/pages/dashboard.init.js') }}"></script> --}}
     <script src="{{ URL::asset('assets/js/app.js') }}"></script>
 @endsection
