@@ -35,7 +35,7 @@
                             <p class="text-white-50 px-4 mt-4"></p>
 
                             <div class="mt-4 pt-2 mb-2">
-                                <a href="" class="btn btn-success">View Profile <i class="mdi mdi-arrow-right ms-1"></i></a>
+                                <a href="contacts-profile" class="btn btn-success">View Profile <i class="mdi mdi-arrow-right ms-1"></i></a>
                             </div>
                         </div>
                     </div>
@@ -65,13 +65,145 @@
         <div class="col-xl-4 mb-4">
             <div class="card h-100">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between my-4 p-3 border border-primary rounded wave-effects" role="button" data-bs-toggle="modal" data-bs-target="">
-                            <h6 class="align-self-center">Cash Wallet</h6>
-                            <h2>RM2,880.50</h2>
+                    @hasanyrole('user')
+                    <div class="d-flex justify-content-between my-3 p-2 border border-primary rounded wave-effects" role="button" data-bs-toggle="modal" data-bs-target="">
+                        <h6 class="align-self-center">Cash Wallet</h6>
+                        <h2>RM2,880.50</h2>
                     </div>
-                    <div class="d-flex justify-content-between my-4 p-3 border border-primary rounded" role="button" data-bs-toggle="modal" data-bs-target="">
+                    <div class="d-flex justify-content-between my-3 p-2 border border-primary rounded" role="button" data-bs-toggle="modal" data-bs-target="">
                             <h6 class="align-self-center">Product Wallet</h6>
                             <h2>RM2,880.50</h2>
+                    </div>
+                    @endhasanyrole
+                    @hasanyrole('superadmin|admin')
+                    <div class="d-flex justify-content-between my-3 p-2 border border-primary rounded wave-effects" role="button" data-bs-toggle="modal" data-bs-target="">
+                        <h6 class="align-self-center">Total Group Sales</h6>
+                        <h2>RM2,880.50</h2>
+                    </div>
+                    <div class="d-flex justify-content-between my-3 p-2 border border-primary rounded wave-effects" role="button" data-bs-toggle="modal" data-bs-target="">
+                        <h6 class="align-self-center">Total Withdrawals</h6>
+                        <h2>RM2,880.50</h2>
+                    </div>
+                    <div class="d-flex justify-content-between my-3 p-2 border border-primary rounded" role="button" data-bs-toggle="modal" data-bs-target="">
+                            <h6 class="align-self-center">Total Net Profit</h6>
+                            <h2>RM2,880.50</h2>
+                    </div>
+                    @endhasanyrole
+                </div>
+            </div>
+        </div>
+
+        @hasanyrole('user')
+        <div class="col-xl-12">
+            <div class="row">
+                <div class="col-lg-2 col-md-6">
+                    <div class="card">
+                        <div class="card-body" role="button" data-bs-toggle="modal" data-bs-toggle="">
+                            <div class="avatar">
+                                <span class="avatar-title bg-soft-primary rounded">
+                                    <i class='bx bx-dollar text-primary font-size-24'></i>
+                                </span>
+                            </div>
+                            <p class="text-muted mt-4 mb-0">Total Commission</p>
+                            <h4 class="mt-1 mb-0">RM 1,888.50 <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
+                            <div>
+                                {{-- <div class="py-3 my-1">
+                                    <div id="mini-1" data-colors='["#3980c0"]'></div>
+                                </div> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <div class="card">
+                        <div class="card-body" role="button" data-bs-toggle="modal" data-bs-toggle="">
+                            <div class="avatar">
+                                <span class="avatar-title bg-soft-success rounded">
+                                    <i class="mdi mdi-account-multiple-outline text-success font-size-24"></i>
+                                </span>
+                            </div>
+                            <p class="text-muted mt-4 mb-0">Total Group Sales</p>
+                            <h4 class="mt-1 mb-0">RM 2,888.50 <!-- <sup class="text-danger fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 19%</sup> --></h4>
+                            <div>
+                                {{-- <div class="py-3 my-1">
+                                    <div id="mini-2" data-colors='["#33a186"]'></div>
+                                </div> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-6">
+                    <div class="card">
+                        <div class="card-body" role="button" data-bs-toggle="modal" data-bs-toggle="">
+                            <div class="avatar">
+                                <span class="avatar-title bg-soft-primary rounded">
+                                    <i class='bx bxs-hand-down text-primary font-size-24'></i>
+                                </span>
+                            </div>
+                            <p class="text-muted mt-4 mb-0">Total Downline Sales</p>
+                            <h4 class="mt-1 mb-0">RM 3,888.50 <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 22%</sup> --></h4>
+                            <div>
+                                {{-- <div class="py-3 my-1">
+                                    <div id="mini-3" data-colors='["#3980c0"]'></div>
+                                </div> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <div class="card">
+                        <div class="card-body" role="button" data-bs-toggle="modal" data-bs-toggle="">
+                            <div class="avatar">
+                                <span class="avatar-title bg-soft-success rounded">
+                                    <i class="bx bxs-purchase-tag text-success font-size-24"></i>
+                                </span>
+                            </div>
+                            <p class="text-muted mt-4 mb-0">Total Purchase</p>
+                            <h4 class="mt-1 mb-0">RM 13,888.50 <!-- <sup class="text-danger fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 18%</sup> --></h4>
+                            <div>
+                                {{-- <div class="py-3 my-1">
+                                    <div id="mini-4" data-colors='["#33a186"]'></div>
+                                </div> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-6">
+                    <div class="card">
+                        <div class="card-body" role="button" data-bs-toggle="modal" data-bs-toggle="">
+                            <div class="avatar">
+                                <span class="avatar-title bg-soft-primary rounded">
+                                    <i class="bx bx-dollar-circle text-primary font-size-24"></i>
+                                </span>
+                            </div>
+                            <p class="text-muted mt-4 mb-0">Total Commission Withdrawn</p>
+                            <h4 class="mt-1 mb-0">RM 5,888.50 <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 22%</sup> --></h4>
+                            <div>
+                                {{-- <div class="py-3 my-1">
+                                    <div id="mini-3" data-colors='["#3980c0"]'></div>
+                                </div> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <div class="card">
+                        <div class="card-body" role="button" data-bs-toggle="modal" data-bs-toggle="">
+                            <div class="avatar">
+                                <span class="avatar-title bg-soft-success rounded">
+                                    <i class="mdi mdi-account-multiple-outline text-success font-size-24"></i>
+                                </span>
+                            </div>
+                            <p class="text-muted mt-4 mb-0">Total Referrals</p>
+                            <h4 class="mt-1 mb-0">88 <!-- <sup class="text-danger fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 18%</sup> --></h4>
+                            <div>
+                                {{-- <div class="py-3 my-1">
+                                    <div id="mini-4" data-colors='["#33a186"]'></div>
+                                </div> --}}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -81,79 +213,36 @@
             <div class="row">
                 <div class="col-lg-2 col-md-6">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-body" role="button" data-bs-toggle="modal" data-bs-toggle="">
                             <div class="avatar">
                                 <span class="avatar-title bg-soft-primary rounded">
-                                    <i class="mdi mdi-shopping-outline text-primary font-size-24"></i>
+                                    <i class='bx bx-dollar text-primary font-size-24'></i>
                                 </span>
                             </div>
-                            <p class="text-muted mt-4 mb-0">Total Commission</p>
-                            <h4 class="mt-1 mb-0">3,89,658 <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup></h4>
+                            <p class="text-muted mt-4 mb-0">Monthly Bonus</p>
+                            <h4 class="mt-1 mb-0">RM 588 <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
                             <div>
                                 {{-- <div class="py-3 my-1">
                                     <div id="mini-1" data-colors='["#3980c0"]'></div>
                                 </div> --}}
-
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <div class="col-lg-2 col-md-6">
                     <div class="card">
-                        <div class="card-body">
-                            <div class="avatar">
-                                <span class="avatar-title bg-soft-success rounded">
-                                    <i class="mdi mdi-eye-outline text-success font-size-24"></i>
-                                </span>
-                            </div>
-                            <p class="text-muted mt-4 mb-0">Total Group Sales</p>
-                            <h4 class="mt-1 mb-0">1,648,29 <sup class="text-danger fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 19%</sup></h4>
-                            <div>
-                                {{-- <div class="py-3 my-1">
-                                    <div id="mini-2" data-colors='["#33a186"]'></div>
-                                </div> --}}
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-2 col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="avatar">
-                                <span class="avatar-title bg-soft-primary rounded">
-                                    <i class="mdi mdi-rocket-outline text-primary font-size-24"></i>
-                                </span>
-                            </div>
-                            <p class="text-muted mt-4 mb-0">Total Downline Sales</p>
-                            <h4 class="mt-1 mb-0">6,48,249 <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 22%</sup></h4>
-                            <div>
-                                {{-- <div class="py-3 my-1">
-                                    <div id="mini-3" data-colors='["#3980c0"]'></div>
-                                </div> --}}
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-2 col-md-6">
-                    <div class="card">
-                        <div class="card-body">
+                        <div class="card-body" role="button" data-bs-toggle="modal" data-bs-toggle="">
                             <div class="avatar">
                                 <span class="avatar-title bg-soft-success rounded">
                                     <i class="mdi mdi-account-multiple-outline text-success font-size-24"></i>
                                 </span>
                             </div>
-                            <p class="text-muted mt-4 mb-0">Total Purchase</p>
-                            <h4 class="mt-1 mb-0">$5,265,3 <sup class="text-danger fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 18%</sup></h4>
+                            <p class="text-muted mt-4 mb-0">Quarterly Bonus</p>
+                            <h4 class="mt-1 mb-0">RM 1,088 <!-- <sup class="text-danger fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 19%</sup> --></h4>
                             <div>
                                 {{-- <div class="py-3 my-1">
-                                    <div id="mini-4" data-colors='["#33a186"]'></div>
+                                    <div id="mini-2" data-colors='["#33a186"]'></div>
                                 </div> --}}
-
                             </div>
                         </div>
                     </div>
@@ -161,48 +250,83 @@
 
                 <div class="col-lg-2 col-md-6">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-body" role="button" data-bs-toggle="modal" data-bs-toggle="">
                             <div class="avatar">
                                 <span class="avatar-title bg-soft-primary rounded">
-                                    <i class="mdi mdi-rocket-outline text-primary font-size-24"></i>
+                                    <i class='bx bxs-hand-down text-primary font-size-24'></i>
                                 </span>
                             </div>
-                            <p class="text-muted mt-4 mb-0">Total Commission Withdrawn</p>
-                            <h4 class="mt-1 mb-0">6,48,249 <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 22%</sup></h4>
+                            <p class="text-muted mt-4 mb-0">Annually Bonus</p>
+                            <h4 class="mt-1 mb-0">RM 3,088 <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 22%</sup> --></h4>
                             <div>
                                 {{-- <div class="py-3 my-1">
                                     <div id="mini-3" data-colors='["#3980c0"]'></div>
                                 </div> --}}
-
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-6">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-body" role="button" data-bs-toggle="modal" data-bs-toggle="">
+                            <div class="avatar">
+                                <span class="avatar-title bg-soft-success rounded">
+                                    <i class="bx bxs-purchase-tag text-success font-size-24"></i>
+                                </span>
+                            </div>
+                            <p class="text-muted mt-4 mb-0">Total Purchase</p>
+                            <h4 class="mt-1 mb-0">RM 13,888.50 <!-- <sup class="text-danger fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 18%</sup> --></h4>
+                            <div>
+                                {{-- <div class="py-3 my-1">
+                                    <div id="mini-4" data-colors='["#33a186"]'></div>
+                                </div> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-6">
+                    <div class="card">
+                        <div class="card-body" role="button" data-bs-toggle="modal" data-bs-toggle="">
+                            <div class="avatar">
+                                <span class="avatar-title bg-soft-primary rounded">
+                                    <i class="bx bx-dollar-circle text-primary font-size-24"></i>
+                                </span>
+                            </div>
+                            <p class="text-muted mt-4 mb-0">Total Commission Withdrawn</p>
+                            <h4 class="mt-1 mb-0">RM 5,888.50 <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 22%</sup> --></h4>
+                            <div>
+                                {{-- <div class="py-3 my-1">
+                                    <div id="mini-3" data-colors='["#3980c0"]'></div>
+                                </div> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <div class="card">
+                        <div class="card-body" role="button" data-bs-toggle="modal" data-bs-toggle="">
                             <div class="avatar">
                                 <span class="avatar-title bg-soft-success rounded">
                                     <i class="mdi mdi-account-multiple-outline text-success font-size-24"></i>
                                 </span>
                             </div>
                             <p class="text-muted mt-4 mb-0">New Users</p>
-                            <h4 class="mt-1 mb-0">$5,265,3 <sup class="text-danger fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 18%</sup></h4>
+                            <h4 class="mt-1 mb-0">RM 6,888.50 <!-- <sup class="text-danger fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 18%</sup> --></h4>
                             <div>
                                 {{-- <div class="py-3 my-1">
                                     <div id="mini-4" data-colors='["#33a186"]'></div>
                                 </div> --}}
-
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
+        @endhasanyrole
     </div>
 
-    <div class="row">
+    {{-- <div class="row">
         <div class="col-xl-8">
                     <div class="card">
                         <div class="card-body">
@@ -370,7 +494,7 @@
                         </div>
                     </div>
         </div>
-    </div>
+    </div> --}}
 
     {{-- <div class="row">
                 <div class="col-xl-8">
