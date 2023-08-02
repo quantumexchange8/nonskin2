@@ -13,8 +13,11 @@ class Category extends Model
         'name_en',
         'name_cn',
         'status',
+        'remarks',
+        'created_at',
         'created_by',
         'updated_at',
+        'updated_by',
     ];
 
     public function products() {

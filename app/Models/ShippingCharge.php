@@ -9,6 +9,15 @@ class ShippingCharge extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'amount',
+        'created_at',
+        'created_by',
+        'updated_at',
+        'updated_by',
+    ];
+
     public function userName()
     {
         return $this->belongsTo(User::class, 'created_by', 'id');

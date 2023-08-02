@@ -10,12 +10,17 @@
         @slot('title') @lang('translation.Banks Setting') @endslot
     @endcomponent
 
+    @include('admin.settings.modal-add-bank')
+    @foreach ($banks as $k => $v)
+    @include('admin.settings.modal-update-bank')
+    @endforeach
+
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex justify-content-end pt-2">
-                        <button type="submit" class="btn btn-primary"><i class='bx bx-plus-circle' ></i> @lang('translation.add bank')</button>
+                        <button data-bs-toggle="modal" data-bs-target="#addBank" type="submit" class="btn btn-primary"><i class='bx bx-plus-circle' ></i> @lang('translation.add bank')</button>
                     </div>
                 </div>
                 <div class="card-body">
@@ -39,8 +44,12 @@
                                         <td>{{ $v->user->name }}</td>
                                         <td>
                                             <div class="d-flex gap-2">
-                                                <a href="" class="btn btn-sm btn-soft-primary waves-effect waves-light"><i class="bx bx-edit font-size-14 align-middle"></i></a>
-                                                <a href="" class="btn btn-sm btn-soft-danger waves-effect waves-light"><i class="bx bxs-trash font-size-14 align-middle"></i></a>
+                                                <a href="" data-bs-toggle="modal" data-bs-target="#updateBank{{ $v->id }}" class="btn btn-sm btn-soft-primary waves-effect waves-light bx bx-edit font-size-14 align-middle"></a>
+                                                <form method="post">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <a href="{{ route('admin.settings.bank-destroy', $v->id) }}" data-confirm-delete="true" class="btn btn-sm btn-soft-danger waves-effect waves-light bx bxs-trash font-size-14 align-middle"></a>
+                                                </form>
                                             </div>
                                         </td>
                                     </tr>

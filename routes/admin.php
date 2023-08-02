@@ -29,4 +29,10 @@ Route::group(['prefix' => 'admin/settings', 'as' => 'admin.settings.',  'middlew
     Route::get('/shipping-charges', [UserController::class, 'shippingCharges'])->name('shipping-charges');
     Route::get('/banks', [UserController::class, 'bankSettings'])->name('banks');
     Route::get('/company-info', [UserController::class, 'companyInfo'])->name('company-info');
+    Route::post('/product-category/update', [UserController::class, 'categoryStore'])->name('category-store');
+    Route::post('/shipping-charge/update', [UserController::class, 'chargeStore'])->name('charge-store');
+    Route::post('/bank/update', [UserController::class, 'bankStore'])->name('bank-store');
+    Route::delete('/product-category/destroy/{category}', [UserController::class, 'categoryDestroy'])->name('category-destroy');
+    Route::delete('/shipping-charge/destroy/{charge}', [UserController::class, 'chargeDestroy'])->name('charge-destroy');
+    Route::delete('/bank/destroy/{bank}', [UserController::class, 'bankDestroy'])->name('bank-destroy');
 });

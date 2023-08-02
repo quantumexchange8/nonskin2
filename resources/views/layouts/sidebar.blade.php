@@ -38,7 +38,7 @@
                 @hasanyrole('user')
                 <li><a href="{{ route('member.announcement') }}">
                         <i class="bx bxs-volume-full icon nav-icon"></i>
-                        <span class="menu-item" data-key="t-announcement">Announcement</span>
+                        <span class="menu-item" data-key="t-announcement">@lang('translation.Announcement')</span>
                         {{-- <span class="badge rounded-pill bg-danger">@lang('translation.5+')</span> --}}
                     </a>
                 </li>
@@ -47,12 +47,12 @@
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bx bxs-volume-full icon nav-icon"></i>
-                        <span class="menu-item">Announcement</span>
+                        <span class="menu-item">@lang('translation.Announcement')</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{ route('announcements.index') }}">User View</a></li>
-                        <li><a href="{{ route('announcements.list') }}">List</a></li>
-                        <li><a href="{{ route('announcements.create') }}">Add</a></li>
+                        <li><a href="{{ route('announcements.create') }}">@lang('translation.Add')</a></li>
+                        <li><a href="{{ route('announcements.list') }}">@lang('translation.List View')</a></li>
+                        <li><a href="{{ route('announcements.index') }}">@lang('translation.User View')</a></li>
                     </ul>
                 </li>
                 @endhasanyrole
@@ -63,13 +63,13 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         @hasanyrole('superadmin|admin')
-                        <li><a href="{{ route('admin.products.create') }}">Add Product</a></li>
-                        <li><a href="{{ route('admin.products.list') }}">List View</a></li>
-                        <li><a href="{{ route('admin.products.index') }}" >User View</a></li>
+                        <li><a href="{{ route('admin.products.create') }}">@lang('translation.Add')</a></li>
+                        <li><a href="{{ route('admin.products.list') }}">@lang('translation.List View')</a></li>
+                        <li><a href="{{ route('admin.products.index') }}" >@lang('translation.User View')</a></li>
                         @endhasanyrole
                         @hasanyrole('user')
-                        <li><a href="{{ route('member.product-list') }}" >List</a></li>
-                        <li><a href="{{ route('member.cart') }}">Cart</a></li>
+                        <li><a href="{{ route('member.product-list') }}">@lang('translation.List')</a></li>
+                        <li><a href="{{ route('member.cart') }}">@lang('translation.Cart')</a></li>
                         @endhasanyrole
                     </ul>
                 </li>
@@ -77,7 +77,7 @@
                 <li>
                     <a href="{{ route('member.commission') }}">
                         <i class="bx bxs-dollar-circle icon nav-icon"></i>
-                        <span class="menu-item" data-key="t-commission">Commission</span>
+                        <span class="menu-item" data-key="t-commission">@lang('translation.Commission')</span>
                     </a>
                 </li>
                 @endhasanyrole
@@ -85,20 +85,20 @@
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bx bxs-truck icon nav-icon"></i>
                         @hasanyrole('user')
-                        <span class="menu-item" data-key="t-multi-level">My Orders</span>
+                        <span class="menu-item" data-key="t-multi-level">@lang('translation.My Orders')</span>
                         @endhasanyrole
                         @hasanyrole('superadmin|admin')
-                        <span class="menu-item" data-key="t-multi-level">Orders</span>
+                        <span class="menu-item" data-key="t-multi-level">@lang('translation.Orders')</span>
                         @endhasanyrole
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
                         @hasanyrole('user')
-                        <li><a href="{{ route('member.order-pending') }}" data-key="t-order-pending">History</a></li>
+                        <li><a href="{{ route('member.order-pending') }}" data-key="t-order-pending">@lang('translation.History')</a></li>
                         {{-- <li><a href="{{ route('member.order-history') }}" data-key="t-order-history">History</a></li> --}}
                         @endhasanyrole
                         @hasanyrole('superadmin|admin')
-                        <li><a href="{{ route('admin.new-order-list') }}">New Order</a></li>
-                        <li><a href="{{ route('admin.order-history-list') }}">History</a></li>
+                        <li><a href="{{ route('admin.new-order-list') }}">@lang('translation.New Order')</a></li>
+                        <li><a href="{{ route('admin.order-history-list') }}">@lang('translation.History')</a></li>
                         @endhasanyrole
                     </ul>
                 </li>
@@ -106,54 +106,54 @@
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bx bx-dollar icon nav-icon"></i>
-                        <span class="menu-item" data-key="t-multi-level">Top Up</span>
+                        <span class="menu-item" data-key="t-multi-level">@lang('translation.Top Up')</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
-                        <li><a href="{{ route('member.topup-pending') }}" data-key="t-topup-pending">Pending</a></li>
-                        <li><a href="{{ route('member.topup-history') }}" data-key="t-topup-history">History</a></li>
+                        <li><a href="{{ route('member.topup-pending') }}" data-key="t-topup-pending">@lang('translation.Pending')</a></li>
+                        <li><a href="{{ route('member.topup-history') }}" data-key="t-topup-history">@lang('translation.History')</a></li>
                     </ul>
                 </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bx bx-dollar icon nav-icon"></i>
-                        <span class="menu-item" data-key="t-multi-level">Withdrawal</span>
+                        <span class="menu-item" data-key="t-multi-level">@lang('translation.Withdrawal')</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
-                        <li><a href="{{ route('member.withdrawal-pending') }}" data-key="t-withdrawal-pending">Pending</a></li>
-                        <li><a href="{{ route('member.withdrawal-history') }}" data-key="t-withdrawal-history">History</a></li>
+                        <li><a href="{{ route('member.withdrawal-pending') }}" data-key="t-withdrawal-pending">@lang('translation.Pending')</a></li>
+                        <li><a href="{{ route('member.withdrawal-history') }}" data-key="t-withdrawal-history">@lang('translation.History')</a></li>
                     </ul>
                 </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bx bx-dollar icon nav-icon"></i>
-                        <span class="menu-item" data-key="t-multi-level">Internal Transfer</span>
+                        <span class="menu-item" data-key="t-multi-level">@lang('translation.Internal Transfer')</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
-                        <li><a href="{{ route('member.internal-transfer-new') }}" data-key="t-internal-transfer-new">New Internal Transfer</a></li>
-                        <li><a href="{{ route('member.internal-transfer-history') }}" data-key="t-internal-transfer-history">History</a></li>
+                        <li><a href="{{ route('member.internal-transfer-new') }}" data-key="t-internal-transfer-new">@lang('translation.New') @lang('translation.History')</a></li>
+                        <li><a href="{{ route('member.internal-transfer-history') }}" data-key="t-internal-transfer-history">@lang('translation.History')</a></li>
                     </ul>
                 </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bx bx-share-alt icon nav-icon"></i>
-                        <span class="menu-item" data-key="t-multi-level">Member</span>
+                        <span class="menu-item" data-key="t-multi-level">@lang('translation.Member')</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
-                        <li><a href="{{ route('member.member-network') }}" data-key="t-member-network">Network</a></li>
-                        <li><a href="{{ route('member.member-tree') }}" data-key="t-member-tree">Tree</a></li>
+                        <li><a href="{{ route('member.member-network') }}" data-key="t-member-network">@lang('translation.Network')</a></li>
+                        <li><a href="{{ route('member.member-tree') }}" data-key="t-member-tree">@lang('translation.Tree')</a></li>
                     </ul>
                 </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bx bxs-report icon nav-icon"></i>
-                        <span class="menu-item" data-key="t-multi-level">Report</span>
+                        <span class="menu-item" data-key="t-multi-level">@lang('translation.Report')</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
-                        <li><a href="{{ route('member.report-downline-sales') }}" data-key="t-report-downline-sales">Downline Sales</a></li>
-                        <li><a href="{{ route('member.report-sales') }}" data-key="t-report-sales">Sales</a></li>
-                        <li><a href="{{ route('member.report-leadership') }}" data-key="t-report-leadership">Leadership</a></li>
-                        <li><a href="{{ route('member.report-levelling') }}" data-key="t-report-levelling">Levelling</a></li>
-                        <li><a href="{{ route('member.report-wallet') }}" data-key="t-report-wallet">Wallet</a></li>
+                        <li><a href="{{ route('member.report-downline-sales') }}" data-key="t-report-downline-sales">@lang('translation.Downline Sales')</a></li>
+                        <li><a href="{{ route('member.report-sales') }}" data-key="t-report-sales">@lang('translation.Sales')</a></li>
+                        <li><a href="{{ route('member.report-leadership') }}" data-key="t-report-leadership">@lang('translation.Leadership')</a></li>
+                        <li><a href="{{ route('member.report-levelling') }}" data-key="t-report-levelling">@lang('translation.Levelling')</a></li>
+                        <li><a href="{{ route('member.report-wallet') }}" data-key="t-report-wallet">@lang('translation.Wallet')</a></li>
                     </ul>
                 </li>
                 @endhasanyrole
@@ -161,10 +161,10 @@
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bx bx-share-alt icon nav-icon"></i>
-                        <span class="menu-item" data-key="t-multi-level">Member</span>
+                        <span class="menu-item" data-key="t-multi-level">@lang('translation.Member')</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
-                        <li><a href="{{ route('admin.member-list') }}" data-key="t-member-list">List</a></li>
+                        <li><a href="{{ route('admin.member-list') }}" data-key="t-member-list">@lang('translation.List')</a></li>
                         {{-- <li><a href="{{ route('member.member-network') }}" data-key="t-member-network">Network</a></li> --}}
                         {{-- <li><a href="{{ route('member.member-tree') }}" data-key="t-member-tree">Tree</a></li> --}}
                     </ul>
