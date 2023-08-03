@@ -26,124 +26,82 @@
                                 <table id="allOrder">
                                     <thead>
                                         <tr>
-                                            <td>#</td>
                                             <td>Order ID</td>
-                                            <td>Billing Name</td>
+                                            <td>Name</td>
+                                            <td>Contact</td>
                                             <td>Date</td>
-                                            <td>Total</td>
-                                            <td>Payment Status</td>
+                                            <td>Shipping Type</td>
                                             <td>Payment Method</td>
                                             <td>View Details</td>
+                                            <td>Status</td>
                                             <td>Action</td>
                                         </tr>
                                     </thead>
-                                    <tfoot>
+                                    <tbody>
+                                        @foreach($orders as $order)
                                         <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td>{{$order->order_num}}</td>
+                                            <td>
+                                                @if($order->delivery_method == 'Delivery')
+                                                    {{$order->receiver}}
+                                                @endif
+                                            </td>
+                                            <td>{{$order->contact}}</td>
+                                            <td>{{$order->updated_at}}</td>
+                                            <td>{{$order->delivery_method}}</td>
+                                            <td>{{$order->payment_method}}</td>
+                                            <td>
+                                                <button type="button" class="btn btn-primary btn-sm btn-rounded view-detail-button" data-bs-toggle="modal" data-bs-target="#orderdetailsModal_{{ $order->id }}" id="{{$order->id}}">
+                                                    View Details
+                                                </button>
+                                                @include('member.modals.order_detail_modal')
+                                            </td>
+                                            <td>
+                                                @if($order->status == 1)
+                                                    <span class="badge badge-pill badge-soft-success font-size-12">
+                                                        Processing
+                                                    </span>
+                                                
+                                                @elseif($order->status == 2)
+                                                    <span class="badge badge-pill badge-soft-success font-size-12">
+                                                        Packing
+                                                    </span>
+                                                
+                                                @elseif($order->status == 3)
+                                                    <span class="badge badge-pill badge-soft-success font-size-12">
+                                                        Delivering
+                                                    </span>
+                                                @elseif($order->status == 4)
+                                                    <span class="badge badge-pill badge-soft-success font-size-12">
+                                                        Complete
+                                                    </span>
+                                                    @else
+                                                    <span class="badge badge-pill badge-soft-danger font-size-12">
+                                                        Cancelled
+                                                    </span>
+                                                @endif
+                                                
+                                            </td>
                                             <td>
                                                 <div class="d-flex gap-3">
-                                                    <span data-bs-toggle="modal" data-bs-target=".orderdetailsModal"><a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="View" data-bs-original-title="View" class="text-primary"><i class="mdi mdi-eye-outline font-size-18"></i></a></span>
+                                                    <span data-bs-toggle="modal" data-bs-target=".orderdetailsModal">
+                                                        <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="View" data-bs-original-title="View" class="text-primary">
+                                                            <i class="mdi mdi-eye-outline font-size-18"></i>
+                                                        </a>
+                                                    </span>
                                                     {{-- <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-bs-original-title="Edit" class="text-success"><i class="mdi mdi-pencil font-size-18"></i></a> --}}
-                                                    <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-bs-original-title="Delete" class="text-danger"><i class="mdi mdi-delete font-size-18"></i></a>
+                                                    <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-placement="top" title="Cancel" data-bs-original-title="Cancel" class="text-danger"><i class="mdi mdi-delete font-size-18"></i></a>
                                                 </div>
                                             </td>
                                         </tr>
-                                    </tfoot>
+                                        @endforeach
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
 
-                    <div class="modal fade orderdetailsModal" tabindex="-1" role="dialog" aria-labelledby="orderdetailsModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="orderdetailsModalLabel">Order Details</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <p class="mb-2">Product Id: <span class="text-primary">#SK2540</span></p>
-                                    <p class="mb-4">Billing Name: <span class="text-primary">Neal Matthews</span></p>
-
-                                    <div class="table-responsive">
-                                        <table class="table align-middle table-nowrap">
-                                            <thead>
-                                                <tr>
-                                                <th scope="col">Product</th>
-                                                <th scope="col">Product Name</th>
-                                                <th scope="col">Price</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <th scope="row">
-                                                        <div>
-                                                            <img src="{{ URL::asset('assets/images/product/img-1.png') }}" alt="" class="avatar-md">
-                                                        </div>
-                                                    </th>
-                                                    <td>
-                                                        <div>
-                                                            <h5 class="text-truncate font-size-14">Nike N012 Shoes</h5>
-                                                            <p class="text-muted mb-0">$ 225 x 1</p>
-                                                        </div>
-                                                    </td>
-                                                    <td>$ 255</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">
-                                                        <div>
-                                                            <img src="{{ URL::asset('assets/images/product/img-4.png') }}" alt="" class="avatar-md">
-                                                        </div>
-                                                    </th>
-                                                    <td>
-                                                        <div>
-                                                            <h5 class="text-truncate font-size-14">Sports S120 Shoes</h5>
-                                                            <p class="text-muted mb-0">$ 145 x 1</p>
-                                                        </div>
-                                                    </td>
-                                                    <td>$ 145</td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="2">
-                                                        <h6 class="m-0 text-right">Sub Total:</h6>
-                                                    </td>
-                                                    <td>
-                                                        $ 400
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="2">
-                                                        <h6 class="m-0 text-right">Shipping:</h6>
-                                                    </td>
-                                                    <td>
-                                                        Free
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="2">
-                                                        <h6 class="m-0 text-right">Total:</h6>
-                                                    </td>
-                                                    <td>
-                                                        $ 400
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -156,5 +114,17 @@
             responsive: true,
             pagingType: 'simple_numbers'
         });
+
+        // Handle click event for "View Details" button
+        document.querySelectorAll('.view-details-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const orderNum = this.getAttribute('data-bs-order-num');
+                document.getElementById('order-id').textContent = orderNum;
+
+                console.log(orderNum)
+            });
+        });
+
+        
     </script>
 @endsection

@@ -53,7 +53,7 @@
                     <td colspan="2">
                         <h5 class="font-size-14 m-0">Total Shipping Charge :</h5>
                     </td>
-                    <td id="shipping">RM {{ number_format($user->address[0]->shippingCharge->amount, 2, '.', ',') }}</td>
+                    <td id="shipping">RM 0.00</td>
                     <input type="hidden" name="delivery_fee" id="delivery-fee-input">
                 </tr>
 

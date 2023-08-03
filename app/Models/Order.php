@@ -16,10 +16,11 @@ class Order extends Model
 
     // STATUS FOR ORDER
     const processing = 1; //for every order start
-    const packed = 2; //can be selfpickup and ship
+    const packing = 2; //can be selfpickup and ship
     const delivering = 3; //shipping
     const complete = 4; // succesfully
     const cancel = 5; //cancel
+    const pending_payment = 9; //pending payment
 
     /**
      * Get all of the orderItems for the Order
@@ -34,6 +35,10 @@ class Order extends Model
     public function payment()
     {
         return $this->belongsTo(Payment::class, 'payment_id', 'id');
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id', 'id');
     }
 
 }

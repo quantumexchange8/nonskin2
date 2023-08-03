@@ -114,9 +114,11 @@ class UserController extends Controller
         return view('member.member_tree');
     }
     public function pendingOrder() {
-        $orders = Order::with('orderItems', 'payment')->where('user_id', Auth::id())->latest()->get();
-        // dd($orders[0]);
-        return view('member.order_pending', compact('orders'));
+        $orders = Order::with(['user', 'orderItems', 'orderItems.product'])->get();
+        // dd($orders);
+        return view('member.order_pending', [
+            'orders' => $orders,
+        ]);
     }
     public function orderHistory() {
         return view('member.order_history');
