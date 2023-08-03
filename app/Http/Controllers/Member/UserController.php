@@ -8,6 +8,7 @@ use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Address;
 use App\Models\PaymentSetting;
 use App\Models\DeliverySetting;
 use App\Http\Controllers\Controller;
@@ -46,10 +47,10 @@ class UserController extends Controller
 
     public function checkout()
     {
-        $payment_methods = PaymentSetting::select('name', 'icon_class')
-        ->get();
-        $delivery_methods = DeliverySetting::select('name', 'icon_class')
-        ->get();
+        $payment_methods = PaymentSetting::whereIn('id', [1, 2])->get();
+        $payment_selfpick = PaymentSetting::get();
+        $delivery_methods = DeliverySetting::get();
+        $default_address = Address::where('id', 1)->first();
         $user = User::with('cart.items', 'address.shippingCharge')
             ->where('id', Auth::id())
             ->whereHas('address', function ($query) {
@@ -57,13 +58,8 @@ class UserController extends Controller
             })
             ->select('id', 'name', 'contact', 'email')
             ->first();
-            // dd($user->address);
-        // $cartItems = CartItem::with('cart', 'product')
-        //     ->whereHas('cart', function ($query) {
-        //         $query->where('user_id', Auth::id());
-        //     })
-        //     ->latest()
-        //     ->get();
+
+        // $shipping_methods = DeliverySetting::
 
         $cartItems = $user->cart ? $user->cart->items : collect();
 
@@ -88,12 +84,19 @@ class UserController extends Controller
         // ... (existing code)
 
         if ($cartItems->count() > 0) {
-            return view('member.checkout', compact('cartItems', 'user', 'payment_methods', 'delivery_methods', 'subtotal', 'discountedPrice', 'discount', 'totalDiscount', 'totalPriceWithDiscount'));
+            return view('member.checkout', compact('cartItems', 'user', 'payment_methods', 'delivery_methods', 'subtotal', 'discountedPrice', 'discount', 'totalDiscount', 'totalPriceWithDiscount', 'default_address', 'payment_selfpick'));
         }
 
         // If the user does not meet the conditions, redirect to the cart page with a message
         return redirect()->route('member.cart')->with('title', 'Error: No items in cart')->with('message', 'You need to have items in your cart to proceed to checkout.')->with('from_modal', true);
     }
+
+    // public function createOrder(Request $requesst)
+    // {
+    //     dd($request->all());
+
+    //     return redirect()->back();
+    // }
 
     public function commission() {
         return view('member.commission');

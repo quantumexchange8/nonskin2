@@ -111,11 +111,13 @@
                     <i class='bx bx-cart'></i>
                     <span class="noti-dot bg-danger rounded-pill">
                         @php
-                            $cart = App\Models\Cart::where('user_id', auth()->id())->first();
+                            $cart = App\Models\Cart::where('user_id', auth()->id())->with(['product'])->first();
 
                             $cartItemsCount = $cart->items->count()
+
                         @endphp
                         {{ $cartItemsCount }}
+                        
                     </span>
                 </button>
                 @endunlessrole
@@ -135,7 +137,11 @@
                         <h6 class="dropdown-header bg-light">Recently added products</h6>
                         <div id="ajax-data">
                         </div>
-                        @foreach(App\Models\CartItem::all() as $row)
+                        @php
+                            $userItem = App\Models\CartItem::where('cart_id', Auth::user()->cart->id)->get();
+
+                        @endphp
+                        @foreach($userItem as $row)
                             <div>
                                 <a href="" class="text-reset notification-item">
                                     <div class="d-flex border-bottom align-items-start">

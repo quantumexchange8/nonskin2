@@ -61,6 +61,7 @@ class OrderController extends Controller
             $order->payment_method      = $paymentMethod;
             $order->delivery_address    = $deliveryAddress;
             $order->delivery_fee        = $deliveryMethod == 'Delivery' ? $deliveryFee : 0;
+            $order->status              = 1;//processing
             $order->remarks             = 'New Order';
             $order->created_by          = Auth::id();
             $order->updated_at          = null;

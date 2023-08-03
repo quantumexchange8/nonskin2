@@ -18,31 +18,9 @@
 <div id="checkout-paymentinfo-collapse" class="collapse show">
     <div class="p-4 border-top">
         <div>
-            <h5 class="font-size-14 mb-3 required">Select delivery method :</h5>
-            <div class="row">
-                @foreach ($delivery_methods as $res)
-                    <div class="col-lg-3 col-sm-6">
-                        <div data-bs-toggle="collapse">
-                            <label class="card-radio-label">
-                                <input type="radio" name="delivery_method" id="deliveryMethod"
-                                    class="card-radio-input" value="{{ $res->name }}">
-                                <span class="card-radio text-center text-truncate" data-bs-toggle="tooltip" data-placement="top"
-                                title="" data-bs-original-title="{{ $res->name }}">
-                                    <i class="{{ $res->icon_class }} d-block h2 mb-3"></i>
-                                    {{ $res->name }}
-                                </span>
-                            </label>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    </div>
-    <div class="p-4 border-top">
-        <div>
             <h5 class="font-size-14 mb-3 required">Select payment method :</h5>
             <div class="row">
-                @foreach ($payment_methods as $res)
+                @foreach ($payment_selfpick as $res)
                     <div class="col-lg-3 col-sm-6">
                         <div>
                             <label class="card-radio-label">

@@ -12,12 +12,14 @@ class ShippingSettingSeeder extends Seeder
         [
             'name' => 'Delivery',
             'icon_class' => 'bx bxs-truck',
+            'status' => 1,
             'updated_at' => null,
             'created_by' => 1
         ],
         [
             'name' => 'Self-Pickup',
             'icon_class' => 'bx bxs-store-alt',
+            'status' => 2,
             'updated_at' => null,
             'created_by' => 1
         ]

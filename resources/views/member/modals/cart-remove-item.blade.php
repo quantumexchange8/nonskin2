@@ -15,7 +15,7 @@
                         <form action="{{ route('cart.destroy', ['cart' => $v->cart->id, 'productId' => $v->product->id]) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-primary">Save changes</button>
+                            <button type="submit" class="btn btn-primary remove-button">Save changes</button>
                         </form>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     </div>

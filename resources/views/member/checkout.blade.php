@@ -19,14 +19,65 @@
         <div class="col-xl-8">
             <div class="custom-accordion">
                 <div class="card">
-                    {{-- @include('member.partials._checkout_billing_info') --}}
+                    <div class="collapse show">
+                        <div class="p-4 border-top">
+                            <h5 class="font-size-14 mb-3 required">Select delivery method :</h5>
+                            <div class="row">
+                                @foreach ($delivery_methods as $res)
+                                    @if($res->status == 1)
+                                        <div class="col-lg-3 col-sm-6">
+                                            <div data-bs-toggle="collapse">
+                                                <label class="card-radio-label">
+                                                    <input type="radio" name="delivery_method" id="shippingMethod"
+                                                        class="card-radio-input" value="{{ $res->name }}">
+                                                    <span class="card-radio text-center text-truncate" data-bs-toggle="tooltip" data-placement="top"
+                                                    title="" data-bs-original-title="{{ $res->name }}">
+                                                        <i class="{{ $res->icon_class }} d-block h2 mb-3"></i>
+                                                        {{ $res->name }}
+                                                    </span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="col-lg-3 col-sm-6">
+                                            <div data-bs-toggle="collapse">
+                                                <label class="card-radio-label">
+                                                    <input type="radio" name="delivery_method" id="selfpickupMethod"
+                                                        class="card-radio-input" value="{{ $res->name }}">
+                                                    <span class="card-radio text-center text-truncate" data-bs-toggle="tooltip" data-placement="top"
+                                                    title="" data-bs-original-title="{{ $res->name }}">
+                                                        <i class="{{ $res->icon_class }} d-block h2 mb-3"></i>
+                                                        {{ $res->name }}
+                                                    </span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    @endif
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="card">
-                    @include('member.partials._checkout_shipping_info')
+                
+                
+                <div id="shippinginfo" style="display: none;">
+                    <div class="card">
+                        @include('member.partials._checkout_shipping_info')
+                    </div>
+                    <div class="card">
+                        @include('member.partials._checkout_payment_info_ship')
+                    </div>
                 </div>
-                <div class="card">
-                    @include('member.partials._checkout_payment_info')
+
+                <div id="selfpickupinfo" style="display: none;">
+                    <div class="card" >
+                        @include('member.partials._checkout_selfpickup_info')
+                    </div>
+                    <div class="card">
+                        @include('member.partials._checkout_payment_info_self')
+                    </div>
                 </div>
+
             </div>
         </div>
         <div class="col-xl-4">
@@ -43,6 +94,52 @@
     <script src="{{ URL::asset('assets/js/app.js') }}"></script>
     <script>
         $(document).ready(function() {
+
+            function resetShippingInfo() {
+                // Reset the selected address and payment fields in the shipping section
+                $('input[name="address"]').prop('checked', false);
+                $('input[name="payment_method"]').prop('checked', false);
+            }
+
+            // Initially hide the shippinginfo card
+            $('#shippinginfo').hide();
+            $('#selfpickupinfo').hide();
+            
+            $('input[name="delivery_method"]').change(function () {
+                // Check if the "shippingMethod" radio button is selected
+                if ($('#shippingMethod').is(':checked')) {
+                    // If it's selected, show the shippinginfo card
+                    $('#shippinginfo').show();
+                    // Also hide the selfpickupinfo card if it was previously shown
+                    $('#selfpickupinfo').hide();
+
+                     // Show the shipping table and hide the self-pickup table
+                    $('#shippingTable').show();
+                    $('#selfpickupTable').hide();
+
+                    // Reset the shipping info fields
+                    resetShippingInfo();
+
+                    // Update the shipping charge and total amount
+                    updateShippingCharge(true);
+                } else {
+                    // If it's not selected, hide the shippinginfo card
+                    $('#shippinginfo').hide();
+                    // Also show the selfpickupinfo card if it was previously hidden
+                    $('#selfpickupinfo').show();
+
+                    // Hide the shipping table and show the self-pickup table
+                    $('#shippingTable').hide();
+                    $('#selfpickupTable').show();
+
+                    // Reset the shipping info fields
+                    resetShippingInfo();
+
+                    // Update the shipping charge and total amount
+                    updateShippingCharge(false);
+                }
+            });
+
             // Attach a click event handler to the "Place Order" button
             $('#place-order-btn').click(function() {
                 // Check if delivery method and payment method are selected
@@ -55,17 +152,34 @@
                 const totalAmount = Number(totalElement.innerText.match(/\d+\.\d+/)[0]);
                 const formattedTotal = totalAmount.toFixed(2);
                 // Get the data-name and data-contact attributes from the selected radio button
-                const name = selectedAddressRadio.data('name');
-                const contact = selectedAddressRadio.data('contact');
+                let name = null;
+                let contact = null;
 
-                if (!selectedAddressRadio) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Please select your delivery address to proceed'
-                    })
-                    return;
+                
+                if (selectedAddressRadio) {
+                    name = selectedAddressRadio.data('name');
+                    contact = selectedAddressRadio.data('contact');
                 }
+                if (selectedDeliveryMethod === 'Delivery') {
+                    if (!selectedAddressRadio.is(':checked')) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Please select your delivery address to proceed'
+                        })
+                        return;
+                    }
+                }else if (selectedDeliveryMethod === 'Self-Pickup') {
+                    if (!selectedAddressRadio.is(':checked')) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Please select the self-pickup address'
+                        })
+                        return;
+                    }
+                }
+                
                 if (!selectedDeliveryMethod) {
                     Swal.fire({
                         icon: 'error',
@@ -98,14 +212,31 @@
                 }, {
                     name: 'total_amount',
                     value: formattedTotal
-                }, {
-                    name: 'receiver',
-                    value: name
-                }, {
-                    name: 'contact',
-                    value: contact
                 });
-
+                 // Check the delivery method and add receiver and contact accordingly
+                if (selectedDeliveryMethod === 'Delivery') {
+                    formData.push({
+                        name: 'receiver',
+                        value: name
+                    }, {
+                        name: 'contact',
+                        value: contact
+                    });
+                } else if (selectedDeliveryMethod === 'Self-Pickup') {
+                    formData.push({
+                        name: 'receiver',
+                        value: 'company'
+                    }, {
+                        name: 'contact',
+                        value: 'company'
+                    }, {
+                        name: 'deliveryAddress',
+                        value: 'test',
+                    }
+                    
+                    );
+                }
+                console.log(formData)
                 // Use AJAX to post the form data to the server
                 $.ajax({
                     url: '{{ route("place-order") }}',
@@ -144,7 +275,7 @@
                         }
                     },
                     error: function(xhr, status, error) {
-                        console.log(formData);
+                        // console.log(formData);
                         console.log(xhr);
                         console.log(status);
                         Swal.fire({
@@ -157,20 +288,24 @@
                 });
             });
         });
-        function updateShippingCharge(radio) {
-            const totalElement = document.getElementById('total');
-            const shippingCharge = radio.value.includes('Sabah') || radio.value.includes('Sarawak') ? 5 : 0;
+        function updateShippingCharge(isShippingMethod) {
+            const shippingCharge = isShippingMethod ? {{ $user->address[0]->shippingCharge->amount }} : 0;
             const shippingElement = document.getElementById('shipping');
             const shippingAmount = shippingCharge.toFixed(2);
             const totalPrice = Number({{ $subtotal }});
             const totalAmount = (totalPrice + shippingCharge).toFixed(2);
 
             shippingElement.innerText = `RM ${shippingAmount}`;
+            const totalElement = document.getElementById('total');
             totalElement.innerText = `RM ${totalAmount}`;
 
             // Set the value of the hidden input field
             const deliveryFeeInput = document.getElementById('delivery-fee-input');
             deliveryFeeInput.value = shippingCharge;
+
+            // Set the value of the hidden input field for selfpickup
+            const selfPickupFeeInput = document.getElementById('selfpickup-fee-input');
+            selfPickupFeeInput.value = 0;
         }
     </script>
 @endsection

@@ -168,6 +168,7 @@
 
 @endsection
 @section('script')
+    <script src="{{ URL::asset('assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
     <script src="{{ asset('assets/js/app.js') }}"></script>
     <script>
         $(document).ready(() => {

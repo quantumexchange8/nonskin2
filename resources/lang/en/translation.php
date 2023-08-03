@@ -202,7 +202,7 @@
         "Level_1_2" => "Level 1.2",
         "Level_2_1" => "Level 2.1",
         "Level_2_2" => "Level 2.2",
-        "View_More" => "View More",
+        "View_cart" => "View Cart",
         "3_days_ago" => "3 days ago",
         "1_hour_ago" => "1 hour ago",
         "5_hours_ago" => "5 hours ago",

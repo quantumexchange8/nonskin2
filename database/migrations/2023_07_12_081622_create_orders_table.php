@@ -26,7 +26,7 @@ class CreateOrdersTable extends Migration
             $table->string('payment_method');
             $table->string('delivery_address');
             $table->double('delivery_fee',4,2);
-            $table->string('status')->default('New');
+            $table->string('status')->default('1');
             $table->string('courier')->nullable();
             $table->string('cn')->nullable();
             $table->string('tracking_number')->nullable();

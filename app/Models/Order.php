@@ -14,6 +14,13 @@ class Order extends Model
         'created_by',
     ];
 
+    // STATUS FOR ORDER
+    const processing = 1; //for every order start
+    const packed = 2; //can be selfpickup and ship
+    const delivering = 3; //shipping
+    const complete = 4; // succesfully
+    const cancel = 5; //cancel
+
     /**
      * Get all of the orderItems for the Order
      *
