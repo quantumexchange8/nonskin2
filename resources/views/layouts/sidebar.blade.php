@@ -129,7 +129,7 @@
                         <span class="menu-item" data-key="t-multi-level">@lang('translation.Internal Transfer')</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
-                        <li><a href="{{ route('member.internal-transfer-new') }}" data-key="t-internal-transfer-new">@lang('translation.New') @lang('translation.History')</a></li>
+                        <li><a href="{{ route('member.internal-transfer-new') }}" data-key="t-internal-transfer-new">@lang('translation.New') @lang('translation.Internal Transfer')</a></li>
                         <li><a href="{{ route('member.internal-transfer-history') }}" data-key="t-internal-transfer-history">@lang('translation.History')</a></li>
                     </ul>
                 </li>

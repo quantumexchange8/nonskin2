@@ -35,7 +35,7 @@
                             <p class="text-white-50 px-4 mt-4"></p>
 
                             <div class="mt-4 pt-2 mb-2">
-                                QR Code
+                                <!-- QR Code -->
                             </div>
                         </div>
                     </div>
@@ -44,19 +44,15 @@
         </div>
         <div class="col-xl-4 mb-4">
             <div class="card h-100">
-                <div class="card-body">
-                    <div class="d-flex flex-wrap align-items-center">
-                        <h5 class="card-title mb-0">Purchase Wallet</h5>
-                    </div>
-                    <div class="row mt-4 d-flex align-items-end">
-                        <div class="col">
-                            <div class="d-flex justify-content-between">
-                                <h2>RM 3,888.50</h2>
-                            </div>
-                            <div class="d-flex justify-content-between gap-3">
-                                <button class="btn btn-primary w-100">Deposit</button>
-                                <button class="btn btn-primary w-100">Withdraw</button>
-                            </div>
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title mb-0">Purchase Wallet</h5>
+                    <div class="row mt-4 mt-auto">
+                        <div>
+                            <h2>RM 3,888.50</h2>
+                        </div>
+                        <div class="d-flex justify-content-between gap-3 mt-4">
+                            <button class="btn btn-primary w-100">Deposit</button>
+                            <button class="btn btn-primary w-100">Withdraw</button>
                         </div>
                     </div>
                 </div>
@@ -66,25 +62,25 @@
             <div class="card h-100">
                 <div class="card-body">
                     @hasanyrole('user')
-                    <div class="d-flex justify-content-between my-3 p-2 border border-primary rounded wave-effects" role="button" data-bs-toggle="modal" data-bs-target="">
+                    <div class="d-flex justify-content-between mb-3 p-2 border border-primary rounded wave-effects" role="button" data-bs-toggle="modal" data-bs-target="">
                         <h6 class="align-self-center">Cash Wallet</h6>
                         <h2>RM2,880.50</h2>
                     </div>
-                    <div class="d-flex justify-content-between my-3 p-2 border border-primary rounded" role="button" data-bs-toggle="modal" data-bs-target="">
+                    <div class="d-flex justify-content-between mb-3 p-2 border border-primary rounded" role="button" data-bs-toggle="modal" data-bs-target="">
                             <h6 class="align-self-center">Product Wallet</h6>
                             <h2>RM2,880.50</h2>
                     </div>
                     @endhasanyrole
                     @hasanyrole('superadmin|admin')
-                    <div class="d-flex justify-content-between my-3 p-2 border border-primary rounded wave-effects" role="button" data-bs-toggle="modal" data-bs-target="">
+                    <div class="d-flex justify-content-between mb-3 p-2 border border-primary rounded wave-effects" role="button" data-bs-toggle="modal" data-bs-target="">
                         <h6 class="align-self-center">Total Group Sales</h6>
                         <h2>RM2,880.50</h2>
                     </div>
-                    <div class="d-flex justify-content-between my-3 p-2 border border-primary rounded wave-effects" role="button" data-bs-toggle="modal" data-bs-target="">
+                    <div class="d-flex justify-content-between mb-3 p-2 border border-primary rounded wave-effects" role="button" data-bs-toggle="modal" data-bs-target="">
                         <h6 class="align-self-center">Total Withdrawals</h6>
                         <h2>RM2,880.50</h2>
                     </div>
-                    <div class="d-flex justify-content-between my-3 p-2 border border-primary rounded" role="button" data-bs-toggle="modal" data-bs-target="">
+                    <div class="d-flex justify-content-between mb-3 p-2 border border-primary rounded" role="button" data-bs-toggle="modal" data-bs-target="">
                             <h6 class="align-self-center">Total Net Profit</h6>
                             <h2>RM2,880.50</h2>
                     </div>
@@ -92,7 +88,122 @@
                 </div>
             </div>
         </div>
+        @hasanyrole('superadmin|admin')
+        <div class="col-xl-12">
+            <div class="row">
+                <div class="col-lg-2 col-md-6">
+                    <div class="card">
+                        <div class="card-body" role="button" data-bs-toggle="modal" data-bs-toggle="">
+                            <div class="avatar">
+                                <span class="avatar-title bg-soft-primary rounded">
+                                    <i class='mdi mdi-account-group text-primary font-size-24'></i>
+                                </span>
+                            </div>
+                            <p class="text-muted mt-4 mb-0">Overall User</p>
+                            <h4 class="mt-1 mb-0"> 3,888 <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
+                            <div>
+                                {{-- <div class="py-3 my-1">
+                                    <div id="mini-1" data-colors='["#3980c0"]'></div>
+                                </div> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <div class="card">
+                        <div class="card-body" role="button" data-bs-toggle="modal" data-bs-toggle="">
+                            <div class="avatar">
+                                <span class="avatar-title bg-soft-purple rounded">
+                                    <i class="mdi mdi-hexagram text-purple font-size-24"></i>
+                                </span>
+                            </div>
+                            <p class="text-muted mt-4 mb-0">Total Chief Distributor</p>
+                            <h4 class="mt-1 mb-0">88 <!-- <sup class="text-danger fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 19%</sup> --></h4>
+                            <div>
+                                {{-- <div class="py-3 my-1">
+                                    <div id="mini-2" data-colors='["#33a186"]'></div>
+                                </div> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
+                <div class="col-lg-2 col-md-6">
+                    <div class="card">
+                        <div class="card-body" role="button" data-bs-toggle="modal" data-bs-toggle="">
+                            <div class="avatar">
+                                <span class="avatar-title bg-soft-danger rounded">
+                                    <i class='mdi mdi-star text-danger font-size-24'></i>
+                                </span>
+                            </div>
+                            <p class="text-muted mt-4 mb-0">Total Exclusive Distributor</p>
+                            <h4 class="mt-1 mb-0">188 <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 22%</sup> --></h4>
+                            <div>
+                                {{-- <div class="py-3 my-1">
+                                    <div id="mini-3" data-colors='["#3980c0"]'></div>
+                                </div> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <div class="card">
+                        <div class="card-body" role="button" data-bs-toggle="modal" data-bs-toggle="">
+                            <div class="avatar">
+                                <span class="avatar-title bg-soft-warning rounded">
+                                    <i class="mdi mdi-star-four-points text-warning font-size-24"></i>
+                                </span>
+                            </div>
+                            <p class="text-muted mt-4 mb-0">Total General Distributor</p>
+                            <h4 class="mt-1 mb-0">888<!-- <sup class="text-danger fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 18%</sup> --></h4>
+                            <div>
+                                {{-- <div class="py-3 my-1">
+                                    <div id="mini-4" data-colors='["#33a186"]'></div>
+                                </div> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-6">
+                    <div class="card">
+                        <div class="card-body" role="button" data-bs-toggle="modal" data-bs-toggle="">
+                            <div class="avatar">
+                                <span class="avatar-title bg-soft-primary rounded">
+                                    <i class="mdi mdi-star-three-points text-primary font-size-24"></i>
+                                </span>
+                            </div>
+                            <p class="text-muted mt-4 mb-0">Total Members</p>
+                            <h4 class="mt-1 mb-0">2,888 <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 22%</sup> --></h4>
+                            <div>
+                                {{-- <div class="py-3 my-1">
+                                    <div id="mini-3" data-colors='["#3980c0"]'></div>
+                                </div> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <div class="card">
+                        <div class="card-body" role="button" data-bs-toggle="modal" data-bs-toggle="">
+                            <div class="avatar">
+                                <span class="avatar-title bg-soft-success rounded">
+                                    <i class="mdi mdi-account-multiple-outline text-success font-size-24"></i>
+                                </span>
+                            </div>
+                            <p class="text-muted mt-4 mb-0">New User</p>
+                            <h4 class="mt-1 mb-0">88 <!-- <sup class="text-danger fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 18%</sup> --></h4>
+                            <div>
+                                {{-- <div class="py-3 my-1">
+                                    <div id="mini-4" data-colors='["#33a186"]'></div>
+                                </div> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endhasanyrole
         @hasanyrole('user')
         <div class="col-xl-12">
             <div class="row">
