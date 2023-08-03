@@ -35,7 +35,7 @@
                             <p class="text-white-50 px-4 mt-4"></p>
 
                             <div class="mt-4 pt-2 mb-2">
-                                <a href="contacts-profile" class="btn btn-success">View Profile <i class="mdi mdi-arrow-right ms-1"></i></a>
+                                QR Code
                             </div>
                         </div>
                     </div>

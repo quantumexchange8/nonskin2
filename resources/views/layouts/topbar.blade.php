@@ -179,7 +179,7 @@
                     <span class="d-none d-xl-inline-block ms-1" key="t-henry">{{ucfirst(Auth::user()->name)}}</span>
                 </button>
                 <div class="dropdown-menu dropdown-menu-end pt-0">
-                    <a class="dropdown-item" href="contacts-profile"><i class='bx bx-user-circle text-muted font-size-18 align-middle me-1'></i> <span class="align-middle">@lang('translation.My_Account') </span></a>
+                    <a class="dropdown-item" href="{{ route('myProfile') }}"><i class='bx bx-user-circle text-muted font-size-18 align-middle me-1'></i> <span class="align-middle">@lang('translation.My_Account') </span></a>
                     <a class="dropdown-item" href="apps-chat"><i class='bx bx-chat text-muted font-size-18 align-middle me-1'></i> <span class="align-middle">@lang('translation.Chat')</span></a>
                     <a class="dropdown-item" href="pages-faqs"><i class='bx bx-buoy text-muted font-size-18 align-middle me-1'></i> <span class="align-middle">@lang('translation.Support')</span></a>
                     <div class="dropdown-divider"></div>

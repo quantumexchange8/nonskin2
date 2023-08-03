@@ -52,6 +52,10 @@ class HomeController extends Controller
         }
     }
 
+    public function myProfile() {
+        return view('web.my-profile');
+    }
+
     public function updateProfile(Request $request)
     {
         $id = ucfirst(Auth::user()->id);
@@ -62,7 +66,10 @@ class HomeController extends Controller
         ]);
 
         $user = User::find($id);
+        $user->username = $request->get('username');
         $user->name = $request->get('name');
+        $user->id_no = $request->get('id_no');
+        $user->contact = $request->get('contact');
         $user->email = $request->get('email');
 
         if ($request->file('avatar')) {
@@ -111,7 +118,8 @@ class HomeController extends Controller
                 Session::flash('alert-class', 'alert-success');
                 return response()->json([
                     'isSuccess' => true,
-                    'Message' => "Password updated successfully!"
+                    'Message' => "Password updated successfully!",
+                    'html' => view('web.my-profile')
                 ], 200); // Status code here
             } else {
                 Session::flash('message', 'Something went wrong!');
