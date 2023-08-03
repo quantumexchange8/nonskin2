@@ -117,7 +117,7 @@
 
                         @endphp
                         {{ $cartItemsCount }}
-                        
+
                     </span>
                 </button>
                 @endunlessrole
@@ -137,6 +137,7 @@
                         <h6 class="dropdown-header bg-light">Recently added products</h6>
                         <div id="ajax-data">
                         </div>
+                        @hasanyrole('user')
                         @php
                             $userItem = App\Models\CartItem::where('cart_id', Auth::user()->cart->id)->get();
 
@@ -162,6 +163,7 @@
                                 </a>
                             </div>
                         @endforeach
+                        @endhasanyrole
                     </div>
                     <div class="p-2 border-top d-grid">
                         <a class="btn btn-sm btn-link font-size-14 btn-block text-center" href="{{ route('member.cart') }}">

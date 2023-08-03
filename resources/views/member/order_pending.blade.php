@@ -21,97 +21,126 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-6">
-                            <div>
-                                <h5>Showing result for "Orders"</h5>
-                                <ol class="breadcrumb p-0 bg-transparent mb-2">
-                                    <li class="breadcrumb-item"><a href="javascript: void(0);">Orders</a></li>
-                                    <li class="breadcrumb-item active">Pending</li>
-                                </ol>
+                        <div class="col-12">
+                            <div class="card-body">
+                                <table id="allOrder">
+                                    <thead>
+                                        <tr>
+                                            <td>#</td>
+                                            <td>Order ID</td>
+                                            <td>Billing Name</td>
+                                            <td>Date</td>
+                                            <td>Total</td>
+                                            <td>Payment Status</td>
+                                            <td>Payment Method</td>
+                                            <td>View Details</td>
+                                            <td>Action</td>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>
+                                                <div class="d-flex gap-3">
+                                                    <span data-bs-toggle="modal" data-bs-target=".orderdetailsModal"><a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="View" data-bs-original-title="View" class="text-primary"><i class="mdi mdi-eye-outline font-size-18"></i></a></span>
+                                                    {{-- <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-bs-original-title="Edit" class="text-success"><i class="mdi mdi-pencil font-size-18"></i></a> --}}
+                                                    <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-bs-original-title="Delete" class="text-danger"><i class="mdi mdi-delete font-size-18"></i></a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-inline float-md-end">
-                                <div class="search-box ms-2">
-                                    <div class="position-relative">
-                                        <input type="text" class="form-control bg-light border-light rounded"
-                                            placeholder="Search...">
-                                        <i class="bx bx-search search-icon"></i>
+                    </div>
+
+                    <div class="modal fade orderdetailsModal" tabindex="-1" role="dialog" aria-labelledby="orderdetailsModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="orderdetailsModalLabel">Order Details</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="mb-2">Product Id: <span class="text-primary">#SK2540</span></p>
+                                    <p class="mb-4">Billing Name: <span class="text-primary">Neal Matthews</span></p>
+
+                                    <div class="table-responsive">
+                                        <table class="table align-middle table-nowrap">
+                                            <thead>
+                                                <tr>
+                                                <th scope="col">Product</th>
+                                                <th scope="col">Product Name</th>
+                                                <th scope="col">Price</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">
+                                                        <div>
+                                                            <img src="{{ URL::asset('assets/images/product/img-1.png') }}" alt="" class="avatar-md">
+                                                        </div>
+                                                    </th>
+                                                    <td>
+                                                        <div>
+                                                            <h5 class="text-truncate font-size-14">Nike N012 Shoes</h5>
+                                                            <p class="text-muted mb-0">$ 225 x 1</p>
+                                                        </div>
+                                                    </td>
+                                                    <td>$ 255</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">
+                                                        <div>
+                                                            <img src="{{ URL::asset('assets/images/product/img-4.png') }}" alt="" class="avatar-md">
+                                                        </div>
+                                                    </th>
+                                                    <td>
+                                                        <div>
+                                                            <h5 class="text-truncate font-size-14">Sports S120 Shoes</h5>
+                                                            <p class="text-muted mb-0">$ 145 x 1</p>
+                                                        </div>
+                                                    </td>
+                                                    <td>$ 145</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <h6 class="m-0 text-right">Sub Total:</h6>
+                                                    </td>
+                                                    <td>
+                                                        $ 400
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <h6 class="m-0 text-right">Shipping:</h6>
+                                                    </td>
+                                                    <td>
+                                                        Free
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <h6 class="m-0 text-right">Total:</h6>
+                                                    </td>
+                                                    <td>
+                                                        $ 400
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <ul class="nav nav-tabs nav-tabs-custom mt-3 mb-2 ecommerce-sortby-list">
-                        <li class="nav-item">
-                            <a class="nav-link disabled fw-medium" href="#" tabindex="-1" aria-disabled="true">Sort
-                                orders by:</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" data-bs-toggle="tab" href="#all" role="tab"
-                                href="#">All</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#toPay" role="tab" href="#">To Pay</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#toShip" role="tab" href="#">To
-                                Ship</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#toReceive" role="tab" href="#">To
-                                Receive</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#discount" role="tab"
-                                href="#">Completed</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#discount" role="tab"
-                                href="#">Cancelled</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#discount" role="tab"
-                                href="#">Refund</a>
-                        </li>
-                    </ul>
-
-                    <!-- Tab panes -->
-                    <div class="tab-content p-3 text-muted">
-                        @include('member.partials._orders_tab_contents')
-                    </div>
-
-                    <div class="row mt-4">
-                        <div class="col-sm-6">
-                            <div>
-                                <p class="mb-sm-0">Page 2 of 84</p>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="float-sm-end">
-                                <ul class="pagination pagination-rounded mb-sm-0">
-                                    <li class="page-item disabled">
-                                        <a href="#" class="page-link"><i class="mdi mdi-chevron-left"></i></a>
-                                    </li>
-                                    <li class="page-item active">
-                                        <a href="#" class="page-link">1</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a href="#" class="page-link">2</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a href="#" class="page-link">3</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a href="#" class="page-link">4</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a href="#" class="page-link">5</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a href="#" class="page-link"><i class="mdi mdi-chevron-right"></i></a>
-                                    </li>
-                                </ul>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -122,4 +151,10 @@
 @endsection
 @section('script')
     <script src="{{ URL::asset('assets/js/app.js') }}"></script>
+    <script>
+        new DataTable('#allOrder', {
+            responsive: true,
+            pagingType: 'simple_numbers'
+        });
+    </script>
 @endsection
