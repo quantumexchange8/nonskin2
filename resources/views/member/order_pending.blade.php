@@ -90,9 +90,16 @@
                                                         </a>
                                                     </span> --}}
                                                     {{-- <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-bs-original-title="Edit" class="text-success"><i class="mdi mdi-pencil font-size-18"></i></a> --}}
-                                                    <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-placement="top" title="Cancel" data-bs-original-title="Cancel" class="text-danger">
-                                                        <i class="mdi mdi-delete font-size-18"></i>
-                                                    </a>
+                                                    {{-- <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Cancel" data-bs-original-title="Cancel" class="text-danger"> --}}
+                                                        <form action="{{ route('cancelorder', $order->id) }}" method="POST" id="delete-form-{{ $order->id }}">
+                                                            @csrf
+                                                            <button type="button" class="btn btn-link text-danger delete-button" data-order-id="{{ $order->id }}">
+                                                                <i class="mdi mdi-delete font-size-18"></i>
+                                                            </button>
+                                                        </form>  
+                                                        
+                                                        
+                                                    {{-- </a> --}}
                                                 </div>
                                             </td>
                                         </tr>
@@ -111,12 +118,12 @@
 @endsection
 @section('script')
     <script src="{{ URL::asset('assets/js/app.js') }}"></script>
+    <script src="{{ URL::asset('assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
     <script>
         new DataTable('#allOrder', {
             responsive: true,
-            paging:   false,
-            pagingType: 'simple_numbers'
-
+            pagingType: 'simple_numbers',
+            lengthChange: false
         });
 
         // Handle click event for "View Details" button
@@ -129,6 +136,21 @@
             });
         });
 
+        document.addEventListener('DOMContentLoaded', function() {
+        // Add click event listeners to all delete buttons
+        const deleteButtons = document.querySelectorAll('.delete-button');
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Get the order ID from the data attribute
+                const orderId = this.getAttribute('data-order-id');
+                // Get the corresponding form
+                const form = document.getElementById('delete-form-' + orderId);
+                // Submit the form
+                form.submit();
+            });
+        });
+    });
 
+        
     </script>
 @endsection

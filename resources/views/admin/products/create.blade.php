@@ -22,9 +22,9 @@
         @csrf
         <div class="row">
             <div class="col-lg-12">
-                <div id="addproduct-accordion" class="custom-accordion">
+                <div>
                     <div class="card">
-                        <a href="#addproduct-productinfo-collapse" class="text-dark" data-bs-toggle="collapse" aria-expanded="true" aria-controls="addproduct-productinfo-collapse">
+                        <a class="text-dark">
                             <div class="p-4">
                                 <div class="d-flex align-items-center">
                                     <div class="flex-shrink-0 me-3">
@@ -184,7 +184,7 @@
                         </div>
                     </div>
                     <div class="card">
-                        <a href="#addproduct-img-collapse" class="text-dark collapsed" data-bs-toggle="collapse" aria-haspopup="true" aria-expanded="true" aria-haspopup="true" aria-controls="addproduct-img-collapse">
+                        <a>
                             <div class="p-4">
                                 <div class="d-flex align-items-center">
                                     <div class="flex-shrink-0 me-3">
@@ -204,7 +204,7 @@
                                 </div>
                             </div>
                         </a>
-                        <div id="addproduct-img-collapse" class="collapse" data-bs-parent="#addproduct-accordion">
+                        <div id="addproduct-img-collapse" data-bs-parent="#addproduct-accordion">
                             <div class="p-4 border-top">
                                 <div class="mt-4 mt-xl-0">
                                     <div class="mt-4">

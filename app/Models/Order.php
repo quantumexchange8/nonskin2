@@ -12,6 +12,7 @@ class Order extends Model
     protected $fillable = [
         'payment_id',
         'created_by',
+        'status',
     ];
 
     // STATUS FOR ORDER

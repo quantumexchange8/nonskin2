@@ -129,10 +129,15 @@ class OrderController extends Controller
 
     // Admin
     public function new() {
-        $orders = Order::where('status', 'New')->get();
-        $ordersJson = json_encode($orders);
+        // $orders = Order::where('status', 'New')->get();
+        // $ordersJson = json_encode($orders);
         // dd($orders);
-        return view('admin.orders.new', compact('ordersJson'));
+
+        $orders = Order::get();
+
+        return view('admin.orders.new', [
+            'orders' => $orders,
+        ]);
     }
     public function history() {
         return view('admin.orders.history');

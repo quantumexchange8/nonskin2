@@ -203,6 +203,110 @@
         </div>
     </div>
 
+    {{-- <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-xl-4">
+                            <div class="product-detail" dir="ltr">
+                                <h5>Product Description</h5>
+                                <label>Product Name: </label>
+                                <span>
+                                    {{$product->name_en}}
+                                </span>
+                                <br>
+                                <label>
+                                     Description (EN): </label>
+                                <span>
+                                    {{$product->desc_en}}
+                                </span>
+                                <br>
+                                <label>
+                                     Description (CN): </label>
+                                <span>
+                                    {{$product->desc_cn}}
+                                </span>
+                            </div>
+                        </div>
+                        
+                    </div> --}}
+                    <!-- end row -->
+
+                    {{-- <div class="row">
+                        <div class="col-4">
+                            <div class="mt-4 pt-3">
+                                <h5 class="font-size-14 mb-3">Product description: </h5>
+                                <div class="product-desc">
+                                    <ul class="nav nav-tabs nav-tabs-custom" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="desc-tab" data-bs-toggle="tab" href="#desc" role="tab">Description</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="specifi-tab" data-bs-toggle="tab" href="#specifi" role="tab">Specifications</a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content border border-top-0 p-4">
+                                        <div class="tab-pane fade" id="desc" role="tabpanel">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div>
+                                                        <img src="{{ URL::asset('assets/images/product/img-6.png') }}" alt="" class="img-fluid mx-auto d-block">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <div class="text-muted">
+                                                        <p>If several languages coalesce, the grammar of the resulting language is more simple and regular</p>
+                                                        <p>It will be as simple as occidental in fact.</p>
+                                                        <div>
+                                                            <ul class="list-unstyled product-desc-list text-muted mb-0">
+                                                                <li><i class="mdi mdi-circle-medium me-1 align-middle"></i> Sed ut perspiciatis omnis iste</li>
+                                                                <li><i class="mdi mdi-circle-medium me-1 align-middle"></i> Neque porro quisquam est</li>
+                                                                <li><i class="mdi mdi-circle-medium me-1 align-middle"></i> Quis autem vel eum iure</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade show active" id="specifi" role="tabpanel">
+                                            <div class="table-responsive">
+                                                <table class="table table-nowrap mb-0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th scope="row" style="width: 50%;"><b>Category :</b></th>
+                                                            <td>Shoes</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row"><b>Brand :</b></th>
+                                                            <td>Nike</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row"><b>Color :</b></th>
+                                                            <td>Gray</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row"><b>Quality :</b></th>
+                                                            <td>High</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row"><b>Material :</b></th>
+                                                            <td>Leather</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> --}}
+                {{-- </div>
+            </div>
+        </div>
+    </div> --}}
+
     <div id="color-img" class="modal fade" tabindex="-1" aria-labelledby="color-imgLabel" aria-hidden="true" data-bs-scroll="true">
         <div class="modal-dialog  modal-dialog-centered">
             <div class="modal-content">

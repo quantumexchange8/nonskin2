@@ -10,6 +10,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\DropdownController;
 use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\Member\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,6 +59,8 @@ Route::group(['prefix' => 'manage/members',  'middleware' => 'auth'], function (
     Route::post('/', [MemberController::class, 'store'])->name('members.store');                                    // store
     Route::post('/update/{customer}', [MemberController::class, 'update'])->name('members.update');                 // update
     Route::post('/destroy/{customer}', [MemberController::class, 'destroy'])->name('members.destroy');              // destroy
+    Route::post('pending-orders/{order}', [UserController::class, 'cancelorder'])->name('cancelorder');
+    
 });
 /**
  * PRODUCTS

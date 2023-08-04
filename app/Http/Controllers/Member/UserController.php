@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Http\Middleware\CheckCartItem;
 use Illuminate\Support\Facades\Redirect;
-
+Use Alert;
 
 class UserController extends Controller
 {
@@ -123,6 +123,29 @@ class UserController extends Controller
             'orders' => $orders,
         ]);
     }
+    public function cancelorder(Order $order)
+    {
+        // dd($order->status);
+        
+        if($order->status == 1 || $order->status == 2)
+        {
+            $order->update([
+                'status' => 5,
+            ]);
+
+            Alert::success('Success', 'Cancelled the shipment');
+            return redirect()->back();
+        }else{
+            Alert::error('Fail', 'You cannot cancel the shipment');
+            return redirect()->back();
+        }
+        
+
+
+        
+        
+    }
+
     public function orderHistory() {
         return view('member.order_history');
     }
