@@ -23,7 +23,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="card-body">
-                                <table id="allOrder" class="table table-striped mb-0">
+                                <table id="allOrder" class="stripe mb-0">
                                     <thead>
                                         <tr>
                                             <td>Order ID</td>
@@ -61,12 +61,12 @@
                                                     <span class="badge badge-pill badge-soft-secondary font-size-12">
                                                         Processing
                                                     </span>
-                                                
+
                                                 @elseif($order->status == 2)
                                                     <span class="badge badge-pill badge-soft-success font-size-12">
                                                         Packing
                                                     </span>
-                                                
+
                                                 @elseif($order->status == 3)
                                                     <span class="badge badge-pill badge-soft-warning font-size-12">
                                                         Delivering
@@ -80,7 +80,7 @@
                                                         Cancelled
                                                     </span>
                                                 @endif
-                                                
+
                                             </td>
                                             <td>
                                                 <div class="d-flex gap-3">
@@ -103,7 +103,7 @@
                         </div>
                     </div>
 
-                    
+
                 </div>
             </div>
         </div>
@@ -127,6 +127,6 @@
             });
         });
 
-        
+
     </script>
 @endsection

@@ -22,7 +22,7 @@
                             <tr>
                                 <th scope="row">
                                     <div>
-                                        <img src="{{ asset($order_item->image_1) }}" alt="" class="avatar-md">
+                                        <img src="{{ asset('images/products/' . $order_item->product->image_1) }}" alt="" class="avatar-md">
                                     </div>
                                 </th>
                                 <td>
@@ -41,7 +41,7 @@
                                     @else
                                         RM {{ number_format($order_item->price, 2)}}
                                     @endif
-                                    
+
                                 </td>
                             </tr>
                             @endforeach
@@ -69,9 +69,9 @@
                                     RM {{ number_format($order->total_amount, 2)}}
                                 </td>
                             </tr>
-                           
-                            
-                            
+
+
+
                         </tbody>
                     </table>
                 </div>
