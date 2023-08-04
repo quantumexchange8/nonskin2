@@ -101,6 +101,9 @@ class UserController extends Controller
     public function commission() {
         return view('member.commission');
     }
+    public function bonus() {
+        return view('member.bonus');
+    }
     public function internalTransferHistory() {
         return view('member.internal_transfer_history');
     }

@@ -74,8 +74,8 @@ Route::group(['prefix' => 'consumer/products',  'middleware' => 'auth'], functio
 Route::post('/add-member', [RegisterController::class, 'store'])->name('add.member');
 
 Route::get('/announcement/index', [AnnouncementController::class, 'index'])->name('announcements.index');
-Route::get('/announcement/list', [AnnouncementController::class, 'list'])->name('announcements.list');
-Route::get('/announcement/create', [AnnouncementController::class, 'create'])->name('announcements.create');
+Route::get('/announcement/listing', [AnnouncementController::class, 'list'])->name('announcements.list');
+Route::get('/announcement/add', [AnnouncementController::class, 'create'])->name('announcements.create');
 Route::post('/announcement', [AnnouncementController::class, 'store'])->name('announcements.store');
 
 Route::get('dependent-dropdown', [DropdownController::class, 'index']);

@@ -114,7 +114,9 @@
     <script>
         new DataTable('#allOrder', {
             responsive: true,
+            paging:   false,
             pagingType: 'simple_numbers'
+
         });
 
         // Handle click event for "View Details" button

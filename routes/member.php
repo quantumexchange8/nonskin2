@@ -11,6 +11,7 @@ Route::group(['prefix' => 'member/', 'as' => 'member.',  'middleware' => ['auth'
     Route::get('cart', [UserController::class, 'cart'])->name('cart');
     Route::get('cart/checkout', [UserController::class, 'checkout'])->name('checkout');
     Route::get('commission', [UserController::class, 'commission'])->name('commission');
+    Route::get('bonus', [UserController::class, 'bonus'])->name('bonus');
     Route::get('internal-transfer-history', [UserController::class, 'internalTransferHistory'])->name('internal-transfer-history');
     Route::get('internal-transfer-new', [UserController::class, 'internalTransferNew'])->name('internal-transfer-new');
     Route::get('member-network', [UserController::class, 'memberNetwork'])->name('member-network');

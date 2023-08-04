@@ -24,6 +24,9 @@
         "Leadership" => "Leadership",
         "Levelling" => "Levelling",
         "Wallet" => "Wallet",
+        "Product" => "Product",
+        "Listing" => "Listing",
+        "Order" => "Order",
 
         // Custom
         "search" => "Search",

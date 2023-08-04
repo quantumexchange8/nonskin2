@@ -256,8 +256,8 @@
                                 <div class="row">
                                     @if (isset($products))
                                         @foreach ($products as $product)
-                                            <div class="col-xl-2 col-sm-6">
-                                                <div class="product-box">
+                                            <div class="col-xl-2 col-sm-6 mb-4">
+                                                <div class="product-box h-100 d-flex flex-column">
                                                     @if ($product->discount != 0)
                                                         <div class="product-ribbon">
                                                             - {{ $product->discount }} %
@@ -272,7 +272,7 @@
                                                         @hasanyrole('user')
                                                         <a href="{{ route('member.product-detail', $product->id) }}">
                                                             <img src="{{ asset('images/products/' . $product->image_1) }}"
-                                                                alt="" class="img-fluid mx-auto d-block"
+                                                                alt="{{ $product->name_en }}" class="img-fluid mx-auto d-block"
                                                                 style="width: 70% !important;">
                                                         </a>
                                                         @endhasanyrole
@@ -284,7 +284,7 @@
                                                         </a>
                                                         @endhasanyrole
                                                     </div>
-                                                    <div class="product-content p-4">
+                                                    <div class="product-content p-4 mt-auto">
                                                         <div class="d-flex justify-content-between align-items-end">
                                                             <div>
                                                                 <h5 class="mb-1">
@@ -333,9 +333,9 @@
                                                                 <button class="btn btn-primary btn"
                                                                 {{ Auth::user()->role == 'user' ? '' : 'disabled' }}>
                                                                 <i class='bx bx-cart-alt'></i> Add to Cart</button>
-                                                            </div>  
+                                                            </div>
                                                         </form>
-                                                        
+
                                                     </div>
                                                 </div>
                                             </div>

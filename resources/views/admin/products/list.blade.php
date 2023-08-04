@@ -1,13 +1,13 @@
 @extends('layouts.master')
 @section('title')
-    Product List
+    Product Listing
 @endsection
 
 @section('content')
     @component('components.breadcrumb')
     @slot('url') {{ route('admin.products.list') }} @endslot
         @slot('li_1') Products @endslot
-        @slot('title') Product List @endslot
+        @slot('title') Product Listing @endslot
     @endcomponent
 
 @section('css')
@@ -58,7 +58,7 @@
                                     <td>{{ $product->shipping_quantity }}</td>
                                     <td class="text-end">RM {{ number_format($product->price,2,'.',',') }}</td>
                                     <td>{{ number_format($product->discount,1,'.') }} %</td>
-                                    <td>{{ $product->status }}</td>
+                                    <td><span class="badge badge-pill {{ $product->status == 'Active' ? 'badge-soft-success' : 'badge-soft-danger' }}">{{ $product->status }}</span></td>
                                     <td>
                                         <div class="d-flex gap-3">
                                             <a href="{{ route('admin.products.edit', $product->id) }}" class="text-success" data-bs-placement="top" data-bs-toggle="tooltip" title="Edit" data-bs-original-title="Edit">

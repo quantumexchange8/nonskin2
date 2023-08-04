@@ -1,13 +1,13 @@
 @extends('layouts.master')
 @section('title')
-    New Orders
+    Order Listing
 @endsection
 
 @section('content')
     @component('components.breadcrumb')
         @slot('url') {{ url('/') }} @endslot
         @slot('li_1') Home @endslot
-        @slot('title') New Orders @endslot
+        @slot('title') Order Listing @endslot
     @endcomponent
 
     @section('css')

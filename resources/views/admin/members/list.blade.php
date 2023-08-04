@@ -1,13 +1,13 @@
 @extends('layouts.master')
 @section('title')
-    Member List
+    Member Listing
 @endsection
 
 @section('content')
     @component('components.breadcrumb')
         @slot('url') {{ url('/') }} @endslot
         @slot('li_1') Home @endslot
-        @slot('title') Member List @endslot
+        @slot('title') Member Listing @endslot
     @endcomponent
 
 @section('css')
@@ -64,7 +64,7 @@
         new gridjs.Grid({
             columns: [
                 "Referral",
-                "Referrer",
+                "Upline",
                 "Name",
                 "Email",
                 "Ranking",

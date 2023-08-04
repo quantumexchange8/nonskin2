@@ -1,13 +1,13 @@
 @extends('layouts.master')
 @section('title')
-    Announcement List
+    Announcement Listing
 @endsection
 
 @section('content')
     @component('components.breadcrumb')
         @slot('url') {{ url('/') }} @endslot
         @slot('li_1') Home @endslot
-        @slot('title') Announcement List @endslot
+        @slot('title') Announcement Listing @endslot
     @endcomponent
 
     <div class="row">

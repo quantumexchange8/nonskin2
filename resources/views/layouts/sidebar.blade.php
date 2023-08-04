@@ -50,9 +50,9 @@
                         <span class="menu-item">@lang('translation.Announcement')</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{ route('announcements.create') }}">@lang('translation.Add')</a></li>
-                        <li><a href="{{ route('announcements.list') }}">@lang('translation.List View')</a></li>
-                        <li><a href="{{ route('announcements.index') }}">@lang('translation.User View')</a></li>
+                        <li><a href="{{ route('announcements.create') }}">@lang('translation.Add') @lang('translation.Announcement')</a></li>
+                        <li><a href="{{ route('announcements.list') }}">@lang('translation.Announcement') @lang('translation.Listing')</a></li>
+                        {{-- <li><a href="{{ route('announcements.index') }}">@lang('translation.User View')</a></li> --}}
                     </ul>
                 </li>
                 @endhasanyrole
@@ -63,12 +63,12 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         @hasanyrole('superadmin|admin')
-                        <li><a href="{{ route('admin.products.create') }}">@lang('translation.Add')</a></li>
-                        <li><a href="{{ route('admin.products.list') }}">@lang('translation.List View')</a></li>
-                        <li><a href="{{ route('admin.products.index') }}" >@lang('translation.User View')</a></li>
+                        <li><a href="{{ route('admin.products.create') }}">@lang('translation.Add') @lang('translation.Product')</a></li>
+                        <li><a href="{{ route('admin.products.list') }}">@lang('translation.Product') @lang('translation.Listing')</a></li>
+                        {{-- <li><a href="{{ route('admin.products.index') }}" >@lang('translation.User View')</a></li> --}}
                         @endhasanyrole
                         @hasanyrole('user')
-                        <li><a href="{{ route('member.product-list') }}">@lang('translation.List')</a></li>
+                        <li><a href="{{ route('member.product-list') }}">@lang('translation.Product') @lang('translation.List')</a></li>
                         <li><a href="{{ route('member.cart') }}">@lang('translation.Cart')</a></li>
                         @endhasanyrole
                     </ul>
@@ -79,6 +79,17 @@
                         <i class="bx bxs-dollar-circle icon nav-icon"></i>
                         <span class="menu-item" data-key="t-commission">@lang('translation.Commission')</span>
                     </a>
+                </li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i class="mdi mdi-gift icon nav-icon"></i>
+                        <span class="menu-item" data-key="t-multi-level">Bonus</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="true">
+                        @hasanyrole('user')
+                        <li><a href="{{ route('member.bonus') }}">@lang('translation.History')</a></li>
+                        @endhasanyrole
+                    </ul>
                 </li>
                 @endhasanyrole
                 <li>
@@ -97,8 +108,8 @@
                         {{-- <li><a href="{{ route('member.order-history') }}" data-key="t-order-history">History</a></li> --}}
                         @endhasanyrole
                         @hasanyrole('superadmin|admin')
-                        <li><a href="{{ route('admin.new-order-list') }}">@lang('translation.New Order')</a></li>
-                        <li><a href="{{ route('admin.order-history-list') }}">@lang('translation.History')</a></li>
+                        <li><a href="{{ route('admin.new-order-list') }}">@lang('translation.Order') @lang('translation.Listing')</a></li>
+                        {{-- <li><a href="{{ route('admin.order-history-list') }}">@lang('translation.History')</a></li> --}}
                         @endhasanyrole
                     </ul>
                 </li>
@@ -164,7 +175,7 @@
                         <span class="menu-item" data-key="t-multi-level">@lang('translation.Member')</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
-                        <li><a href="{{ route('admin.member-list') }}" data-key="t-member-list">@lang('translation.List')</a></li>
+                        <li><a href="{{ route('admin.member-list') }}" data-key="t-member-list">@lang('translation.Member') @lang('translation.Listing')</a></li>
                         {{-- <li><a href="{{ route('member.member-network') }}" data-key="t-member-network">Network</a></li> --}}
                         {{-- <li><a href="{{ route('member.member-tree') }}" data-key="t-member-tree">Tree</a></li> --}}
                     </ul>
