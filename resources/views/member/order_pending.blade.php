@@ -23,7 +23,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="card-body">
-                                <table id="allOrder">
+                                <table id="allOrder" class="table table-striped mb-0">
                                     <thead>
                                         <tr>
                                             <td>Order ID</td>
@@ -58,7 +58,7 @@
                                             </td>
                                             <td>
                                                 @if($order->status == 1)
-                                                    <span class="badge badge-pill badge-soft-success font-size-12">
+                                                    <span class="badge badge-pill badge-soft-secondary font-size-12">
                                                         Processing
                                                     </span>
                                                 
@@ -68,7 +68,7 @@
                                                     </span>
                                                 
                                                 @elseif($order->status == 3)
-                                                    <span class="badge badge-pill badge-soft-success font-size-12">
+                                                    <span class="badge badge-pill badge-soft-warning font-size-12">
                                                         Delivering
                                                     </span>
                                                 @elseif($order->status == 4)
@@ -84,13 +84,15 @@
                                             </td>
                                             <td>
                                                 <div class="d-flex gap-3">
-                                                    <span data-bs-toggle="modal" data-bs-target=".orderdetailsModal">
+                                                    {{-- <span data-bs-toggle="modal" data-bs-target=".orderdetailsModal">
                                                         <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="View" data-bs-original-title="View" class="text-primary">
                                                             <i class="mdi mdi-eye-outline font-size-18"></i>
                                                         </a>
-                                                    </span>
+                                                    </span> --}}
                                                     {{-- <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-bs-original-title="Edit" class="text-success"><i class="mdi mdi-pencil font-size-18"></i></a> --}}
-                                                    <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-placement="top" title="Cancel" data-bs-original-title="Cancel" class="text-danger"><i class="mdi mdi-delete font-size-18"></i></a>
+                                                    <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-placement="top" title="Cancel" data-bs-original-title="Cancel" class="text-danger">
+                                                        <i class="mdi mdi-delete font-size-18"></i>
+                                                    </a>
                                                 </div>
                                             </td>
                                         </tr>

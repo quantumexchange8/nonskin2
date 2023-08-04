@@ -22,7 +22,7 @@
                             <tr>
                                 <th scope="row">
                                     <div>
-                                        <img src="{{ URL::asset('assets/images/product/img-1.png') }}" alt="" class="avatar-md">
+                                        <img src="{{ asset($order_item->image_1) }}" alt="" class="avatar-md">
                                     </div>
                                 </th>
                                 <td>
@@ -33,8 +33,18 @@
                                         <p class="text-muted mb-0">RM {{ number_format($order_item->product->price, 2) }} x {{ $order_item->quantity}}</p>
                                     </div>
                                 </td>
-                                <td>RM {{ $order->total_amount}}</td>
+                                <td>
+                                    @if($order_item->product->discount != 0 )
+                                        <del><small>RM {{ number_format($order_item->product->price, 2)}}</small></del> <small>{{ $order_item->product->discount}}%</small>
+                                        <br>
+                                        RM {{ number_format($order_item->price, 2)}}
+                                    @else
+                                        RM {{ number_format($order_item->price, 2)}}
+                                    @endif
+                                    
+                                </td>
                             </tr>
+                            @endforeach
                             <tr>
                                 <td colspan="2">
                                     <h6 class="m-0 text-right">Sub Total:</h6>
@@ -48,7 +58,7 @@
                                     <h6 class="m-0 text-right">Shipping:</h6>
                                 </td>
                                 <td>
-                                    RM 0.00
+                                    RM {{ number_format($order->delivery_fee, 2) }}
                                 </td>
                             </tr>
                             <tr>
@@ -59,7 +69,6 @@
                                     RM {{ number_format($order->total_amount, 2)}}
                                 </td>
                             </tr>
-                            @endforeach
                            
                             
                             
