@@ -27,6 +27,9 @@ Auth::routes();
 Route::resource('cart', CartController::class);
 Route::get('/', [App\Http\Controllers\HomeController::class, 'root'])->name('root');
 
+Route::get('/register', [RegisterController::class, 'register'])->name('register');
+Route::post('/add-member', [RegisterController::class, 'store'])->name('add.member');
+
 //Update User Details
 Route::get('/my-profile',[App\Http\Controllers\HomeController::class, 'myProfile'])->name('myProfile');
 Route::post('/update-profile', [App\Http\Controllers\HomeController::class, 'updateProfile'])->name('updateProfile');
@@ -74,7 +77,6 @@ Route::group(['prefix' => 'consumer/products',  'middleware' => 'auth'], functio
     Route::post('/destroy/{product}', [ProductController::class, 'destroy'])->name('products.destroy');             // destroy
 });
 
-Route::post('/add-member', [RegisterController::class, 'store'])->name('add.member');
 
 Route::get('/announcement/index', [AnnouncementController::class, 'index'])->name('announcements.index');
 Route::get('/announcement/listing', [AnnouncementController::class, 'list'])->name('announcements.list');

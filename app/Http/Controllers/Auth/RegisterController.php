@@ -4,11 +4,16 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use App\Models\Prefix;
 use App\Models\User;
+use App\Models\Address;
+use App\Models\Cart;
+use App\Models\BankSetting;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Auth;
 
 class RegisterController extends Controller
 {
@@ -51,7 +56,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'referral' => ['nullable', 'string', 'max:12'],
+            'upline_id' => ['nullable', 'string', 'max:12'],
             'name' => ['required', 'string', 'max:255'],
             'id_no' => ['required', 'numeric', 'digits:12'],
             'contact' => ['required', 'numeric'],
@@ -117,16 +122,20 @@ class RegisterController extends Controller
         ]);
     }
 
+    public function register() {
+        $banks = BankSetting::pluck('name', 'id');
+        return view('auth.register', compact('banks'));
+    }
+
     public function store(Request $request){
-        $validator = $this->validator($request->all());
+        // $validator = $this->validator($request->all());
 
-        if ($validator->fails()) {
-            return redirect()
-                ->back()
-                ->withErrors($validator)
-                ->withInput();
-        }
-
+        // dd($request);
+        // if ($validator->fails()) {
+        //     return redirect()
+        //         ->back()
+        //         ->withErrors('error', 'Try again later');
+        // }
         // if (request()->has('avatar')) {
         //     $avatar = request()->file('avatar');
         //     $avatarName = time() . '.' . $avatar->getClientOriginalExtension();
@@ -134,13 +143,29 @@ class RegisterController extends Controller
         //     $avatar->move($avatarPath, $avatarName);
         // }
 
+        // if user inputs referral in registration form
+        if($request->upline_id){
+            $uplineId = User::where('referrer_id', $request->upline_id)->pluck('id')->first();
+        }
+        $memberPrefix = 'NON';
+        // Find the corresponding row in the 'prefixes' table based on the prefix
+        $prefixRow = Prefix::where('prefix', $memberPrefix)->first();
+
+        $newMemberNumber = $prefixRow->counter + 1;
+            $prefixRow->update(
+                [
+                    'counter' => $newMemberNumber,
+                    'updated_by' => Auth::id()
+                ]
+            );
+
         $user = User::create([
-            'code'          => $request->code,
+            'upline_id'     => $uplineId ?? 3,
+            'referrer_id'   => $memberPrefix . str_pad($newMemberNumber, $prefixRow->padding, '0', STR_PAD_LEFT),
             'email'         => $request->email,
             'password'      => Hash::make($request->password),
             // 'avatar'     => "/images/" . $avatarName,
             'avatar'        => '',
-            'referral'      => $request->referral,
             'name'          => $request->name,
             'id_no'         => $request->id_no,
             'contact'       => $request->contact,
@@ -149,24 +174,49 @@ class RegisterController extends Controller
             'role'          =>'user',
             'ranking_id'    => 5,
             'ranking_name'  => 'Nonmember',
-
+            'bank_name'         => $request->bank_name,
+            'bank_holder_name'  => $request->bank_holder_name,
+            'bank_acc_no'       => $request->bank_acc_no,
+            'bank_ic'           => $request->bank_ic,
             'address_1'     => $request->address_1,
             'address_2'     => $request->address_2,
             'city'          => $request->city,
             'postcode'      => $request->postcode,
             'state'         => $request->state,
             'country'       => $request->country,
-
-            'bank_name'         => $request->bank_name,
-            'bank_holder_name'  => $request->bank_holder_name,
-            'bank_acc_no'       => $request->bank_acc_no,
-            'bank_ic'           => $request->bank_ic,
         ]);
-
         $user->assignRole('user');
 
-        return redirect()
-                ->route('login')
-                ->with("added", "User successfully created!");
+        if($user->wasRecentlyCreated){
+            $user->update(
+                [
+                    'created_at' => $user->created_at,
+                    'updated_at' => now(),
+                    'created_by' => $user->id,
+                    'updated_by' => $user->id
+                ]
+            );
+            Address::create([
+                'user_id'       => $user->id,
+                'name'          => $request->name,
+                'contact'       => $request->contact,
+                'address_1'     => $request->address_1,
+                'address_2'     => $request->address_2,
+                'city'          => $request->city,
+                'postcode'      => $request->postcode,
+                'state'         => $request->state,
+                'country'       => $request->country,
+                'created_by'    => $user->id,
+            ]);
+            Cart::create([
+                'user_id'       => $user->id,
+                'created_by'    => $user->id
+            ]);
+            return redirect()
+            ->route('login')
+            ->with("added", "User successfully created!");
+        }else{
+            return redirect()->back()->with("error", "Please try register again");
+        }
     }
 }

@@ -12,7 +12,7 @@ class PrefixSeeder extends Seeder
             'prefix' => 'NON',
             'padding' => 9,
             'counter' => 6,
-            'description' => 'Member ID',
+            'description' => 'Member ID or Referrer ID. Each member has unique Referrer ID for referral purpose',
             'updated_at' => null,
             'created_by' => 1
         ],

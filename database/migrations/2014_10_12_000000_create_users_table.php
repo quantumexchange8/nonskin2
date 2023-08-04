@@ -17,8 +17,8 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('referral')->nullable();
-            $table->string('referrer')->nullable();
+            $table->bigInteger('upline_id')->nullable()->default(3);
+            $table->string('referrer_id')->unique()->nullable();
             $table->string('hierarchyList')->nullable();
             $table->string('username')->unique();
             $table->string('contact')->unique();
@@ -39,10 +39,10 @@ class CreateUsersTable extends Migration
             $table->string('city', 50);
             $table->string('state', 50);
             $table->string('country', 50);
-            $table->string('bank_name');
-            $table->string('bank_holder_name');
-            $table->string('bank_acc_no');
-            $table->string('bank_ic');
+            $table->string('bank_name')->nullable();
+            $table->string('bank_holder_name')->nullable();
+            $table->string('bank_acc_no')->nullable();
+            $table->string('bank_ic')->nullable();
             $table->string('remarks', 10)->default('New User');
             $table->tinyInteger('is_active')->default(1)->comment('0 - Inactive, 1 - Active');
             $table->tinyInteger('is_legacy')->default(0)->comment('0 - New User, 1 - Old existing users');

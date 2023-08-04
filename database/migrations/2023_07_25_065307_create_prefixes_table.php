@@ -18,7 +18,7 @@ class CreatePrefixesTable extends Migration
             $table->string('prefix', 5)->comment('the Prefix');
             $table->tinyInteger('padding')->comment('How many number?');
             $table->integer('counter')->unsigned()->default(0);
-            $table->string('description', 50);
+            $table->string('description', 100);
             $table->timestamps();
             $table->integer('created_by')->unsigned()->nullable()->comment('Refers to user id');
             $table->integer('updated_by')->unsigned()->nullable()->comment('Refers to user id');

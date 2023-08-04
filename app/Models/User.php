@@ -23,7 +23,8 @@ class User extends Authenticatable
         'email',
         'password',
         'avatar',
-        'referral',
+        'upline_id',
+        'referrer_id',
         'id_no',
         'contact',
         'username',
@@ -41,12 +42,10 @@ class User extends Authenticatable
         'bank_holder_name',
         'bank_acc_no',
         'bank_ic',
-        'delivery_address_1',
-        'delivery_address_2',
-        'delivery_city',
-        'delivery_postcode',
-        'delivery_state',
-        'delivery_country',
+        'created_by',
+        'created_at',
+        'updated_by',
+        'updated_at'
     ];
 
     /**
@@ -81,5 +80,10 @@ class User extends Authenticatable
     public function address()
     {
         return $this->hasMany(Address::class, 'user_id', 'id');
+    }
+
+    public function upline()
+    {
+        return $this->belongsTo(User::class, 'upline_id', 'id');
     }
 }
