@@ -11,6 +11,7 @@ class PrefixSeeder extends Seeder
         [
             'prefix' => 'NON',
             'padding' => 9,
+            'counter' => 6,
             'description' => 'Member ID',
             'updated_at' => null,
             'created_by' => 1

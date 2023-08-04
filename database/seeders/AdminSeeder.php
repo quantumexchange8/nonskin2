@@ -102,6 +102,7 @@ class AdminSeeder extends Seeder
 
         User::create(
         [
+            'referrer'      =>'NON000000001',
             'name'          =>'Admin',
             'username'      =>'Admin',
             'id_no'         =>'111111031111',
@@ -144,6 +145,8 @@ class AdminSeeder extends Seeder
 
         User::create(
         [
+            'referral'      =>3,
+            'referrer'      =>'NON000000002',
             'name'          =>'Lee Chong Wei',
             'username'      =>'Chong Wei',
             'id_no'         =>'111111041111',
@@ -193,6 +196,8 @@ class AdminSeeder extends Seeder
 
         User::create(
         [
+            'referral'      =>3,
+            'referrer'      =>'NON000000003',
             'name'          =>'Leonard Hofstadter',
             'username'      =>'Leonard',
             'id_no'         =>'111111051111',
@@ -242,6 +247,8 @@ class AdminSeeder extends Seeder
 
         User::create(
         [
+            'referral'      =>3,
+            'referrer'      =>'NON000000004',
             'name'          =>'Ali Ah Kau',
             'username'      =>'Ali',
             'id_no'         =>'111111061111',
@@ -291,6 +298,8 @@ class AdminSeeder extends Seeder
 
         User::create(
         [
+            'referral'      =>3,
+            'referrer'      =>'NON000000005',
             'name'          =>'Tiong Wan Chuah',
             'username'      =>'Syazwan',
             'id_no'         =>'111111071111',
@@ -355,6 +364,8 @@ class AdminSeeder extends Seeder
 
         User::create(
         [
+            'referral'      =>3,
+            'referrer'      =>'NON000000006',
             'name'          =>'Lee Yew Eng',
             'username'      =>'Yew',
             'id_no'         =>'111111081111',
