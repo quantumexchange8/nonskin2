@@ -34,8 +34,8 @@ class RankingSeeder extends Seeder
             'created_by' => 1
         ],
         [
-            'name' => 'Nonmember',
-            'desc' => 'Nonmember',
+            'name' => 'Client',
+            'desc' => 'Client',
             'updated_at' => null,
             'created_by' => 1
         ]
