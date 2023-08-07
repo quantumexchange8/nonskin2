@@ -11,12 +11,14 @@ Route::group(['prefix' => 'member/', 'as' => 'member.',  'middleware' => ['auth'
     Route::get('cart', [UserController::class, 'cart'])->name('cart');
     Route::get('cart/checkout', [UserController::class, 'checkout'])->name('checkout');
     Route::get('commission', [UserController::class, 'commission'])->name('commission');
+    Route::get('wallet/deposit', [UserController::class, 'deposit'])->name('wallet-deposit');
+    Route::get('wallet/withdrawal', [UserController::class, 'withdrawal'])->name('wallet-withdrawal');
     Route::get('bonus', [UserController::class, 'bonus'])->name('bonus');
-    Route::get('internal-transfer-history', [UserController::class, 'internalTransferHistory'])->name('internal-transfer-history');
-    Route::get('internal-transfer-new', [UserController::class, 'internalTransferNew'])->name('internal-transfer-new');
-    Route::get('member-network', [UserController::class, 'memberNetwork'])->name('member-network');
-    Route::get('member-tree', [UserController::class, 'memberTree'])->name('member-tree');
-    Route::get('pending-orders', [UserController::class, 'pendingOrder'])->name('order-pending');
+    Route::get('internal-transfer/history', [UserController::class, 'internalTransferHistory'])->name('internal-transfer-history');
+    Route::get('internal-transfer/new', [UserController::class, 'internalTransferNew'])->name('new-internal-transfer');
+    Route::get('member-listing', [UserController::class, 'memberListing'])->name('listing');
+    Route::get('member-network-tree', [UserController::class, 'memberNetworkTree'])->name('network-tree');
+    Route::get('orders/history', [UserController::class, 'pendingOrder'])->name('order-pending');
     Route::post('pending-orders/{order}', [UserController::class, 'cancelorder'])->name('cancelorder');
 
     Route::get('order-history', [UserController::class, 'orderHistory'])->name('order-history');
@@ -27,10 +29,10 @@ Route::group(['prefix' => 'member/', 'as' => 'member.',  'middleware' => ['auth'
     Route::get('report-levelling', [UserController::class, 'reportLevelling'])->name('report-levelling');
     Route::get('report-sales', [UserController::class, 'reportSales'])->name('report-sales');
     Route::get('report-wallet', [UserController::class, 'reportWallet'])->name('report-wallet');
-    Route::get('topup-history', [UserController::class, 'topupHistory'])->name('topup-history');
-    Route::get('topup-pending', [UserController::class, 'topupPending'])->name('topup-pending');
-    Route::get('withdrawal-history', [UserController::class, 'withdrawalHistory'])->name('withdrawal-history');
-    Route::get('withdrawal-pending', [UserController::class, 'withdrawalPending'])->name('withdrawal-pending');
+    // Route::get('topup-history', [UserController::class, 'topupHistory'])->name('topup-history');
+    // Route::get('topup-pending', [UserController::class, 'topupPending'])->name('topup-pending');
+    // Route::get('withdrawal-history', [UserController::class, 'withdrawalHistory'])->name('withdrawal-history');
+    // Route::get('withdrawal-pending', [UserController::class, 'withdrawalPending'])->name('withdrawal-pending');
 });
 Route::post('/updateQty/{itemId}/{action}', [CartController::class, 'updateQty'])->name('updateQty');
 

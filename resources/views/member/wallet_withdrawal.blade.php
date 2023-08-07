@@ -1,11 +1,11 @@
 @extends('layouts.master')
-@section('title') Member Tree @endsection
+@section('title') Wallet Withdrawal @endsection
 
 @section('content')
     @component('components.breadcrumb')
     @slot('url') {{ url('/') }} @endslot
     @slot('li_1') Home @endslot
-    @slot('title') Member Tree @endslot
+    @slot('title') Wallet Withdrawal @endslot
     @endcomponent
 
 @endsection

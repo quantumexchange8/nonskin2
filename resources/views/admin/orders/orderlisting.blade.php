@@ -18,15 +18,106 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="position-relative">
+                    {{-- <div class="position-relative">
                         <div class="modal-button mt-2">
                             <button type="button" class="btn btn-success waves-effect waves-light mb-2 me-2" data-bs-toggle="modal" data-bs-target=".add-new-order"><i class="mdi mdi-plus me-1"></i> Add New Order</button>
                         </div>
-                    </div>
-                    <div id="table-new-orders" data-new-orders="{{ $orders }}"></div>
-                    @php
-                        // dd($orders);
-                    @endphp
+                    </div> --}}
+                    <table id="allOrder" class="stripe mb-0 res display responsive wrap">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Name</th>
+                                <th>Contact</th>
+                                <th>Date</th>
+                                <th>Shipping Type</th>
+                                <th>Payment Method</th>
+                                <th>View Details</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($orders as $order)
+                            <tr>
+                                <td class="fw-bold">#{{$order->order_num}}</td>
+                                <td>
+                                    @if($order->delivery_method == 'Delivery')
+                                        {{ $order->receiver}}
+                                    @endif
+                                </td>
+                                <td>{{ $order->contact }}</td>
+                                <td>{{ $order->updated_at }}</td>
+                                <td>
+                                    @if($order->delivery_method == 'Delivery')
+                                        <i class="bx bxs-truck me-2"></i> {{ $order->delivery_method }}
+                                    @else
+                                        <i class="bx bxs-store-alt me-2"></i> {{ $order->delivery_method }}
+                                    @endif
+                                </td>
+                                <td>
+                                    @switch($order->payment_method)
+                                        @case('Manual Transfer')
+                                            <i class="fab fa-cc-paypal me-2"></i> {{ $order->payment_method }}
+                                            @break
+                                        @case('Online Banking')
+                                            <i class="fab fa-cc-mastercard me-2"></i> {{ $order->payment_method }}
+                                            @break
+                                        @default
+                                            <i class="fas fa-money-bill-alt me-2"></i> {{ $order->payment_method }}
+                                    @endswitch
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-primary btn-sm btn-rounded view-detail-button" data-bs-toggle="modal" data-bs-target="#orderdetailsModal_{{ $order->id }}" id="{{$order->id}}">
+                                        View Details
+                                    </button>
+                                    @include('member.modals.order_detail_modal')
+                                </td>
+                                <td>
+                                    @if($order->status == 1)
+                                        <span class="badge badge-pill badge-soft-secondary font-size-12">
+                                            Processing
+                                        </span>
+                                    @elseif($order->status == 2)
+                                        <span class="badge badge-pill badge-soft-success font-size-12">
+                                            Packing
+                                        </span>
+                                    @elseif($order->status == 3)
+                                        <span class="badge badge-pill badge-soft-warning font-size-12">
+                                            Delivering
+                                        </span>
+                                    @elseif($order->status == 4)
+                                        <span class="badge badge-pill badge-soft-success font-size-12">
+                                            Complete
+                                        </span>
+                                        @else
+                                        <span class="badge badge-pill badge-soft-danger font-size-12">
+                                            Cancelled
+                                        </span>
+                                    @endif
+                                </td>
+                                <td>
+                                    <div class="d-flex gap-3">
+                                        {{-- <span data-bs-toggle="modal" data-bs-target=".orderdetailsModal">
+                                            <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="View" data-bs-original-title="View" class="text-primary">
+                                                <i class="mdi mdi-eye-outline font-size-18"></i>
+                                            </a>
+                                        </span> --}}
+                                        {{-- <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-bs-original-title="Edit" class="text-success"><i class="mdi mdi-pencil font-size-18"></i></a> --}}
+                                        {{-- <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Cancel" data-bs-original-title="Cancel" class="text-danger"> --}}
+                                            <form action="{{ route('cancelorder', $order->id) }}" method="POST" id="delete-form-{{ $order->id }}">
+                                                @csrf
+                                                <button type="button" class="btn btn-link text-danger delete-button" data-order-id="{{ $order->id }}" data-order-status="{{ $order->status }}">
+                                                    <i class="mdi mdi-delete font-size-18"></i>
+                                                </button>
+                                            </form>
+                                        {{-- </a> --}}
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -121,103 +212,110 @@
     </div>
 
     @include('admin.orders.modal.orderdetail')
-    
+
 @endsection
 @section('script')
-<script src="{{ URL::asset('assets/libs/gridjs/gridjs.min.js') }}"></script>
-<script src="{{ URL::asset('assets/js/app.js') }}"></script>
-{{-- <script src="{{ URL::asset('assets/js/pages/admin-pending-orders.js') }}"></script> --}}
-<script src="{{ URL::asset('assets/libs/flatpickr/flatpickr.min.js') }}"></script>
-<script>
-    const ordersData = document.getElementById("table-new-orders").dataset.newOrders;
-    const orders = JSON.parse(ordersData);
-    console.log(orders);
-    new gridjs.Grid({
-        columns: [
-            { id: 'id', name: '#', width: '5%' },
-            {
-                id: 'order_num',
-                name: 'Order Number',
-                formatter: (cell) => gridjs.html(`<span class="fw-semibold">#${cell}</span>`),
-            },
-            {
-                id: 'total_amount',
-                name: 'Total Amount',
-                width: '9%',
-                formatter: (function (cell) {
-                    return gridjs.html('RM ' + cell.toLocaleString(undefined, { minimumFractionDigits: 2 }))
-                })
-            },
-            {
-                id: "payment_method",
-                name: "Payment Method",
-                formatter: (function (cell) {
-                    switch (cell) {
-                        case "Online Banking":
-                            return gridjs.html('<i class="fab fa-cc-mastercard me-2"></i>' + cell);
-                        case "Visa":
-                            return gridjs.html('<i class="fab fa-cc-visa me-2"></i>' + cell);
-                        case "Manual Transfer":
-                            return gridjs.html('<i class="fab fa-cc-paypal me-2"></i>' + cell);
-                        case "Payment at Counter":
-                            return gridjs.html('<i class="fas fa-money-bill-alt me-2"></i>' + cell);
-                        default:
-                            return gridjs.html('<i class="fab fa-cc-visa me-2"></i>' + cell);
-                    }
-                })
-            },
-            {
-                id: "delivery_method",
-                name: "Delivery Method",
-                formatter: (function (cell) {
-                    switch (cell) {
-                        case "Self-Pickup":
-                            return gridjs.html('<i class="bx bxs-store-alt me-2"></i>' + cell);
-                        case "Delivery":
-                            return gridjs.html('<i class="bx bxs-truck me-2"></i>' + cell);
-                        default:
-                            return gridjs.html('<i class="fab fa-cc-visa me-2"></i>' + cell);
-                    }
-                })
-            },
-            {
-                id: "receiver",
-                name: "Receiver"
-            },
-            {
-                id: "contact",
-                name: "Contact",
-                width: '8%'
-            },
-            {
-                id: "delivery_address",
-                name: "Address",
-                width: '20%'
-            },
-            {
-                name: "Action",
-                width: '7%',
-                sort: {
-                    enabled: false
+    <script src="{{ URL::asset('assets/libs/gridjs/gridjs.min.js') }}"></script>
+    <script src="{{ URL::asset('assets/js/app.js') }}"></script>
+    {{-- <script src="{{ URL::asset('assets/js/pages/admin-pending-orders.js') }}"></script> --}}
+    <script src="{{ URL::asset('assets/libs/flatpickr/flatpickr.min.js') }}"></script>
+    <script>
+        new DataTable('#allOrder', {
+            responsive: true,
+            pagingType: 'simple_numbers',
+            lengthChange: false
+        });
+    </script>
+    <script>
+        const ordersData = document.getElementById("table-new-orders").dataset.newOrders;
+        const orders = JSON.parse(ordersData);
+        console.log(orders);
+        new gridjs.Grid({
+            columns: [
+                { id: 'id', name: '#', width: '5%' },
+                {
+                    id: 'order_num',
+                    name: 'Order Number',
+                    formatter: (cell) => gridjs.html(`<span class="fw-semibold">#${cell}</span>`),
                 },
-                formatter: (function (cell) {
-                    return gridjs.html('<div class="d-flex gap-3"><a href="#" data-bs-toggle="modal" data-bs-target=".orderdetailsModal" data-bs-toggle="tooltip" data-bs-placement="top" title="View" data-bs-original-title="View" class="text-primary"><i class="mdi mdi-eye-outline font-size-18"></i></a><a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-bs-original-title="Edit" class="text-success"><i class="mdi mdi-pencil font-size-18"></i></a><a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-bs-original-title="Delete" class="text-danger"><i class="mdi mdi-delete font-size-18"></i></a></div>');
-                })
-            }
-        ],
-        pagination: {
-            limit: 8
-        },
-        sort: true,
-        search: true,
-        data: orders,
-    }).render(document.getElementById("table-new-orders"));
+                {
+                    id: 'total_amount',
+                    name: 'Total Amount',
+                    width: '9%',
+                    formatter: (function (cell) {
+                        return gridjs.html('RM ' + cell.toLocaleString(undefined, { minimumFractionDigits: 2 }))
+                    })
+                },
+                {
+                    id: "payment_method",
+                    name: "Payment Method",
+                    formatter: (function (cell) {
+                        switch (cell) {
+                            case "Online Banking":
+                                return gridjs.html('<i class="fab fa-cc-mastercard me-2"></i>' + cell);
+                            case "Visa":
+                                return gridjs.html('<i class="fab fa-cc-visa me-2"></i>' + cell);
+                            case "Manual Transfer":
+                                return gridjs.html('<i class="fab fa-cc-paypal me-2"></i>' + cell);
+                            case "Payment at Counter":
+                                return gridjs.html('<i class="fas fa-money-bill-alt me-2"></i>' + cell);
+                            default:
+                                return gridjs.html('<i class="fab fa-cc-visa me-2"></i>' + cell);
+                        }
+                    })
+                },
+                {
+                    id: "delivery_method",
+                    name: "Delivery Method",
+                    formatter: (function (cell) {
+                        switch (cell) {
+                            case "Self-Pickup":
+                                return gridjs.html('<i class="bx bxs-store-alt me-2"></i>' + cell);
+                            case "Delivery":
+                                return gridjs.html('<i class="bx bxs-truck me-2"></i>' + cell);
+                            default:
+                                return gridjs.html('<i class="fab fa-cc-visa me-2"></i>' + cell);
+                        }
+                    })
+                },
+                {
+                    id: "receiver",
+                    name: "Receiver"
+                },
+                {
+                    id: "contact",
+                    name: "Contact",
+                    width: '8%'
+                },
+                {
+                    id: "delivery_address",
+                    name: "Address",
+                    width: '20%'
+                },
+                {
+                    name: "Action",
+                    width: '7%',
+                    sort: {
+                        enabled: false
+                    },
+                    formatter: (function (cell) {
+                        return gridjs.html('<div class="d-flex gap-3"><a href="#" data-bs-toggle="modal" data-bs-target=".orderdetailsModal" data-bs-toggle="tooltip" data-bs-placement="top" title="View" data-bs-original-title="View" class="text-primary"><i class="mdi mdi-eye-outline font-size-18"></i></a><a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-bs-original-title="Edit" class="text-success"><i class="mdi mdi-pencil font-size-18"></i></a><a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-bs-original-title="Delete" class="text-danger"><i class="mdi mdi-delete font-size-18"></i></a></div>');
+                    })
+                }
+            ],
+            pagination: {
+                limit: 8
+            },
+            sort: true,
+            search: true,
+            data: orders,
+        }).render(document.getElementById("table-new-orders"));
 
 
 
-    flatpickr('#order-date', {
-        defaultDate: new Date(),
-        dateFormat: "d M, Y",
-    });
-</script>
+        flatpickr('#order-date', {
+            defaultDate: new Date(),
+            dateFormat: "d M, Y",
+        });
+    </script>
 @endsection

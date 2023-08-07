@@ -52,7 +52,7 @@ class UserController extends Controller
         $delivery_methods = DeliverySetting::get();
         $default_address = Address::where('id', 1)->first();
         $shipping_address = Address::where('user_id', auth()->user()->id)->get();
-        
+
         $user = User::with('cart.items', 'address.shippingCharge')
             ->where('id', Auth::id())
             ->whereHas('address', function ($query) {
@@ -123,16 +123,16 @@ class UserController extends Controller
         return view('member.internal_transfer_history');
     }
     public function internalTransferNew() {
-        return view('member.internal_transfer_history');
+        return view('member.internal_transfer_new');
     }
-    public function memberNetwork() {
-        return view('member.member_network');
+    public function memberListing() {
+        return view('member.member_listing');
     }
-    public function memberTree() {
-        return view('member.member_tree');
+    public function memberNetworkTree() {
+        return view('member.member_network_tree');
     }
     public function pendingOrder() {
-        $orders = Order::with(['user', 'orderItems', 'orderItems.product'])->get();
+        $orders = Order::with(['user', 'orderItems', 'orderItems.product'])->where('user_id', Auth::id())->get();
         // dd($orders);
         return view('member.order_pending', [
             'orders' => $orders,
@@ -141,7 +141,7 @@ class UserController extends Controller
     public function cancelorder(Order $order)
     {
         // dd($order->status);
-        
+
         if($order->status == 1 || $order->status == 2)
         {
             $order->update([
@@ -154,11 +154,6 @@ class UserController extends Controller
             Alert::error('Fail', 'You cannot cancel the shipment');
             return redirect()->back();
         }
-        
-
-
-        
-        
     }
 
     public function orderHistory() {
@@ -170,6 +165,7 @@ class UserController extends Controller
     public function productDetail() {
         // ProductController
     }
+
     public function reportDownlineSales() {
         return view('member.report_downline_sales');
     }
@@ -185,18 +181,27 @@ class UserController extends Controller
     public function reportWallet() {
         return view('member.report_wallet');
     }
-    public function topupHistory() {
-        return view('member.topup_history');
+
+    // public function topupHistory() {
+    //     return view('member.topup_history');
+    // }
+    // public function topupPending() {
+    //     return view('member.topup_pending');
+    // }
+
+    public function deposit() {
+        return view('member.wallet_deposit');
     }
-    public function topupPending() {
-        return view('member.topup_pending');
+    public function withdrawal() {
+        return view('member.wallet_withdrawal');
     }
-    public function withdrawalHistory() {
-        return view('member.withdrawal_history');
-    }
-    public function withdrawalPending() {
-        return view('member.withdrawal_pending');
-    }
+
+    // public function withdrawalHistory() {
+    //     return view('member.withdrawal_history');
+    // }
+    // public function withdrawalPending() {
+    //     return view('member.withdrawal_pending');
+    // }
 
     // AJAX
 

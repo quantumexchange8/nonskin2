@@ -27,6 +27,16 @@
         "Product" => "Product",
         "Listing" => "Listing",
         "Order" => "Order",
+        "My Wallets" => "My Wallets",
+        "Wallets" => "Wallets",
+        "Deposit" => "Deposit",
+        "My-Member" => "My Members",
+        "member-listing" => "Member Listing",
+        "Network-tree" => "Network Tree",
+        "pending-deposit" => "Pending Deposit",
+        "pending-withdrawal" => "Pending Withdrawal",
+        "my-rewards" => "My Rewards",
+        "reward-voucher" => "Reward Voucher",
 
         // Custom
         "search" => "Search",

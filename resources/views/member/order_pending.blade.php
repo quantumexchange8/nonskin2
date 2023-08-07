@@ -23,24 +23,24 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="card-body">
-                                <table id="allOrder" class="stripe mb-0">
+                                <table id="allOrder" class="stripe mb-0 res display responsive wrap">
                                     <thead>
                                         <tr>
-                                            <td>Order ID</td>
-                                            <td>Name</td>
-                                            <td>Contact</td>
-                                            <td>Date</td>
-                                            <td>Shipping Type</td>
-                                            <td>Payment Method</td>
-                                            <td>View Details</td>
-                                            <td>Status</td>
-                                            <td>Action</td>
+                                            <th>Order ID</th>
+                                            <th>Name</th>
+                                            <th>Contact</th>
+                                            <th>Date</th>
+                                            <th>Shipping Type</th>
+                                            <th>Payment Method</th>
+                                            <th>View Details</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach($orders as $order)
                                         <tr>
-                                            <td>{{$order->order_num}}</td>
+                                            <td class="fw-bold">#{{$order->order_num}}</td>
                                             <td>
                                                 @if($order->delivery_method == 'Delivery')
                                                     {{$order->receiver}}
@@ -61,12 +61,10 @@
                                                     <span class="badge badge-pill badge-soft-secondary font-size-12">
                                                         Processing
                                                     </span>
-
                                                 @elseif($order->status == 2)
                                                     <span class="badge badge-pill badge-soft-success font-size-12">
                                                         Packing
                                                     </span>
-
                                                 @elseif($order->status == 3)
                                                     <span class="badge badge-pill badge-soft-warning font-size-12">
                                                         Delivering
@@ -80,7 +78,6 @@
                                                         Cancelled
                                                     </span>
                                                 @endif
-
                                             </td>
                                             <td>
                                                 <div class="d-flex gap-3">
@@ -96,9 +93,7 @@
                                                             <button type="button" class="btn btn-link text-danger delete-button" data-order-id="{{ $order->id }}" data-order-status="{{ $order->status }}">
                                                                 <i class="mdi mdi-delete font-size-18"></i>
                                                             </button>
-                                                        </form>  
-                                                        
-                                                        
+                                                        </form>
                                                     {{-- </a> --}}
                                                 </div>
                                             </td>
@@ -109,8 +104,6 @@
                             </div>
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>
@@ -188,6 +181,6 @@
             });
         });
 
-        
+
     </script>
 @endsection
