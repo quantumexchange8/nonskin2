@@ -41,8 +41,8 @@
 <script>
     var users = {!! $users->map(function ($user) {
             return [
-                $user->referral ?? '-N/A-',
-                $user->referrer ?? '-N/A-',
+                $user->upline->name ?? '-N/A-',
+                $user->referrer_id ?? '-N/A-',
                 $user->name,
                 $user->email,
                 $user->ranking_name,
