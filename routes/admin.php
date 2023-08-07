@@ -11,6 +11,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.',  'middleware' => 'auth'], f
     Route::get('/orders/listing', [OrderController::class, 'new'])->name('new-order-list');
     Route::get('/orders/history', [OrderController::class, 'history'])->name('order-history-list');
 
+    // Route::get('/wallets/pending-deposit', [UserController::class, 'pendingDeposit'])->name('wallet-pending-deposit');
+    // Route::get('/wallets/pending-withdrawal', [UserController::class, 'pendingWithdrawal'])->name('wallet-pending-withdrawal');
+
 });
 Route::group(['prefix' => 'admin/products', 'as' => 'admin.products.',  'middleware' => ['auth', 'role:superadmin|admin',]], function () {
     Route::get('/add', [ProductController::class, 'create'])->name('create');

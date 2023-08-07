@@ -122,8 +122,8 @@
                             {{-- <li><a href="{{ route('member.order-history') }}" data-key="t-order-history">History</a></li> --}}
                         @endhasanyrole
                         @hasanyrole('superadmin|admin')
-                            <li><a href="#">@lang('translation.pending-deposit')</a></li>
-                            <li><a href="#">@lang('translation.pending-withdrawal')</a></li>
+                            {{-- <li><a href="{{ route('admin.pending-deposit') }}">@lang('translation.pending-deposit')</a></li> --}}
+                            {{-- <li><a href="{{ route('admin.pending-withdrawal') }}">@lang('translation.pending-withdrawal')</a></li> --}}
                             {{-- <li><a href="{{ route('admin.order-history-list') }}">@lang('translation.History')</a></li> --}}
                         @endhasanyrole
                     </ul>
@@ -198,7 +198,7 @@
                         @endhasanyrole
                         @hasanyrole('superadmin|admin')
                             <li><a href="{{ route('admin.member-list') }}">@lang('translation.Member') @lang('translation.Listing')</a></li>
-                            <li><a href="{{ route('member.member-network') }}">@lang('translation.Network-tree')</a></li>
+                            <li><a href="{{ route('member.network-tree') }}">@lang('translation.Network-tree')</a></li>
                         @endhasanyrole
                     </ul>
                 </li>
