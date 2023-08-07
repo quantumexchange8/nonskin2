@@ -698,6 +698,7 @@
 @section('script')
     <script src="{{ asset('assets/libs/wnumb/wNumb.min.js') }}"></script>
     <script src="{{ asset('assets/js/app.js') }}"></script>
+    <script src="{{ URL::asset('assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
     <script>
         $(document).ready(function() {
             // Set the CSRF token for all AJAX requests
@@ -725,11 +726,24 @@
                         quantity: quantity
                     },
                     success: function(response) {
-                        alert(response.message);
+                        // Show SweetAlert2 success notification
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: 'Product added to cart successfully!',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
                     },
                     error: function(xhr, status, error) {
                         // Handle any errors that occur during the AJAX request
-                        alert(error);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Failed to add product to cart.',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
                     }
                 });
             });

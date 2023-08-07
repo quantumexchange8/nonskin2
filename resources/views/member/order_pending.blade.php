@@ -93,7 +93,7 @@
                                                     {{-- <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Cancel" data-bs-original-title="Cancel" class="text-danger"> --}}
                                                         <form action="{{ route('cancelorder', $order->id) }}" method="POST" id="delete-form-{{ $order->id }}">
                                                             @csrf
-                                                            <button type="button" class="btn btn-link text-danger delete-button" data-order-id="{{ $order->id }}">
+                                                            <button type="button" class="btn btn-link text-danger delete-button" data-order-id="{{ $order->id }}" data-order-status="{{ $order->status }}">
                                                                 <i class="mdi mdi-delete font-size-18"></i>
                                                             </button>
                                                         </form>  
@@ -137,19 +137,56 @@
         });
 
         document.addEventListener('DOMContentLoaded', function() {
-        // Add click event listeners to all delete buttons
-        const deleteButtons = document.querySelectorAll('.delete-button');
-        deleteButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                // Get the order ID from the data attribute
-                const orderId = this.getAttribute('data-order-id');
-                // Get the corresponding form
-                const form = document.getElementById('delete-form-' + orderId);
-                // Submit the form
-                form.submit();
+            // Add click event listeners to all delete buttons
+            const deleteButtons = document.querySelectorAll('.delete-button');
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const orderId = this.getAttribute('data-order-id');
+                    const orderStatus = this.getAttribute('data-order-status');
+
+                    if (orderStatus === '5') {
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'This order has already been cancelled!',
+                            icon: 'error',
+                            confirmButtonText: 'Ok'
+                        });
+                    } else if(orderStatus === '4') {
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'This order has already completed!',
+                            icon: 'error',
+                            confirmButtonText: 'Ok'
+                        });
+                    } else if(orderStatus === '3') {
+                        Swal.fire({
+                            title: 'Warning',
+                            text: 'This order has already shipped out!',
+                            icon: 'warning',
+                            confirmButtonText: 'Ok'
+                        });
+                    } else {
+                        // Show SweetAlert 2 confirmation dialog
+                        Swal.fire({
+                            title: 'Are you sure?',
+                            text: 'You will not be able to recover this order!',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Yes, delete it!',
+                            cancelButtonText: 'Cancel'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // If the user confirms, submit the form to delete the order
+                                const form = document.getElementById('delete-form-' + orderId);
+                                form.submit();
+                            }
+                        });
+                    }
+                });
             });
         });
-    });
 
         
     </script>

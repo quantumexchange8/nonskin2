@@ -19,20 +19,18 @@
     <div class="p-4 border-top">
         <h5 class="font-size-14 mb-3">Shipping Info</h5>
         <div class="row">
-            @foreach ($user->address as $k => $v)
+            @foreach ($shipping_address as $k => $v)
             <div class="col-lg-4 col-sm-6">
                 <div>
                     <label class="card-radio-label mb-0">
-                        <input type="radio" name="address" id="address"
-                            class="card-radio-input" onchange="updateShippingCharge(this)" data-name="{{ $v->name }}" data-contact="{{ $v->contact }}"
+                        <input type="radio" name="address" id="address{{ $v->id }}" onchange="updateShippingCharge(this)" class="card-radio-input" data-name="{{ $v->name }}"
+                            data-contact="{{ $v->contact }}" data-shipping-charge="{{ $v->shippingCharge->amount }}"
                             value="{{ $v->address_1 }}, {{ $v->address_2 }}, {{ $v->postcode }}, {{ $v->city }}, {{ $v->state }}, {{ $v->country }}">
+
                         <div class="card-radio text-truncate p-3">
-                            {{-- <span class="fs-14 mb-4 d-block">Delivery Address</span> --}}
                             <span class="fs-14 mb-2 d-block">
                                 {{ $v->name }}
-                                {{-- @if ($v->is_default == 1)
-                                    <span class="btn btn-sm btn-warning">Default</span>
-                                @endif --}}
+                                
                             </span>
                             <span class="text-muted fw-normal text-wrap mb-1 d-block">
                                 {{ $v->address_1 }}, {{ $v->address_2 }}, {{ $v->postcode }}, {{ $v->city }}, {{ $v->state }}, {{ $v->country }}
@@ -40,12 +38,6 @@
                             <span class="text-muted fw-normal d-block">Contact: {{ $v->contact }}</span>
                         </div>
                     </label>
-                    <div class="edit-btn bg-light  rounded">
-                        <a href="#" data-bs-toggle="tooltip" data-placement="top"
-                            title="" data-bs-original-title="Edit">
-                            <i class="bx bx-pencil font-size-16"></i>
-                        </a>
-                    </div>
                 </div>
             </div>
             @endforeach

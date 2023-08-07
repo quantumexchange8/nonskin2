@@ -51,6 +51,8 @@ class UserController extends Controller
         $payment_selfpick = PaymentSetting::get();
         $delivery_methods = DeliverySetting::get();
         $default_address = Address::where('id', 1)->first();
+        $shipping_address = Address::where('user_id', auth()->user()->id)->get();
+        
         $user = User::with('cart.items', 'address.shippingCharge')
             ->where('id', Auth::id())
             ->whereHas('address', function ($query) {
@@ -84,7 +86,20 @@ class UserController extends Controller
         // ... (existing code)
 
         if ($cartItems->count() > 0) {
-            return view('member.checkout', compact('cartItems', 'user', 'payment_methods', 'delivery_methods', 'subtotal', 'discountedPrice', 'discount', 'totalDiscount', 'totalPriceWithDiscount', 'default_address', 'payment_selfpick'));
+            return view('member.checkout', [
+                'cartItems' => $cartItems,
+                'user' => $user,
+                'payment_methods' => $payment_methods,
+                'delivery_methods' => $delivery_methods,
+                'subtotal' => $subtotal,
+                'discountedPrice' => $discountedPrice,
+                'discount' => $discount,
+                'totalDiscount' => $totalDiscount,
+                'totalPriceWithDiscount' => $totalPriceWithDiscount,
+                'default_address' => $default_address,
+                'payment_selfpick' => $payment_selfpick,
+                'shipping_address' => $shipping_address,
+            ]);
         }
 
         // If the user does not meet the conditions, redirect to the cart page with a message

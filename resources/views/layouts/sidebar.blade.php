@@ -63,35 +63,29 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         @hasanyrole('superadmin|admin')
-                        <li><a href="{{ route('admin.products.create') }}">@lang('translation.Add') @lang('translation.Product')</a></li>
-                        <li><a href="{{ route('admin.products.list') }}">@lang('translation.Product') @lang('translation.Listing')</a></li>
+                        <li>
+                            <a href="{{ route('admin.products.create') }}">
+                                @lang('translation.Add') @lang('translation.Product')
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.products.list') }}">
+                                @lang('translation.Product') @lang('translation.Listing')
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.settings.categories') }}">
+                                <span class="menu-item">@lang('translation.Product Categories')</span>
+                            </a>
+                        </li>
                         {{-- <li><a href="{{ route('admin.products.index') }}" >@lang('translation.User View')</a></li> --}}
                         @endhasanyrole
                         @hasanyrole('user')
                         <li><a href="{{ route('member.product-list') }}">@lang('translation.Product') @lang('translation.List')</a></li>
-                        <li><a href="{{ route('member.cart') }}">@lang('translation.Cart')</a></li>
+                        {{-- <li><a href="{{ route('member.cart') }}">@lang('translation.Cart')</a></li> --}}
                         @endhasanyrole
                     </ul>
                 </li>
-                @hasanyrole('user')
-                <li>
-                    <a href="{{ route('member.commission') }}">
-                        <i class="bx bxs-dollar-circle icon nav-icon"></i>
-                        <span class="menu-item" data-key="t-commission">@lang('translation.Commission')</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow">
-                        <i class="mdi mdi-gift icon nav-icon"></i>
-                        <span class="menu-item" data-key="t-multi-level">Bonus</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="true">
-                        @hasanyrole('user')
-                        <li><a href="{{ route('member.bonus') }}">@lang('translation.History')</a></li>
-                        @endhasanyrole
-                    </ul>
-                </li>
-                @endhasanyrole
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bx bxs-truck icon nav-icon"></i>
@@ -113,8 +107,50 @@
                         @endhasanyrole
                     </ul>
                 </li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i class="bx bxs-truck icon nav-icon"></i>
+                        @hasanyrole('user')
+                        <span class="menu-item" data-key="t-multi-level">@lang('translation.My Wallets')</span>
+                        @endhasanyrole
+                        @hasanyrole('superadmin|admin')
+                        <span class="menu-item" data-key="t-multi-level">@lang('translation.Wallets')</span>
+                        @endhasanyrole
+                    </a>
+                    <ul class="sub-menu" aria-expanded="true">
+                        @hasanyrole('user')
+                        <li><a href="{{ route('member.order-pending') }}" data-key="t-order-pending">@lang('translation.Deposit')</a></li>
+                        <li><a href="{{ route('member.order-pending') }}" data-key="t-order-pending">@lang('translation.Withdrawal')</a></li>
+                        {{-- <li><a href="{{ route('member.order-history') }}" data-key="t-order-history">History</a></li> --}}
+                        @endhasanyrole
+                        @hasanyrole('superadmin|admin')
+                        <li><a href="{{ route('admin.new-order-list') }}">@lang('translation.pending-deposit')</a></li>
+                        <li><a href="{{ route('admin.new-order-list') }}">@lang('translation.pending-withdrawal')</a></li>
+                        {{-- <li><a href="{{ route('admin.order-history-list') }}">@lang('translation.History')</a></li> --}}
+                        @endhasanyrole
+                    </ul>
+                </li>
                 @hasanyrole('user')
                 <li>
+                    <a href="{{ route('member.commission') }}">
+                        <i class="bx bxs-dollar-circle icon nav-icon"></i>
+                        <span class="menu-item" data-key="t-commission">@lang('translation.Commission')</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i class="mdi mdi-gift icon nav-icon"></i>
+                        <span class="menu-item" data-key="t-multi-level">My Rewards</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="true">
+                        @hasanyrole('user')
+                        <li><a href="{{ route('member.bonus') }}">@lang('translation.Reward voucher')</a></li>
+                        @endhasanyrole
+                    </ul>
+                </li>
+                @endhasanyrole
+                @hasanyrole('user')
+                {{-- <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bx bx-dollar icon nav-icon"></i>
                         <span class="menu-item" data-key="t-multi-level">@lang('translation.Top Up')</span>
@@ -123,8 +159,8 @@
                         <li><a href="{{ route('member.topup-pending') }}" data-key="t-topup-pending">@lang('translation.Pending')</a></li>
                         <li><a href="{{ route('member.topup-history') }}" data-key="t-topup-history">@lang('translation.History')</a></li>
                     </ul>
-                </li>
-                <li>
+                </li> --}}
+                {{-- <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bx bx-dollar icon nav-icon"></i>
                         <span class="menu-item" data-key="t-multi-level">@lang('translation.Withdrawal')</span>
@@ -133,7 +169,7 @@
                         <li><a href="{{ route('member.withdrawal-pending') }}" data-key="t-withdrawal-pending">@lang('translation.Pending')</a></li>
                         <li><a href="{{ route('member.withdrawal-history') }}" data-key="t-withdrawal-history">@lang('translation.History')</a></li>
                     </ul>
-                </li>
+                </li> --}}
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bx bx-dollar icon nav-icon"></i>
@@ -147,11 +183,11 @@
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bx bx-share-alt icon nav-icon"></i>
-                        <span class="menu-item" data-key="t-multi-level">@lang('translation.Member')</span>
+                        <span class="menu-item" data-key="t-multi-level">@lang('translation.My-Member')</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
-                        <li><a href="{{ route('member.member-network') }}" data-key="t-member-network">@lang('translation.Network')</a></li>
-                        <li><a href="{{ route('member.member-tree') }}" data-key="t-member-tree">@lang('translation.Tree')</a></li>
+                        <li><a href="{{ route('member.member-network') }}" data-key="t-member-network">@lang('translation.member-listing')</a></li>
+                        <li><a href="{{ route('member.member-network') }}" data-key="t-member-network">@lang('translation.Network-tree')</a></li>
                     </ul>
                 </li>
                 <li>
@@ -176,17 +212,12 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
                         <li><a href="{{ route('admin.member-list') }}" data-key="t-member-list">@lang('translation.Member') @lang('translation.Listing')</a></li>
-                        {{-- <li><a href="{{ route('member.member-network') }}" data-key="t-member-network">Network</a></li> --}}
+                        <li><a href="{{ route('member.member-network') }}" data-key="t-member-network">@lang('translation.network-tree')</a></li>
                         {{-- <li><a href="{{ route('member.member-tree') }}" data-key="t-member-tree">Tree</a></li> --}}
                     </ul>
                 </li>
                 <li class="menu-title" data-key="t-applications">@lang('translation.Settings')</li>
-                <li>
-                    <a href="{{ route('admin.settings.categories') }}">
-                        <i class="bx bxs-category icon nav-icon"></i>
-                        <span class="menu-item">@lang('translation.Product Categories')</span>
-                    </a>
-                </li>
+                
                 <li>
                     <a href="{{ route('admin.settings.shipping-charges') }}">
                         <i class="bx bxs-ship icon nav-icon"></i>

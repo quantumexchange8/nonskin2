@@ -135,7 +135,7 @@ class OrderController extends Controller
 
         $orders = Order::get();
 
-        return view('admin.orders.new', [
+        return view('admin.orders.orderlisting', [
             'orders' => $orders,
         ]);
     }

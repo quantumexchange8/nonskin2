@@ -64,6 +64,7 @@
                     <div class="card">
                         @include('member.partials._checkout_shipping_info')
                     </div>
+                    
                     <div class="card">
                         @include('member.partials._checkout_payment_info_ship')
                     </div>
@@ -243,7 +244,6 @@
                     
                     );
                 }
-                console.log(formData)
                 // Use AJAX to post the form data to the server
                 $.ajax({
                     url: '{{ route("place-order") }}',
@@ -300,14 +300,21 @@
             const shippingElement = document.getElementById('shipping');
             let shippingCharge = 0; // Initialize the shipping charge to 0
 
-            if (isShippingMethod) {
-                // If the shipping method is selected, use the default shipping charge from the user's address
-                shippingCharge = {{ $user->address[0]->shippingCharge->amount }};
-                console.log(shippingCharge)
+            if (deliveryMethod === 'Delivery') {
+                 // Check if any address is selected
+                const selectedAddress = $('input[name="address"]:checked');
+                if (selectedAddress.length > 0) {
+                    // If the shipping method is selected and an address is chosen, use the shipping charge from the user's address
+                    shippingCharge = parseFloat(selectedAddress.data('shipping-charge'));
+                    console.log(shippingCharge)
+                }else{
+                    shippingCharge = 0;
+                }
+                // console.log(selectedAddress)
             } else if (deliveryMethod === 'Self-Pickup') {
                 // If self-pickup method is selected, the shipping charge should be 0
                 shippingCharge = 0;
-                console.log(shippingCharge)
+                
             }
 
             const shippingAmount = shippingCharge.toFixed(2);
