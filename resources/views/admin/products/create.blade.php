@@ -64,7 +64,7 @@
                                             <select class="form-select @error('category_id') is-invalid @enderror" name="category_id" id="category_id">
                                                 <option value="">Select Category</option>
                                                 @foreach ($categories as $k => $v)
-                                                    <option value="{{ $k }}">{{ $v }}</option>
+                                                    <option value="{{ $k }}" {{ old('category_id') == $k ? 'selected' : '' }}>{{ $v }}</option>
                                                 @endforeach
                                             </select>
                                             @error('category_id')
@@ -101,7 +101,7 @@
                                     <div class="col-lg-6">
                                         <div class="mb-3">
                                             <label class="form-label required" for="desc-en">Description (EN)</label>
-                                            <textarea class="form-control @error('desc_en') is-invalid @enderror" name="desc_en" id="desc_en" placeholder="Enter English Description" rows="4" value="{{ old('desc_en') }}"></textarea>
+                                            <textarea class="form-control @error('desc_en') is-invalid @enderror" name="desc_en" id="desc_en" placeholder="Enter English Description" rows="4">{{ old('desc_en') }}</textarea>
                                             @error('desc_en')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -112,7 +112,7 @@
                                     <div class="col-lg-6">
                                         <div class="mb-3">
                                             <label class="form-label required" for="desc-cn">Description (CN)</label>
-                                            <textarea class="form-control @error('desc_cn') is-invalid @enderror" name="desc_cn" id="desc-cn" placeholder="Enter Chinese Description" rows="4" value="{{ old('desc_cn') }}"></textarea>
+                                            <textarea class="form-control @error('desc_cn') is-invalid @enderror" name="desc_cn" id="desc-cn" placeholder="Enter Chinese Description" rows="4">{{ old('desc_cn') }}</textarea>
                                             @error('desc_cn')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -164,19 +164,19 @@
                                             <label class="form-label required" for="price">Price</label>
                                             <div class="input-group">
                                                 <div class="input-group-text">RM</div>
-                                                <input class="form-control @error('price') is-invalid @enderror" id="price" name="price" placeholder="e.g. 388.50" type="number">
+                                                <input class="form-control @error('price') is-invalid @enderror" id="price" name="price" placeholder="e.g. 388.50" type="number" value="{{ old('price') }}">
                                                 @error('price')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @else
+                                                    <div class="valid-feedback">Looks good</div>
+                                                @enderror
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="mb-3">
                                             <label class="form-label" for="discount">Discount in (%) <small class="text-muted">(Optional)</small></label>
-                                            <input id="discount" name="discount" placeholder="e.g. 5 (without %)" type="number" class="form-control ">
+                                            <input id="discount" name="discount" placeholder="e.g. 5 (without %)" type="number" class="form-control" value="{{ old('discount') }}">
                                         </div>
                                     </div>
                                 </div>
@@ -209,7 +209,7 @@
                                 <div class="mt-4 mt-xl-0">
                                     <div class="mt-4">
                                         <label for="formFile" class="form-label required">Upload Main Image</label>
-                                        <input name="image_1" class="form-control @error('image_1') is-invalid @enderror" type="file" id="formFile">
+                                        <input name="image_1" class="form-control @error('image_1') is-invalid @enderror" type="file" id="formFile" value="{{ old('image_1') }}">
                                         @error('image_1')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>

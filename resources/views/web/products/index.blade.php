@@ -14,6 +14,8 @@
         @slot('title') Product List @endslot
     @endcomponent
 
+    @include('includes.alerts')
+
     <div class="row">
         {{-- <div class="col-xl-3 col-lg-4">
             <div class="card">
@@ -279,7 +281,7 @@
                                                         @hasanyrole('superadmin|admin')
                                                         <a href="{{ route('admin.products.show', $product->id) }}">
                                                             <img src="{{ asset('images/products/' . $product->image_1) }}"
-                                                                alt="" class="img-fluid mx-auto d-block"
+                                                                alt="{{ $product->name_en }}" class="img-fluid mx-auto d-block"
                                                                 style="width: 70% !important;">
                                                         </a>
                                                         @endhasanyrole
@@ -330,9 +332,11 @@
                                                                 <input type="hidden" name="product_id" value="{{ $product->id }}">
                                                                 <input type="hidden" name="price" value="{{ $product->selling_price }}">
                                                                 <input type="hidden" name="quantity" value="1">
-                                                                <button class="btn btn-primary btn"
-                                                                {{ Auth::user()->role == 'user' ? '' : 'disabled' }}>
-                                                                <i class='bx bx-cart-alt'></i> Add to Cart</button>
+                                                                @if (Auth::user()->role == 'user')
+                                                                    <button class="btn btn-primary btn"><i class='bx bx-cart-alt'></i> Add to Cart</button>
+                                                                @else
+                                                                    <a href="{{ route('admin.products.edit', $product->id) }}" class="btn btn-primary btn"><i class='bx bxs-edit'></i> Edit Product</a>
+                                                                @endif
                                                             </div>
                                                         </form>
 

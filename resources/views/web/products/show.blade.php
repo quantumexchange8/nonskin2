@@ -116,11 +116,14 @@
                                 <div class="row text-center mt-3">
                                     <div class="col-lg-3 col-sm-6">
                                         <div class="d-grid">
+                                            @if (Auth::user()->role == 'user')
                                             <button class="btn btn-primary waves-effect waves-light mt-2 me-1 add-to-cart-btn"
-                                                    {{ Auth::user()->role == 'user' ? '' : 'disabled' }}
-                                                    data-product-id="{{ $product->id }}" data-product-price="{{ $product->price }}">
-                                                    <i class="bx bx-cart-alt me-2"></i> Add to cart
-                                                </button>
+                                                data-product-id="{{ $product->id }}" data-product-price="{{ $product->price }}">
+                                                <i class="bx bx-cart-alt me-2"></i> Add to cart
+                                            </button>
+                                            @else
+                                                <a href="{{ route('admin.products.edit', $product->id) }}" class="btn btn-primary btn"><i class='bx bxs-edit'></i> Edit Product</a>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -229,7 +232,7 @@
                                 </span>
                             </div>
                         </div>
-                        
+
                     </div> --}}
                     <!-- end row -->
 

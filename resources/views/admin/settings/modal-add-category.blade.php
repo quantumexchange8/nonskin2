@@ -11,43 +11,31 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="validationCustom01">Name (EN)</label>
+                                <label class="form-label required" for="validationCustom01">Name (EN)</label>
                                 <input type="text" class="form-control" name="name_en" id="validationCustom01" placeholder="Enter Category Name in English" required>
-                                <div class="valid-feedback">
-                                    Looks good!
-                                </div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="validationCustom02">Name(CN)</label>
+                                <label class="form-label required" for="validationCustom02">Name(CN)</label>
                                 <input type="text" class="form-control" name="name_cn" id="validationCustom02" placeholder="Enter Category Name in Chinese" required>
-                                <div class="valid-feedback">
-                                    Looks good!
-                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="validationCustom03">Status</label>
+                                <label class="form-label required" for="validationCustom03">Status</label>
                                 <select class="form-select" name="status" id="validationCustom03" placeholder="Select Status">
                                     <option value="Active" selected>Active</option>
                                     <option value="Inactive">Inactive</option>
                                 </select>
-                                <div class="invalid-feedback">
-                                    Please provide a valid city.
-                                </div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="validationCustom04">Remarks <small class="text-muted">(Leave empty if unnecessary)</small></label>
                                 <input type="text" name="remarks" class="form-control" id="validationCustom04" placeholder="Nonskin">
-                                <div class="invalid-feedback">
-                                    Please provide a valid state.
-                                </div>
                             </div>
                         </div>
                     </div>

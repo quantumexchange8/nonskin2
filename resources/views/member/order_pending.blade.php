@@ -5,105 +5,98 @@
 
 @section('content')
     @component('components.breadcrumb')
-        @slot('url')
-            {{ url('/') }}
-        @endslot
-        @slot('li_1')
-            Home
-        @endslot
-        @slot('title')
-            My Orders
-        @endslot
+        @slot('url') {{ url('/') }} @endslot
+        @slot('li_1') Home @endslot
+        @slot('title') My Orders @endslot
     @endcomponent
 
+    @section('modal')
+        @foreach($orders as $order)
+            @include('member.modals.order_detail_modal')
+        @endforeach
+    @endsection
+
     <div class="row">
-        <div class="col-xl-12 col-lg-8">
+        <div class="col-xl-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card-body">
-                                <table id="allOrder" class="stripe mb-0 res display responsive wrap">
-                                    <thead>
-                                        <tr>
-                                            <th>Order ID</th>
-                                            <th>Name</th>
-                                            <th>Contact</th>
-                                            <th>Date</th>
-                                            <th>Shipping Type</th>
-                                            <th>Payment Method</th>
-                                            <th>View Details</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach($orders as $order)
-                                        <tr>
-                                            <td class="fw-bold">#{{$order->order_num}}</td>
-                                            <td>
-                                                @if($order->delivery_method == 'Delivery')
-                                                    {{$order->receiver}}
-                                                @endif
-                                            </td>
-                                            <td>{{$order->contact}}</td>
-                                            <td>{{$order->updated_at}}</td>
-                                            <td>{{$order->delivery_method}}</td>
-                                            <td>{{$order->payment_method}}</td>
-                                            <td>
-                                                <button type="button" class="btn btn-primary btn-sm btn-rounded view-detail-button" data-bs-toggle="modal" data-bs-target="#orderdetailsModal_{{ $order->id }}" id="{{$order->id}}">
-                                                    View Details
+                    <table id="allOrder" class="stripe nowrap" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Name</th>
+                                <th>Contact</th>
+                                <th>Date</th>
+                                <th>Shipping Type</th>
+                                <th>Payment Method</th>
+                                <th>View Details</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($orders as $order)
+                            <tr>
+                                <td class="fw-bold">#{{$order->order_num}}</td>
+                                <td>
+                                    @if($order->delivery_method == 'Delivery')
+                                        {{$order->receiver}}
+                                    @endif
+                                </td>
+                                <td>{{$order->contact}}</td>
+                                <td>{{$order->updated_at}}</td>
+                                <td>{{$order->delivery_method}}</td>
+                                <td>{{$order->payment_method}}</td>
+                                <td>
+                                    <button type="button" class="btn btn-primary btn-sm btn-rounded view-detail-button" data-bs-toggle="modal" data-bs-target="#orderdetailsModal_{{ $order->id }}" id="{{$order->id}}">
+                                        View Details
+                                    </button>
+                                </td>
+                                <td>
+                                    @if($order->status == 1)
+                                        <span class="badge badge-pill badge-soft-secondary font-size-12">
+                                            Processing
+                                        </span>
+                                    @elseif($order->status == 2)
+                                        <span class="badge badge-pill badge-soft-success font-size-12">
+                                            Packing
+                                        </span>
+                                    @elseif($order->status == 3)
+                                        <span class="badge badge-pill badge-soft-warning font-size-12">
+                                            Delivering
+                                        </span>
+                                    @elseif($order->status == 4)
+                                        <span class="badge badge-pill badge-soft-success font-size-12">
+                                            Complete
+                                        </span>
+                                        @else
+                                        <span class="badge badge-pill badge-soft-danger font-size-12">
+                                            Cancelled
+                                        </span>
+                                    @endif
+                                </td>
+                                <td>
+                                    <div class="d-flex gap-3">
+                                        {{-- <span data-bs-toggle="modal" data-bs-target=".orderdetailsModal">
+                                            <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="View" data-bs-original-title="View" class="text-primary">
+                                                <i class="mdi mdi-eye-outline font-size-18"></i>
+                                            </a>
+                                        </span> --}}
+                                        {{-- <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-bs-original-title="Edit" class="text-success"><i class="mdi mdi-pencil font-size-18"></i></a> --}}
+                                        {{-- <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Cancel" data-bs-original-title="Cancel" class="text-danger"> --}}
+                                            <form action="{{ route('cancelorder', $order->id) }}" method="POST" id="delete-form-{{ $order->id }}">
+                                                @csrf
+                                                <button type="button" class="btn btn-link text-danger delete-button" data-order-id="{{ $order->id }}" data-order-status="{{ $order->status }}">
+                                                    <i class="mdi mdi-delete font-size-18"></i>
                                                 </button>
-                                                @include('member.modals.order_detail_modal')
-                                            </td>
-                                            <td>
-                                                @if($order->status == 1)
-                                                    <span class="badge badge-pill badge-soft-secondary font-size-12">
-                                                        Processing
-                                                    </span>
-                                                @elseif($order->status == 2)
-                                                    <span class="badge badge-pill badge-soft-success font-size-12">
-                                                        Packing
-                                                    </span>
-                                                @elseif($order->status == 3)
-                                                    <span class="badge badge-pill badge-soft-warning font-size-12">
-                                                        Delivering
-                                                    </span>
-                                                @elseif($order->status == 4)
-                                                    <span class="badge badge-pill badge-soft-success font-size-12">
-                                                        Complete
-                                                    </span>
-                                                    @else
-                                                    <span class="badge badge-pill badge-soft-danger font-size-12">
-                                                        Cancelled
-                                                    </span>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                <div class="d-flex gap-3">
-                                                    {{-- <span data-bs-toggle="modal" data-bs-target=".orderdetailsModal">
-                                                        <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="View" data-bs-original-title="View" class="text-primary">
-                                                            <i class="mdi mdi-eye-outline font-size-18"></i>
-                                                        </a>
-                                                    </span> --}}
-                                                    {{-- <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-bs-original-title="Edit" class="text-success"><i class="mdi mdi-pencil font-size-18"></i></a> --}}
-                                                    {{-- <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Cancel" data-bs-original-title="Cancel" class="text-danger"> --}}
-                                                        <form action="{{ route('cancelorder', $order->id) }}" method="POST" id="delete-form-{{ $order->id }}">
-                                                            @csrf
-                                                            <button type="button" class="btn btn-link text-danger delete-button" data-order-id="{{ $order->id }}" data-order-status="{{ $order->status }}">
-                                                                <i class="mdi mdi-delete font-size-18"></i>
-                                                            </button>
-                                                        </form>
-                                                    {{-- </a> --}}
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+                                            </form>
+                                        {{-- </a> --}}
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

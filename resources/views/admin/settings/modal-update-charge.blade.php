@@ -11,20 +11,14 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="validationCustom01">State Name</label>
+                                <label class="form-label required" for="validationCustom01">State Name</label>
                                 <input type="text" class="form-control" name="name" id="name" placeholder="Enter Region Name" value="{{ $v->name }}" required>
-                                <div class="valid-feedback">
-                                    Looks good!
-                                </div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="validationCustom02">Amount</label>
+                                <label class="form-label required" for="validationCustom02">Amount</label>
                                 <input type="number" class="form-control" name="amount" id="amount" placeholder="e.g. 5.00" value="{{ $v->amount }}" required>
-                                <div class="valid-feedback">
-                                    Looks good!
-                                </div>
                             </div>
                         </div>
                     </div>

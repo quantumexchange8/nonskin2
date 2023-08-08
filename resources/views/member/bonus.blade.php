@@ -9,49 +9,43 @@
     @endcomponent
 
     <div class="row">
-        <div class="col-xl-12 col-lg-8">
+        <div class="col-xl-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card-body">
-                                <table id="commissionTable">
-                                    <thead>
-                                        <tr>
-                                            <td>#</td>
-                                            <td>Transaction ID</td>
-                                            <td>Billing Name</td>
-                                            <td>Date</td>
-                                            <td>Total</td>
-                                            <td>Payment Status</td>
-                                            <td>Payment Method</td>
-                                            <td>View Details</td>
-                                            <td>Action</td>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td>
-                                                <div class="d-flex gap-3">
-                                                    <span data-bs-toggle="modal" data-bs-target=".orderdetailsModal"><a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="View" data-bs-original-title="View" class="text-primary"><i class="mdi mdi-eye-outline font-size-18"></i></a></span>
-                                                    {{-- <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-bs-original-title="Edit" class="text-success"><i class="mdi mdi-pencil font-size-18"></i></a> --}}
-                                                    <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-bs-original-title="Delete" class="text-danger"><i class="mdi mdi-delete font-size-18"></i></a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+                    <table id="commissionTable" class="stripe nowrap" style="width:100%">
+                        <thead>
+                            <tr>
+                                <td>#</td>
+                                <td>Transaction ID</td>
+                                <td>Billing Name</td>
+                                <td>Date</td>
+                                <td>Total</td>
+                                <td>Payment Status</td>
+                                <td>Payment Method</td>
+                                <td>View Details</td>
+                                <td>Action</td>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <div class="d-flex gap-3">
+                                        <span data-bs-toggle="modal" data-bs-target=".orderdetailsModal"><a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="View" data-bs-original-title="View" class="text-primary"><i class="mdi mdi-eye-outline font-size-18"></i></a></span>
+                                        {{-- <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-bs-original-title="Edit" class="text-success"><i class="mdi mdi-pencil font-size-18"></i></a> --}}
+                                        <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-bs-original-title="Delete" class="text-danger"><i class="mdi mdi-delete font-size-18"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
 
                     <div class="modal fade orderdetailsModal" tabindex="-1" role="dialog" aria-labelledby="orderdetailsModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">

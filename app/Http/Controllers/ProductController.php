@@ -27,10 +27,9 @@ class ProductController extends Controller
     }
 
 
-    public function list()
-    {
+    public function listing(){
         $products = Product::with('category')->get();
-        return view('admin.products.list', ['products' => $products]);
+        return view('web.products.index', ['products' => $products]);
     }
 
     public function create()
@@ -141,7 +140,7 @@ class ProductController extends Controller
 
             return redirect()
                 ->route('admin.products.list')
-                ->with("added", "Product successfully created!");
+                ->with("created", "Product successfully created!");
         } catch (\Exception $e) {
             // Handle the exception here, for example:
             return redirect()
@@ -259,7 +258,7 @@ class ProductController extends Controller
             $product->save();
 
             return redirect()
-                ->route('admin.products.edit', [$product->id])
+                ->route('admin.products.list')
                 ->with("updated", "Product successfully updated!");
         } catch (\Exception $e) {
             // Handle the exception here, for example:

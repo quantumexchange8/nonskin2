@@ -16,12 +16,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.',  'middleware' => 'auth'], f
 
 });
 Route::group(['prefix' => 'admin/products', 'as' => 'admin.products.',  'middleware' => ['auth', 'role:superadmin|admin',]], function () {
-    Route::get('/add', [ProductController::class, 'create'])->name('create');
-    Route::get('/edit/{product}', [ProductController::class, 'edit'])->name('edit');
-    Route::get('/listing', [ProductController::class, 'list'])->name('list');
-    Route::get('/user-view', [ProductController::class, 'index'])->name('index');
-    Route::get('/user-view/{product}', [ProductController::class, 'show'])->name('show');
+    // Route::get('/user-view', [ProductController::class, 'index'])->name('index');
+    Route::get('/', [ProductController::class, 'listing'])->name('list');
+    Route::get('/create', [ProductController::class, 'create'])->name('create');
     Route::post('/', [ProductController::class, 'store'])->name('store');
+    Route::get('/{product}', [ProductController::class, 'show'])->name('show');
+    Route::get('/{product}/edit', [ProductController::class, 'edit'])->name('edit');
     Route::post('/update/{product}', [ProductController::class, 'update'])->name('update');
     Route::post('/destroy/{product}', [ProductController::class, 'destroy'])->name('destroy');
 });
@@ -29,13 +29,13 @@ Route::group(['prefix' => 'admin/products', 'as' => 'admin.products.',  'middlew
 // Settings
 Route::group(['prefix' => 'admin/settings', 'as' => 'admin.settings.',  'middleware' => ['auth', 'role:superadmin|admin',]], function () {
     Route::get('/product-categories', [UserController::class, 'categorySettings'])->name('categories');
-    Route::get('/shipping-charges', [UserController::class, 'shippingCharges'])->name('shipping-charges');
-    Route::get('/banks', [UserController::class, 'bankSettings'])->name('banks');
-    Route::get('/company-info', [UserController::class, 'companyInfo'])->name('company-info');
     Route::post('/product-category/update', [UserController::class, 'categoryStore'])->name('category-store');
-    Route::post('/shipping-charge/update', [UserController::class, 'chargeStore'])->name('charge-store');
-    Route::post('/bank/update', [UserController::class, 'bankStore'])->name('bank-store');
     Route::delete('/product-category/destroy/{category}', [UserController::class, 'categoryDestroy'])->name('category-destroy');
+    Route::get('/shipping-charges', [UserController::class, 'shippingCharges'])->name('shipping-charges');
+    Route::post('/shipping-charge/update', [UserController::class, 'chargeStore'])->name('charge-store');
     Route::delete('/shipping-charge/destroy/{charge}', [UserController::class, 'chargeDestroy'])->name('charge-destroy');
+    Route::get('/banks', [UserController::class, 'bankSettings'])->name('banks');
+    Route::post('/bank/update', [UserController::class, 'bankStore'])->name('bank-store');
     Route::delete('/bank/destroy/{bank}', [UserController::class, 'bankDestroy'])->name('bank-destroy');
+    Route::get('/company-info', [UserController::class, 'companyInfo'])->name('company-info');
 });

@@ -11,7 +11,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="mb-3">
-                                <label class="form-label" for="validationCustom01">Bank Name</label>
+                                <label class="form-label required" for="validationCustom01">Bank Name</label>
                                 <input type="text" class="form-control" name="name" value="{{ $v->name }}" placeholder="Enter Bank Name" required>
                                 <div class="valid-feedback">
                                     Looks good!

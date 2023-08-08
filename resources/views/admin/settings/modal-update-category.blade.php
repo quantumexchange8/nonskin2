@@ -11,7 +11,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="validationCustom01">Name (EN)</label>
+                                <label class="form-label required" for="validationCustom01">Name (EN)</label>
                                 <input type="text" class="form-control" name="name_en" id="validationCustom01" placeholder="Enter Category Name in English" value="{{ $v->name_en }}" required>
                                 <div class="valid-feedback">
                                     Looks good!
@@ -20,7 +20,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="validationCustom02">Name(CN)</label>
+                                <label class="form-label required" for="validationCustom02">Name(CN)</label>
                                 <input type="text" class="form-control" name="name_cn" id="validationCustom02" placeholder="Enter Category Name in Chinese" value="{{ $v->name_cn }}" required>
                                 <div class="valid-feedback">
                                     Looks good!
@@ -31,7 +31,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="validationCustom03">Status</label>
+                                <label class="form-label required" for="validationCustom03">Status</label>
                                 <select class="form-select" name="status" id="validationCustom03" placeholder="Select Status">
                                     <option value="Active" {{ $v->status == 'Active' ? 'selected' : '' }}>Active</option>
                                     <option value="Inactive" {{ $v->status == 'Inactive' ? 'selected' : '' }}>Inactive</option>

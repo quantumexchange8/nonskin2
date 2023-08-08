@@ -14,8 +14,15 @@
         <link rel="stylesheet" href="{{ URL::asset('assets/libs/gridjs/gridjs.min.css') }}">
         <link rel="stylesheet" href="{{ URL::asset('assets/libs/flatpickr/flatpickr.min.css') }}">
     @endsection
+
+    @section('modal')
+        @foreach($orders as $order)
+            @include('admin.orders.modal.orderdetail')
+            {{-- @include('member.modals.order_detail_modal') --}}
+        @endforeach
+    @endsection
     <div class="row">
-        <div class="col-12">
+        <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
                     {{-- <div class="position-relative">
@@ -23,7 +30,7 @@
                             <button type="button" class="btn btn-success waves-effect waves-light mb-2 me-2" data-bs-toggle="modal" data-bs-target=".add-new-order"><i class="mdi mdi-plus me-1"></i> Add New Order</button>
                         </div>
                     </div> --}}
-                    <table id="allOrder" class="stripe mb-0 res display responsive wrap">
+                    <table id="allOrder" class="stripe nowrap" style="width:100%">
                         <thead>
                             <tr>
                                 <th>Order ID</th>
@@ -71,7 +78,6 @@
                                     <button type="button" class="btn btn-primary btn-sm btn-rounded view-detail-button" data-bs-toggle="modal" data-bs-target="#orderdetailsModal_{{ $order->id }}" id="{{$order->id}}">
                                         View Details
                                     </button>
-                                    @include('member.modals.order_detail_modal')
                                 </td>
                                 <td>
                                     @if($order->status == 1)
@@ -97,13 +103,13 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <div class="d-flex gap-3">
+                                    <div class="d-flex gap-1 align-items-center">
                                         {{-- <span data-bs-toggle="modal" data-bs-target=".orderdetailsModal">
                                             <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="View" data-bs-original-title="View" class="text-primary">
                                                 <i class="mdi mdi-eye-outline font-size-18"></i>
                                             </a>
                                         </span> --}}
-                                        {{-- <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-bs-original-title="Edit" class="text-success"><i class="mdi mdi-pencil font-size-18"></i></a> --}}
+                                        <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-bs-original-title="Edit" class="text-success"><i class="mdi mdi-pencil font-size-18"></i></a>
                                         {{-- <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Cancel" data-bs-original-title="Cancel" class="text-danger"> --}}
                                             <form action="{{ route('cancelorder', $order->id) }}" method="POST" id="delete-form-{{ $order->id }}">
                                                 @csrf
@@ -211,111 +217,15 @@
         </div><!-- /.modal-dialog -->
     </div>
 
-    @include('admin.orders.modal.orderdetail')
 
 @endsection
 @section('script')
-    <script src="{{ URL::asset('assets/libs/gridjs/gridjs.min.js') }}"></script>
     <script src="{{ URL::asset('assets/js/app.js') }}"></script>
-    {{-- <script src="{{ URL::asset('assets/js/pages/admin-pending-orders.js') }}"></script> --}}
-    <script src="{{ URL::asset('assets/libs/flatpickr/flatpickr.min.js') }}"></script>
     <script>
         new DataTable('#allOrder', {
             responsive: true,
             pagingType: 'simple_numbers',
             lengthChange: false
-        });
-    </script>
-    <script>
-        const ordersData = document.getElementById("table-new-orders").dataset.newOrders;
-        const orders = JSON.parse(ordersData);
-        console.log(orders);
-        new gridjs.Grid({
-            columns: [
-                { id: 'id', name: '#', width: '5%' },
-                {
-                    id: 'order_num',
-                    name: 'Order Number',
-                    formatter: (cell) => gridjs.html(`<span class="fw-semibold">#${cell}</span>`),
-                },
-                {
-                    id: 'total_amount',
-                    name: 'Total Amount',
-                    width: '9%',
-                    formatter: (function (cell) {
-                        return gridjs.html('RM ' + cell.toLocaleString(undefined, { minimumFractionDigits: 2 }))
-                    })
-                },
-                {
-                    id: "payment_method",
-                    name: "Payment Method",
-                    formatter: (function (cell) {
-                        switch (cell) {
-                            case "Online Banking":
-                                return gridjs.html('<i class="fab fa-cc-mastercard me-2"></i>' + cell);
-                            case "Visa":
-                                return gridjs.html('<i class="fab fa-cc-visa me-2"></i>' + cell);
-                            case "Manual Transfer":
-                                return gridjs.html('<i class="fab fa-cc-paypal me-2"></i>' + cell);
-                            case "Payment at Counter":
-                                return gridjs.html('<i class="fas fa-money-bill-alt me-2"></i>' + cell);
-                            default:
-                                return gridjs.html('<i class="fab fa-cc-visa me-2"></i>' + cell);
-                        }
-                    })
-                },
-                {
-                    id: "delivery_method",
-                    name: "Delivery Method",
-                    formatter: (function (cell) {
-                        switch (cell) {
-                            case "Self-Pickup":
-                                return gridjs.html('<i class="bx bxs-store-alt me-2"></i>' + cell);
-                            case "Delivery":
-                                return gridjs.html('<i class="bx bxs-truck me-2"></i>' + cell);
-                            default:
-                                return gridjs.html('<i class="fab fa-cc-visa me-2"></i>' + cell);
-                        }
-                    })
-                },
-                {
-                    id: "receiver",
-                    name: "Receiver"
-                },
-                {
-                    id: "contact",
-                    name: "Contact",
-                    width: '8%'
-                },
-                {
-                    id: "delivery_address",
-                    name: "Address",
-                    width: '20%'
-                },
-                {
-                    name: "Action",
-                    width: '7%',
-                    sort: {
-                        enabled: false
-                    },
-                    formatter: (function (cell) {
-                        return gridjs.html('<div class="d-flex gap-3"><a href="#" data-bs-toggle="modal" data-bs-target=".orderdetailsModal" data-bs-toggle="tooltip" data-bs-placement="top" title="View" data-bs-original-title="View" class="text-primary"><i class="mdi mdi-eye-outline font-size-18"></i></a><a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-bs-original-title="Edit" class="text-success"><i class="mdi mdi-pencil font-size-18"></i></a><a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-bs-original-title="Delete" class="text-danger"><i class="mdi mdi-delete font-size-18"></i></a></div>');
-                    })
-                }
-            ],
-            pagination: {
-                limit: 8
-            },
-            sort: true,
-            search: true,
-            data: orders,
-        }).render(document.getElementById("table-new-orders"));
-
-
-
-        flatpickr('#order-date', {
-            defaultDate: new Date(),
-            dateFormat: "d M, Y",
         });
     </script>
 @endsection

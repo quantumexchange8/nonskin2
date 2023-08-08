@@ -14,12 +14,6 @@
         @slot('title2') Edit Product @endslot
     @endcomponent
 
-    @if(session('updated'))
-    <div class="alert alert-dismissible alert-success" role="alert">
-        {{ session('updated') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    @endif
     <form action="{{ route('admin.products.update', $product->id) }}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="row">

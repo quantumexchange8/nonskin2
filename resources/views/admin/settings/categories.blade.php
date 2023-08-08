@@ -10,10 +10,14 @@
         @slot('title') @lang('translation.Product Categories Setting') @endslot
     @endcomponent
 
-    @include('admin.settings.modal-add-category')
-    @foreach ($categories as $k => $v)
-    @include('admin.settings.modal-update-category')
-    @endforeach
+    @include('includes.alerts')
+
+    @section('modal')
+        @include('admin.settings.modal-add-category')
+        @foreach ($categories as $k => $v)
+        @include('admin.settings.modal-update-category')
+        @endforeach
+    @endsection
 
     <div class="row">
         <div class="col-lg-12">

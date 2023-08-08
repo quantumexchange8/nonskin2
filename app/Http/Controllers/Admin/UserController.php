@@ -34,7 +34,7 @@ class UserController extends Controller
         ->orWhere('role', 'admin')
         ->get(['upline_id', 'referrer_id', 'name', 'email', 'ranking_name', 'postcode', 'city', 'state', 'created_at']);
         // dd($users);
-        return view('admin.members.list', compact('users', 'states'));
+        return view('admin.members.listing', compact('users', 'states'));
     }
 
     public function categorySettings() {
@@ -45,8 +45,9 @@ class UserController extends Controller
         return view('admin.settings.categories', compact('categories'));
     }
     public function categoryStore(Request $request) {
-        $categoryData = $request->only('id', 'name_en', 'name_cn', 'status', 'remarks', 'created_by', 'created_at', 'updated_by', 'updated_at');
+        $categoryData = $request->only('id', 'name_en', 'name_cn', 'status', 'remarks');
         // dd($categoryData);
+        $category = Category::find($categoryData['id']);
         $category = Category::updateOrCreate(
             ['id' => $categoryData['id']],
             [
@@ -54,8 +55,8 @@ class UserController extends Controller
                 'name_cn'    => $categoryData['name_cn'],
                 'status'     => $categoryData['status'],
                 'remarks'    => $categoryData['remarks'] ?? 'Nonskin',
-                'created_by' => $categoryData['created_by'] ?? Auth::id(),
-                'created_at' => $categoryData['created_at'] ?? now(),
+                'created_by' => $category->created_by ?? Auth::id(),
+                'created_at' => $category->created_at ?? now(),
                 'updated_by' => Auth::id(),
                 'updated_at' => now()
             ]);
@@ -67,7 +68,7 @@ class UserController extends Controller
     }
     public function categoryDestroy(Category $category) {
         $category->delete();
-        return redirect()->back()->with('deleted', 'Category deleted successfully');
+        return redirect()->back()->with('deleted', 'Category has been deleted');
     }
 
     public function shippingCharges() {
@@ -78,27 +79,28 @@ class UserController extends Controller
         return view('admin.settings.shipping-charges', compact('res'));
     }
     public function chargeStore(Request $request) {
-        $chargeData = $request->only('id', 'name', 'amount', 'created_by', 'created_at', 'updated_by', 'updated_at');
+        $chargeData = $request->only('id', 'name', 'amount');
         // dd($chargeData);
+        $charge = ShippingCharge::find($chargeData['id']);
         $charge = ShippingCharge::updateOrCreate(
             ['id' => $chargeData['id']],
             [
-                'name'    => $chargeData['name'],
-                'amount'    => $chargeData['amount'],
-                'created_by' => $chargeData['created_by'] ?? Auth::id(),
-                'created_at' => $chargeData['created_at'] ?? now(),
+                'name'       => $chargeData['name'],
+                'amount'     => $chargeData['amount'],
+                'created_by' => $charge->created_by ?? Auth::id(),
+                'created_at' => $charge->created_at ?? now(),
                 'updated_by' => Auth::id(),
                 'updated_at' => now()
             ]);
         if ($charge->wasRecentlyCreated){
-            return redirect()->back()->with('created', 'Category created successfully');
+            return redirect()->back()->with('created', 'Shipping Charge created successfully');
         }else{
-            return redirect()->back()->with('updated', 'Category updated successfully');
+            return redirect()->back()->with('updated', 'Shipping Charge updated successfully');
         }
     }
     public function chargeDestroy(ShippingCharge $charge) {
         $charge->delete();
-        return redirect()->back()->with('deleted', 'Category deleted successfully');
+        return redirect()->back()->with('deleted', 'Shipping Charge has been deleted');
     }
 
     public function bankSettings() {
@@ -109,26 +111,27 @@ class UserController extends Controller
         return view('admin.settings.banks', compact('banks'));
     }
     public function bankStore(Request $request) {
-        $bankData = $request->only('id', 'name', 'created_by', 'created_at', 'updated_by', 'updated_at');
+        $bankData = $request->only('id', 'name');
         // dd($bankData);
+        $bank = BankSetting::find($bankData['id']);
         $bank = BankSetting::updateOrCreate(
             ['id' => $bankData['id']],
             [
                 'name'       => $bankData['name'],
-                'created_by' => $bankData['created_by'] ?? Auth::id(),
-                'created_at' => $bankData['created_at'] ?? now(),
+                'created_by' => $bank->created_by ?? Auth::id(),
+                'created_at' => $bank->created_at ?? now(),
                 'updated_by' => Auth::id(),
                 'updated_at' => now()
             ]);
         if ($bank->wasRecentlyCreated){
-            return redirect()->back()->with('created', 'Category created successfully');
+            return redirect()->back()->with('created', 'Bank created successfully');
         }else{
-            return redirect()->back()->with('updated', 'Category updated successfully');
+            return redirect()->back()->with('updated', 'Bank updated successfully');
         }
     }
     public function bankDestroy(BankSetting $bank) {
         $bank->delete();
-        return redirect()->back()->with('deleted', 'Category deleted successfully');
+        return redirect()->back()->with('deleted', 'Bank has been deleted');
     }
 
     public function companyInfo() {

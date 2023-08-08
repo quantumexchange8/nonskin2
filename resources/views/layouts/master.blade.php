@@ -22,6 +22,8 @@
         @include('layouts.sidebar')
         @include('layouts.horizontal')
 
+        @yield('modal')
+
             <div class="main-content">
                 <div class="page-content">
                     <div class="container-fluid">

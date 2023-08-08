@@ -170,7 +170,7 @@
                 </ul>
                 </li> --}}
 
-                <li>
+                {{-- <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bx bx-dollar icon nav-icon"></i>
                         <span class="menu-item" data-key="t-multi-level">@lang('translation.Internal Transfer')</span>
@@ -179,7 +179,7 @@
                         <li><a href="{{ route('member.new-internal-transfer') }}">@lang('translation.New') @lang('translation.Internal Transfer')</a></li>
                         <li><a href="{{ route('member.internal-transfer-history') }}">@lang('translation.History')</a></li>
                     </ul>
-                </li>
+                </li> --}}
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">

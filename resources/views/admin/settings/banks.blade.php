@@ -10,10 +10,14 @@
         @slot('title') @lang('translation.Banks Setting') @endslot
     @endcomponent
 
-    @include('admin.settings.modal-add-bank')
-    @foreach ($banks as $k => $v)
-    @include('admin.settings.modal-update-bank')
-    @endforeach
+    @include('includes.alerts')
+
+    @section('modal')
+        @include('admin.settings.modal-add-bank')
+        @foreach ($banks as $k => $v)
+            @include('admin.settings.modal-update-bank')
+        @endforeach
+    @endsection
 
     <div class="row">
         <div class="col-lg-12">
@@ -25,7 +29,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table mb-0">
+                        <table class="table table-striped mb-0">
                             <thead>
                                 <tr>
                                     <th>#</th>

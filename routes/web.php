@@ -33,6 +33,7 @@ Route::post('/add-member', [RegisterController::class, 'store'])->name('add.memb
 //Update User Details
 Route::get('/my-profile',[App\Http\Controllers\HomeController::class, 'myProfile'])->name('myProfile');
 Route::post('/update-profile', [App\Http\Controllers\HomeController::class, 'updateProfile'])->name('updateProfile');
+Route::post('/update-bank', [App\Http\Controllers\HomeController::class, 'updateBank'])->name('updateBank');
 Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('updatePassword');
 
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
@@ -63,7 +64,7 @@ Route::group(['prefix' => 'manage/members',  'middleware' => 'auth'], function (
     Route::post('/update/{customer}', [MemberController::class, 'update'])->name('members.update');                 // update
     Route::post('/destroy/{customer}', [MemberController::class, 'destroy'])->name('members.destroy');              // destroy
     Route::post('pending-orders/{order}', [UserController::class, 'cancelorder'])->name('cancelorder');
-    
+
 });
 /**
  * PRODUCTS

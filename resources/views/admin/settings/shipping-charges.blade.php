@@ -10,10 +10,14 @@
         @slot('title') @lang('translation.Shipping Charges Setting') @endslot
     @endcomponent
 
-    @include('admin.settings.modal-add-charge')
-    @foreach ($res as $k => $v)
-    @include('admin.settings.modal-update-charge')
-    @endforeach
+    @include('includes.alerts')
+
+    @section('modal')
+        @include('admin.settings.modal-add-charge')
+        @foreach ($res as $k => $v)
+            @include('admin.settings.modal-update-charge')
+        @endforeach
+    @endsection
 
     <div class="row">
         <div class="col-lg-12">
@@ -25,7 +29,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table mb-0">
+                        <table class="table table-striped mb-0">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -43,7 +47,7 @@
                                         <td>{{ $v->name }}</td>
                                         <td>RM {{ number_format($v->amount,2,'.',',') }}</td>
                                         <td>{{ $v->created_at?->format('d/m/Y') }}</td>
-                                        <td>{{ $v->userName?->name }}</td>
+                                        <td>{{ $v->updatedBy->name  }}</td>
                                         <td>
                                             <div class="d-flex gap-2">
                                                 <a href="" data-bs-toggle="modal" data-bs-target="#updateCharge{{ $v->id }}" class="btn btn-sm btn-soft-primary waves-effect waves-light"><i class="bx bx-edit font-size-14 align-middle"></i></a>
