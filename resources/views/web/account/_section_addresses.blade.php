@@ -1,4 +1,4 @@
-<div class="tab-pane fade" id="v-pills-addresses" role="tabpanel" aria-labelledby="v-pills-addresses-tab">
+<div class="tab-pane fade {{ session('activeTab') === 'addresses' ? 'show active' : '' }}" id="v-pills-addresses" role="tabpanel" aria-labelledby="v-pills-addresses-tab">
     <div class="row p-2">
         <div class="d-flex justify-content-between">
             <h5 class="font-size-16">My Addresses:</h5>
@@ -24,8 +24,11 @@
                     <a class="link" role="button" data-bs-toggle="modal" data-bs-target="#editAddressModal{{ $address->id }}">Edit</a>
                     <br>
                     @if ($address->is_default == 0)
-                    <form action="" method="POST">
+                    <form action="{{ route('toggleDefaultAddress') }}" method="POST">
                         @csrf
+                        <input type="hidden" name="id" value="{{ $address->id }}">
+                        <input type="hidden" name="user_id" value="{{ $address->user_id }}">
+                        <input type="hidden" name="is_default" value="{{ $address->is_default }}">
                         <button type="submit" class="btn btn-soft-primary btn-sm border mt-2">Set As Default</button>
                     </form>
                     @endif

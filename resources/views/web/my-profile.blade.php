@@ -36,13 +36,13 @@
                 <div class="mail-list mt-1">
                     <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                         {{-- <a href="" class="active"><i class="mdi mdi-email-outline font-size-16 align-middle me-2"></i> Inbox <span class="ms-1 float-end">(18)</span></a> --}}
-                        <a class="nav-link mb-2 active" id="v-pills-profile-tab" data-bs-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="true">
+                        <a class="nav-link mb-2 {{ session('activeTab') === 'profile' ? 'active' : '' }}" id="v-pills-profile-tab" data-bs-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="true">
                             <i class="bx bxs-user font-size-16 align-middle me-2"></i>Profile</a>
-                        <a class="nav-link mb-2" id="v-pills-addresses-tab" data-bs-toggle="pill" href="#v-pills-addresses" role="tab" aria-controls="v-pills-addresses" aria-selected="false">
+                        <a class="nav-link mb-2 {{ session('activeTab') === 'addresses' ? 'active' : '' }}" id="v-pills-addresses-tab" data-bs-toggle="pill" href="#v-pills-addresses" role="tab" aria-controls="v-pills-addresses" aria-selected="false">
                             <i class="bx bxs-envelope font-size-16 align-middle me-2"></i>Addresses</a>
-                        <a class="nav-link mb-2" id="v-pills-bank-tab" data-bs-toggle="pill" href="#v-pills-bank" role="tab" aria-controls="v-pills-bank" aria-selected="false">
+                        <a class="nav-link mb-2 {{ session('activeTab') === 'bank' ? 'active' : '' }}" id="v-pills-bank-tab" data-bs-toggle="pill" href="#v-pills-bank" role="tab" aria-controls="v-pills-bank" aria-selected="false">
                             <i class="bx bxs-credit-card-alt font-size-16 align-middle me-2"></i>Bank Detail</a>
-                        <a class="nav-link mb-2" id="v-pills-password-tab" data-bs-toggle="pill" href="#v-pills-password" role="tab" aria-controls="v-pills-password" aria-selected="false">
+                        <a class="nav-link mb-2 {{ session('activeTab') === 'password' ? 'active' : '' }}" id="v-pills-password-tab" data-bs-toggle="pill" href="#v-pills-password" role="tab" aria-controls="v-pills-password" aria-selected="false">
                             <i class="bx bxs-lock font-size-16 align-middle me-2"></i>Change Password</a>
                     </div>
                 </div>
@@ -68,4 +68,73 @@
 @endsection
 @section('script')
     <script src="{{ URL::asset('assets/js/app.js') }}"></script>
+    <script>
+        function validateForm(formId) {
+            let isValid = true;
+            let inputs = document.querySelectorAll(`#${formId} input[required], #${formId} select[required]`);
+            // Validate required fields in the form
+            for (let i = 0; i < inputs.length; i++) {
+                if (!inputs[i].value.trim()) {
+                    isValid = false;
+                    inputs[i].classList.add("is-invalid");
+                } else {
+                    inputs[i].classList.remove("is-invalid");
+                }
+            }
+            return isValid;
+        }
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Number mask
+            let contactInputs = document.querySelectorAll('.contact-input');
+            contactInputs.forEach(input => {
+                IMask(input, {
+                    mask: '00000000000'
+                });
+            });
+
+            let postcodeInputs = document.querySelectorAll('.postcode-input');
+            postcodeInputs.forEach(input => {
+                IMask(input, {
+                    mask: '00000'
+                });
+            });
+
+            let bankAccNoInputs = document.querySelectorAll('.bank-acc-no-input');
+            bankAccNoInputs.forEach(input => {
+                IMask(input, {
+                    mask: '00000000000000000'
+                });
+            });
+
+            let idInputs = document.querySelectorAll('.id-input');
+            idInputs.forEach(input => {
+                IMask(input, {
+                    mask: '000000000000'
+                });
+            });
+
+            // ... Add other input masks as needed
+
+            // Add an event listener to each form's submit button
+            const forms = [
+                { id: "updateProfileForm", submitButtonId: "updateProfile" },
+                { id: "addAddressForm", submitButtonId: "addAddress" },
+                { id: "updateBankForm", submitButtonId: "updateBank" },
+                { id: "updatePasswordForm", submitButtonId: "updatePassword" },
+                // Add other forms here...
+            ];
+            forms.forEach((formInfo) => {
+                const form = document.getElementById(formInfo.id);
+                const submitButton = form.querySelector(`#${formInfo.submitButtonId}`);
+                submitButton.addEventListener("click", function(event) {
+                    if (!validateForm(formInfo.id)) {
+                        event.preventDefault(); // Prevent form submission if validation fails
+                    }
+                });
+            });
+        });
+    </script>
+
 @endsection

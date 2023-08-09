@@ -24,6 +24,10 @@ use App\Http\Controllers\admin\AdminController;
 |
 */
 
+
+//Language Translation
+Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
+
 Route::get('/', function () {
     return view('auth/login');
 });
@@ -39,23 +43,12 @@ Route::post('/add-member', [RegisterController::class, 'store'])->name('add.memb
 //Update User Details
 Route::get('/my-profile',[App\Http\Controllers\HomeController::class, 'myProfile'])->name('myProfile');
 Route::post('/update-profile', [App\Http\Controllers\HomeController::class, 'updateProfile'])->name('updateProfile');
+Route::post('/update-address', [App\Http\Controllers\HomeController::class, 'updateAddress'])->name('updateAddress');
+Route::post('/toggle-default-address', [App\Http\Controllers\HomeController::class, 'toggleDefaultAddress'])->name('toggleDefaultAddress');
 Route::post('/update-bank', [App\Http\Controllers\HomeController::class, 'updateBank'])->name('updateBank');
 Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('updatePassword');
 
-Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
 
-//Language Translation
-Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
-
-// Route::controller(CustomerController::class)->prefix('customers')->as('manage.customers.')->group(function () {
-//     Route::get('/', 'index')->name('index');
-// });
-// Route::controller(ProductController::class)->prefix('products')->as('manage.products.')->group(function () {
-//     Route::get('/', 'index')->name('index');
-// });
-// Route::controller(OrderController::class)->prefix('orders')->as('manage.orders.')->group(function () {
-//     Route::get('/', 'index')->name('index');
-// });
 
 /**
  * MEMBERS
@@ -105,3 +98,5 @@ Route::group(['prefix' => 'admin',  'middleware' => ['auth', 'role:superadmin|ad
     // Route::post('/orders/listing/{order}/update', [AdminController::class, 'updatestatus'])->name('updatestatus');
 
 });
+
+// Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');

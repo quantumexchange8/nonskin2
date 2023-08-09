@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Ranking extends Model
 {
     use HasFactory, SoftDeletes;
+
+    protected $table = 'ranking';
 
     const client = 1;
     const member = 2;

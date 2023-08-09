@@ -1,4 +1,4 @@
-// 
+//
 // authentication.scss
 //
 
@@ -24,7 +24,7 @@ body[data-topbar="dark"] {
 }
 
 .authentication-bg{
-    background-image: url("../images/auth-bg-1.jpg");
+    // background-image: url("../images/auth-bg.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -48,7 +48,7 @@ body[data-topbar="dark"] {
     }
 
     .bg-overlay{
-        background-color: $header-dark-bg;
+        background-color: #eecabc;
     }
 
     .auth-cover-card{
@@ -163,7 +163,7 @@ body[data-layout-mode="dark"] {
         }
 
         .auth-logo{
-    
+
             .auth-logo-dark{
                 display: none;
             }

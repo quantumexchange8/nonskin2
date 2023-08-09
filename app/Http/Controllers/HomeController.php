@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Address;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -39,7 +40,7 @@ class HomeController extends Controller
     {
         $user = Auth::user();
         $user->url = url('') .'/register/' . $user->referrer_id;
-        
+
         return view('member.dashboard', [
             'user' => $user,
         ]);
@@ -59,6 +60,9 @@ class HomeController extends Controller
     }
 
     public function myProfile() {
+        // dd(session());
+        session(['activeTab' => 'profile']);
+
         return view('web.my-profile');
     }
 
@@ -66,6 +70,7 @@ class HomeController extends Controller
         $id = ucfirst(Auth::user()->id);
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
+            'username' => ['required', 'string', 'unique:users,username'],
             'email' => ['required', 'string', 'email'],
             'avatar' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:1024'],
         ]);
@@ -92,7 +97,6 @@ class HomeController extends Controller
         $user->update();
         if ($user) {
             Session::flash('message', 'User Details Updated successfully!');
-            Session::flash('alert-class', 'alert-success');
 
         } else {
             Session::flash('message', 'Something went wrong!');
@@ -100,6 +104,49 @@ class HomeController extends Controller
 
         }
         return redirect()->back()->with('success', 'YOU HAVE SUCCESSFULLY UPDATED!');
+    }
+
+    public function updateAddress(Request $request){
+        $addressData = $request->only('id', 'name', 'contact', 'address_1', 'address_2', 'postcode', 'city', 'state', 'country');
+        dd($request->all());
+        try {
+            $address = Address::updateOrCreate(
+                ['id' => $addressData['id'] ?? null],
+                [
+                    'user_id'       => Auth::id(),
+                    'name'          => $addressData['name'],
+                    'contact'       => $addressData['contact'],
+                    'address_1'     => $addressData['address_1'],
+                    'address_2'     => $addressData['address_2'],
+                    'postcode'      => $addressData['postcode'],
+                    'city'          => $addressData['city'],
+                    'state'         => $addressData['state'],
+                    'country'       => $addressData['country'],
+                    'created_by'    => $address->created_by ?? Auth::id(),
+                    'created_at'    => $address->created_at ?? now(),
+                    'updated_by'    => Auth::id(),
+                    'updated_at'    => now()
+                ]);
+            if ($address->wasRecentlyCreated){
+                return redirect()->back()->with('created', 'Address created successfully');
+            }else{
+                Session::flash('activeTab', 'addresses');
+                return redirect()->back()->with('updated', 'Address updated successfully');
+            }
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Something went wrong!');
+        }
+    }
+
+    public function toggleDefaultAddress(Request $request){
+        $addressData = $request->only('id', 'user_id', 'is_default');
+        $address = Address::where('user_id', $addressData['user_id'])->where('is_default', 1)->first();
+        $address->is_default = !$address->is_default;
+        $address->update();
+        $address = Address::find($addressData['id']);
+        $address->is_default = !$address->is_default;
+        $address->update();
+        return redirect()->back()->with('updated', 'Your default address has been changed successfully');
     }
 
     public function updateBank(Request $request){
@@ -126,37 +173,24 @@ class HomeController extends Controller
     }
 
     public function updatePassword(Request $request, $id){
-        $request->validate([
+        $validator = $request->validate([
             'current_password' => ['required', 'string'],
-            'password' => ['required', 'string', 'min:6', 'confirmed'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
 
         if (!(Hash::check($request->get('current_password'), Auth::user()->password))) {
-            return response()->json([
-                'isSuccess' => false,
-                'Message' => "Your Current password does not matches with the password you provided. Please try again."
-            ], 200); // Status code
+            return redirect()->back()->withErrors($validator);
         } else {
             $user = User::find($id);
             $user->password = Hash::make($request->get('password'));
             $user->update();
+
             if ($user) {
-                Session::flash('message', 'Password updated successfully!');
-                Session::flash('alert-class', 'alert-success');
-                return response()->json([
-                    'isSuccess' => true,
-                    'Message' => "Password updated successfully!",
-                    'html' => view('web.my-profile')
-                ], 200); // Status code here
+                return redirect()->back()->with('success', "Password updated successfully!");
             } else {
-                Session::flash('message', 'Something went wrong!');
-                Session::flash('alert-class', 'alert-danger');
-                return response()->json([
-                    'isSuccess' => true,
-                    'Message' => "Something went wrong!",
-                    'html' => view('web.my-profile')
-                ], 200); // Status code here
+                return redirect()->back()->withErrors($validator);
             }
         }
     }
+
 }

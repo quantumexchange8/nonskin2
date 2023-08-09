@@ -3,48 +3,53 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\RankingSetting;
+use App\Models\Ranking;
 
 
 class RankingSeeder extends Seeder
 {
     public $ranks = [
         [
-            'name' => 'Chief Distributor',
-            'desc' => 'Chief Distributor',
+            'name' => 'Client',
+            'package_requirement' => '',
+            'group_sale_requirement' => '',
             'updated_at' => null,
-            'created_by' => 1
-        ],
-        [
-            'name' => 'Exclusive Distributor',
-            'desc' => 'Exclusive Distributor',
-            'updated_at' => null,
-            'created_by' => 1
-        ],
-        [
-            'name' => 'General Distributor',
-            'desc' => 'General Distributor',
-            'updated_at' => null,
-            'created_by' => 1
+            'rank_short' => ''
         ],
         [
             'name' => 'Member',
-            'desc' => 'Member',
+            'package_requirement' => '',
+            'group_sale_requirement' => '',
             'updated_at' => null,
-            'created_by' => 1
+            'rank_short' => ''
         ],
         [
-            'name' => 'Client',
-            'desc' => 'Client',
+            'name' => 'General Distributor',
+            'package_requirement' => '',
+            'group_sale_requirement' => '',
             'updated_at' => null,
-            'created_by' => 1
-        ]
+            'rank_short' => ''
+        ],
+        [
+            'name' => 'Exclusive Distributor',
+            'package_requirement' => '',
+            'group_sale_requirement' => '',
+            'updated_at' => null,
+            'rank_short' => ''
+        ],
+        [
+            'name' => 'Chief Distributor',
+            'package_requirement' => '',
+            'group_sale_requirement' => '',
+            'updated_at' => null,
+            'rank_short' => ''
+        ],
     ];
 
     public function run()
     {
         foreach ($this->ranks as $rank) {
-            RankingSetting::create($rank);
+            Ranking::create($rank);
         }
     }
 }

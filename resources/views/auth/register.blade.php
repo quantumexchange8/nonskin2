@@ -290,7 +290,7 @@ use App\Models\{State, BankSetting};
             <div class="row">
                 <div class="col-lg-12">
                     <div class="text-center text-muted p-4">
-                        <p class="text-white-50">©
+                        <p class="">©
                             <script>
                                 document.write(new Date().getFullYear())
                             </script>

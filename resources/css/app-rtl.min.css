@@ -2130,7 +2130,7 @@ body[data-layout-mode=dark] .accordion-collapse {
   right: 0;
   top: 0;
   opacity: 0.7;
-  background-color: #000;
+  background-color: #eecabc;
 }
 
 .list-group-item {
@@ -5046,7 +5046,7 @@ body[data-topbar=dark] .auth-logo .logo-txt {
   margin: 0px auto;
 }
 .authentication-bg .bg-overlay {
-  background-color: #003032;
+  background-color: #eecabc;
 }
 .authentication-bg .auth-cover-card .authentication-bg {
   -webkit-box-align: start;

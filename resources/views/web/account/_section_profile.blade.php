@@ -1,4 +1,4 @@
-<div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+<div class="tab-pane fade {{ session('activeTab') === 'profile' ? 'show active' : '' }}" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
     {{-- <div class="profile-user"></div> --}}
     <div class="profile-content text-center">
         <div class="profile-user-img mt-5">
@@ -31,8 +31,8 @@
         </div>
         <div class="col-lg-6">
             <div class="mb-3">
-                <label for="basicpill-email-input" class="form-label">ID</label>
-                <input type="text" class="form-control" placeholder="e.g. 900101023434" value="{{ Auth::user()->id_no ?? '-N/A-' }}" name="id_no" disabled>
+                <label for="basicpill-email-input" class="form-label">ID Number</label>
+                <input type="text" class="form-control id-input" placeholder="e.g. 900101023434" value="{{ Auth::user()->id_no ?? '-N/A-' }}" name="id_no" disabled>
             </div>
         </div>
     </div>
@@ -40,7 +40,7 @@
         <div class="col-lg-6">
             <div class="mb-3">
                 <label for="basicpill-phoneno-input" class="form-label">Contact</label>
-                <input type="text" class="form-control" placeholder="e.g. 01178781515" value="{{ Auth::user()->contact ?? '-N/A-' }}" name="contact" disabled>
+                <input type="text" class="form-control contact-input" placeholder="e.g. 01178781515" value="{{ Auth::user()->contact ?? '-N/A-' }}" name="contact" disabled>
             </div>
         </div>
         <div class="col-lg-6">
@@ -58,3 +58,4 @@
         </div>
     </div>
 </div>
+

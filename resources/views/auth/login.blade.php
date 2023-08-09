@@ -4,7 +4,9 @@
 
 @section('content')
 
+@section('modal')
 @include('modals.create-member')
+@endsection
 
 <div class="authentication-bg min-vh-100">
     <div class="bg-overlay"></div>
@@ -15,7 +17,7 @@
 
                     <div class="text-center mb-4">
                         <a href="index">
-                            <img src="{{ URL::asset('assets/images/logo-sm.svg') }}" alt="" height="22"> <span class="logo-txt">Nonskin</span>
+                            <img src="{{ URL::asset('assets/images/nonskin/non-logo.jpg') }}" alt="" height="100"> <span class="logo-txt"></span>
                         </a>
                     </div>
 
@@ -133,14 +135,4 @@
 @endsection
 
 @section('script')
-    <script src="{{ URL::asset('assets/js/pages/modal.init.js') }}"></script>
-    <script>
-        var myModal = document.getElementById('myModal')
-        var myInput = document.getElementById('myInput')
-
-        myModal.addEventListener('shown.bs.modal', function () {
-        myInput.focus()
-        })
-    </script>
-    <script src="{{ URL::asset('assets/js/app.js') }}"></script>
 @endsection

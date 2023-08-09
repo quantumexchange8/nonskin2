@@ -1,4 +1,4 @@
-<div class="tab-pane fade" id="v-pills-bank" role="tabpanel" aria-labelledby="v-pills-bank-tab">
+<div class="tab-pane fade {{ session('activeTab') === 'bank' ? 'show active' : '' }}" id="v-pills-bank" role="tabpanel" aria-labelledby="v-pills-bank-tab">
     <div class="row">
         <div class="col-lg-6">
             <div class="mb-3">
