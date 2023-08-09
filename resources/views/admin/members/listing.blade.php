@@ -30,14 +30,12 @@
                     <table id="allMember" class="stripe nowrap" style="width:100%">
                         <thead>
                             <tr>
-                                <th>Upline Name</th>
-                                <th>Referrer ID</th>
+                                <th>#</th>
+                                <th>User ID</th>
                                 <th>Name</th>
                                 <th>Email</th>
+                                <th>Contact</th>
                                 <th>Ranking</th>
-                                <th>Postcode</th>
-                                <th>City</th>
-                                <th>State</th>
                                 <th>Joined Date</th>
                                 <th>Action</th>
                             </tr>
@@ -45,14 +43,24 @@
                         <tbody>
                             @foreach ($users as $user)
                             <tr>
-                                {{-- <td>{{ $user->upline->name }}</td> --}}
-                                <td class="fw-bold">#{{ $user->referrer_id }}</td>
-                                <td>{{ $user->name }}</td>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $user->id }}</td>
+                                <td>{{ $user->full_name }}</td>
                                 <td>{{ $user->email }}</td>
-                                <td>{{ $user->ranking_name }}</td>
-                                <td>{{ $user->postcode }}</td>
-                                <td>{{ $user->city }}</td>
-                                <td>{{ $user->state }}</td>
+                                <td>{{ $user->contact }}</td>
+                                <td>
+                                    @if($user->rank_id == 1)
+                                        Client
+                                    @elseif($user->rank_id == 2)
+                                        Member
+                                    @elseif($user->rank_id == 3)
+                                        General Distributor
+                                    @elseif($user->rank_id == 4)
+                                        Exclusive Distributor
+                                    @elseif($user->rank_id == 5)
+                                        Chief Distributor
+                                    @endif
+                                </td>
                                 <td>{{ $user->created_at }}</td>
                                 <td>
                                     <div class="d-flex gap-1 align-items-center">

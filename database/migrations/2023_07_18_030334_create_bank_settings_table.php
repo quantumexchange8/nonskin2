@@ -17,8 +17,6 @@ class CreateBankSettingsTable extends Migration
             $table->id();
             $table->string('name', 100)->nullable();
             $table->timestamps();
-            $table->integer('created_by')->unsigned()->nullable()->comment('Refers to user id');
-            $table->integer('updated_by')->unsigned()->nullable()->comment('Refers to user id');
         });
     }
 

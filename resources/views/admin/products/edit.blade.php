@@ -14,11 +14,11 @@
         @slot('title2') Edit Product @endslot
     @endcomponent
 
-    <form action="{{ route('admin.products.update', $product->id) }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('update', $product->id) }}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="row">
             <div class="col-lg-12">
-                <div id="addproduct-accordion" class="custom-accordion">
+                <div>
                     <div class="card">
                         <a href="#addproduct-productinfo-collapse" class="text-dark" data-bs-toggle="collapse" aria-expanded="true" aria-controls="addproduct-productinfo-collapse">
                             <div class="p-4">
@@ -194,7 +194,7 @@
                                 </div>
                             </div>
                         </a>
-                        <div id="addproduct-img-collapse" class="collapse" data-bs-parent="#addproduct-accordion">
+                        <div id="addproduct-img-collapse" data-bs-parent="#addproduct-accordion">
                             <div class="p-4 border-top">
                                 <div class="mt-4 mt-xl-0">
                                     <div class="mt-4">
@@ -264,7 +264,7 @@
         </div>
         <div class="row mb-4">
             <div class="col text-end">
-                <a href="#" class="btn btn-danger"> <i class="bx bx-x me-1"></i> Cancel </a>
+                <a href="{{ route('list') }}" class="btn btn-danger cancel-btn"> <i class="bx bx-x me-1"></i> Cancel </a>
                 <button type="submit" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#success-btn"> <i class=" bx bx-file me-1"></i> Save </button>
             </div> <!-- end col -->
         </div>
@@ -291,4 +291,32 @@
     <script src="{{ URL::asset('assets/libs/dropzone/dropzone.min.js') }}"></script>
     <script src="{{ URL::asset('assets/js/pages/ecommerce-choices.init.js') }}"></script>
     <script src="{{ URL::asset('assets/js/app.js') }}"></script>
+    <script src="{{ URL::asset('assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+        // Select the cancel button by its class name
+        const cancelButton = document.querySelector('.cancel-btn');
+
+        // Add a click event listener to the cancel button
+        cancelButton.addEventListener('click', function (event) {
+            event.preventDefault(); // Prevent the default link behavior
+
+            // Show the SweetAlert2 confirmation popup
+            Swal.fire({
+                title: 'Cancel edit product?',
+                text: 'The edited product will not be save.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, cancel it!',
+                cancelButtonText: 'No, keep it'
+            }).then((result) => {
+                // If the user confirms, navigate to the specified route
+                if (result.isConfirmed) {
+                    window.location.href = cancelButton.getAttribute('href');
+                }
+            });
+        });
+    });
+    </script>
 @endsection

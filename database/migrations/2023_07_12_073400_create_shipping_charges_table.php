@@ -18,8 +18,6 @@ class CreateShippingChargesTable extends Migration
             $table->string('name')->nullable();
             $table->double('amount')->nullable();
             $table->timestamps();
-            $table->integer('created_by')->unsigned()->nullable()->comment('Refers to user id');
-            $table->integer('updated_by')->unsigned()->nullable()->comment('Refers to user id');
         });
     }
 

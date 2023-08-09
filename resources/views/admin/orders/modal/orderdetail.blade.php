@@ -136,7 +136,11 @@
                                 <button type="button" class="btn btn-secondary btn-edit" disabled>Update Status</button>
                             @else
                                 <input type="hidden" name="remark" id="remark-{{ $order->id }}">
-                                <button type="button" class="btn btn-success btn-edit" data-order-id-edit="{{ $order->id }}" data-order-status-edit="{{ $order->status }}">Update Status</button>
+                                <button type="button" class="btn btn-success btn-edit" 
+                                data-order-id-edit="{{ $order->id }}" 
+                                data-order-status-edit="{{ $order->status }}"
+                                data-order-shipment="{{ $order->delivery_method }}"
+                                >Update Status</button>
                             @endif
                         </form>
                         

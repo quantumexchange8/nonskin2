@@ -18,7 +18,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     @endif
-    <form action="{{ route('admin.products.store') }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('store') }}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="row">
             <div class="col-lg-12">
@@ -259,7 +259,7 @@
         </div>
         <div class="row mb-4">
             <div class="col text-end">
-                <a href="#" class="btn btn-danger"> <i class="bx bx-x me-1"></i> Cancel </a>
+                
                 <button type="submit" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#success-btn"> <i class=" bx bx-file me-1"></i> Save </button>
             </div> <!-- end col -->
         </div>

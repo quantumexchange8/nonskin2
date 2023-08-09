@@ -29,18 +29,28 @@
                         @endif
                     </td>
                     @if($v->product->discount > 0)
-                        <td>RM {{ number_format($v->price*$v->quantity,2,'.',',') }}</td>
+                        <td>RM {{ number_format($v->price * $v->quantity,2,'.',',') }}</td>
                     @else
-                        <td>RM {{ number_format($v->price*$v->quantity,2,'.',',') }}</td>
+                        <td>RM {{ number_format($v->price * $v->quantity,2,'.',',') }}</td>
                     @endif
 
                 </tr>
                 @endforeach
+                @php 
+                 $totalAmount = 0; // Initialize the total amount variable
+
+                 foreach ($cartItems as $k => $v) {
+                    // Calculate the total price for each item
+                    $itemTotal = $v->product->price * $v->quantity;
+                    $totalAmount += $itemTotal; // Add to the total amount
+                }
+
+                @endphp
                 <tr>
                     <td colspan="2">
-                        <h5 class="font-size-14 m-0">Merchandise Sub Total :</h5>
+                        <h5 class="font-size-14 m-0">Total Amount :</h5>
                     </td>
-                    <td>RM {{ number_format($subtotal,2,'.',',') }}</td>
+                    <td> RM {{ number_format(($totalAmount) ,2,'.',',') }}</td>
                 </tr>
                 <tr>
                     <td colspan="2">
@@ -48,13 +58,18 @@
                     </td>
                     <td>- RM {{ number_format($totalDiscount,2,'.',',') }}</td>
                 </tr>
-
                 <tr>
                     <td colspan="2">
                         <h5 class="font-size-14 m-0">Total Shipping Charge :</h5>
                     </td>
                     <td id="shipping">RM 0.00</td>
                     <input type="hidden" name="delivery_fee" id="delivery-fee-input">
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <h5 class="font-size-14 m-0">Merchandise Sub Total :</h5>
+                    </td>
+                    <td>RM {{ number_format($subtotal,2,'.',',') }}</td>
                 </tr>
 
                 <tr class="bg-light" >
@@ -130,7 +145,7 @@
     </div>
     <div class="row my-4">
         <div class="col">
-            <a href="{{ route('member.product-list') }}" class="btn btn-link text-muted">
+            <a href="{{ route('product-list') }}" class="btn btn-link text-muted">
                 <i class="mdi mdi-arrow-left me-1"></i> Continue Shopping </a>
         </div> <!-- end col -->
         <div class="col">

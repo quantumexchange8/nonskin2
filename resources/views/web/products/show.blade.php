@@ -122,7 +122,7 @@
                                                 <i class="bx bx-cart-alt me-2"></i> Add to cart
                                             </button>
                                             @else
-                                                <a href="{{ route('admin.products.edit', $product->id) }}" class="btn btn-primary btn"><i class='bx bxs-edit'></i> Edit Product</a>
+                                                <a href="{{ route('edit', $product->id) }}" class="btn btn-primary btn"><i class='bx bxs-edit'></i> Edit Product</a>
                                             @endif
                                         </div>
                                     </div>

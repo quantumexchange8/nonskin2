@@ -42,7 +42,7 @@
 
                 @hasanyrole('user')
                 <li>
-                    <a href="{{ url('/dashboard') }}">
+                    <a href="{{ url('/members/dashboard') }}">
                         <i class="bx bx-tachometer icon nav-icon"></i>
                         <span class="menu-item" data-key="t-dashboards">@lang('translation.Dashboard')</span>
                     </a>
@@ -79,13 +79,13 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         @hasanyrole('user')
-                            <li><a href="{{ route('member.product-list') }}">@lang('translation.Product') @lang('translation.List')</a></li>
+                            <li><a href="{{ route('product-list') }}">@lang('translation.Product') @lang('translation.List')</a></li>
                             {{-- <li><a href="{{ route('member.cart') }}">@lang('translation.Cart')</a></li> --}}
                         @endhasanyrole
                         @hasanyrole('superadmin|admin')
-                            <li><a href="{{ route('admin.products.create') }}">@lang('translation.Add') @lang('translation.Product')</a>
+                            <li><a href="{{ route('create') }}">@lang('translation.Add') @lang('translation.Product')</a>
                             </li>
-                            <li><a href="{{ route('admin.products.list') }}">@lang('translation.Product') @lang('translation.Listing')</a></li>
+                            <li><a href="{{ route('list') }}">@lang('translation.Product') @lang('translation.Listing')</a></li>
                             <li><a href="{{ route('admin.settings.categories') }}">@lang('translation.Product Categories')</a></li>
                             {{-- <li><a href="{{ route('admin.products.index') }}" >@lang('translation.User View')</a></li> --}}
                         @endhasanyrole
@@ -211,7 +211,7 @@
                             <li><a href="{{ route('member.network-tree') }}">@lang('translation.Network-tree')</a></li>
                         @endhasanyrole
                         @hasanyrole('superadmin|admin')
-                            <li><a href="{{ route('admin.member-list') }}">@lang('translation.Member') @lang('translation.Listing')</a></li>
+                            <li><a href="{{ route('member-list') }}">@lang('translation.Member') @lang('translation.Listing')</a></li>
                             <li><a href="{{ route('member.network-tree') }}">@lang('translation.Network-tree')</a></li>
                         @endhasanyrole
                     </ul>

@@ -272,14 +272,14 @@
                                                             </a>
                                                         </div> --}}
                                                         @hasanyrole('user')
-                                                        <a href="{{ route('member.product-detail', $product->id) }}">
+                                                        <a href="{{ route('showdetails', $product->id) }}">
                                                             <img src="{{ asset('images/products/' . $product->image_1) }}"
                                                                 alt="{{ $product->name_en }}" class="img-fluid mx-auto d-block"
                                                                 style="width: 70% !important;">
                                                         </a>
                                                         @endhasanyrole
                                                         @hasanyrole('superadmin|admin')
-                                                        <a href="{{ route('admin.products.show', $product->id) }}">
+                                                        <a href="{{ route('show', $product->id) }}">
                                                             <img src="{{ asset('images/products/' . $product->image_1) }}"
                                                                 alt="{{ $product->name_en }}" class="img-fluid mx-auto d-block"
                                                                 style="width: 70% !important;">
@@ -291,10 +291,10 @@
                                                             <div>
                                                                 <h5 class="mb-1">
                                                                     @hasanyrole('user')
-                                                                    <a href="{{ route('member.product-detail', $product->id) }}" class="font-size-14">{{ Str::limit($product->name_en, 21, '...') }}</a>
+                                                                    <a href="{{ route('showdetails', $product->id) }}" class="font-size-14">{{ Str::limit($product->name_en, 21, '...') }}</a>
                                                                     @endhasanyrole
                                                                     @hasanyrole('superadmin|admin')
-                                                                    <a href="{{ route('admin.products.show', $product->id) }}" class="font-size-14">{{ Str::limit($product->name_en, 21, '...') }}</a>
+                                                                    <a href="{{ route('show', $product->id) }}" class="font-size-14">{{ Str::limit($product->name_en, 21, '...') }}</a>
                                                                     @endhasanyrole
                                                                 </h5>
                                                                 {{-- <p class="text-muted font-size-13">{{ $product->desc_en }}</p> --}}
@@ -335,7 +335,7 @@
                                                                 @if (Auth::user()->role == 'user')
                                                                     <button class="btn btn-primary btn"><i class='bx bx-cart-alt'></i> Add to Cart</button>
                                                                 @else
-                                                                    <a href="{{ route('admin.products.edit', $product->id) }}" class="btn btn-primary btn"><i class='bx bxs-edit'></i> Edit Product</a>
+                                                                    <a href="{{ route('edit', $product->id) }}" class="btn btn-primary btn"><i class='bx bxs-edit'></i> Edit Product</a>
                                                                 @endif
                                                             </div>
                                                         </form>

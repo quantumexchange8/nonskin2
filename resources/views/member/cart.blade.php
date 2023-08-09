@@ -17,7 +17,7 @@
                 @if($cartItems->isEmpty())
                     <div class="col-xl-12 pt-4 pb-4 d-flex flex-column">
                         <p class="pt-4 pb-2 d-flex justify-content-center align-items-center">This shopping cart is empty</p>
-                        <a href="{{ route('member.product-list') }}" class="btn btn-md btn-primary d-flex justify-content-center align-items-center align-self-center">CONTINUE SHOPPING</a>
+                        <a href="{{ route('product-list') }}" class="btn btn-md btn-primary d-flex justify-content-center align-items-center align-self-center">CONTINUE SHOPPING</a>
                     </div>
                 @endif
                 <div class="col-xl-8">
@@ -44,7 +44,7 @@
                                     </div>
                                     <div class="flex-grow-1 align-self-center overflow-hidden">
                                         <div>
-                                            <h5 class="text-truncate font-size-16"><a href="{{ route('member.product-detail', $v->product->id) }}" class="text-dark">{{ $v->product->name_en }}</a></h5>
+                                            <h5 class="text-truncate font-size-16"><a href="{{ route('showdetails', $v->product->id) }}" class="text-dark">{{ $v->product->name_en }}</a></h5>
                                             @if ($v->product->discount > 0)
                                             <p class="mb-1">{{ $v->product->discount }}% off</p>
                                             @endif
@@ -149,7 +149,7 @@
                                 <!-- end table-responsive -->
                                 <div class="row my-4">
                                     <div class="col-sm-6">
-                                        <a href="{{ route('member.product-list') }}" class="btn btn-link text-muted">
+                                        <a href="{{ route('product-list') }}" class="btn btn-link text-muted">
                                             <i class="mdi mdi-arrow-left me-1"></i> Continue Shopping </a>
                                     </div> <!-- end col -->
                                     <div class="col-sm-6">

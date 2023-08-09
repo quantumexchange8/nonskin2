@@ -139,7 +139,7 @@ class ProductController extends Controller
             $product->save();
 
             return redirect()
-                ->route('admin.products.list')
+                ->route('list')
                 ->with("created", "Product successfully created!");
         } catch (\Exception $e) {
             // Handle the exception here, for example:
@@ -152,7 +152,13 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         // dd($product->image_1);
-        return view('web.products.show', compact('product'));
+        return view('admin.products.show', compact('product'));
+    }
+
+    public function showdetails(Product $product)
+    {
+        // dd($product->image_1);
+        return view('member.products.product_details', compact('product'));
     }
 
     public function edit(Product $product)
@@ -258,7 +264,7 @@ class ProductController extends Controller
             $product->save();
 
             return redirect()
-                ->route('admin.products.list')
+                ->route('list')
                 ->with("updated", "Product successfully updated!");
         } catch (\Exception $e) {
             // Handle the exception here, for example:
@@ -271,5 +277,15 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         //
+    }
+
+    public function productlist ()
+    {
+        $products = Product::selectRaw('*, CASE WHEN discount > 0 THEN (price - (price * discount / 100)) ELSE price END as selling_price')
+            ->latest()
+            ->where('status', 'Active')
+            ->get();
+        // dd($products);
+        return view('member.products.product_list', compact('products'));
     }
 }

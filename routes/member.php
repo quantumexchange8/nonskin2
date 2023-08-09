@@ -22,8 +22,8 @@ Route::group(['prefix' => 'member/', 'as' => 'member.',  'middleware' => ['auth'
     Route::post('pending-orders/{order}', [UserController::class, 'cancelorder'])->name('cancelorder');
 
     Route::get('order-history', [UserController::class, 'orderHistory'])->name('order-history');
-    Route::get('products', [ProductController::class, 'index'])->name('product-list');
-    Route::get('products/{product}', [ProductController::class, 'show'])->name('product-detail');
+    // Route::get('products', [ProductController::class, 'index'])->name('product-list');
+    
     Route::get('report-downline-sales', [UserController::class, 'reportDownlineSales'])->name('report-downline-sales');
     Route::get('report-leadership', [UserController::class, 'reportLeadership'])->name('report-leadership');
     Route::get('report-levelling', [UserController::class, 'reportLevelling'])->name('report-levelling');

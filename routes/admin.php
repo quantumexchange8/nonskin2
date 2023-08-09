@@ -5,27 +5,6 @@ use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.',  'middleware' => 'auth'], function () {
-    Route::get('/members_listing', [AdminController::class, 'memberList'])->name('member-list');
-
-    
-    Route::get('/orders/history', [OrderController::class, 'history'])->name('order-history-list');
-
-    // Route::get('/wallets/pending-deposit', [AdminController::class, 'pendingDeposit'])->name('wallet-pending-deposit');
-    // Route::get('/wallets/pending-withdrawal', [AdminController::class, 'pendingWithdrawal'])->name('wallet-pending-withdrawal');
-
-});
-Route::group(['prefix' => 'admin/products', 'as' => 'admin.products.',  'middleware' => ['auth', 'role:superadmin|admin',]], function () {
-    // Route::get('/user-view', [ProductController::class, 'index'])->name('index');
-    Route::get('/', [ProductController::class, 'listing'])->name('list');
-    Route::get('/create', [ProductController::class, 'create'])->name('create');
-    Route::post('/', [ProductController::class, 'store'])->name('store');
-    Route::get('/{product}', [ProductController::class, 'show'])->name('show');
-    Route::get('/{product}/edit', [ProductController::class, 'edit'])->name('edit');
-    Route::post('/update/{product}', [ProductController::class, 'update'])->name('update');
-    Route::post('/destroy/{product}', [ProductController::class, 'destroy'])->name('destroy');
-});
-
 // Settings
 Route::group(['prefix' => 'admin/settings', 'as' => 'admin.settings.',  'middleware' => ['auth', 'role:superadmin|admin',]], function () {
     Route::get('/product-categories', [AdminController::class, 'categorySettings'])->name('categories');

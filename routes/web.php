@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProductController;
@@ -33,8 +34,11 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+// Route::get('/login', [LoginController::class, 'login'])->name('login');
+// Route::post('/customlogin', [LoginController::class, 'customlogin'])->name('customlogin');
+
 Route::resource('cart', CartController::class);
-Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
+// Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
 
 Route::get('/register', [RegisterController::class, 'register'])->name('register');
 Route::get('/register/{referral?}', [RegisterController::class, 'register'])->name('register');
@@ -48,22 +52,29 @@ Route::post('/toggle-default-address', [App\Http\Controllers\HomeController::cla
 Route::post('/update-bank', [App\Http\Controllers\HomeController::class, 'updateBank'])->name('updateBank');
 Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('updatePassword');
 
+// Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
 
 
 /**
  * MEMBERS
  */
-Route::group(['prefix' => 'manage/members',  'middleware' => 'auth'], function () {
-    Route::get('/', [MemberController::class, 'index'])->name('members.index');                                     // member Index
-    Route::get('/create', [MemberController::class, 'create'])->name('members.create');                             // member CREATE
-    Route::get('/delete/{customer}', [MemberController::class, 'delete'])->name('members.delete');                  // member DELETE
-    Route::get('/show/{customer}', [MemberController::class, 'show'])->name('members.show');                        // member SHOW
-    Route::get('/edit/{customer}', [MemberController::class, 'edit'])->name('members.edit');                        // member EDIT
-    Route::post('/', [MemberController::class, 'store'])->name('members.store');                                    // store
-    Route::post('/update/{customer}', [MemberController::class, 'update'])->name('members.update');                 // update
-    Route::post('/destroy/{customer}', [MemberController::class, 'destroy'])->name('members.destroy');              // destroy
-    Route::post('pending-orders/{order}', [UserController::class, 'cancelorder'])->name('cancelorder');
+Route::group(['prefix' => 'members',  'middleware' => ['auth', 'role:user',]], function () {
+    Route::get('/dashboard', [UserController::class, 'dashboard'])->name('dashboard');
 
+    // Route::get('/', [MemberController::class, 'index'])->name('members.index');                                     // member Index
+    // Route::get('/create', [MemberController::class, 'create'])->name('members.create');                             // member CREATE
+    // Route::get('/delete/{customer}', [MemberController::class, 'delete'])->name('members.delete');                  // member DELETE
+    // Route::get('/show/{customer}', [MemberController::class, 'show'])->name('members.show');                        // member SHOW
+    // Route::get('/edit/{customer}', [MemberController::class, 'edit'])->name('members.edit');                        // member EDIT
+    // Route::post('/', [MemberController::class, 'store'])->name('members.store');                                    // store
+    // Route::post('/update/{customer}', [MemberController::class, 'update'])->name('members.update');                 // update
+    // Route::post('/destroy/{customer}', [MemberController::class, 'destroy'])->name('members.destroy');              // destroy
+    Route::post('pending-orders/{order}', [UserController::class, 'cancelorder'])->name('cancelorder');
+    Route::get('/products_list', [ProductController::class, 'productlist'])->name('product-list');
+
+    Route::get('/products_details/{product}', [ProductController::class, 'showdetails'])->name('showdetails');
+    Route::post('/products_details/cart/{product}', [CartController::class, 'addToCartDetails'])->name('cart_add');
+    
 });
 /**
  * PRODUCTS
@@ -89,14 +100,28 @@ Route::post('api/fetch-cities', [DropdownController::class, 'fetchCity']);
 
 // ADMIN
 Route::group(['prefix' => 'admin',  'middleware' => ['auth', 'role:superadmin|admin',]], function () {
+    // dashboard
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+
+    // order
     Route::get('/orders/listing', [AdminController::class, 'allorder'])->name('new-order-list');
     Route::post('/orders/listing/{order}/reject', [AdminController::class, 'reject'])->name('rejectorder');
     Route::post('/orders/listing/{order}/pack', [AdminController::class, 'packing'])->name('packing');
-    // Route::post('/orders/listing/{order}/deliver', [AdminController::class, 'delivering'])->name('delivering');
-    // Route::post('/orders/listing/{order}/complete', [AdminController::class, 'complete'])->name('complete');
-    // Route::post('/orders/listing/{order}/update', [AdminController::class, 'updatestatus'])->name('updatestatus');
 
+    // product 
+    Route::get('product_listing', [ProductController::class, 'listing'])->name('list');
+    Route::post('product_listing', [ProductController::class, 'store'])->name('store');
+    Route::get('create_product', [ProductController::class, 'create'])->name('create');
+    Route::get('/product_detail/{product}', [ProductController::class, 'show'])->name('show');
+    Route::get('/product_detail/{product}/edit', [ProductController::class, 'edit'])->name('edit');
+    Route::post('/product_detail/update/{product}', [ProductController::class, 'update'])->name('update');
+    Route::post('/product_detail/destroy/{product}', [ProductController::class, 'destroy'])->name('destroy');
+
+    // members
+    Route::get('/members_listing', [AdminController::class, 'memberList'])->name('member-list');
+    Route::get('/orders/history', [OrderController::class, 'history'])->name('order-history-list');
+
+    
 });
 
 // Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');

@@ -25,6 +25,17 @@ class UserController extends Controller
         $this->middleware(CheckCartItem::class)->only('member.checkout');
     }
 
+    public function dashboard()
+    {
+
+        $user = Auth::user();
+        $user->url = url('') .'/register/' . $user->referrer_id;
+
+        return view('member.dashboard', [
+            'user' => $user,
+        ]);
+    }
+
     public function announcement() {
         $announcements = Announcement::where('status', 1)->get();
         return view('member.announcement', compact('announcements'));
@@ -58,7 +69,7 @@ class UserController extends Controller
             ->whereHas('address', function ($query) {
                 $query->where('user_id', Auth::id());
             })
-            ->select('id', 'name', 'contact', 'email')
+            ->select('id', 'full_name', 'contact', 'email')
             ->first();
 
         // $shipping_methods = DeliverySetting::
@@ -126,6 +137,10 @@ class UserController extends Controller
         return view('member.internal_transfer_new');
     }
     public function memberListing() {
+        $user = Auth::user();
+
+        $members = User::where('upline_id', $user->id)->get();
+
         return view('member.member_listing');
     }
     public function memberNetworkTree() {

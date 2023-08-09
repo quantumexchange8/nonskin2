@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 class LoginController extends Controller
 {
     /*
@@ -37,4 +38,30 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    // public function login()
+    // {
+    //     return view('auth.login');
+    // }
+
+    // public function customlogin(Request $request)
+    // {
+    //     // dd($request->all());
+    //     $request->validate([
+    //         'email' => 'required',
+    //         'password' => 'required',
+    //     ]);
+
+    //     $credentials = [
+    //         'username' => $request['email'],
+    //         'password' => $request['password'],
+    //     ];
+        
+    //     if(Auth::attempt($credentials)) {
+    //         return redirect()->intended('members/dashboard')
+    //                     ->withSuccess('Signed in');
+    //     }
+
+    //     return redirect("login")->withError('Login details are not valid');
+    // }
 }

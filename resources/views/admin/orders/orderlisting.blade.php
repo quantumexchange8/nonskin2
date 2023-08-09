@@ -257,31 +257,53 @@
 
     $(".btn-edit").click(function () {
         const orderId = this.getAttribute('data-order-id-edit');
-        const orderStatus = this.getAttribute('data-order-status-edit'); // Assuming $order->status is accessible in this context
+        const orderStatus = this.getAttribute('data-order-status-edit'); // get the orders current status
+        const shippingtype = this.getAttribute('data-order-shipment'); //get the orders shipping methods
 
         let inputOptions = {};
-        if (orderStatus == 1){
-            inputOptions = {
-                2: 'Packing',
-                3: 'Delivering',
-                4: 'Complete'
-            };
-        }else if (orderStatus == 2) {
-            inputOptions = {
-                3: 'Delivering',
-                4: 'Complete'
-            };
-        } else if (orderStatus == 3) {
-            inputOptions = {
-                4: 'Complete'
-            };
-        } else if (orderStatus == 9) {
-            inputOptions = {
-                2: 'Packing',
-                3: 'Delivering',
-                4: 'Complete'
-            };
+
+        if(shippingtype == 'Delivery') {
+            if (orderStatus == 1){
+                inputOptions = {
+                    2: 'Packing',
+                    3: 'Delivering',
+                    4: 'Complete'
+                };
+            }else if (orderStatus == 2) {
+                inputOptions = {
+                    3: 'Delivering',
+                    4: 'Complete'
+                };
+            } else if (orderStatus == 3) {
+                inputOptions = {
+                    4: 'Complete'
+                };
+            } else if (orderStatus == 9) {
+                inputOptions = {
+                    2: 'Packing',
+                    3: 'Delivering',
+                    4: 'Complete'
+                };
+            }
+        } else {
+            if (orderStatus == 1){
+                inputOptions = {
+                    2: 'Packing',
+                    4: 'Complete'
+                };
+            }else if (orderStatus == 2) {
+                inputOptions = {
+                    4: 'Complete'
+                };
+            }  else if (orderStatus == 9) {
+                inputOptions = {
+                    2: 'Packing',
+                    3: 'Delivering',
+                    4: 'Complete'
+                };
+            }
         }
+        
 
         // Show SweetAlert 2 confirmation dialog
         

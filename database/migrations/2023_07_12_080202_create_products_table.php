@@ -16,10 +16,8 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('code')->nullable()->comment('Product code');
-            $table->string('name_en')->nullable()->comment('Product name in English');
-            $table->string('name_cn')->nullable()->comment('Product name in Chinese');
-            $table->longText('desc_en')->nullable()->comment('Product description in English');
-            $table->longText('desc_cn')->nullable()->comment('Product description in Chinese');
+            $table->string('name')->nullable();
+            $table->longText('description')->nullable();
             $table->double('price')->nullable();
             $table->double('discount')->default(0);
             $table->tinyInteger('category_id');

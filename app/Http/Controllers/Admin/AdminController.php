@@ -34,10 +34,12 @@ class AdminController extends Controller
 
         // dd($users);
 
-        $users = User::with(['address', 'upline'])
-        ->where('role', 'user')
-        ->orWhere('role', 'admin')
-        ->get(['upline_id', 'referrer_id', 'name', 'email', 'ranking_name', 'postcode', 'city', 'state', 'created_at']);
+        // $users = User::with(['address', 'upline'])
+        // ->where('role', 'user')
+        // ->orWhere('role', 'admin')
+        // ->get(['upline_id', 'referrer_id', 'name', 'email', 'ranking_name', 'postcode', 'city', 'state', 'created_at']);
+
+        $users = User::where('role', 'user')->get();
         // dd($users);
         return view('admin.members.listing', compact('users', 'states'));
     }
