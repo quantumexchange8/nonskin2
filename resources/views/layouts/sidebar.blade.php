@@ -31,12 +31,23 @@
             <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
                 {{-- <li class="menu-title" data-key="t-menu">{{ auth::user()->ranking_name }}</li> --}}
+                @hasanyrole('superadmin|admin')
                 <li>
-                    <a href="{{ url('/') }}">
+                    <a href="{{ url('/admin/dashboard') }}">
                         <i class="bx bx-tachometer icon nav-icon"></i>
                         <span class="menu-item" data-key="t-dashboards">@lang('translation.Dashboard')</span>
                     </a>
                 </li>
+                @endhasanyrole
+
+                @hasanyrole('user')
+                <li>
+                    <a href="{{ url('/dashboard') }}">
+                        <i class="bx bx-tachometer icon nav-icon"></i>
+                        <span class="menu-item" data-key="t-dashboards">@lang('translation.Dashboard')</span>
+                    </a>
+                </li>
+                @endhasanyrole
 
                 @hasanyrole('user')
                     <li><a href="{{ route('member.announcement') }}">
@@ -98,7 +109,7 @@
                             {{-- <li><a href="{{ route('member.order-history') }}" data-key="t-order-history">History</a></li> --}}
                         @endhasanyrole
                         @hasanyrole('superadmin|admin')
-                            <li><a href="{{ route('admin.new-order-list') }}">@lang('translation.Order') @lang('translation.Listing')</a>
+                            <li><a href="{{ route('new-order-list') }}">@lang('translation.Order') @lang('translation.Listing')</a>
                             </li>
                             {{-- <li><a href="{{ route('admin.order-history-list') }}">@lang('translation.History')</a></li> --}}
                         @endhasanyrole
@@ -117,13 +128,16 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
                         @hasanyrole('user')
-                            <li><a href="{{ route('member.wallet-deposit') }}" data-key="t-order-pending">@lang('translation.Deposit')</a></li>
-                            <li><a href="{{ route('member.wallet-withdrawal') }}" data-key="t-order-pending">@lang('translation.Withdrawal')</a></li>
+                            <li><a href="{{ route('member.wallet-deposit') }}" data-key="t-order-pending">@lang('translation.Purchase Wallet')</a></li>
+                            <li><a href="{{ route('member.wallet-withdrawal') }}" data-key="t-order-pending">@lang('translation.Cash Wallet')</a></li>
+                            <li><a href="{{ route('member.wallet-withdrawal') }}" data-key="t-order-pending">@lang('translation.Product Wallet')</a></li>
                             {{-- <li><a href="{{ route('member.order-history') }}" data-key="t-order-history">History</a></li> --}}
                         @endhasanyrole
                         @hasanyrole('superadmin|admin')
                             {{-- <li><a href="{{ route('admin.pending-deposit') }}">@lang('translation.pending-deposit')</a></li> --}}
+                            <li><a href="#">@lang('translation.Cash Wallet')</a></li>
                             {{-- <li><a href="{{ route('admin.pending-withdrawal') }}">@lang('translation.pending-withdrawal')</a></li> --}}
+                            <li><a href="#">@lang('translation.Purchase Wallet')</a></li>
                             {{-- <li><a href="{{ route('admin.order-history-list') }}">@lang('translation.History')</a></li> --}}
                         @endhasanyrole
                     </ul>

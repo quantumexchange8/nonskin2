@@ -33,13 +33,13 @@
                     <table id="allOrder" class="stripe nowrap" style="width:100%">
                         <thead>
                             <tr>
+                                <th>#</th>
                                 <th>Order ID</th>
                                 <th>Name</th>
                                 <th>Contact</th>
                                 <th>Date</th>
                                 <th>Shipping Type</th>
                                 <th>Payment Method</th>
-                                <th>View Details</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -47,6 +47,7 @@
                         <tbody>
                             @foreach($orders as $order)
                             <tr>
+                                <td>{{ $loop->iteration }}</td>
                                 <td class="fw-bold">#{{$order->order_num}}</td>
                                 <td>
                                     @if($order->delivery_method == 'Delivery')
@@ -75,11 +76,6 @@
                                     @endswitch
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-primary btn-sm btn-rounded view-detail-button" data-bs-toggle="modal" data-bs-target="#orderdetailsModal_{{ $order->id }}" id="{{$order->id}}">
-                                        View Details
-                                    </button>
-                                </td>
-                                <td>
                                     @if($order->status == 1)
                                         <span class="badge badge-pill badge-soft-secondary font-size-12">
                                             Processing
@@ -96,24 +92,36 @@
                                         <span class="badge badge-pill badge-soft-success font-size-12">
                                             Complete
                                         </span>
-                                        @else
+                                    @elseif($order->status == 6)
                                         <span class="badge badge-pill badge-soft-danger font-size-12">
-                                            Cancelled
+                                            Rejected
+                                        </span>
+                                    @elseif($order->status == 9)
+                                        <span class="badge badge-pill badge-soft-danger font-size-12">
+                                            Pending payment
+                                        </span>
+                                    @else
+                                        <span class="badge badge-pill badge-soft-danger font-size-12">
+                                            Pending Refund
                                         </span>
                                     @endif
                                 </td>
                                 <td>
-                                    <div class="d-flex gap-1 align-items-center">
-                                        {{-- <span data-bs-toggle="modal" data-bs-target=".orderdetailsModal">
-                                            <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="View" data-bs-original-title="View" class="text-primary">
-                                                <i class="mdi mdi-eye-outline font-size-18"></i>
-                                            </a>
-                                        </span> --}}
-                                        <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-bs-original-title="Edit" class="text-success"><i class="mdi mdi-pencil font-size-18"></i></a>
+                                    <div class="d-flex gap-3">
+                                        
+                                            <button type="button" class="btn btn-link view-detail-button" data-bs-toggle="modal" data-bs-target="#orderdetailsModal_{{ $order->id }}" id="{{$order->id}}">
+                                                <i class="mdi mdi-pencil font-size-18"></i>
+                                            </button>
+                                            @include('admin.orders.modal.orderdetail')
+                                            
+                                            
+                                        {{-- </form> --}}
+                                        
                                         {{-- <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Cancel" data-bs-original-title="Cancel" class="text-danger"> --}}
-                                            <form action="{{ route('cancelorder', $order->id) }}" method="POST" id="delete-form-{{ $order->id }}">
+                                            <form action="{{ route('rejectorder', $order->id) }}" method="POST" id="reject-form-{{ $order->id }}">
                                                 @csrf
-                                                <button type="button" class="btn btn-link text-danger delete-button" data-order-id="{{ $order->id }}" data-order-status="{{ $order->status }}">
+                                                <input type="hidden" name="remark" id="remark-{{ $order->id }}">
+                                                <button type="button" class="btn btn-link text-danger reject-button" data-order-id="{{ $order->id }}" data-order-status="{{ $order->status }}">
                                                     <i class="mdi mdi-delete font-size-18"></i>
                                                 </button>
                                             </form>
@@ -129,103 +137,195 @@
         </div>
     </div>
 
-    <div class="modal fade add-new-order" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="myExtraLargeModalLabel">Add New Order</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="AddOrder-Product">Choose Product</label>
-                            <select class="form-select" required>
-                                <option value="" selected> Select Product </option>
-                                <option>Adidas Running Shoes</option>
-                                <option>Puma P103 Shoes</option>
-                                <option>Adidas AB23 Shoes</option>
-                            </select>
-                        </div>
-                    </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="AddOrder-Billing-Name">Billing Name</label>
-                                <input type="text" class="form-control" placeholder="Enter Billing Name" id="AddOrder-Billing-Name" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Date</label>
-                                <input type="text" class="form-control" placeholder="Select Date" id="order-date" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="AddOrder-Total">Total</label>
-                                <input type="text" class="form-control" placeholder="$565" id="AddOrder-Total" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="AddOrder-Payment-Status">Payment Status</label>
-                                <select class="form-select" required>
-                                    <option value="" selected> Select Card Type </option>
-                                    <option>Paid</option>
-                                    <option>Chargeback</option>
-                                    <option>Refund</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="AddOrder-Payment-Method">Payment Method</label>
-                                <select class="form-select" required>
-                                    <option value="" selected> Select Payment Method </option>
-                                    <option> Mastercard</option>
-                                    <option>Visa</option>
-                                    <option>Paypal</option>
-                                    <option>COD</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mt-2">
-                    <div class="col-12 text-end">
-                        <button type="button" class="btn btn-danger me-1" data-bs-dismiss="modal"><i class="bx bx-x me-1"></i> Cancel</button>
-                        <button type="submit" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#success-btn" id="btn-save-event"><i class="bx bx-check me-1"></i> Confirm</button>
-                    </div>
-                </div>
-
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div>
-
-
-    <div id="success-btn" class="modal fade" tabindex="-1" aria-labelledby="success-btnLabel" aria-hidden="true" data-bs-scroll="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="text-center">
-                        <i class="bx bx-check-circle display-1 text-success"></i>
-                        <h3 class="mt-3">Order Completed Successfully</h3>
-                    </div>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div>
-
-
 @endsection
 @section('script')
     <script src="{{ URL::asset('assets/js/app.js') }}"></script>
+    {{-- <script src="{{ URL::asset('assets/js/pages/admin-pending-orders.js') }}"></script> --}}
+    <script src="{{ URL::asset('assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
+    <script src="{{ URL::asset('assets/libs/flatpickr/flatpickr.min.js') }}"></script>
     <script>
+        const customLanguage = {
+            search: "Search Order ID:"
+        };
+
         new DataTable('#allOrder', {
             responsive: true,
             pagingType: 'simple_numbers',
-            lengthChange: false
+            lengthChange: false,
+            language: customLanguage // Provide the custom language object
         });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click event listeners to all delete buttons
+            const deleteButtons = document.querySelectorAll('.reject-button');
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const orderId = this.getAttribute('data-order-id');
+                    const orderStatus = this.getAttribute('data-order-status');
+
+                    // if (orderStatus === '5') {
+                    //     Swal.fire({
+                    //         title: 'Error',
+                    //         text: 'This order has already been cancelled!',
+                    //         icon: 'error',
+                    //         confirmButtonText: 'Ok'
+                    //     });
+                    // } else 
+                    if(orderStatus === '4') {
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'This order has already completed!',
+                            icon: 'error',
+                            confirmButtonText: 'Ok'
+                        });
+                    } else if(orderStatus === '3') {
+                        Swal.fire({
+                            title: 'Warning',
+                            text: 'This order has already shipped out!',
+                            icon: 'warning',
+                            confirmButtonText: 'Ok'
+                        });
+                    } else if(orderStatus === '6') {
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'This order has already rejected!',
+                            icon: 'error',
+                            confirmButtonText: 'Ok'
+                        });
+                    } else {
+                        // Show SweetAlert 2 confirmation dialog
+                        Swal.fire({
+                            title: 'Are you sure?',
+                            text: 'You will not be able to recover this order!',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Yes, reject it!',
+                            cancelButtonText: 'Cancel',
+                            input: 'text', // Add an input field
+                            inputPlaceholder: 'Enter your remark', // Placeholder for the input field
+                            inputValidator: (value) => {
+                                // Check if the input field is not empty
+                                if (!value) {
+                                    return 'Remark is required'; // Show error message
+                                }
+                            }
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // If the user confirms, submit the form to delete the order
+                                const remark = result.value; // Get the value of the input field
+                                const form = document.getElementById('reject-form-' + orderId);
+                                const remarkInput = form.querySelector('#remark-' + orderId);
+                                remarkInput.value = remark; // Set the value of the hidden input field
+                                form.submit();
+                            }
+                        });
+                    }
+                });
+            });
+
+            
+
+            const modalCloseButtons = document.querySelectorAll('.modal .btn-secondary'); // Select all "Close" buttons in modals
+
+            modalCloseButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const modal = button.closest('.modal'); // Find the closest modal to the clicked button
+                    modal.classList.remove('show'); // Hide the modal
+                    modal.setAttribute('aria-hidden', 'true');
+                    modal.setAttribute('style', 'display: none');
+                });
+            });
+        });
+
+        $(document).ready(function () {
+    // function toggleEditMode() {
+    //     $(".edit-mode").toggle();
+    //     $(".btn-edit").toggle();
+    //     $(".btn-packing").toggle();
+    //     $(".badge").toggle();
+    // }
+
+    // $(".btn-edit").click(function () {
+    //     toggleEditMode();
+    // });
+
+    // $(".btn-cancel").click(function () {
+    //     toggleEditMode();
+    // });
+
+    $(".btn-edit").click(function () {
+        const orderId = this.getAttribute('data-order-id-edit');
+        const orderStatus = this.getAttribute('data-order-status-edit'); // Assuming $order->status is accessible in this context
+
+        let inputOptions = {};
+        if (orderStatus == 1){
+            inputOptions = {
+                2: 'Packing',
+                3: 'Delivering',
+                4: 'Complete'
+            };
+        }else if (orderStatus == 2) {
+            inputOptions = {
+                3: 'Delivering',
+                4: 'Complete'
+            };
+        } else if (orderStatus == 3) {
+            inputOptions = {
+                4: 'Complete'
+            };
+        } else if (orderStatus == 9) {
+            inputOptions = {
+                2: 'Packing',
+                3: 'Delivering',
+                4: 'Complete'
+            };
+        }
+
+        // Show SweetAlert 2 confirmation dialog
+        
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'Do you want to update the status?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#51D28C',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, update it!',
+            cancelButtonText: 'Cancel',
+            input: 'select', // Use 'select' input type for a dropdown
+            inputOptions: inputOptions,
+            inputPlaceholder: 'Select new status',
+            inputValidator: (value) => {
+                if (!value) {
+                    return 'Status selection is required';
+                }
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const selectedStatus = result.value;
+                
+                if (selectedStatus) {
+                    const statusInput = document.querySelector('#status-form-' + orderId + ' .form-select');
+                    console.log(statusInput)
+                    if (statusInput) {
+                        statusInput.value = selectedStatus;
+                        console.log(statusInput.value);
+                        
+                        const form = statusInput.closest('form');
+                        form.submit();
+                    } else {
+                        console.log('Status input not found.');
+                    }
+                }
+            }
+        });
+    });
+});
+
+
+
     </script>
+    
 @endsection

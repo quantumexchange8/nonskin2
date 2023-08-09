@@ -62,7 +62,7 @@ class OrderController extends Controller
             $order->delivery_address    = $deliveryAddress;
             $order->delivery_fee        = $deliveryMethod == 'Delivery' ? $deliveryFee : 0;
             $order->status              = 1;//processing
-            $order->remarks             = 'New Order';
+            $order->remarks             = null;
             $order->created_by          = Auth::id();
             $order->updated_at          = null;
             $order->save();
@@ -82,7 +82,7 @@ class OrderController extends Controller
             $payment->amount        = $totalAmount;
             $payment->gateway       = 'none';
             $payment->status        = 'Pending';
-            $payment->remarks       = 'New Order';
+            $payment->remarks       = null;
             $payment->receipt       = null;
             $payment->updated_at    = null;
             $payment->created_by    = Auth::id();

@@ -45,7 +45,7 @@
                         <tbody>
                             @foreach ($users as $user)
                             <tr>
-                                <td>{{ $user->upline->name }}</td>
+                                {{-- <td>{{ $user->upline->name }}</td> --}}
                                 <td class="fw-bold">#{{ $user->referrer_id }}</td>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>

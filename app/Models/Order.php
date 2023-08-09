@@ -13,6 +13,7 @@ class Order extends Model
         'payment_id',
         'created_by',
         'status',
+        'remarks',
     ];
 
     // STATUS FOR ORDER
@@ -20,7 +21,8 @@ class Order extends Model
     const packing = 2; //can be selfpickup and ship
     const delivering = 3; //shipping
     const complete = 4; // succesfully
-    const cancel = 5; //cancel
+    const cancel = 5; //cancel or pending refund
+    const reject = 6; //reject
     const pending_payment = 9; //pending payment
 
     /**

@@ -25,6 +25,7 @@ class User extends Authenticatable
         'avatar',
         'upline_id',
         'referrer_id',
+        'hierarchyList',
         'id_no',
         'contact',
         'username',

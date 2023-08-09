@@ -122,30 +122,35 @@ class RegisterController extends Controller
         ]);
     }
 
-    public function register() {
+    public function register(Request $request, $referral = null) {
+        
         $banks = BankSetting::pluck('name', 'id');
-        return view('auth.register', compact('banks'));
+        // dd($referral);
+        return view('auth.register', [
+            'banks' => $banks,
+            'referral' => $referral,
+        ]);
     }
 
     public function store(Request $request){
         // $validator = $this->validator($request->all());
 
-        // dd($request);
-        // if ($validator->fails()) {
-        //     return redirect()
-        //         ->back()
-        //         ->withErrors('error', 'Try again later');
-        // }
-        // if (request()->has('avatar')) {
-        //     $avatar = request()->file('avatar');
-        //     $avatarName = time() . '.' . $avatar->getClientOriginalExtension();
-        //     $avatarPath = public_path('/images/');
-        //     $avatar->move($avatarPath, $avatarName);
-        // }
-
         // if user inputs referral in registration form
-        if($request->upline_id){
-            $uplineId = User::where('referrer_id', $request->upline_id)->pluck('id')->first();
+        
+        if($request->referral != null){
+            $uplineId = User::where('referrer_id', $request->referral)->first();
+            
+            if(!$uplineId) {
+                return back()->withInput($request->input())->withErrors(['error_messages'=>'Invalid referral code!']);
+            }
+
+            $upline_user_id = $uplineId->id;
+            if(empty($uplineId['hierarchyList'])){
+                $hierarchyList = "-" . $upline_user_id . "-";
+            } else {
+                $hierarchyList = $uplineId['hierarchyList'] . $upline_user_id . "-";
+            }
+           
         }
         $memberPrefix = 'NON';
         // Find the corresponding row in the 'prefixes' table based on the prefix
@@ -160,8 +165,9 @@ class RegisterController extends Controller
             );
 
         $user = User::create([
-            'upline_id'     => $uplineId ?? 3,
+            'upline_id'     => $referral ?? 3,
             'referrer_id'   => $memberPrefix . str_pad($newMemberNumber, $prefixRow->padding, '0', STR_PAD_LEFT),
+            'hierarchyList' => $hierarchyList,
             'email'         => $request->email,
             'password'      => Hash::make($request->password),
             // 'avatar'     => "/images/" . $avatarName,
@@ -173,7 +179,7 @@ class RegisterController extends Controller
             'role_id'       => 4,
             'role'          =>'user',
             'ranking_id'    => 5,
-            'ranking_name'  => 'Nonmember',
+            'ranking_name'  => 'client',
             'bank_name'         => $request->bank_name,
             'bank_holder_name'  => $request->bank_holder_name,
             'bank_acc_no'       => $request->bank_acc_no,

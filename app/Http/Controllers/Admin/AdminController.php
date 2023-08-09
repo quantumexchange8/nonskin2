@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\CompanyInfo;
 use App\Models\BankSetting;
 use App\Models\ShippingCharge;
+use App\Models\Order;
 use Validator;
 use Response;
 use Redirect;
@@ -17,8 +18,12 @@ use Illuminate\Support\Facades\DB;
 use Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 
-class UserController extends Controller
+class AdminController extends Controller
 {
+    public function dashboard()
+    {
+        return view('admin.dashboard');
+    }
     public function memberList(){
         $states = State::select('id', 'name')->get();
 
@@ -29,7 +34,7 @@ class UserController extends Controller
 
         // dd($users);
 
-        $users = User::with('address')
+        $users = User::with(['address', 'upline'])
         ->where('role', 'user')
         ->orWhere('role', 'admin')
         ->get(['upline_id', 'referrer_id', 'name', 'email', 'ranking_name', 'postcode', 'city', 'state', 'created_at']);
@@ -137,5 +142,78 @@ class UserController extends Controller
     public function companyInfo() {
         $infos = CompanyInfo::get();
         return view('admin.settings.company-info', compact('infos'));
+    }
+
+    public function allorder() {
+        // $orders = Order::where('status', 'New')->get();
+        // $ordersJson = json_encode($orders);
+        // dd($orders);
+
+        $orders = Order::get();
+
+        return view('admin.orders.orderlisting', [
+            'orders' => $orders,
+        ]);
+    }
+
+    public function proceed(Request $request, Order $order)
+    {
+        dd($request);
+        return redirect()->back();
+    }
+
+    public function reject(Request $request, Order $order)
+    {
+        // dd($request->remark);
+        if($order->status == 1 || $order->status == 2)
+        {
+            $order->update([
+                'status' => 6,
+                'remarks' => $request->remark,
+            ]);
+
+            Alert::success('Success', 'Cancelled the shipment');
+            return redirect()->back();
+        }else{
+            Alert::error('Fail', 'You cannot cancel the shipment');
+            return redirect()->back();
+        }
+    }
+    public function packing(Request $request, Order $order)
+    {
+        // dd($request->all());
+        $order->update([
+            'status' => $request->status,
+        ]);
+
+        Alert::success('Success', 'Status has been updated');
+        return redirect()->back();
+    }
+    public function delivering(Request $request, Order $order)
+    {
+        // $order->update([
+        //     'status' => 3,
+        // ]);
+
+        
+        return redirect()->back();
+    }
+    public function complete(Request $request, Order $order)
+    {
+        // dd($request);
+        // $order->update([
+        //     'status' => 4,
+        // ]);
+
+        
+        return redirect()->back();
+    }
+
+    public function updatestatus(Request $request)
+    {
+
+        dd($request);
+
+        return redirect()->back();
     }
 }

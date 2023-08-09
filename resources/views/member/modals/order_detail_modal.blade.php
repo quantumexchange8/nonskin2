@@ -7,7 +7,8 @@
             </div>
             <div class="modal-body">
                 <p class="mb-2">Order Id: <span class="text-primary" id="order-id">{{$order->order_num}}</span></p>
-                <p class="mb-4">Receiver Name: <span class="text-primary" id="receiver-name">{{$order->receiver}}</span></p>
+                <p class="mb-2">Receiver Name: <span class="text-primary" id="receiver-name">{{$order->receiver}}</span></p>
+                <p class="mb-4">Deliver Address: <span class="text-primary" id="receiver-name">{{$order->delivery_address}}</span></p>
                 <div class="table-responsive">
                     <table class="table align-middle table-nowrap">
                         <thead>
@@ -69,6 +70,32 @@
                                     RM {{ number_format($order->total_amount, 2)}}
                                 </td>
                             </tr>
+                            @if($order->status == 6 || $order->status == 5)
+                            <tr>
+                                <td colspan="2">
+                                    <h6 class="m-0 text-right">Status:</h6>
+                                </td>
+                                <td>
+                                    @if($order->status == 6)
+                                        <span class="badge badge-pill badge-soft-danger font-size-14">
+                                            Rejected
+                                        </span>
+                                    @elseif($order->status == 5)
+                                        <span class="badge badge-pill badge-soft-danger font-size-14">
+                                            Pending refund
+                                        </span>
+                                    @endif
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <h6 class="m-0 text-right">Remark:</h6>
+                                </td>
+                                <td>
+                                   {{ $order->remarks }}
+                                </td>
+                            </tr>
+                            @endif
 
 
 

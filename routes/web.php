@@ -11,6 +11,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\DropdownController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\Member\UserController;
+use App\Http\Controllers\admin\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,11 +24,16 @@ use App\Http\Controllers\Member\UserController;
 |
 */
 
+Route::get('/', function () {
+    return view('auth/login');
+});
+
 Auth::routes();
 Route::resource('cart', CartController::class);
-Route::get('/', [App\Http\Controllers\HomeController::class, 'root'])->name('root');
+Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
 
 Route::get('/register', [RegisterController::class, 'register'])->name('register');
+Route::get('/register/{referral?}', [RegisterController::class, 'register'])->name('register');
 Route::post('/add-member', [RegisterController::class, 'store'])->name('add.member');
 
 //Update User Details
@@ -87,3 +93,15 @@ Route::post('/announcement', [AnnouncementController::class, 'store'])->name('an
 Route::get('dependent-dropdown', [DropdownController::class, 'index']);
 Route::post('api/fetch-states', [DropdownController::class, 'fetchState']);
 Route::post('api/fetch-cities', [DropdownController::class, 'fetchCity']);
+
+// ADMIN
+Route::group(['prefix' => 'admin',  'middleware' => ['auth', 'role:superadmin|admin',]], function () {
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::get('/orders/listing', [AdminController::class, 'allorder'])->name('new-order-list');
+    Route::post('/orders/listing/{order}/reject', [AdminController::class, 'reject'])->name('rejectorder');
+    Route::post('/orders/listing/{order}/pack', [AdminController::class, 'packing'])->name('packing');
+    // Route::post('/orders/listing/{order}/deliver', [AdminController::class, 'delivering'])->name('delivering');
+    // Route::post('/orders/listing/{order}/complete', [AdminController::class, 'complete'])->name('complete');
+    // Route::post('/orders/listing/{order}/update', [AdminController::class, 'updatestatus'])->name('updatestatus');
+
+});

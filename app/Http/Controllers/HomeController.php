@@ -35,9 +35,14 @@ class HomeController extends Controller
         return abort(404);
     }
 
-    public function root()
+    public function dashboard()
     {
-        return view('web.dashboard');
+        $user = Auth::user();
+        $user->url = url('') .'/register/' . $user->referrer_id;
+        
+        return view('member.dashboard', [
+            'user' => $user,
+        ]);
     }
 
     /*Language Translation*/

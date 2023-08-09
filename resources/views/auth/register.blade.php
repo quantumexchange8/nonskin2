@@ -84,7 +84,11 @@ use App\Models\{State, BankSetting};
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
                                                             <label for="basicpill-firstname-input" class="form-label">Referral <small class="text-muted">(Optional)</small></label>
-                                                            <input type="text" class="form-control" placeholder="e.g. NON000000003" name="upline_id">
+                                                            @if($referral != null)
+                                                                <input type="text" class="form-control" placeholder="e.g. NON000000003" name="referral" value="{{ $referral ?: null}}">
+                                                            @else
+                                                                <input type="text" class="form-control" placeholder="e.g. NON000000003" name="referral">
+                                                            @endif
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6">
@@ -104,7 +108,7 @@ use App\Models\{State, BankSetting};
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
                                                             <label for="basicpill-email-input" class="form-label required">ID</label>
-                                                            <input type="text" class="form-control" placeholder="e.g. 900101023434" name="id_no" required>
+                                                            <input type="number" class="form-control" placeholder="e.g. 900101023434" name="id_no" required>
                                                         </div>
                                                     </div>
                                                 </div><!-- end row -->
@@ -112,7 +116,7 @@ use App\Models\{State, BankSetting};
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
                                                             <label for="basicpill-phoneno-input" class="form-label required">Contact</label>
-                                                            <input type="text" class="form-control" placeholder="e.g. 01178781515" name="contact" required>
+                                                            <input type="number" class="form-control" placeholder="e.g. 01178781515" name="contact" required>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6">
@@ -167,7 +171,7 @@ use App\Models\{State, BankSetting};
                                                         <div class="col-lg-6">
                                                             <div class="mb-3">
                                                                 <label for="postcode" class="form-label required">Postcode</label>
-                                                                <input type="text" class="form-control" placeholder="e.g. 81300" name="postcode" required>
+                                                                <input type="number" class="form-control" placeholder="e.g. 81300" name="postcode" required min="5">
                                                             </div>
                                                         </div>
 
@@ -247,14 +251,14 @@ use App\Models\{State, BankSetting};
                                                         <div class="col-lg-6">
                                                             <div class="mb-3">
                                                                 <label for="bank_acc_no" class="form-label required">Bank Acc Number</label>
-                                                                <input type="text" class="form-control" placeholder="Enter Bank Acc Number" name="bank_acc_no" required>
+                                                                <input type="number" class="form-control" placeholder="Enter Bank Acc Number" name="bank_acc_no" required>
                                                             </div>
                                                         </div>
 
                                                         <div class="col-lg-6">
                                                             <div class="mb-3">
                                                                 <label for="bank_ic" class="form-label required">Bank Identification Number</label>
-                                                                <input type="text" class="form-control" placeholder="Enter Bank Identification Number" name="bank_ic" required>
+                                                                <input type="number" class="form-control" placeholder="Enter Bank Identification Number" name="bank_ic" required>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -351,12 +355,12 @@ use App\Models\{State, BankSetting};
 
             // Validate required fields in the current tab
             for (var i = 0; i < inputs.length; i++) {
-            if (!inputs[i].value.trim()) {
-                isValid = false;
-                inputs[i].classList.add("is-invalid");
-            } else {
-                inputs[i].classList.remove("is-invalid");
-            }
+                if (!inputs[i].value.trim()) {
+                    isValid = false;
+                    inputs[i].classList.add("is-invalid");
+                } else {
+                    inputs[i].classList.remove("is-invalid");
+                }
             }
 
             if (isValid) {
