@@ -74,7 +74,7 @@ Route::group(['prefix' => 'members',  'middleware' => ['auth', 'role:user',]], f
 
     Route::get('/products_details/{product}', [ProductController::class, 'showdetails'])->name('showdetails');
     Route::post('/products_details/cart/{product}', [CartController::class, 'addToCartDetails'])->name('cart_add');
-    
+
 });
 /**
  * PRODUCTS
@@ -89,10 +89,8 @@ Route::group(['prefix' => 'consumer/products',  'middleware' => 'auth'], functio
 });
 
 
-Route::get('/announcement/index', [AnnouncementController::class, 'index'])->name('announcements.index');
-Route::get('/announcement/listing', [AnnouncementController::class, 'list'])->name('announcements.list');
-Route::get('/announcement/add', [AnnouncementController::class, 'create'])->name('announcements.create');
-Route::post('/announcement', [AnnouncementController::class, 'store'])->name('announcements.store');
+// Route::get('/announcement/index', [AnnouncementController::class, 'index'])->name('announcements.index');
+
 
 Route::get('dependent-dropdown', [DropdownController::class, 'index']);
 Route::post('api/fetch-states', [DropdownController::class, 'fetchState']);
@@ -103,12 +101,18 @@ Route::group(['prefix' => 'admin',  'middleware' => ['auth', 'role:superadmin|ad
     // dashboard
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
 
+    // announcements
+    Route::get('/announcements', [AnnouncementController::class, 'list'])->name('announcements.list');
+    Route::get('/announcements/add', [AnnouncementController::class, 'create'])->name('announcements.create');
+    Route::get('/announcements/{announcement}/edit', [AnnouncementController::class, 'edit'])->name('announcements.edit');
+    Route::post('/announcements', [AnnouncementController::class, 'store'])->name('announcements.store');
+
     // order
     Route::get('/orders/listing', [AdminController::class, 'allorder'])->name('new-order-list');
     Route::post('/orders/listing/{order}/reject', [AdminController::class, 'reject'])->name('rejectorder');
     Route::post('/orders/listing/{order}/pack', [AdminController::class, 'packing'])->name('packing');
 
-    // product 
+    // product
     Route::get('product_listing', [ProductController::class, 'listing'])->name('list');
     Route::post('product_listing', [ProductController::class, 'store'])->name('store');
     Route::get('create_product', [ProductController::class, 'create'])->name('create');
@@ -121,7 +125,7 @@ Route::group(['prefix' => 'admin',  'middleware' => ['auth', 'role:superadmin|ad
     Route::get('/members_listing', [AdminController::class, 'memberList'])->name('member-list');
     Route::get('/orders/history', [OrderController::class, 'history'])->name('order-history-list');
 
-    
+
 });
 
 // Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');

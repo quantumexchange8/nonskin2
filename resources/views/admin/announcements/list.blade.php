@@ -10,102 +10,97 @@
         @slot('title') Announcement Listing @endslot
     @endcomponent
 
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-header">
-                    <div class="row">
-                        <div class="row mb-50">
-                            <div class="col-sm mr-n15">
-                                <label for="tradingAccount" class="form-label">@lang('translation.status')</label>
-                                <select class="form-select" name="status">
-                                    <option selected disabled>@lang('translation.select status')</option>
-                                    <option value="1">@lang('translation.active')</option>
-                                    <option value="0">@lang('translation.inactive')</option>
-                                </select>
-                            </div>
-                            <div class="col-sm mr-n15">
-                                <label for="From Date" class="form-label">@lang('translation.from date')</label>
-                                <input type="date" class="form-control rounded" id="datepicker3" placeholder="@lang('translation.from date')" name="start_date">
-                            </div>
-                            <div class="col-sm">
-                                <label for="To Date" class="form-label">@lang('translation.to date')</label>
-                                <input type="date" class="form-control rounded" id="datepicker4" placeholder="@lang('translation.to date')" name="end_date">
-                            </div>
-                            <div class="col-sm">
-                                <label for="Search" class="form-label">&nbsp;</label>
-                                <button type="submit" class="w-100 btn btn-primary">@lang('translation.search')</button>
-                            </div>
+    @include('includes.alerts')
 
-                        </div>
-                    </div>
-                    {{-- <p class="card-title-desc">
-                        Create responsive tables by wrapping any <code>.table</code> in <code>.table-responsive</code>
-                        to make them scroll horizontally on small devices (under 768px).
-                    </p> --}}
-                </div>
+    @section('modal')
+        @foreach ($announcements as $k => $v)
+            @include('member.modals.announcement-detail')
+        @endforeach
+    @endsection
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
                 <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table mb-0">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Title</th>
-                                    <th>Content</th>
-                                    <th>Status</th>
-                                    <th>Popup</th>
-                                    <th>Popup Once</th>
-                                    <th>Date Announced</th>
-                                    <th>Announced By</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse ($announcements as $k => $v)
-                                    <tr>
-                                        <th scope="row">{{ $loop->iteration }}</th>
-                                        <td>{{ $v->title }}</td>
-                                        <td>{{ $v->content }}</td>
-                                        <td>
-                                            <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" role="switch" {{ $v->status == 1 ? 'checked' : '' }} disabled>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" role="switch" {{ $v->popup == 1 ? 'checked' : '' }} disabled>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" role="switch" {{ $v->popup_once == 1 ? 'checked' : '' }} disabled>
-                                            </div>
-                                        </td>
-                                        <td>{{ $v->created_at->format('d/m/Y') }}</td>
-                                        <td>{{ $v->user->name }}</td>
-                                        <td>
-                                            <div class="d-flex">
-                                                <a href="" class="btn btn-sm btn-soft-dark waves-effect waves-light"><i class="bx bx-detail font-size-14 align-middle"></i></a>
-                                                &nbsp;
-                                                <a href="" class="btn btn-sm btn-soft-primary waves-effect waves-light"><i class="bx bx-edit font-size-14 align-middle"></i></a>
-                                                &nbsp;
-                                                <a href="" class="btn btn-sm btn-soft-danger waves-effect waves-light"><i class="bx bxs-trash font-size-14 align-middle"></i></a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @empty
-                                <tr>
-                                    <td class="text-center" colspan="100%">No data available</td>
-                                </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
-                    </div>
+                    <table id="announcementsTable" class="stripe nowrap" style="width:100">
+                        <thead>
+                            <tr>
+                                <td>#</td>
+                                <td>Image</td>
+                                <td>Title</td>
+                                <td>Content</td>
+                                <td>Status</td>
+                                <td>Popup</td>
+                                <td>Popup Once</td>
+                                <td>Last Updated By</td>
+                                <td>View Details</td>
+                                <td>Action</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($announcements as $k => $v)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td><img class="object-fit-cover" src="{{ asset('images/announcements/' . $v->image) }}" style="height: 80px" alt="{{ Str::words($v->title,1) }}"></td>
+                                <td>{{ $v->title }}</td>
+                                <td>{{ Str::limit($v->content, 50) }}</td>
+                                <td>
+                                    @if($v->status == 1)
+                                    <span class="badge badge-pill badge-soft-success font-size-12">
+                                        Active
+                                    </span>
+                                    @else
+                                    <span class="badge badge-pill badge-soft-danger font-size-12">
+                                        Inactive
+                                    </span>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($v->popup == 1)
+                                    <span class="badge badge-pill badge-soft-primary font-size-12">
+                                        Enabled
+                                    </span>
+                                    @else
+                                    <span class="badge badge-pill badge-soft-warning font-size-12">
+                                        Disabled
+                                    </span>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($v->popup_once == 1)
+                                    <span class="badge badge-pill badge-soft-primary font-size-12">
+                                        Enabled
+                                    </span>
+                                    @else
+                                    <span class="badge badge-pill badge-soft-warning font-size-12">
+                                        Disabled
+                                    </span>
+                                    @endif
+                                </td>
+                                <td>{{ $v->user->name }} - {{ $v->updated_at->format('d/m/Y, h:m:s') }}</td>
+                                <td>
+                                    <button type="button" class="btn btn-primary btn-sm btn-rounded view-detail-button" data-bs-toggle="modal" data-bs-target="#announcementModal{{ $v->id }}">
+                                        View Details
+                                    </button>
+                                </td>
+                                <td>
+                                    <a href="{{ route('announcements.edit', $v->id) }}"><i class="mdi mdi-pencil font-size-18"></i></a>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
+
 @endsection
 @section('script')
     <script src="{{ URL::asset('assets/js/app.js') }}"></script>
+    <script>
+        new DataTable('#announcementsTable', {
+            responsive: true,
+            pagingType: 'simple_numbers'
+        });
+    </script>
 @endsection

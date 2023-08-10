@@ -8,39 +8,22 @@
     @slot('title') Announcement @endslot
     @endcomponent
 
-    @foreach ($announcements as $announcement)
-        <div id="announcementModal" class="modal fade" tabindex="-1" aria-labelledby="announcementModalLabel" aria-hidden="true" data-bs-scroll="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="announcementModalLabel">Announcement</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <img class="card-img-top img-fluid mb-3" src="{{ URL::asset('assets/images/nonskin/non-logo.jpg') }}" alt="{{ $announcement->title }}">
-                        <h5>{{ $announcement->title }}</h5>
-                        {{ $announcement->content }}
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+    @foreach ($announcements as $k => $v)
+        @include('member.modals.announcement-detail')
     @endforeach
     <div class="row">
-        @forelse ($announcements as $announcement)
-            <div class="col-lg-4">
+        @forelse ($announcements as $k => $v)
+            <div class="col-lg-3">
                 <div class="card">
-                    <img class="card-img-top img-fluid" src="{{ URL::asset('assets/images/nonskin/non-logo.jpg') }}" style="width: 50% !important;" alt="{{ $announcement->title }}">
+                    <img class="object-fit-cover p-3" src="{{ asset('images/announcements/' . $v->image) }}" style="height: 350px" alt="{{ $v->title }}">
                     <div class="card-body">
-                        <h4 class="card-title">{{ $announcement->title }}</h4>
-                        <p class="card-text">{{ Str::limit($announcement->content,70,'...') }}</p>
+                        <h4 class="card-title">{{ $v->title }}</h4>
+                        <p class="card-text">{{ Str::words($v->content,8,'...') }}</p>
                         <p class="card-text">
-                            <small class="text-muted">Updated on <span class="fw-bold">{{ $announcement->created_at->format('d/M/Y, h:m:s') }}</span></small>
+                            <small class="text-muted">Updated on <span class="fw-bold">{{ $v->created_at->format('d/M/Y, h:m:s') }}</span></small>
                         </p>
                         <div>
-                            <button class="btn btn-primary col-md-3" data-bs-toggle="modal" data-bs-target="#announcementModal">View</button>
+                            <button class="btn btn-primary col-md-3" data-bs-toggle="modal" data-bs-target="#announcementModal{{ $v->id }}">View</button>
                         </div>
                     </div>
 
