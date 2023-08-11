@@ -28,11 +28,10 @@
                             <li><i class="bx bx-polygon font-size-24"></i></li>
                         </ul>
                         <div class="main-wid position-relative">
-                            <h3 class="text-white">Nonskin Dashboard</h3>
-
-                            <h3 class="text-white mb-0"> Welcome Back, {{ Auth::user()->name }}!</h3>
-
-                            <p class="text-white-50 px-4 mt-4"></p>
+                            
+                            <div>
+                                {{QrCode::size(180)->generate($user->url)}}
+                            </div>
 
                             <div class="mt-4 pt-2 mb-2">
                                 <!-- QR Code -->

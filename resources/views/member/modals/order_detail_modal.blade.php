@@ -1,14 +1,24 @@
 <div class="modal fade" id="orderdetailsModal_{{ $order->id }}" tabindex="-1" role="dialog" aria-labelledby="orderdetailsModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="orderdetailsModalLabel">Order Details</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <div class="modal-body"> 
+                <a href="{{ route('invoice', $order->id) }}" target="_blank">
+                    <button class="btn btn-success">
+                        Print
+                    </button>
+                </a>
+            </div>
             <div class="modal-body">
                 <p class="mb-2">Order Id: <span class="text-primary" id="order-id">{{$order->order_num}}</span></p>
                 <p class="mb-2">Receiver Name: <span class="text-primary" id="receiver-name">{{$order->receiver}}</span></p>
-                <p class="mb-4">Deliver Address: <span class="text-primary" id="receiver-name">{{$order->delivery_address}}</span></p>
+                <p class="mb-2">Deliver Address: <span class="text-primary" id="receiver-name">{{$order->delivery_address}}</span></p>
+                <p class="mb-2">Courier: <span class="text-primary" id="receiver-name">{{$order->courier}}</span></p>
+                <p class="mb-2">Consignment Note: <span class="text-primary" id="receiver-name">{{$order->cn}}</span></p>
+                <p class="mb-4">Tracking Number: <span class="text-primary" id="receiver-name">{{$order->tracking_no}}</span></p>
                 <div class="table-responsive">
                     <table class="table align-middle table-nowrap">
                         <thead>

@@ -105,7 +105,7 @@
                     <ul class="sub-menu" aria-expanded="true">
                         @hasanyrole('user')
                             <li><a href="{{ route('member.order-pending') }}"
-                                    data-key="t-order-pending">@lang('translation.History')</a></li>
+                                    data-key="t-order-pending">@lang('translation.All Orders')</a></li>
                             {{-- <li><a href="{{ route('member.order-history') }}" data-key="t-order-history">History</a></li> --}}
                         @endhasanyrole
                         @hasanyrole('superadmin|admin')
@@ -217,6 +217,19 @@
                     </ul>
                 </li>
 
+                @hasanyrole('user')
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i class="mdi mdi-file-tree-outline icon nav-icon"></i>
+                        <span class="menu-item" data-key="t-multi-level">@lang('translation.My-Accounts')</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="true">
+                        <li><a href="{{ route('userprofile') }}">@lang('translation.Profile')</a></li>
+                        <li><a href="{{ route('changepassword') }}">@lang('translation.Change Password')</a></li>
+                        <li><a href="{{ route('shippingaddress') }}">@lang('translation.Shipping Address')</a></li>
+                    </ul>
+                </li>
+                @endhasanyrole
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bx bxs-report icon nav-icon"></i>

@@ -1,15 +1,22 @@
 <div class="modal fade" id="orderdetailsModal_{{ $order->id }}" tabindex="-1" role="dialog" aria-labelledby="orderdetailsModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="orderdetailsModalLabel">Order Details</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            
-                
+                <div class="modal-body"> 
+                    <a href="{{ route('invoice-admin', $order->id) }}" target="_blank">
+                        <button class="btn btn-success">
+                            Print
+                        </button>
+                    </a>
+                </div>
+            <form action="{{ route('packing', $order->id)}}" method="POST" id="status-form-{{ $order->id }}">
+                @csrf
                 <div class="modal-body">
                     <p class="mb-2">Order Id: <span class="text-primary" id="order-id">{{$order->order_num}}</span></p>
-                    <p class="mb-2">Receiver Name: <span class="text-primary" id="receiver-name">{{$order->receiver}}</span></p>
+                    <p class="mb-2">Customer Name: <span class="text-primary" id="receiver-name">{{$order->receiver}}</span></p>
                     @if($order->delivery_method == 'Self-Pickup')
                     <p class="mb-2">Delivery Method: <span class="text-primary" id="receiver-name">{{$order->delivery_method}}</span></p>
                     <p class="mb-4">Self-Pickup Address: <span class="text-primary" id="receiver-name">{{$order->delivery_address}}</span></p>
@@ -17,40 +24,47 @@
                     <p class="mb-2">Deliver Method: <span class="text-primary" id="receiver-name">{{$order->delivery_method}}</span></p>
                     <p class="mb-2">Deliver Address: <span class="text-primary" id="receiver-name">{{$order->delivery_address}}</span></p>
                     @endif
-                    <p class="mb-2">Status: 
-                        <span class="text-primary" id="receiver-name">
-                            @if($order->status == 1)
-                                <span class="badge badge-pill badge-soft-secondary font-size-14">
-                                    Processing
-                                </span>
-                            @elseif($order->status == 2)
-                                <span class="badge badge-pill badge-soft-success font-size-14">
-                                    Packing
-                                </span>
-                            @elseif($order->status == 3)
-                                <span class="badge badge-pill badge-soft-warning font-size-14">
-                                    Delivering
-                                </span>
-                            @elseif($order->status == 4)
-                                <span class="badge badge-pill badge-soft-success font-size-14">
-                                    Complete
-                                </span>
-                            @elseif($order->status == 6)
-                                <span class="badge badge-pill badge-soft-danger font-size-14">
-                                    Rejected
-                                </span>
-                            @elseif($order->status == 9)
-                                <span class="badge badge-pill badge-soft-danger font-size-14">
-                                    Pending payment
-                                </span>
-                            @else
-                                <span class="badge badge-pill badge-soft-danger font-size-12">
-                                    Pending Refund
-                                </span>
-                            @endif
-                        </span>
-                    </p>
-                    <p class="mb-4">Remark: <span class="text-primary" id="receiver-name">{{ $order->remarks }}</span></p>
+                    <div id="status-section">
+                        <label class="mb-2" for="status">Status:</label>
+                        @if ($order->status == 1)
+                            <span class="text-primary" id="receiver-name">Processing</span>
+                        @elseif ($order->status == 2)
+                            <span class="text-primary" id="receiver-name">Packing</span>
+                        @elseif ($order->status == 3)
+                            <span class="text-primary" id="receiver-name">Delivering</span>
+                        @elseif ($order->status == 4)
+                            <span class="text-primary" id="receiver-name">Complete</span>
+                        @elseif ($order->status == 5)
+                            <span class="text-primary" id="receiver-name">Cancel</span>
+                        @endif
+                        <select class="form-control d-none" name="status" id="status">
+                            <option value="1" {{ $order->status == 1 ? 'selected' : '' }}>Processing</option>
+                            <option value="2" {{ $order->status == 2 ? 'selected' : '' }}>Packing</option>
+                            <option value="3" {{ $order->status == 3 ? 'selected' : '' }}>Delivering</option>
+                            <option value="4" {{ $order->status == 4 ? 'selected' : '' }}>Complete</option>
+                            <option value="5" {{ $order->status == 5 ? 'selected' : '' }}>Cancel</option>
+                        </select>
+                    </div>
+                    <div id="courier-section">
+                        <label class="mb-2">Courier:</label>
+                        <span class="text-primary" id="receiver-name">{{$order->courier}}</span>
+                        <input type="text" class="form-control d-none" value="{{$order->courier}}" name="courier">
+                    </div>
+                    
+                    <div id="consignment-section">
+                        <label class="mb-2">Consignment Note:</label>
+                        <span class="text-primary" id="receiver-name">{{$order->cn}}</span>
+                        <input type="text" class="form-control d-none" value="{{$order->cn}}" name="cn">
+                    </div>
+                    
+                    <div id="tracking-section">
+                        <label class="mb-2">Tracking Number:</label>
+                        <span class="text-primary" id="receiver-name">{{$order->tracking_number}}</span>
+                        <input type="text" class="form-control d-none" value="{{$order->tracking_number}}" name="tracking_number">
+                        
+                    </div>
+                    
+                    
                     <div class="table-responsive">
                         <table class="table align-middle table-nowrap">
                             <thead>
@@ -118,9 +132,7 @@
                 </div>
                 <div class="modal-footer">
                     <div class="modal-footer">
-                        <form action="{{ route('packing', $order->id)}}" method="POST" id="status-form-{{ $order->id }}">
-                            @csrf
-                            <div class="edit-mode" style="display: none;">
+                            {{-- <div class="edit-mode" style="display: none;">
                                 <p class="mb-2">Change Status:</p>
                                 <select class="form-select mb-3" name="status">
                                     <option value="2">Packing</option>
@@ -129,7 +141,7 @@
                                     <option value="6">Rejected</option>
                                     <option value="9">Pending payment</option>
                                 </select>
-                            </div>
+                            </div> --}}
                             @if($order->status == 6 )
                                 <button type="button" class="btn btn-secondary btn-edit" disabled>Update Status</button>
                             @elseif($order->status == 4 )
@@ -140,12 +152,14 @@
                                 data-order-id-edit="{{ $order->id }}" 
                                 data-order-status-edit="{{ $order->status }}"
                                 data-order-shipment="{{ $order->delivery_method }}"
-                                >Update Status</button>
+                                >Edit</button>
+
+                                <button type="submit" class="btn btn-success btn-save-profile d-none" id="save-profile-button">Save</button>
+                                <button type="button" class="btn btn-danger btn-cancel-edit d-none" id="cancel-edit-button">Cancel</button>
                             @endif
-                        </form>
-                        
                     </div>
                 </div>
+            </form>
         </div>
     </div>
 </div>

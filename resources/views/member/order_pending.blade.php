@@ -29,7 +29,6 @@
                                 <th>Date</th>
                                 <th>Shipping Type</th>
                                 <th>Payment Method</th>
-                                <th>View Details</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -47,11 +46,6 @@
                                 <td>{{$order->updated_at}}</td>
                                 <td>{{$order->delivery_method}}</td>
                                 <td>{{$order->payment_method}}</td>
-                                <td>
-                                    <button type="button" class="btn btn-primary btn-sm btn-rounded view-detail-button" data-bs-toggle="modal" data-bs-target="#orderdetailsModal_{{ $order->id }}" id="{{$order->id}}">
-                                        View Details
-                                    </button>
-                                </td>
                                 <td>
                                     @if($order->status == 1)
                                         <span class="badge badge-pill badge-soft-secondary font-size-12">
@@ -84,6 +78,12 @@
                                         </span> --}}
                                         {{-- <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-bs-original-title="Edit" class="text-success"><i class="mdi mdi-pencil font-size-18"></i></a> --}}
                                         {{-- <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Cancel" data-bs-original-title="Cancel" class="text-danger"> --}}
+                                            {{-- <button type="button" class="btn btn-link view-invoice-button" data-bs-toggle="modal" data-bs-target="#orderinvoice{{ $order->id }}" id="{{$order->id}}">
+                                                <i class="mdi mdi-printer-settings"></i>
+                                            </button> --}}
+                                            <button type="button" class="btn btn-link btn-sm btn-rounded view-detail-button" data-bs-toggle="modal" data-bs-target="#orderdetailsModal_{{ $order->id }}" id="{{$order->id}}">
+                                                <i class="mdi mdi-printer-settings"></i>
+                                            </button>
                                             <form action="{{ route('cancelorder', $order->id) }}" method="POST" id="delete-form-{{ $order->id }}">
                                                 @csrf
                                                 <button type="button" class="btn btn-link text-danger delete-button" data-order-id="{{ $order->id }}" data-order-status="{{ $order->status }}">

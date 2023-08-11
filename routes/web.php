@@ -71,10 +71,23 @@ Route::group(['prefix' => 'members',  'middleware' => ['auth', 'role:user',]], f
     // Route::post('/destroy/{customer}', [MemberController::class, 'destroy'])->name('members.destroy');              // destroy
     Route::post('pending-orders/{order}', [UserController::class, 'cancelorder'])->name('cancelorder');
     Route::get('/products_list', [ProductController::class, 'productlist'])->name('product-list');
-
     Route::get('/products_details/{product}', [ProductController::class, 'showdetails'])->name('showdetails');
     Route::post('/products_details/cart/{product}', [CartController::class, 'addToCartDetails'])->name('cart_add');
 
+    // profile update route
+    Route::get('/my_profile', [UserController::class, 'userprofile'])->name('userprofile');
+    Route::post('/my_profile/update', [UserController::class, 'updateprofile'])->name('updateprofile');
+    Route::post('/check-unique-fullname', [UserController::class, 'checkUniqueFullName'])->name('checkUniqueFullName');
+    Route::post('/check-unique-email', [UserController::class, 'checkUniqueEmail'])->name('checkUniqueEmail');
+    Route::post('/my_profile/password', [UserController::class, 'updatepassword'])->name('updatepassword');
+    Route::post('/check-current-password', [UserController::class, 'checkCurrentPass'])->name('checkCurrentPass');
+
+    Route::get('/shipping_address', [UserController::class, 'ShippingAddress'])->name('shippingaddress');
+    Route::get('/change_password', [UserController::class, 'changepassword'])->name('changepassword');
+
+    // order
+    Route::get('/invoice/{order}', [UserController::class, 'invoice'])->name('invoice');
+    
 });
 /**
  * PRODUCTS
@@ -129,7 +142,7 @@ Route::group(['prefix' => 'admin',  'middleware' => ['auth', 'role:superadmin|ad
     Route::get('/members/{user}/destroy', [AdminController::class, 'memberDestroy'])->name('members.destroy');
     Route::get('/orders/history', [OrderController::class, 'history'])->name('order-history-list');
 
-
+    Route::get('/invoice/{order}', [AdminController::class, 'invoice'])->name('invoice-admin');
 });
 
 // Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
