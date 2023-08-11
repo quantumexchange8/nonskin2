@@ -138,7 +138,7 @@ Route::group(['prefix' => 'admin',  'middleware' => ['auth', 'role:superadmin|ad
     Route::get('/members_listing', [AdminController::class, 'memberList'])->name('member-list');
     Route::get('/orders/history', [OrderController::class, 'history'])->name('order-history-list');
 
-    Route::get('/invoice/{order}', [AdminController::class, 'invoice'])->name('invoice');
+    Route::get('/invoice/{order}', [AdminController::class, 'invoice'])->name('invoice-admin');
 });
 
 // Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
