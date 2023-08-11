@@ -18,7 +18,7 @@
                     <div class="row mb-4">
                         <label for="contact" class="col-sm-3 col-form-label required">Contact</label>
                         <div class="col-sm-9">
-                            <input type="text" placeholder="e.g. 01145457878" name="contact" class="form-control contact-input" id="contact" required>
+                            <input type="text" placeholder="e.g. 01145457878" name="contact_address" class="form-control contact-input" id="contact" required>
                         </div>
                     </div>
                     <div class="row mb-4">

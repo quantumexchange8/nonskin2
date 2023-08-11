@@ -107,15 +107,15 @@ class HomeController extends Controller
     }
 
     public function updateAddress(Request $request){
-        $addressData = $request->only('id', 'name', 'contact', 'address_1', 'address_2', 'postcode', 'city', 'state', 'country');
-        dd($request->all());
+        $addressData = $request->only('id', 'name', 'contact_address', 'address_1', 'address_2', 'postcode', 'city', 'state', 'country');
+        
         try {
             $address = Address::updateOrCreate(
                 ['id' => $addressData['id'] ?? null],
                 [
                     'user_id'       => Auth::id(),
                     'name'          => $addressData['name'],
-                    'contact'       => $addressData['contact'],
+                    'contact'       => $addressData['contact_address'],
                     'address_1'     => $addressData['address_1'],
                     'address_2'     => $addressData['address_2'],
                     'postcode'      => $addressData['postcode'],
@@ -172,24 +172,28 @@ class HomeController extends Controller
         }
     }
 
-    public function updatePassword(Request $request, $id){
-        $validator = $request->validate([
-            'current_password' => ['required', 'string'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
+    public function updatePassword(Request $request, $id)
+    {
+        
+        $current = Auth::User()->password;
+        if(hash::check($request->input('current_password'), $current))
+        {
+            $user_id = Auth::user()->id;
+            $obj_user = User::find($user_id);
+                if($request->input('new_password') == $request->input('confirm_password'))
+                {
+                    $obj_user->password = Hash::make($request->input('new_password'));
+                    $obj_user->save();
 
-        if (!(Hash::check($request->get('current_password'), Auth::user()->password))) {
-            return redirect()->back()->withErrors($validator);
+                    Alert::success(trans('public.success'), trans('public.successful_updated_password'));
+                    return redirect()->back();
+                } else {
+                    Alert::error(trans('public.failed'), trans('public.new_password_doesn\t_match_with_confirm_password'));
+                    return redirect()->back();
+                }
         } else {
-            $user = User::find($id);
-            $user->password = Hash::make($request->get('password'));
-            $user->update();
-
-            if ($user) {
-                return redirect()->back()->with('success', "Password updated successfully!");
-            } else {
-                return redirect()->back()->withErrors($validator);
-            }
+            Alert::error(trans('public.failed'), trans('public.Incorrect_current_password'));
+            return redirect()->back();
         }
     }
 

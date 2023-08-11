@@ -14,6 +14,9 @@ class Order extends Model
         'created_by',
         'status',
         'remarks',
+        'courier',
+        'cn',
+        'tracking_number',
     ];
 
     // STATUS FOR ORDER

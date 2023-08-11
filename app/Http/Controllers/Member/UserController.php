@@ -7,15 +7,19 @@ use App\Models\User;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\Address;
 use App\Models\PaymentSetting;
 use App\Models\DeliverySetting;
+use App\Models\CompanyInfo;
+use App\Http\Middleware\CheckCartItem;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Auth;
-use App\Http\Middleware\CheckCartItem;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Auth;
 Use Alert;
 
 class UserController extends Controller
@@ -227,6 +231,122 @@ class UserController extends Controller
 
         return response()->json($cartRecords);
     }
+    
+    public function userprofile()
+    {
+        return view('member.profile.myprofile');
+    }
 
+    public function updateprofile(Request $request)
+    {
+        // dd($request->all());
+        $user = Auth::user();
 
+        $user->update([
+            'full_name' => $request->full_name,
+            'username' => $request->username,
+            'email' => $request->email,
+            'contact' => $request->contact,
+            'id_no' => $request->id_no,
+            'bank_holder_name' => $request->holdername,
+            'bank_acc_no' => $request->bankacc,
+            'bank_ic' => $request->bankid,
+        ]);
+
+        if($request->input('current_password') != null)
+        {
+            $current = Auth::User()->password;
+            if(hash::check($request->input('current_password'), $current))
+            {
+                $user_id = Auth::user()->id;
+                $obj_user = User::find($user_id);
+                    if($request->input('new_password') == $request->input('confirm_password'))
+                    {
+                        $obj_user->password = Hash::make($request->input('new_password'));
+                        $obj_user->save();
+    
+                        Alert::success(trans('public.success'), trans('public.successful_updated_password'));
+                        return redirect()->back();
+                    } else {
+                        Alert::error(trans('public.failed'), trans('public.new_password_doesn\t_match_with_confirm_password'));
+                        return redirect()->back();
+                    }
+            } else {
+                Alert::error(trans('public.failed'), trans('public.Incorrect_current_password'));
+                return redirect()->back();
+            }
+        }
+        
+
+        Alert::success('Success', 'Profile Updated');
+        return redirect()->back();
+    }
+    public function updatepassword(Request $request)
+    {
+        // dd($request->all());
+        $user = Auth::user()->password;
+
+        Alert::success('Success', 'Password Updated');
+        return redirect()->back();
+    }
+
+    public function checkUniqueFullName(Request $request)
+    {
+        $full_name = $request->input('full_name');
+        $user = Auth::user();
+
+        $isUnique = !User::where('full_name', $full_name)->where('id', '!=', $user->id)->exists();
+
+        return response()->json(['unique' => $isUnique]);
+    }
+
+    public function checkUniqueEmail(Request $request)
+    {
+        $email = $request->input('email');
+        $user = Auth::user();
+
+        $isUnique = !User::where('email', $email)->where('id', '!=', $user->id)->exists();
+
+        return response()->json(['unique' => $isUnique]);
+    }
+
+    public function checkCurrentPass(Request $request)
+    {
+        $currentPassword = $request->input('current_password');
+        $user = Auth::user();
+
+        // Check if the provided current password matches the user's actual password
+        if (Hash::check($currentPassword, $user->password)) {
+            return response()->json(['match' => true]);
+        } else {
+            return response()->json(['match' => false]);
+        }
+    }
+
+    public function invoice(Order $order, Request $request)
+    {
+        // dd($order);
+        $user = Auth::user();
+        $invoice = Order::where('order_num', '=', $order->order_num)->where('user_id', $user->id)->first();
+
+        // $orderItems = OrderItem::query()->join('products', 'order_items.product_id', '=', 'products.id')
+        //                         ->where('order_num', '=', $order)
+        //                         ->select('order_items.*', 'products.name_en as product_name_en', 'products.name_cn as product_name_cn')
+        //                         ->get();
+        $orderItems = OrderItem::where('order_num', $order->order_num)->with(['product'])->get();                      
+        $companyInfo = CompanyInfo::all()->keyBy('key');
+ 
+        $pdf = PDF::loadView('member.orders..pdf.invoice', ['invoice' => $invoice, 'orderItems' => $orderItems, 'companyInfo' => $companyInfo]);
+        return $pdf->download('invoice.pdf');
+    }
+
+    public function ShippingAddress()
+    {
+        return view('member.profile.shippingaddress');
+    }
+
+    public function changepassword()
+    {
+        return view('member.profile.changepassword');
+    }
 }

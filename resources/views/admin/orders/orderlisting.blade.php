@@ -155,198 +155,65 @@
             language: customLanguage // Provide the custom language object
         });
 
-        document.addEventListener('DOMContentLoaded', function() {
-            // Add click event listeners to all delete buttons
-            const deleteButtons = document.querySelectorAll('.reject-button');
-            deleteButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const orderId = this.getAttribute('data-order-id');
-                    const orderStatus = this.getAttribute('data-order-status');
+        $(document).ready(function() {
 
-                    // if (orderStatus === '5') {
-                    //     Swal.fire({
-                    //         title: 'Error',
-                    //         text: 'This order has already been cancelled!',
-                    //         icon: 'error',
-                    //         confirmButtonText: 'Ok'
-                    //     });
-                    // } else 
-                    if(orderStatus === '4') {
-                        Swal.fire({
-                            title: 'Error',
-                            text: 'This order has already completed!',
-                            icon: 'error',
-                            confirmButtonText: 'Ok'
-                        });
-                    } else if(orderStatus === '3') {
-                        Swal.fire({
-                            title: 'Warning',
-                            text: 'This order has already shipped out!',
-                            icon: 'warning',
-                            confirmButtonText: 'Ok'
-                        });
-                    } else if(orderStatus === '6') {
-                        Swal.fire({
-                            title: 'Error',
-                            text: 'This order has already rejected!',
-                            icon: 'error',
-                            confirmButtonText: 'Ok'
-                        });
-                    } else {
-                        // Show SweetAlert 2 confirmation dialog
-                        Swal.fire({
-                            title: 'Are you sure?',
-                            text: 'You will not be able to recover this order!',
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText: 'Yes, reject it!',
-                            cancelButtonText: 'Cancel',
-                            input: 'text', // Add an input field
-                            inputPlaceholder: 'Enter your remark', // Placeholder for the input field
-                            inputValidator: (value) => {
-                                // Check if the input field is not empty
-                                if (!value) {
-                                    return 'Remark is required'; // Show error message
-                                }
-                            }
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                // If the user confirms, submit the form to delete the order
-                                const remark = result.value; // Get the value of the input field
-                                const form = document.getElementById('reject-form-' + orderId);
-                                const remarkInput = form.querySelector('#remark-' + orderId);
-                                remarkInput.value = remark; // Set the value of the hidden input field
-                                form.submit();
-                            }
-                        });
+            $('.btn-edit').on('click', function() {
+
+                // Show Save and Cancel buttons, hide Edit Profile button
+                $('#save-profile-button, #cancel-edit-button').removeClass('d-none');
+                $('.btn-edit').addClass('d-none');
+
+                // Show input fields and hide labels
+                $('#status-section span').addClass('d-none');
+                $('#status-section select').removeClass('d-none');
+
+                $('#consignment-section span').addClass('d-none');
+                $('#consignment-section input').removeClass('d-none');
+
+                $('#courier-section span').addClass('d-none');
+                $('#courier-section input').removeClass('d-none');
+
+                $('#tracking-section span').addClass('d-none');
+                $('#tracking-section input').removeClass('d-none');
+            });
+
+            $('.btn-cancel-edit').on('click', function() {
+                // Show SweetAlert 2 confirmation dialog
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: 'Changes will be discarded.',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, cancel',
+                    cancelButtonText: 'No, keep editing',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // User confirmed, perform cancel action
+                        // For example, you can reset the form or redirect
+                        // Here, I'm using window.location to redirect to another page
+                        window.location.href = '{{ route('new-order-list') }}';
                     }
                 });
             });
 
-            
+            $('#save-profile-button').on('click', function(event) {
+                event.preventDefault();
 
-            const modalCloseButtons = document.querySelectorAll('.modal .btn-secondary'); // Select all "Close" buttons in modals
-
-            modalCloseButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const modal = button.closest('.modal'); // Find the closest modal to the clicked button
-                    modal.classList.remove('show'); // Hide the modal
-                    modal.setAttribute('aria-hidden', 'true');
-                    modal.setAttribute('style', 'display: none');
+                Swal.fire({
+                    title: 'Confirm Save',
+                    text: 'Are you sure you want to save the changes?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, save',
+                    cancelButtonText: 'No, cancel',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // User confirmed, submit the form
+                        $('#status-form-{{ $order->id }}').submit(); // Submit the correct form to the controller
+                    }
                 });
             });
         });
-
-        $(document).ready(function () {
-    // function toggleEditMode() {
-    //     $(".edit-mode").toggle();
-    //     $(".btn-edit").toggle();
-    //     $(".btn-packing").toggle();
-    //     $(".badge").toggle();
-    // }
-
-    // $(".btn-edit").click(function () {
-    //     toggleEditMode();
-    // });
-
-    // $(".btn-cancel").click(function () {
-    //     toggleEditMode();
-    // });
-
-    $(".btn-edit").click(function () {
-        const orderId = this.getAttribute('data-order-id-edit');
-        const orderStatus = this.getAttribute('data-order-status-edit'); // get the orders current status
-        const shippingtype = this.getAttribute('data-order-shipment'); //get the orders shipping methods
-
-        let inputOptions = {};
-
-        if(shippingtype == 'Delivery') {
-            if (orderStatus == 1){
-                inputOptions = {
-                    2: 'Packing',
-                    3: 'Delivering',
-                    4: 'Complete'
-                };
-            }else if (orderStatus == 2) {
-                inputOptions = {
-                    3: 'Delivering',
-                    4: 'Complete'
-                };
-            } else if (orderStatus == 3) {
-                inputOptions = {
-                    4: 'Complete'
-                };
-            } else if (orderStatus == 9) {
-                inputOptions = {
-                    2: 'Packing',
-                    3: 'Delivering',
-                    4: 'Complete'
-                };
-            }
-        } else {
-            if (orderStatus == 1){
-                inputOptions = {
-                    2: 'Packing',
-                    4: 'Complete'
-                };
-            }else if (orderStatus == 2) {
-                inputOptions = {
-                    4: 'Complete'
-                };
-            }  else if (orderStatus == 9) {
-                inputOptions = {
-                    2: 'Packing',
-                    3: 'Delivering',
-                    4: 'Complete'
-                };
-            }
-        }
-        
-
-        // Show SweetAlert 2 confirmation dialog
-        
-        Swal.fire({
-            title: 'Are you sure?',
-            text: 'Do you want to update the status?',
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonColor: '#51D28C',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, update it!',
-            cancelButtonText: 'Cancel',
-            input: 'select', // Use 'select' input type for a dropdown
-            inputOptions: inputOptions,
-            inputPlaceholder: 'Select new status',
-            inputValidator: (value) => {
-                if (!value) {
-                    return 'Status selection is required';
-                }
-            }
-        }).then((result) => {
-            if (result.isConfirmed) {
-                const selectedStatus = result.value;
-                
-                if (selectedStatus) {
-                    const statusInput = document.querySelector('#status-form-' + orderId + ' .form-select');
-                    console.log(statusInput)
-                    if (statusInput) {
-                        statusInput.value = selectedStatus;
-                        console.log(statusInput.value);
-                        
-                        const form = statusInput.closest('form');
-                        form.submit();
-                    } else {
-                        console.log('Status input not found.');
-                    }
-                }
-            }
-        });
-    });
-});
-
-
 
     </script>
     

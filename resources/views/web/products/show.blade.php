@@ -7,7 +7,7 @@
 
 @section('content')
 @component('components.breadcrumb')
-@slot('url') {{ route('member.product-list') }} @endslot
+@slot('url') {{ route('product-list') }} @endslot
 @slot('li_1') Products @endslot
 @slot('title') {{ $product->name_en }} @endslot
 @endcomponent

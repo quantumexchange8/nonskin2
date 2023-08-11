@@ -39,7 +39,7 @@
                         <a class="nav-link mb-2 {{ session('activeTab') === 'profile' ? 'active' : '' }}" id="v-pills-profile-tab" data-bs-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="true">
                             <i class="bx bxs-user font-size-16 align-middle me-2"></i>Profile</a>
                         <a class="nav-link mb-2 {{ session('activeTab') === 'addresses' ? 'active' : '' }}" id="v-pills-addresses-tab" data-bs-toggle="pill" href="#v-pills-addresses" role="tab" aria-controls="v-pills-addresses" aria-selected="false">
-                            <i class="bx bxs-envelope font-size-16 align-middle me-2"></i>Addresses</a>
+                            <i class="bx bxs-envelope font-size-16 align-middle me-2"></i>Shpping Address</a>
                         <a class="nav-link mb-2 {{ session('activeTab') === 'bank' ? 'active' : '' }}" id="v-pills-bank-tab" data-bs-toggle="pill" href="#v-pills-bank" role="tab" aria-controls="v-pills-bank" aria-selected="false">
                             <i class="bx bxs-credit-card-alt font-size-16 align-middle me-2"></i>Bank Detail</a>
                         <a class="nav-link mb-2 {{ session('activeTab') === 'password' ? 'active' : '' }}" id="v-pills-password-tab" data-bs-toggle="pill" href="#v-pills-password" role="tab" aria-controls="v-pills-password" aria-selected="false">
@@ -68,7 +68,7 @@
 @endsection
 @section('script')
     <script src="{{ URL::asset('assets/js/app.js') }}"></script>
-    <script>
+    {{-- <script>
         function validateForm(formId) {
             let isValid = true;
             let inputs = document.querySelectorAll(`#${formId} input[required], #${formId} select[required]`);
@@ -83,8 +83,8 @@
             }
             return isValid;
         }
-    </script>
-    <script>
+    </script> --}}
+    {{-- <script>
         document.addEventListener("DOMContentLoaded", function() {
             // Number mask
             let contactInputs = document.querySelectorAll('.contact-input');
@@ -135,6 +135,6 @@
                 });
             });
         });
-    </script>
+    </script> --}}
 
 @endsection

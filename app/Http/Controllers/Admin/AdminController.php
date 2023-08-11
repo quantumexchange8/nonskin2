@@ -10,6 +10,7 @@ use App\Models\CompanyInfo;
 use App\Models\BankSetting;
 use App\Models\ShippingCharge;
 use App\Models\Order;
+use App\Models\OrderItem;
 use Validator;
 use Response;
 use Redirect;
@@ -17,6 +18,7 @@ use App\Models\{Country, State, City};
 use Illuminate\Support\Facades\DB;
 use Auth;
 use RealRashid\SweetAlert\Facades\Alert;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class AdminController extends Controller
 {
@@ -186,6 +188,9 @@ class AdminController extends Controller
         // dd($request->all());
         $order->update([
             'status' => $request->status,
+            'courier' => $request->courier,
+            'cn' => $request->cn,
+            'tracking_number' => $request->tracking_number,
         ]);
 
         Alert::success('Success', 'Status has been updated');
@@ -217,5 +222,22 @@ class AdminController extends Controller
         dd($request);
 
         return redirect()->back();
+    }
+
+    public function invoice(Order $order, Request $request)
+    {
+        
+        $user = $order->user_id;
+        $invoice = Order::where('order_num', '=', $order->order_num)->where('user_id', $user)->first();
+
+        // $orderItems = OrderItem::query()->join('products', 'order_items.product_id', '=', 'products.id')
+        //                         ->where('order_num', '=', $order)
+        //                         ->select('order_items.*', 'products.name_en as product_name_en', 'products.name_cn as product_name_cn')
+        //                         ->get();
+        $orderItems = OrderItem::where('order_num', $order->order_num)->with(['product'])->get();                      
+        $companyInfo = CompanyInfo::all()->keyBy('key');
+ 
+        $pdf = PDF::loadView('member.orders..pdf.invoice', ['invoice' => $invoice, 'orderItems' => $orderItems, 'companyInfo' => $companyInfo]);
+        return $pdf->download('invoice.pdf');
     }
 }
