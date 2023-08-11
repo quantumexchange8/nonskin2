@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Address;
 use App\Models\Category;
 use App\Models\CompanyInfo;
 use App\Models\BankSetting;
@@ -26,14 +27,6 @@ class AdminController extends Controller
     }
     public function memberList(){
         $states = State::select('id', 'name')->get();
-
-        // $users = DB::table('users')
-        //     ->where('role', 'user')
-        //     ->orWhere('role', 'admin')
-        //     ->get();
-
-        // dd($users);
-
         // $users = User::with(['address', 'upline'])
         // ->where('role', 'user')
         // ->orWhere('role', 'admin')
@@ -41,8 +34,88 @@ class AdminController extends Controller
 
         $users = User::where('role', 'user')->get();
         // dd($users);
+
+
         return view('admin.members.listing', compact('users', 'states'));
     }
+
+    public function memberEdit(User $user){
+        $states = State::select('id', 'name')->get();
+        $banks = BankSetting::select('id', 'name')->orderBy('name')->get();
+        return view('admin.members.edit', compact('user', 'states', 'banks'));
+    }
+
+    public function memberUpdate(Request $request, User $user){
+        // $request->validate([
+        //     'username'          => ['required', 'string'],
+        //     'email'             => ['required', 'email'],
+        //     'full_name'         => ['required', 'string'],
+        //     'id_no'             => ['required', 'numeric', 'max:13'],
+        //     'contact'           => ['required', 'max:12'],
+        //     'bank_name'         => ['required'],
+        //     'bank_holder_name'  => ['required', 'string'],
+        //     'bank_acc_no'       => ['required', 'numeric'],
+        //     'bank_ic'           => ['required', 'numeric'],
+        //     'address_1'         => ['required'],
+        //     'address_2'         => ['required'],
+        //     'postcode'          => ['required', 'numeric', 'max:6'],
+        //     'city'              => ['required'],
+        //     'state'             => ['required'],
+        //     'country'           => ['required'],
+        // ]);
+
+        $user = User::find($request->input('id'));
+        // dd($request);
+        try {
+            $user->update([
+                'username'          => $request->input('username'),
+                'email'             => $request->input('email'),
+                'full_name'         => $request->input('full_name'),
+                'id_no'             => $request->input('id_no'),
+                'contact'           => $request->input('contact'),
+                'bank_name'         => $request->input('bank_name'),
+                'bank_holder_name'  => $request->input('bank_holder_name'),
+                'bank_acc_no'       => $request->input('bank_acc_no'),
+                'bank_ic'           => $request->input('bank_ic'),
+                'address_1'         => $request->input('address_1'),
+                'address_2'         => $request->input('address_2'),
+                'postcode'          => $request->input('postcode'),
+                'city'              => $request->input('city'),
+                'state'             => $request->input('state'),
+                'country'           => $request->input('country'),
+            ]);
+
+            foreach ($request->input('addresses', []) as $addressId => $addressData) {
+                $address = Address::find($addressId);
+                if ($address) {
+                    $address->update([
+                        'name'      => $addressData['name'],
+                        'contact'   => $addressData['contact'],
+                        'address_1' => $addressData['address_1'],
+                        'address_2' => $addressData['address_2'],
+                        'postcode'  => $addressData['postcode'],
+                        'city'      => $addressData['city'],
+                        'state'     => $addressData['state'],
+                        'country'   => $addressData['country'],
+                        // ... other address fields ...
+                    ]);
+                }
+            }
+
+            return redirect()->back()->with('updated', $user->name . ' profile updated successfully');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage())->with('code', $e->getCode());
+            // return $e->getMessage();
+        }
+    }
+
+    public function memberDestroy(){
+        // dd('here');
+        $title = 'Deleting User!';
+        $text = "Are you sure you want to delete?";
+        confirmDelete($title, $text);
+    }
+
 
     public function categorySettings() {
         $categories = Category::get();
@@ -52,7 +125,7 @@ class AdminController extends Controller
         return view('admin.settings.categories', compact('categories'));
     }
     public function categoryStore(Request $request) {
-        $categoryData = $request->only('id', 'name_en', 'name_cn', 'status', 'remarks');
+        $categoryData = $request->only('id', 'name_en', 'name_cn', 'status');
         // dd($categoryData);
         $category = Category::find($categoryData['id']);
         $category = Category::updateOrCreate(
@@ -61,7 +134,6 @@ class AdminController extends Controller
                 'name_en'    => $categoryData['name_en'],
                 'name_cn'    => $categoryData['name_cn'],
                 'status'     => $categoryData['status'],
-                'remarks'    => $categoryData['remarks'] ?? 'Nonskin',
                 'created_by' => $category->created_by ?? Auth::id(),
                 'created_at' => $category->created_at ?? now(),
                 'updated_by' => Auth::id(),
@@ -197,7 +269,7 @@ class AdminController extends Controller
         //     'status' => 3,
         // ]);
 
-        
+
         return redirect()->back();
     }
     public function complete(Request $request, Order $order)
@@ -207,7 +279,7 @@ class AdminController extends Controller
         //     'status' => 4,
         // ]);
 
-        
+
         return redirect()->back();
     }
 

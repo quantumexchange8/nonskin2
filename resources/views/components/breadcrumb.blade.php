@@ -7,7 +7,7 @@
                 <ol class="breadcrumb m-0">
                     <li class="breadcrumb-item"><a href="{{ isset($url) }}">{{ $li_1 }}</a></li>
                     @if(isset($title))
-                        <li class="breadcrumb-item">{{ $title }}</li>
+                        <li class="breadcrumb-item"><a href="javascript:history.back()">{{ $title }}</a></li>
                     @endif
                     @if(isset($title2))
                         <li class="breadcrumb-item active">{{ $title2 }}</li>

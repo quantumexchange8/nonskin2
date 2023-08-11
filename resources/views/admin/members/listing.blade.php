@@ -10,10 +10,6 @@
         @slot('title') Member Listing @endslot
     @endcomponent
 
-    @section('css')
-        <link rel="stylesheet" href="{{ URL::asset('assets/libs/gridjs/gridjs.min.css') }}">
-    @endsection
-
     @section('modal')
         @include('modals.create-member')
     @endsection
@@ -32,6 +28,7 @@
                             <tr>
                                 <th>#</th>
                                 <th>User ID</th>
+                                <th>Referral ID</th>
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Contact</th>
@@ -45,37 +42,32 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $user->id }}</td>
+                                <td class="fw-bold">{{ $user->referrer_id }}</td>
                                 <td>{{ $user->full_name }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->contact }}</td>
-                                <td>
-                                    @if($user->rank_id == 1)
-                                        Client
-                                    @elseif($user->rank_id == 2)
-                                        Member
-                                    @elseif($user->rank_id == 3)
-                                        General Distributor
-                                    @elseif($user->rank_id == 4)
-                                        Exclusive Distributor
-                                    @elseif($user->rank_id == 5)
-                                        Chief Distributor
-                                    @endif
-                                </td>
-                                <td>{{ $user->created_at }}</td>
+                                <td>{{ $user->rank->name}}</td>
+                                <td>{{ $user->created_at->format('d/m/Y, h:i:s') }}</td>
                                 <td>
                                     <div class="d-flex gap-1 align-items-center">
-                                        <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="View" data-bs-original-title="View" class="text-primary">
+                                        {{-- <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="View" data-bs-original-title="View" class="text-primary">
                                             <i class="mdi mdi-eye-outline font-size-18"></i>
+                                        </a> --}}
+                                        <a href="{{ route('members.edit', $user->id) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-bs-original-title="Edit" class="text-success">
+                                            <i class="mdi mdi-pencil font-size-18"></i>
                                         </a>
-                                        <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-bs-original-title="Edit" class="text-success"><i class="mdi mdi-pencil font-size-18"></i></a>
-                                        <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Cancel" data-bs-original-title="Cancel" class="text-danger">
-                                            <form action="" method="POST" {{-- id="delete-form-{{ $order->id }}" --}} >
-                                                @csrf
-                                                <button type="button" class="btn p-0 btn-link text-danger delete-button" {{-- data-order-id="{{ $order->id }}" data-order-status="{{ $order->status }}" --}} >
-                                                    <i class="mdi mdi-delete font-size-18"></i>
-                                                </button>
-                                            </form>
-                                        </a>
+                                        <form method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            <a href="{{ route('members.destroy', $user->id) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-bs-original-title="Delete" data-confirm-delete="true" class="text-danger">
+                                                <i class="mdi mdi-delete font-size-18"></i>
+                                            </a>
+                                        </form>
+                                        {{-- <form method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <a href="{{ route('members.destroy', $user->id) }}" class="btn btn-sm btn-soft-danger waves-effect waves-light bx bxs-trash font-size-14 align-middle" data-confirm-delete="true"></a>
+                                        </form> --}}
                                     </div>
                                 </td>
                             </tr>
@@ -124,116 +116,13 @@
 
 @endsection
 @section('script')
-<script src="{{ URL::asset('assets/libs/gridjs/gridjs.min.js') }}"></script>
-{{-- <script src="{{ URL::asset('assets/js/pages/gridjs.init.js') }}"></script> --}}
-<script src="{{ URL::asset('assets/js/app.js') }}"></script>
-<script>
-    new DataTable('#allMember', {
-        responsive: true,
-        pagingType: 'simple_numbers',
-        lengthChange: false
-    });
-</script>
-
-<script>
-    var users = {!! $users->map(function ($user) {
-            return [
-                $user->upline->name ?? '-N/A-',
-                $user->referrer_id ?? '-N/A-',
-                $user->name,
-                $user->email,
-                $user->ranking_name,
-                $user->postcode,
-                $user->city,
-                $user->state,
-                formatDate($user->created_at), // Format the date as dd/mm/yyyy
-            ];
-        })->toJson() !!};
-
-    let users2 = @json($users);
-
-    console.log(users);
-
-    (function() {
-        var __webpack_exports__ = {};
-
-        // Basic Table
-        new gridjs.Grid({
-            columns: [
-                "Referral",
-                "Upline",
-                "Name",
-                "Email",
-                "Ranking",
-                "Postcode",
-                "City",
-                "State",
-                "Joined Date",
-                "Action"
-            ],
-            pagination: {
-                limit: 8
-            },
-            sort: true,
-            search: true,
-            data: users,
-        }).render(document.getElementById("table-member-list"));
-    })();
-</script>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $('#country-dd').on('change', function () {
-            var idCountry = this.value;
-            $("#state-dd").html('');
-            $.ajax({
-                url: "{{url('api/fetch-states')}}",
-                type: "POST",
-                data: {
-                    country_id: idCountry,
-                    _token: '{{csrf_token()}}'
-                },
-                dataType: 'json',
-                success: function (result) {
-                    $('#state-dd').html('<option value="">Select State</option>');
-                    $.each(result.states, function (key, value) {
-                        $("#state-dd").append('<option value="' + value
-                            .id + '">' + value.name + '</option>');
-                    });
-                    $('#city-dd').html('<option value="">Select City</option>');
-                }
-            });
+    <script src="{{ URL::asset('assets/js/app.js') }}"></script>
+    <script>
+        new DataTable('#allMember', {
+            responsive: true,
+            pagingType: 'simple_numbers',
+            lengthChange: false
         });
-        $('#state-dd').on('change', function () {
-            var idState = this.value;
-            $("#city-dd").html('');
-            $.ajax({
-                url: "{{url('api/fetch-cities')}}",
-                type: "POST",
-                data: {
-                    state_id: idState,
-                    _token: '{{csrf_token()}}'
-                },
-                dataType: 'json',
-                success: function (res) {
-                    $('#city-dd').html('<option value="">Select City</option>');
-                    $.each(res.cities, function (key, value) {
-                        $("#city-dd").append('<option value="' + value.id + '">' + value.name + '</option>');
-                        // $("#city-dd").append(`<option value="${value.id}">${value.name}</option>`);
-                    });
-                }
-            });
-        });
-    });
-</script>
-
-@php
-function formatDate($dateString) {
-    return date('d/m/Y', strtotime($dateString));
-}
-@endphp
-
-
+    </script>
 
 @endsection

@@ -13,7 +13,6 @@ class Category extends Model
         'name_en',
         'name_cn',
         'status',
-        'remarks',
         'created_at',
         'created_by',
         'updated_at',
@@ -26,6 +25,6 @@ class Category extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'created_by', 'id');
+        return $this->belongsTo(User::class, 'updated_by', 'id');
     }
 }

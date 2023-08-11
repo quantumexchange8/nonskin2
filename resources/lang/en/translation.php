@@ -71,6 +71,7 @@
         "action" => "Action",
         "amount" => "Amount",
         "close" => "Close",
+        "last updated at" => "Last Updated At",
 
         //buttons
         'save changes' => 'Save changes',

@@ -36,9 +36,7 @@
                                     <th>@lang('translation.name_en')</th>
                                     <th>@lang('translation.name_cn')</th>
                                     <th>@lang('translation.status')</th>
-                                    <th>@lang('translation.remarks')</th>
-                                    <th>@lang('translation.created at')</th>
-                                    <th>@lang('translation.created by')</th>
+                                    <th>@lang('translation.last updated at')</th>
                                     <th>@lang('translation.action')</th>
                                 </tr>
                             </thead>
@@ -55,9 +53,7 @@
                                             <span class="badge badge-soft-danger font-size-12">@lang('translation.inactive')</span>
                                             @endif
                                         </td>
-                                        <td>{{ $v->remarks }}</td>
-                                        <td>{{ $v->created_at->format('d/m/Y') }}</td>
-                                        <td>{{ $v->user?->name }}</td>
+                                        <td>{{ $v->updated_at->format('d/m/Y, h:i:s') }}</td>
                                         <td>
                                             <div class="d-flex gap-2">
                                                 <a href="" data-bs-toggle="modal" data-bs-target="#updateCategory{{ $v->id }}" class="btn btn-sm btn-soft-primary waves-effect waves-light"><i class="bx bx-edit font-size-14 align-middle"></i></a>

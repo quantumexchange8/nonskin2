@@ -19,7 +19,7 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
-        'name',
+        'full_name',
         'email',
         'password',
         'avatar',
@@ -86,5 +86,10 @@ class User extends Authenticatable
     public function upline()
     {
         return $this->belongsTo(User::class, 'upline_id', 'id');
+    }
+
+    public function rank()
+    {
+        return $this->hasOne(Ranking::class, 'id', 'rank_id');
     }
 }

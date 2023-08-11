@@ -17,6 +17,10 @@ class CreateAnnouncementsTable extends Migration
             $table->id();
             $table->string('title', 100);
             $table->longText('content')->nullable();
+            $table->string('image')->nullable();
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
+            $table->string('recipient')->nullable();
             $table->tinyInteger('status')->default(1)->comment('1 = Active, 0 = Inactive');
             $table->tinyInteger('popup')->default(0)->comment('1 = True, 0 = False');
             $table->tinyInteger('popup_once')->default(0)->comment('1 = True, 0 = False');

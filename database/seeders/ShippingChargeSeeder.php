@@ -11,86 +11,58 @@ class ShippingChargeSeeder extends Seeder
         [
             'name' => 'Johor',
             'amount' => 0,
-            'updated_at' => null,
-            'created_by' => 1
         ],
         [
             'name' => 'Kedah',
             'amount' => 0,
-            'updated_at' => null,
-            'created_by' => 1
         ],
         [
             'name' => 'Kelantan',
             'amount' => 0,
-            'updated_at' => null,
-            'created_by' => 1
         ],
         [
             'name' => 'Melaka',
             'amount' => 0,
-            'updated_at' => null,
-            'created_by' => 1
         ],
         [
             'name' => 'Negeri Sembilan',
             'amount' => 0,
-            'updated_at' => null,
-            'created_by' => 1
         ],
         [
             'name' => 'Pahang',
             'amount' => 0,
-            'updated_at' => null,
-            'created_by' => 1
         ],
         [
             'name' => 'Pulau Pinang',
             'amount' => 0,
-            'updated_at' => null,
-            'created_by' => 1
         ],
         [
             'name' => 'Perak',
             'amount' => 0,
-            'updated_at' => null,
-            'created_by' => 1
         ],
         [
             'name' => 'Sabah',
             'amount' => 5,
-            'updated_at' => null,
-            'created_by' => 1
         ],
         [
             'name' => 'Sarawak',
             'amount' => 5,
-            'updated_at' => null,
-            'created_by' => 1
         ],
         [
             'name' => 'Selangor',
             'amount' => 0,
-            'updated_at' => null,
-            'created_by' => 1
         ],
         [
             'name' => 'Terengganu',
             'amount' => 0,
-            'updated_at' => null,
-            'created_by' => 1
         ],
         [
             'name' => 'WP Kuala Lumpur',
             'amount' => 0,
-            'updated_at' => null,
-            'created_by' => 1
         ],
         [
             'name' => 'WP Labuan',
             'amount' => 0,
-            'updated_at' => null,
-            'created_by' => 1
         ],
     ];
 

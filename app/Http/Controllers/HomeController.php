@@ -108,12 +108,11 @@ class HomeController extends Controller
 
     public function updateAddress(Request $request){
         $addressData = $request->only('id', 'name', 'contact', 'address_1', 'address_2', 'postcode', 'city', 'state', 'country');
-        dd($request->all());
+        // dd($request->all());
         try {
             $address = Address::updateOrCreate(
                 ['id' => $addressData['id'] ?? null],
                 [
-                    'user_id'       => Auth::id(),
                     'name'          => $addressData['name'],
                     'contact'       => $addressData['contact'],
                     'address_1'     => $addressData['address_1'],
@@ -145,8 +144,10 @@ class HomeController extends Controller
         $address->update();
         $address = Address::find($addressData['id']);
         $address->is_default = !$address->is_default;
+        $address->updated_by = Auth::id();
         $address->update();
-        return redirect()->back()->with('updated', 'Your default address has been changed successfully');
+
+        return redirect()->back()->with('updated', "The default address has been changed successfully");
     }
 
     public function updateBank(Request $request){

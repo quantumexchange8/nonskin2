@@ -1,5 +1,4 @@
-@foreach (Auth::user()->address as $address)
-<div class="modal fade" id="editAddressModal{{ $address->id }}" tabindex="-1" aria-labelledby="exampleModalPopoversLabel" aria-modal="true">
+<div class="modal fade" id="editAddressModal{{ $v->id }}" tabindex="-1" aria-labelledby="exampleModalPopoversLabel" aria-modal="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -8,42 +7,42 @@
             </div>
             <form method="POST" action="{{ route('updateAddress') }}" enctype="multipart/form-data">
                 @csrf
-                <input type="hidden" name="id" value="{{ $address->id }}">
+                <input type="hidden" name="id" value="{{ $v->id }}">
                 <div class="modal-body">
                     <div class="row mb-4">
                         <label for="name" class="col-sm-3 col-form-label required">Name</label>
                         <div class="col-sm-9">
-                            <input type="text" value="{{ $address->name }}" name="name" class="form-control" id="name" required>
+                            <input type="text" value="{{ $v->name }}" name="name" class="form-control" id="name" required>
                         </div>
                     </div>
                     <div class="row mb-4">
                         <label for="contact" class="col-sm-3 col-form-label required">Contact</label>
                         <div class="col-sm-9">
-                            <input type="text" value="{{ $address->contact }}" name="contact" class="form-control contact-input" id="contact" required>
+                            <input type="text" value="{{ $v->contact }}" name="contact" class="form-control contact-input" id="contact" required>
                         </div>
                     </div>
                     <div class="row mb-4">
                         <label for="address_1" class="col-sm-3 col-form-label required">Address Line 1</label>
                         <div class="col-sm-9">
-                            <input type="text" value="{{ $address->address_1 }}" name="address_1" class="form-control" id="address_1" required>
+                            <input type="text" value="{{ $v->address_1 }}" name="address_1" class="form-control" id="address_1" required>
                         </div>
                     </div>
                     <div class="row mb-4">
                         <label for="address_2" class="col-sm-3 col-form-label">Address Line 2</label>
                         <div class="col-sm-9">
-                            <input type="text" value="{{ $address->address_2 }}" name="address_2" class="form-control" id="address_2">
+                            <input type="text" value="{{ $v->address_2 }}" name="address_2" class="form-control" id="address_2">
                         </div>
                     </div>
                     <div class="row mb-4">
                         <label for="postcode" class="col-sm-3 col-form-label required">Postcode</label>
                         <div class="col-sm-9">
-                            <input type="text" value="{{ $address->postcode }}" name="postcode" class="form-control postcode-input" id="postcode" required>
+                            <input type="text" value="{{ $v->postcode }}" name="postcode" class="form-control postcode-input" id="postcode" required>
                         </div>
                     </div>
                     <div class="row mb-4">
                         <label for="city" class="col-sm-3 col-form-label required">City</label>
                         <div class="col-sm-9">
-                            <input type="text" value="{{ $address->city }}" name="city" class="form-control" id="city" required>
+                            <input type="text" value="{{ $v->city }}" name="city" class="form-control" id="city" required>
                         </div>
                     </div>
                     <div class="row mb-4">
@@ -52,7 +51,7 @@
                             <select class="form-select @error('state') is-invalid @enderror" class="form-control" name="state" id="state" required>
                                 <option value="">Select State</option>
                                 @foreach ($states as $state)
-                                    <option value="{{ $state->name }}" {{ $address->state == $state->name ? 'selected' : '' }}>{{ $state->name }}</option>
+                                    <option value="{{ $state->name }}" {{ $v->state == $state->name ? 'selected' : '' }}>{{ $state->name }}</option>
                                 @endforeach
                             </select>
                             @error('state')
@@ -67,12 +66,12 @@
                         <div class="col-sm-9">
                             <select class="form-select @error('country') is-invalid @enderror" name="country" id="country" required>
                                 <option value="">Select Country</option>
-                                <option value="Malaysia" {{ $address->country == 'Malaysia' ? 'selected' : '' }}>Malaysia</option>
-                                <option value="Singapore" {{ $address->country == 'Singapore' ? 'selected' : '' }}>Singapore</option>
-                                <option value="China" {{ $address->country == 'China' ? 'selected' : '' }}>China</option>
-                                <option value="Thailand" {{ $address->country == 'Thailand' ? 'selected' : '' }}>Thailand</option>
-                                <option value="Vietnam" {{ $address->country == 'Vietnam' ? 'selected' : '' }}>Vietnam</option>
-                                <option value="Philippines" {{ $address->country == 'Philippines' ? 'selected' : '' }}>Philippines</option>
+                                <option value="Malaysia" {{ $v->country == 'Malaysia' ? 'selected' : '' }}>Malaysia</option>
+                                <option value="Singapore" {{ $v->country == 'Singapore' ? 'selected' : '' }}>Singapore</option>
+                                <option value="China" {{ $v->country == 'China' ? 'selected' : '' }}>China</option>
+                                <option value="Thailand" {{ $v->country == 'Thailand' ? 'selected' : '' }}>Thailand</option>
+                                <option value="Vietnam" {{ $v->country == 'Vietnam' ? 'selected' : '' }}>Vietnam</option>
+                                <option value="Phillippines" {{ $v->country == 'Phillippines' ? 'selected' : '' }}>Phillippines</option>
                             </select>
                             @error('country')
                             <span class="invalid-feedback" role="alert">
@@ -90,4 +89,3 @@
         </div>
     </div>
 </div>
-@endforeach

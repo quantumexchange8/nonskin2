@@ -122,7 +122,11 @@ Route::group(['prefix' => 'admin',  'middleware' => ['auth', 'role:superadmin|ad
     Route::post('/product_detail/destroy/{product}', [ProductController::class, 'destroy'])->name('destroy');
 
     // members
-    Route::get('/members_listing', [AdminController::class, 'memberList'])->name('member-list');
+    Route::get('/members', [AdminController::class, 'memberList'])->name('member-list');
+    Route::get('/members/{user}/edit', [AdminController::class, 'memberEdit'])->name('members.edit');
+    Route::get('/members/{address}/set-default/{user}', [AdminController::class, 'setDefaultAddress'])->name('setDefaultAddress');
+    Route::post('/members/update', [AdminController::class, 'memberUpdate'])->name('members.update');
+    Route::get('/members/{user}/destroy', [AdminController::class, 'memberDestroy'])->name('members.destroy');
     Route::get('/orders/history', [OrderController::class, 'history'])->name('order-history-list');
 
 

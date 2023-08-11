@@ -34,8 +34,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>@lang('translation.name')</th>
-                                    <th>@lang('translation.created at')</th>
-                                    <th>@lang('translation.created by')</th>
+                                    <th>@lang('translation.last updated at')</th>
                                     <th>@lang('translation.action')</th>
                                 </tr>
                             </thead>
@@ -44,8 +43,7 @@
                                     <tr>
                                         <th scope="row">{{ $loop->iteration }}</th>
                                         <td>{{ $v->name }}</td>
-                                        <td>{{ $v->created_at->format('d/m/Y') }}</td>
-                                        <td>{{ $v->user->name }}</td>
+                                        <td>{{ $v->updated_at->format('d/m/Y, h:i:s') }}</td>
                                         <td>
                                             <div class="d-flex gap-2">
                                                 <a href="" data-bs-toggle="modal" data-bs-target="#updateBank{{ $v->id }}" class="btn btn-sm btn-soft-primary waves-effect waves-light bx bx-edit font-size-14 align-middle"></a>

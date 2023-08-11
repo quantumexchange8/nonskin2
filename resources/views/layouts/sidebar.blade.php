@@ -252,7 +252,7 @@
                 @endhasanyrole
 
                 <!-- Template Pages for Reference -->
-                @hasanyrole('superadmin')
+                @hasanyrole('superadminss')
                     <li class="menu-title" data-key="t-pages">@lang('translation.Pages')</li>
                     <li>
                         <a href="apps-calendar">

@@ -19,6 +19,6 @@ class BankSetting extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'created_by', 'id');
+        return $this->belongsTo(User::class, 'updated_by', 'id');
     }
 }
