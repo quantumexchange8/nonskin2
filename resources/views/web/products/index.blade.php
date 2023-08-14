@@ -225,11 +225,11 @@
                             <div class="col-md-6">
                                 <div class="form-inline float-md-end">
                                     <div class="search-box ms-2">
-                                        <div class="position-relative">
+                                        {{-- <div class="position-relative">
                                             <input type="text" class="form-control bg-light border-light rounded"
                                                 placeholder="Search...">
                                             <i class="bx bx-search search-icon"></i>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                             </div>
@@ -280,9 +280,8 @@
                                                         @endhasanyrole
                                                         @hasanyrole('superadmin|admin')
                                                         <a href="{{ route('show', $product->id) }}">
-                                                            <img src="{{ asset('images/products/' . $product->image_1) }}"
-                                                                alt="{{ $product->name_en }}" class="img-fluid mx-auto d-block"
-                                                                style="width: 70% !important;">
+                                                            <img src="{{ $product->image_1 !== null ? asset('images/products/' . $product->image_1) : asset('assets/images/nonskin/non-logo.jpg') }}"
+                                                                alt="{{ $product->name }}" class="img-fluid mx-auto d-block" style="width: 70% !important;">
                                                         </a>
                                                         @endhasanyrole
                                                     </div>

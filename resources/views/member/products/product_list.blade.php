@@ -17,7 +17,7 @@
     @include('includes.alerts')
 
     <div class="row">
-        
+
         <div class="col-xl-12 col-lg-8">
             <div class="card">
                 <div class="card-body">
@@ -25,22 +25,22 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div>
-                                    
+
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-inline float-md-end">
                                     <div class="search-box ms-2">
                                         <div class="position-relative">
-                                            <input type="text" class="form-control bg-light border-light rounded"
+                                            {{-- <input type="text" class="form-control bg-light border-light rounded"
                                                 placeholder="Search...">
-                                            <i class="bx bx-search search-icon"></i>
+                                            <i class="bx bx-search search-icon"></i> --}}
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- Tab panes -->
                         <div class="tab-content p-3 text-muted">
                             <div class="tab-pane active" id="popularity" role="tabpanel">
@@ -56,9 +56,8 @@
                                                     @endif
                                                     <div class="product-img pt-4 px-4">
                                                         <a href="{{ route('showdetails', $product->id) }}">
-                                                            <img src="{{ asset('images/products/' . $product->image_1) }}"
-                                                                alt="{{ $product->name_en }}" class="img-fluid mx-auto d-block"
-                                                                style="width: 70% !important;">
+                                                            <img src="{{ $product->image_1 !== null ? asset('images/products/' . $product->image_1) : asset('assets/images/nonskin/non-logo.jpg') }}"
+                                                                alt="{{ $product->name }}" class="img-fluid mx-auto d-block" style="width: 70% !important;">
                                                         </a>
                                                     </div>
                                                     <div class="product-content p-4 mt-auto">
@@ -80,7 +79,7 @@
                                                                 </h5>
                                                             </div>
                                                             <div>
-                                                                
+
                                                             </div>
                                                         </div>
                                                         <form action="{{ route('cart.add') }}" method="POST">
