@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title') {{ $product->name_en }} @endsection
+@section('title') {{ $product->name }} @endsection
 
 @section('css')
     <link rel="stylesheet" href="{{ URL::asset('assets/libs/swiper/swiper.min.css') }}">
@@ -9,7 +9,7 @@
 @component('components.breadcrumb')
 @slot('url') {{ route('list') }} @endslot
 @slot('li_1') Products @endslot
-@slot('title') {{ $product->name_en }} @endslot
+@slot('title') {{ $product->name }} @endslot
 @endcomponent
 
     <div class="row">
@@ -26,9 +26,9 @@
                                 </div> --}}
                                 <div class="swiper product-thumbnail-slider rounded border overflow-hidden position-relative">
                                     <div class="swiper-wrapper">
-                                        <div class="swiper-slide"><img src="{{ asset('images/products/' . $product->image_1) }}" alt="{{ $product->name_en }}" class="img-fluid d-block" /></div>
-                                        <div class="swiper-slide"><img src="{{ asset('images/products/' . $product->image_2) }}" alt="{{ $product->name_en }}" class="img-fluid d-block" /></div>
-                                        <div class="swiper-slide"><img src="{{ asset('images/products/' . $product->image_3) }}" alt="{{ $product->name_en }}" class="img-fluid d-block" /></div>
+                                        <div class="swiper-slide"><img src="{{ asset('images/products/' . $product->image_1) }}" alt="{{ $product->name }}" class="img-fluid d-block" /></div>
+                                        <div class="swiper-slide"><img src="{{ asset('images/products/' . $product->image_2) }}" alt="{{ $product->name }}" class="img-fluid d-block" /></div>
+                                        <div class="swiper-slide"><img src="{{ asset('images/products/' . $product->image_3) }}" alt="{{ $product->name }}" class="img-fluid d-block" /></div>
                                         <div class="swiper-slide"><img src="{{ asset('images/products/' . $product->image_4) }}" alt="{{ $product->name_en }}" class="img-fluid d-block" /></div>
                                         <div class="swiper-slide"><img src="{{ asset('assets/images/product/img-5.png') }}" alt="{{ $product->name_en }}" class="img-fluid d-block" /></div>
                                     </div>
@@ -61,7 +61,7 @@
                                         <p class="mt-4 text-muted">Category</p>
                                     </div>
                                     <div class="col-10">
-                                        <p class="mt-4 font-bold">{{ $product->category->name_en }}</p>
+                                        <p class="mt-4 font-bold">{{ $product->category->name }}</p>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -69,16 +69,16 @@
                                         <p class="mt-4 text-muted">Description</p>
                                     </div>
                                     <div class="col-10">
-                                        <p class="mt-4 font-bold">{{ $product->desc_en ?? 'Product description unavailable' }}</p>
+                                        <p class="mt-4 font-bold">{{ $product->description ?? 'Product description unavailable' }}</p>
                                     </div>
                                 </div>
-                                
+
                                 <div class="row text-center mt-3">
                                     <div class="col-lg-3 col-sm-6">
                                         <div class="d-grid">
-                                            
+
                                                 <a href="{{ route('edit', $product->id) }}" class="btn btn-primary btn"><i class='bx bxs-edit'></i> Edit Product</a>
-                                            
+
                                         </div>
                                     </div>
                                 </div>

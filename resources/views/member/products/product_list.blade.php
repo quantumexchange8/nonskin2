@@ -64,7 +64,7 @@
                                                         <div class="d-flex justify-content-between align-items-end">
                                                             <div>
                                                                 <h5 class="mb-1">
-                                                                    <a href="{{ route('showdetails', $product->id) }}" class="font-size-14">{{ Str::limit($product->name_en, 21, '...') }}</a>
+                                                                    <a href="{{ route('showdetails', $product->id) }}" class="font-size-14">{{ Str::limit($product->name, 21, '...') }}</a>
                                                                 </h5>
                                                                 {{-- <p class="text-muted font-size-13">{{ $product->desc_en }}</p> --}}
                                                                 <h5 class="mt-3 mb-0 font-size-16">

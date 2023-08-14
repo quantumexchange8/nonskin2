@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title') {{ $product->name_en }} @endsection
+@section('title') {{ $product->name }} @endsection
 
 @section('css')
     <link rel="stylesheet" href="{{ URL::asset('assets/libs/swiper/swiper.min.css') }}">
@@ -9,7 +9,7 @@
 @component('components.breadcrumb')
 @slot('url') {{ route('showdetails', $product->id) }} @endslot
 @slot('li_1') Products @endslot
-@slot('title') {{ $product->name_en }} @endslot
+@slot('title') {{ $product->name }} @endslot
 @endcomponent
 
     <div class="row">
@@ -26,11 +26,11 @@
                                 </div> --}}
                                 <div class="swiper product-thumbnail-slider rounded border overflow-hidden position-relative">
                                     <div class="swiper-wrapper">
-                                        <div class="swiper-slide"><img src="{{ asset('images/products/' . $product->image_1) }}" alt="{{ $product->name_en }}" class="img-fluid d-block" /></div>
-                                        <div class="swiper-slide"><img src="{{ asset('images/products/' . $product->image_2) }}" alt="{{ $product->name_en }}" class="img-fluid d-block" /></div>
-                                        <div class="swiper-slide"><img src="{{ asset('images/products/' . $product->image_3) }}" alt="{{ $product->name_en }}" class="img-fluid d-block" /></div>
-                                        <div class="swiper-slide"><img src="{{ asset('images/products/' . $product->image_4) }}" alt="{{ $product->name_en }}" class="img-fluid d-block" /></div>
-                                        <div class="swiper-slide"><img src="{{ asset('assets/images/product/img-5.png') }}" alt="{{ $product->name_en }}" class="img-fluid d-block" /></div>
+                                        <div class="swiper-slide"><img src="{{ asset('images/products/' . $product->image_1) }}" alt="{{ $product->name }}" class="img-fluid d-block" /></div>
+                                        <div class="swiper-slide"><img src="{{ asset('images/products/' . $product->image_2) }}" alt="{{ $product->name }}" class="img-fluid d-block" /></div>
+                                        <div class="swiper-slide"><img src="{{ asset('images/products/' . $product->image_3) }}" alt="{{ $product->name }}" class="img-fluid d-block" /></div>
+                                        <div class="swiper-slide"><img src="{{ asset('images/products/' . $product->image_4) }}" alt="{{ $product->name }}" class="img-fluid d-block" /></div>
+                                        <div class="swiper-slide"><img src="{{ asset('assets/images/product/img-5.png') }}" alt="{{ $product->name }}" class="img-fluid d-block" /></div>
                                     </div>
 
                                     <div class="d-none d-md-block">
@@ -42,7 +42,7 @@
                         </div>
                         <div class="col-xl-8">
                             <div class="mt-4 mt-xl-3 ps-xl-4">
-                                <h4 class="font-size-20 mb-3">{{ $product->name_en }} </h4>
+                                <h4 class="font-size-20 mb-3">{{ $product->name }} </h4>
                                 @if ($product->discount != 0)
                                     <h5 class="mt-4 pt-2"><del class="text-muted me-2 font-size-14">RM{{ number_format($product->price,2,".",",") }}</del>RM{{ number_format($product->price - ($product->price * $product->discount/100),2,".",",") }} <span class="text-danger font-size-14 ms-2">- {{ $product->discount }} % Off</span></h5>
                                 @else
@@ -61,7 +61,7 @@
                                         <p class="mt-4 text-muted">Category</p>
                                     </div>
                                     <div class="col-10">
-                                        <p class="mt-4 font-bold">{{ $product->category->name_en }}</p>
+                                        <p class="mt-4 font-bold">{{ $product->category->name }}</p>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -69,7 +69,7 @@
                                         <p class="mt-4 text-muted">Description</p>
                                     </div>
                                     <div class="col-10">
-                                        <p class="mt-4 font-bold">{{ $product->desc_en ?? 'Product description unavailable' }}</p>
+                                        <p class="mt-4 font-bold">{{ $product->description ?? 'Product description unavailable' }}</p>
                                     </div>
                                 </div>
 
@@ -90,32 +90,32 @@
                                         </p>
                                     </div>
                                 </div>
-                                
+
                                 <div class="row text-center mt-3">
                                     <div class="col-lg-3 col-sm-6">
                                         <div class="d-grid">
                                             <form action="{{ route('cart_add', $product->id )}}" method="POST" class="add-to-cart-form">
                                                 @csrf
                                                 @php
-                                                // calculate discounted price 
+                                                // calculate discounted price
                                                     $originalPrice = $product->price ;
                                                     $discountPercentage =  $product->discount ;
 
                                                     $selling_price = $originalPrice - ($originalPrice * ($discountPercentage / 100));
 
-                                                    
+
                                                 @endphp
                                                 <input type="hidden" name="product_id" value="{{ $product->id }}">
                                                 <input type="hidden" name="price" value="{{ $selling_price }}">
                                                 <input type="hidden" name="quantity" value="1">
-                                                <button class="btn btn-primary waves-effect waves-light mt-2 me-1 add-to-cart-btn" 
+                                                <button class="btn btn-primary waves-effect waves-light mt-2 me-1 add-to-cart-btn"
                                                     type="submit"
-                                                    data-product-id="{{ $product->id }}" 
+                                                    data-product-id="{{ $product->id }}"
                                                     data-product-price="{{ $product->price }}">
                                                     <i class="bx bx-cart-alt me-2"></i> Add to cart
                                                 </button>
                                             </form>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -223,6 +223,6 @@
         });
     </script>
     <script>
-         
+
     </script>
 @endsection

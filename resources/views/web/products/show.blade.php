@@ -93,7 +93,7 @@
                                         <p class="mt-4 text-muted">Description</p>
                                     </div>
                                     <div class="col-10">
-                                        <p class="mt-4 font-bold">{{ $product->desc_en ?? 'Product description unavailable' }}</p>
+                                        <p class="mt-4 font-bold">{{ $product->description ?? 'Product description unavailable' }}</p>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -222,7 +222,7 @@
                                 <label>
                                      Description (EN): </label>
                                 <span>
-                                    {{$product->desc_en}}
+                                    {{$product->description}}
                                 </span>
                                 <br>
                                 <label>

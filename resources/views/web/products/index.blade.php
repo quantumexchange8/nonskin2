@@ -274,7 +274,7 @@
                                                         @hasanyrole('user')
                                                         <a href="{{ route('showdetails', $product->id) }}">
                                                             <img src="{{ asset('images/products/' . $product->image_1) }}"
-                                                                alt="{{ $product->name_en }}" class="img-fluid mx-auto d-block"
+                                                                alt="{{ $product->name }}" class="img-fluid mx-auto d-block"
                                                                 style="width: 70% !important;">
                                                         </a>
                                                         @endhasanyrole
@@ -290,10 +290,10 @@
                                                             <div>
                                                                 <h5 class="mb-1">
                                                                     @hasanyrole('user')
-                                                                    <a href="{{ route('showdetails', $product->id) }}" class="font-size-14">{{ Str::limit($product->name_en, 21, '...') }}</a>
+                                                                    <a href="{{ route('showdetails', $product->id) }}" class="font-size-14">{{ Str::limit($product->name, 21, '...') }}</a>
                                                                     @endhasanyrole
                                                                     @hasanyrole('superadmin|admin')
-                                                                    <a href="{{ route('show', $product->id) }}" class="font-size-14">{{ Str::limit($product->name_en, 21, '...') }}</a>
+                                                                    <a href="{{ route('show', $product->id) }}" class="font-size-14">{{ Str::limit($product->name, 21, '...') }}</a>
                                                                     @endhasanyrole
                                                                 </h5>
                                                                 {{-- <p class="text-muted font-size-13">{{ $product->desc_en }}</p> --}}
