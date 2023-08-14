@@ -10,6 +10,8 @@
         @slot('title') Member Listing @endslot
     @endcomponent
 
+    @include('includes.alerts')
+
     @section('modal')
         @include('modals.create-member')
     @endsection
@@ -59,9 +61,8 @@
                                         <form method="post">
                                             @csrf
                                             @method('DELETE')
-                                            <a href="{{ route('members.destroy', $user->id) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-bs-original-title="Delete" data-confirm-delete="true" class="text-danger">
-                                                <i class="mdi mdi-delete font-size-18"></i>
-                                            </a>
+                                            <a href="{{ route('members.destroy', $user->id) }}" class="btn mdi mdi-delete font-size-18 p-0 text-danger" data-confirm-delete="true"
+                                                data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-bs-original-title="Delete"></a>
                                         </form>
                                         {{-- <form method="POST">
                                             @csrf
@@ -122,6 +123,59 @@
             responsive: true,
             pagingType: 'simple_numbers',
             lengthChange: false
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click event listeners to all delete buttons
+            const deleteButtons = document.querySelectorAll('.delete-button');
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const orderId = this.getAttribute('data-order-id');
+                    const orderStatus = this.getAttribute('data-order-status');
+
+                    if (orderStatus === '5') {
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'This order has already been cancelled!',
+                            icon: 'error',
+                            confirmButtonText: 'Ok'
+                        });
+                    } else if(orderStatus === '4') {
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'This order has already completed!',
+                            icon: 'error',
+                            confirmButtonText: 'Ok'
+                        });
+                    } else if(orderStatus === '3') {
+                        Swal.fire({
+                            title: 'Warning',
+                            text: 'This order has already shipped out!',
+                            icon: 'warning',
+                            confirmButtonText: 'Ok'
+                        });
+                    } else {
+                        // Show SweetAlert 2 confirmation dialog
+                        Swal.fire({
+                            title: 'Are you sure?',
+                            text: 'You will not be able to recover this order!',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Yes, delete it!',
+                            cancelButtonText: 'Cancel'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // If the user confirms, submit the form to delete the order
+                                const form = document.getElementById('delete-form-' + orderId);
+                                form.submit();
+                            }
+                        });
+                    }
+                });
+            });
         });
     </script>
 

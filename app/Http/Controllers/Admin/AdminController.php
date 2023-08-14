@@ -35,9 +35,9 @@ class AdminController extends Controller
         // ->get(['upline_id', 'referrer_id', 'name', 'email', 'ranking_name', 'postcode', 'city', 'state', 'created_at']);
 
         $users = User::where('role', 'user')->get();
-        // dd($users);
-
-
+        $title = 'Deleting User!';
+        $text = "Are you sure you want to delete?";
+        confirmDelete($title, $text);
         return view('admin.members.listing', compact('users', 'states'));
     }
 
@@ -104,18 +104,19 @@ class AdminController extends Controller
                 }
             }
 
-            return redirect()->back()->with('updated', $user->name . ' profile updated successfully');
+            return redirect()->back()->with('updated', $user->full_name . ' profile updated successfully');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage())->with('code', $e->getCode());
             // return $e->getMessage();
         }
     }
 
-    public function memberDestroy(){
+    public function memberDestroy(User $user){
         // dd('here');
-        $title = 'Deleting User!';
-        $text = "Are you sure you want to delete?";
-        confirmDelete($title, $text);
+        $user->is_active = !$user->is_active;
+        $user->save();
+        $user->delete();
+        return redirect()->back()->with('deleted', 'User has been deleted successfully!');
     }
 
 
@@ -298,7 +299,7 @@ class AdminController extends Controller
 
     public function invoice(Order $order, Request $request)
     {
-        
+
         $user = $order->user_id;
         $invoice = Order::where('order_num', '=', $order->order_num)->where('user_id', $user)->first();
 
@@ -306,9 +307,9 @@ class AdminController extends Controller
         //                         ->where('order_num', '=', $order)
         //                         ->select('order_items.*', 'products.name_en as product_name_en', 'products.name_cn as product_name_cn')
         //                         ->get();
-        $orderItems = OrderItem::where('order_num', $order->order_num)->with(['product'])->get();                      
+        $orderItems = OrderItem::where('order_num', $order->order_num)->with(['product'])->get();
         $companyInfo = CompanyInfo::all()->keyBy('key');
- 
+
         $pdf = PDF::loadView('member.orders..pdf.invoice', ['invoice' => $invoice, 'orderItems' => $orderItems, 'companyInfo' => $companyInfo]);
         return $pdf->download('invoice.pdf');
     }
