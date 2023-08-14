@@ -16,9 +16,9 @@
                         </div>
                     </div>
                     <div class="row mb-4">
-                        <label for="contact" class="col-sm-3 col-form-label required">Contact</label>
+                        <label for="contact_address" class="col-sm-3 col-form-label required">Contact</label>
                         <div class="col-sm-9">
-                            <input type="text" value="{{ $v->contact }}" name="contact" class="form-control contact-input" id="contact" required>
+                            <input type="text" value="{{ $v->contact }}" name="contact_address" class="form-control contact-input" id="contact_address" required>
                         </div>
                     </div>
                     <div class="row mb-4">

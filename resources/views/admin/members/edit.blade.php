@@ -7,8 +7,9 @@
     @component('components.breadcrumb')
         @slot('url') {{ url('/') }} @endslot
         @slot('li_1') Home @endslot
-        @slot('title') Member Listing @endslot
-        @slot('title2') {{ $user->full_name }} @endslot
+        @slot('url2') {{ route('member-list') }} @endslot
+        @slot('li_2') Member Listing @endslot
+        @slot('title') {{ $user->full_name }} @endslot
     @endcomponent
 
     @include('includes.alerts')
@@ -119,7 +120,7 @@
                         </div>
 
                         <hr>
-                            <div class="mb-3 row">
+                            {{-- <div class="mb-3 row">
                                 <label for="name" class="col-lg-2 col-md-3 col-form-label">Full Name</label>
                                 <div class="col-lg-8 col-md-9">
                                     <input type="text" class="form-control" value="{{ $user->full_name ?? '-N/A-' }}" disabled>
@@ -130,7 +131,7 @@
                                 <div class="col-lg-8 col-md-9">
                                     <input type="text" class="form-control contact-input" value="{{ $user->contact ?? '-N/A-' }}" disabled>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="mb-3 row">
                                 <label for="address_1" class="col-lg-2 col-md-3 col-form-label">Address Line 1</label>
                                 <div class="col-lg-8 col-md-9">
