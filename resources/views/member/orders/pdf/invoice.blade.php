@@ -231,7 +231,7 @@
                 <tr>
                     <td class="w-30">Delivery Method</td>
                     <td width="1%">: </td>
-                    <td>{{ $invoice['delivery_method'] == 'self_pickup' ? 'Self Pickup' : 'Delivery' }}</td>
+                    <td>{{ $invoice['delivery_method']  }}</td>
                 </tr>
             </table>
         </div>
