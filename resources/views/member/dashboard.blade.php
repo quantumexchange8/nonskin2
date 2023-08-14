@@ -28,18 +28,22 @@
                             <li><i class="bx bx-polygon font-size-24"></i></li>
                         </ul>
                         <div class="main-wid position-relative">
-                            
+
                             <div>
-                                {{QrCode::size(180)->generate($user->url)}}
+                                {{QrCode::size(150)->generate($user->url)}}
                             </div>
 
                             <div class="mt-4 pt-2 mb-2">
                                 <!-- QR Code -->
-                                <button id="copyLink" class="btn border border-dark text-white" type="button">
+                                {{-- <button id="copyLink" class="btn border border-dark text-white" type="button">
                                     Referral Code
-                                </button>
-                                <input id="refLink" type="text" class="form-control visually-hidden" placeholder="url" value="{{ $user->url }}" disabled
-                                aria-label="" aria-describedby="basic-addon1" style="overflow: hidden;">
+                                </button> --}}
+                                {{-- <input id="refLink" type="text" class="form-control visually-hidden" placeholder="url" value="{{ $user->url }}" disabled
+                                aria-label="" aria-describedby="basic-addon1" style="overflow: hidden;"> --}}
+                                <div class="input-group">
+                                    <input class="form-control" type="text" id="refLink" value="{{ $user->url }}" aria-describedby="basic-addon1" disabled>
+                                    <button class="btn btn-dark" type="button" id="copyLink">Copy</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -92,7 +96,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="col-xl-12">
             <div class="row">
                 <div class="col-lg-2 col-md-6">
@@ -334,7 +338,7 @@
     <script>
          $(document).ready(function () {
             var copyText = document.getElementById("refLink");
-            
+
             $("#copyLink").click(function () {
                 copyText.select();
                 copyText.setSelectionRange(0, 99999); // For mobile devices
