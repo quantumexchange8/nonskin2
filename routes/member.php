@@ -17,13 +17,14 @@ Route::group(['prefix' => 'member/', 'as' => 'member.',  'middleware' => ['auth'
     Route::get('internal-transfer/history', [UserController::class, 'internalTransferHistory'])->name('internal-transfer-history');
     Route::get('internal-transfer/new', [UserController::class, 'internalTransferNew'])->name('new-internal-transfer');
     Route::get('member-listing', [UserController::class, 'memberListing'])->name('listing');
+    Route::get('member-listing/{user}/detail', [UserController::class, 'memberDetail'])->name('member-detail');
     Route::get('member-network-tree', [UserController::class, 'memberNetworkTree'])->name('network-tree');
     Route::get('orders/history', [UserController::class, 'pendingOrder'])->name('order-pending');
     Route::post('pending-orders/{order}', [UserController::class, 'cancelorder'])->name('cancelorder');
 
     Route::get('order-history', [UserController::class, 'orderHistory'])->name('order-history');
     // Route::get('products', [ProductController::class, 'index'])->name('product-list');
-    
+
     Route::get('report-downline-sales', [UserController::class, 'reportDownlineSales'])->name('report-downline-sales');
     Route::get('report-leadership', [UserController::class, 'reportLeadership'])->name('report-leadership');
     Route::get('report-levelling', [UserController::class, 'reportLevelling'])->name('report-levelling');

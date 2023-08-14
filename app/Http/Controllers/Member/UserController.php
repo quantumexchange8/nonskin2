@@ -140,12 +140,14 @@ class UserController extends Controller
     public function internalTransferNew() {
         return view('member.internal_transfer_new');
     }
+    public function memberDetail(User $user) {
+
+        return view('member.member_detail', compact('user'));
+    }
     public function memberListing() {
-        $user = Auth::user();
+        $members = User::where('upline_id', Auth::id())->get();
 
-        $members = User::where('upline_id', $user->id)->get();
-
-        return view('member.member_listing');
+        return view('member.member_listing', compact('members'));
     }
     public function memberNetworkTree() {
         return view('member.member_network_tree');
@@ -185,17 +187,23 @@ class UserController extends Controller
         // ProductController
     }
 
+    public function reportSales() {
+        $orders = Order::where('user_id', Auth::id())->latest()->get();
+        return view('member.report_sales', compact('orders'));
+    }
     public function reportDownlineSales() {
-        return view('member.report_downline_sales');
+        $users = User::where('upline_id', Auth::id())
+            ->whereHas('orders') // Make sure the relationship method name is correct
+            ->get();
+
+            dd($users[0]->orders);
+        return view('member.report_downline_sales', compact('users'));
     }
     public function reportLeadership() {
         return view('member.report_leadership');
     }
     public function reportLevelling() {
         return view('member.report_levelling');
-    }
-    public function reportSales() {
-        return view('member.report_sales');
     }
     public function reportWallet() {
         return view('member.report_wallet');
@@ -231,7 +239,7 @@ class UserController extends Controller
 
         return response()->json($cartRecords);
     }
-    
+
     public function userprofile()
     {
         return view('member.profile.myprofile');
@@ -264,7 +272,7 @@ class UserController extends Controller
                     {
                         $obj_user->password = Hash::make($request->input('new_password'));
                         $obj_user->save();
-    
+
                         Alert::success(trans('public.success'), trans('public.successful_updated_password'));
                         return redirect()->back();
                     } else {
@@ -276,7 +284,7 @@ class UserController extends Controller
                 return redirect()->back();
             }
         }
-        
+
 
         Alert::success('Success', 'Profile Updated');
         return redirect()->back();
@@ -333,9 +341,9 @@ class UserController extends Controller
         //                         ->where('order_num', '=', $order)
         //                         ->select('order_items.*', 'products.name_en as product_name_en', 'products.name_cn as product_name_cn')
         //                         ->get();
-        $orderItems = OrderItem::where('order_num', $order->order_num)->with(['product'])->get();                      
+        $orderItems = OrderItem::where('order_num', $order->order_num)->with(['product'])->get();
         $companyInfo = CompanyInfo::all()->keyBy('key');
- 
+
         $pdf = PDF::loadView('member.orders..pdf.invoice', ['invoice' => $invoice, 'orderItems' => $orderItems, 'companyInfo' => $companyInfo]);
         return $pdf->download('invoice.pdf');
     }

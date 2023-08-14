@@ -108,15 +108,15 @@
                                 </td>
                                 <td>
                                     <div class="d-flex gap-3">
-                                        
+
                                             <button type="button" class="btn btn-link view-detail-button" data-bs-toggle="modal" data-bs-target="#orderdetailsModal_{{ $order->id }}" id="{{$order->id}}">
                                                 <i class="mdi mdi-pencil font-size-18"></i>
                                             </button>
                                             @include('admin.orders.modal.orderdetail')
-                                            
-                                            
+
+
                                         {{-- </form> --}}
-                                        
+
                                         {{-- <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Cancel" data-bs-original-title="Cancel" class="text-danger"> --}}
                                             <form action="{{ route('rejectorder', $order->id) }}" method="POST" id="reject-form-{{ $order->id }}">
                                                 @csrf
@@ -216,5 +216,5 @@
         });
 
     </script>
-    
+
 @endsection

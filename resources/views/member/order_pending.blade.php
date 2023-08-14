@@ -117,8 +117,6 @@
             button.addEventListener('click', function() {
                 const orderNum = this.getAttribute('data-bs-order-num');
                 document.getElementById('order-id').textContent = orderNum;
-
-                console.log(orderNum)
             });
         });
 
