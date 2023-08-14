@@ -6,11 +6,11 @@
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
                     <li class="breadcrumb-item"><a href="{{ isset($url) }}">{{ $li_1 }}</a></li>
-                    @if(isset($title))
-                        <li class="breadcrumb-item"><a href="javascript:history.back()">{{ $title }}</a></li>
-                    @endif
-                    @if(isset($title2))
-                        <li class="breadcrumb-item active">{{ $title2 }}</li>
+                    @if(isset($li_2) && isset($url2))
+                        <li class="breadcrumb-item"><a href="{{ $url2 }}">{{ $li_2 }}</a></li>
+                        <li class="breadcrumb-item active">{{ $title }}</li>
+                    @else
+                        <li class="breadcrumb-item active">{{ $title }}</li>
                     @endif
                 </ol>
             </div>

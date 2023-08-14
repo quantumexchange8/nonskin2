@@ -107,7 +107,7 @@ class HomeController extends Controller
     }
 
     public function updateAddress(Request $request){
-        $addressData = $request->only('id', 'name', 'contact', 'address_1', 'address_2', 'postcode', 'city', 'state', 'country');
+        $addressData = $request->only('id', 'name', 'contact_address', 'address_1', 'address_2', 'postcode', 'city', 'state', 'country');
         // dd($request->all());
         try {
             $address = Address::updateOrCreate(
