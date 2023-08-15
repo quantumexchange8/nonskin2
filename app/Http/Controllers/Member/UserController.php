@@ -134,11 +134,20 @@ class UserController extends Controller
     public function bonus() {
         return view('member.bonus');
     }
-    public function internalTransferHistory() {
-        return view('member.internal_transfer_history');
+    // public function internalTransferHistory() {
+    //     return view('member.internal_transfer_history');
+    // }
+    // public function internalTransferNew() {
+    //     return view('member.internal_transfer_new');
+    // }
+    public function purchaseWallet() {
+        return view('member.purchase_wallet');
     }
-    public function internalTransferNew() {
-        return view('member.internal_transfer_new');
+    public function cashWallet() {
+        return view('member.cash_wallet');
+    }
+    public function productWallet() {
+        return view('member.product_wallet');
     }
     public function memberDetail(User $user) {
 
@@ -152,7 +161,7 @@ class UserController extends Controller
     public function memberNetworkTree() {
         return view('member.member_network_tree');
     }
-    public function pendingOrder() {
+    public function orderHistory() {
         $orders = Order::with(['user', 'orderItems', 'orderItems.product'])->where('user_id', Auth::id())->get();
         // dd($orders);
         return view('member.order_pending', [
@@ -177,9 +186,9 @@ class UserController extends Controller
         }
     }
 
-    public function orderHistory() {
-        return view('member.order_history');
-    }
+    // public function orderHistory() {
+    //     return view('member.order_history');
+    // }
     public function productList() {
         // ProductController
     }
@@ -196,7 +205,7 @@ class UserController extends Controller
             ->whereHas('orders') // Make sure the relationship method name is correct
             ->get();
 
-            dd($users[0]->orders);
+            // dd($users[0]->orders);
         return view('member.report_downline_sales', compact('users'));
     }
     public function reportLeadership() {

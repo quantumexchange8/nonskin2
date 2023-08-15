@@ -37,6 +37,12 @@
         "pending-withdrawal" => "Pending Withdrawal",
         "my-rewards" => "My Rewards",
         "reward-voucher" => "Reward Voucher",
+        "order history" => "Order History",
+        "Change Password" => "Change Password",
+        "Shipping Address" => "Shipping Address",
+        "Purchase Wallet" => "Purchase Wallet",
+        "Cash Wallet" => "Cash Wallet",
+        "Product Wallet" => "Product Wallet",
 
         // Custom
         "search" => "Search",

@@ -11,19 +11,23 @@ Route::group(['prefix' => 'member/', 'as' => 'member.',  'middleware' => ['auth'
     Route::get('cart', [UserController::class, 'cart'])->name('cart');
     Route::get('cart/checkout', [UserController::class, 'checkout'])->name('checkout');
     Route::get('commission', [UserController::class, 'commission'])->name('commission');
-    Route::get('wallet/deposit', [UserController::class, 'deposit'])->name('wallet-deposit');
-    Route::get('wallet/withdrawal', [UserController::class, 'withdrawal'])->name('wallet-withdrawal');
+    // Route::get('wallet/deposit', [UserController::class, 'deposit'])->name('wallet-deposit');
+    // Route::get('wallet/withdrawal', [UserController::class, 'withdrawal'])->name('wallet-withdrawal');
     Route::get('bonus', [UserController::class, 'bonus'])->name('bonus');
     Route::get('internal-transfer/history', [UserController::class, 'internalTransferHistory'])->name('internal-transfer-history');
     Route::get('internal-transfer/new', [UserController::class, 'internalTransferNew'])->name('new-internal-transfer');
     Route::get('member-listing', [UserController::class, 'memberListing'])->name('listing');
     Route::get('member-listing/{user}/detail', [UserController::class, 'memberDetail'])->name('member-detail');
     Route::get('member-network-tree', [UserController::class, 'memberNetworkTree'])->name('network-tree');
-    Route::get('orders/history', [UserController::class, 'pendingOrder'])->name('order-pending');
+    Route::get('order-history', [UserController::class, 'orderHistory'])->name('order-pending');
     Route::post('pending-orders/{order}', [UserController::class, 'cancelorder'])->name('cancelorder');
 
-    Route::get('order-history', [UserController::class, 'orderHistory'])->name('order-history');
+    // Route::get('order-history', [UserController::class, 'orderHistory'])->name('order-history');
     // Route::get('products', [ProductController::class, 'index'])->name('product-list');
+    Route::get('purchase-wallet', [UserController::class, 'purchaseWallet'])->name('purchase-wallet');
+    Route::get('cash-wallet', [UserController::class, 'cashWallet'])->name('cash-wallet');
+    Route::get('product-wallet', [UserController::class, 'productWallet'])->name('product-wallet');
+
 
     Route::get('report-downline-sales', [UserController::class, 'reportDownlineSales'])->name('report-downline-sales');
     Route::get('report-leadership', [UserController::class, 'reportLeadership'])->name('report-leadership');
