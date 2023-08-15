@@ -15,15 +15,15 @@
                     <table id="commissionTable" class="stripe nowrap" style="width:100%">
                         <thead>
                             <tr>
-                                <td>#</td>
-                                <td>Transaction ID</td>
-                                <td>Billing Name</td>
-                                <td>Date</td>
-                                <td>Total</td>
-                                <td>Payment Status</td>
-                                <td>Payment Method</td>
-                                <td>View Details</td>
-                                <td>Action</td>
+                                <th>#</th>
+                                <th>Transaction ID</th>
+                                <th>Billing Name</th>
+                                <th>Date</th>
+                                <th>Total</th>
+                                <th>Payment Status</th>
+                                <th>Payment Method</th>
+                                <th>View Details</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tfoot>

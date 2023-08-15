@@ -85,7 +85,7 @@
                                     <td>
                                         <div>
                                             <h5 class="text-truncate font-size-14">
-                                                {{ $order_item->product->name_en }}
+                                                {{ $order_item->product->name }}
                                             </h5>
                                             <p class="text-muted mb-0">RM {{ number_format($order_item->product->price, 2) }} x {{ $order_item->quantity}}</p>
                                         </div>
@@ -103,7 +103,7 @@
                                 </tr>
                                 @endforeach
                                 <tr>
-                                    <td colspan="2">
+                                    <td align="right" colspan="2">
                                         <h6 class="m-0 text-right">Sub Total:</h6>
                                     </td>
                                     <td>
@@ -111,7 +111,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">
+                                    <td align="right" colspan="2">
                                         <h6 class="m-0 text-right">Shipping:</h6>
                                     </td>
                                     <td>
@@ -119,7 +119,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">
+                                    <td align="right" colspan="2">
                                         <h6 class="m-0 text-right">Total:</h6>
                                     </td>
                                     <td>

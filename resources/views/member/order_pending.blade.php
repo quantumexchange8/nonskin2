@@ -24,10 +24,12 @@
                         <thead>
                             <tr>
                                 <th>Order ID</th>
-                                <th>Name</th>
-                                <th>Contact</th>
-                                <th>Date</th>
+                                <th>Price</th>
                                 <th>Shipping Type</th>
+                                <th>Courier</th>
+                                <th>Consignment No</th>
+                                <th>Tracking No</th>
+                                <th>Date</th>
                                 <th>Payment Method</th>
                                 <th>Status</th>
                                 <th>Action</th>
@@ -37,14 +39,12 @@
                             @foreach($orders as $order)
                             <tr>
                                 <td class="fw-bold">#{{$order->order_num}}</td>
-                                <td>
-                                    @if($order->delivery_method == 'Delivery')
-                                        {{$order->receiver}}
-                                    @endif
-                                </td>
-                                <td>{{$order->contact}}</td>
-                                <td>{{$order->updated_at}}</td>
+                                <td>RM {{ number_format($order->total_amount, 2) }}</td>
                                 <td>{{$order->delivery_method}}</td>
+                                <td>{{ $order->courier ?? '-' }}</td>
+                                <td>{{ $order->cn ?? '-' }}</td>
+                                <td>{{ $order->tracking_number ?? '-' }}</td>
+                                <td>{{$order->created_at->format('d/m/Y, h:i:s')}}</td>
                                 <td>{{$order->payment_method}}</td>
                                 <td>
                                     @if($order->status == 1)
@@ -101,6 +101,7 @@
             </div>
         </div>
     </div>
+
 @endsection
 @section('script')
     <script src="{{ URL::asset('assets/js/app.js') }}"></script>
