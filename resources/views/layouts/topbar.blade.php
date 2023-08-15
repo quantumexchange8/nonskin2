@@ -55,7 +55,7 @@
                 </div>
             </div>
 
-            <div class="dropdown d-inline-block language-switch">
+            {{-- <div class="dropdown d-inline-block language-switch">
                 <button type="button" class="btn header-item"
                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     @switch(Session::get('lang'))
@@ -101,7 +101,7 @@
                         <img src="{{ URL::asset ('/assets/images/flags/russia.jpg') }}" alt="user-image" class="me-1" height="12"> <span class="align-middle">Russian</span>
                     </a>
                 </div>
-            </div>
+            </div> --}}
 
 
             <div class="dropdown d-inline-block">
@@ -147,16 +147,16 @@
                                 <a href="" class="text-reset notification-item">
                                     <div class="d-flex border-bottom align-items-start">
                                         <div class="flex-shrink-0">
-                                            <img src="{{ URL::asset('assets/images/users/avatar-3.jpg') }}"
+                                            <img src="{{ $row->product->image_1 !== null ? asset('images/products/' . $row->product->image_1) : asset('assets/images/nonskin/non-logo.jpg') }}"
                                             class="me-3 rounded-circle avatar-sm" alt="user-pic">
                                         </div>
                                         <div class="flex-grow-1">
                                             <div style="display: flex;align-items: center;justify-content: space-between;">
-                                                <h6 class="mb-1">{{$row->product->name_en}}</h6>
-                                                <h6 class="mb-1">qty: {{$row->quantity}}</h6>
+                                                <h6 class="mb-1">{{ Str::limit($row->product->name,25,'...') }}</h6>
+                                                <h6 class="mb-1">x {{$row->quantity}}</h6>
                                             </div>
                                             <div class="text-muted">
-                                                <p class="mb-1 font-size-13">price: {{$row->product->price}}</p>
+                                                <p class="mb-1 font-size-13">RM {{$row->product->price}}</p>
                                             </div>
                                         </div>
                                     </div>
