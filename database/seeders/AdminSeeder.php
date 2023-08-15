@@ -20,7 +20,7 @@ class AdminSeeder extends Seeder
         User::create(
         [
             'upline_id'         => null,
-            'full_name'              => 'default',
+            'full_name'         => 'default',
             'username'          => 'default',
             'id_no'             => '111111011111',
             'contact'           => '01111111111',
@@ -66,7 +66,7 @@ class AdminSeeder extends Seeder
         User::create(
         [
             'upline_id'         => null,
-            'full_name'              => 'Superadmin',
+            'full_name'         => 'Superadmin',
             'username'          => 'Superadmin',
             'id_no'             => '111111021111',
             'contact'           => '01211111111',
@@ -113,7 +113,7 @@ class AdminSeeder extends Seeder
         User::create(
         [
             'referrer_id'       => 'NON000000001',
-            'full_name'              => 'Admin',
+            'full_name'         => 'Admin',
             'username'          => 'Admin',
             'id_no'             => '111111031111',
             'contact'           => '60105635811',
@@ -159,9 +159,12 @@ class AdminSeeder extends Seeder
 
         User::create(
         [
+            'purchase_wallet'   => 30000,
+            'cash_wallet'       => 10000,
+            'product_wallet'    => 1000,
             'upline_id'         => 3,
             'referrer_id'       => 'NON000000002',
-            'full_name'              => 'Lee Chong Wei',
+            'full_name'         => 'Lee Chong Wei',
             'username'          => 'Chong Wei',
             'id_no'             => '111111041111',
             'contact'           => '01411111111',
@@ -213,9 +216,12 @@ class AdminSeeder extends Seeder
 
         User::create(
         [
+            'purchase_wallet'   => 30000,
+            'cash_wallet'       => 10000,
+            'product_wallet'    => 1000,
             'upline_id'         => 3,
             'referrer_id'       => 'NON000000003',
-            'full_name'              => 'Leonard Hofstadter',
+            'full_name'         => 'Leonard Hofstadter',
             'username'          => 'Leonard',
             'id_no'             => '111111051111',
             'contact'           => '01511111111',
@@ -267,9 +273,13 @@ class AdminSeeder extends Seeder
 
         User::create(
         [
+            'purchase_wallet'   => 30000,
+            'cash_wallet'       => 10000,
+            'cash_wallet'       => 10000,
+            'product_wallet'    => 1000,
             'upline_id'         => 3,
             'referrer_id'       => 'NON000000004',
-            'full_name'              => 'Ali Ah Kau',
+            'full_name'         => 'Ali Ah Kau',
             'username'          => 'Ali',
             'id_no'             => '111111061111',
             'contact'           => '01611111111',
@@ -321,9 +331,12 @@ class AdminSeeder extends Seeder
 
         User::create(
         [
+            'purchase_wallet'   => 30000,
+            'cash_wallet'       => 10000,
+            'product_wallet'    => 1000,
             'upline_id'         => 3,
             'referrer_id'       => 'NON000000005',
-            'full_name'              => 'Tiong Wan Chuah',
+            'full_name'         => 'Tiong Wan Chuah',
             'username'          => 'Syazwan',
             'id_no'             => '111111071111',
             'contact'           => '01711111111',
@@ -390,9 +403,12 @@ class AdminSeeder extends Seeder
 
         User::create(
         [
+            'purchase_wallet'   => 30000,
+            'cash_wallet'       => 10000,
+            'product_wallet'    => 1000,
             'upline_id'         => 3,
             'referrer_id'       => 'NON000000006',
-            'full_name'              => 'Lee Yew Eng',
+            'full_name'         => 'Lee Yew Eng',
             'username'          => 'Yew',
             'id_no'             => '111111081111',
             'contact'           => '01811111111',

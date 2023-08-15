@@ -11,7 +11,7 @@
 
 
     <div class="row">
-        <div class="col-xl-4 mb-4">
+        <div class="col-xl-4 col-md-6 mb-4">
             <div class="card bg-primary h-100">
                 <div class="card-body">
                     <div class="text-center py-3">
@@ -29,8 +29,15 @@
                         </ul>
                         <div class="main-wid position-relative">
 
-                            <div>
-                                {{QrCode::size(150)->generate($user->url)}}
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    {{QrCode::size(110)->generate($user->url)}}
+                                </div>
+                                <div>
+                                    <span class="h4 text-white text-end">{{ $user->full_name }}</span>
+                                    <p class="text-white my-0 text-end">{{ $user->rank->name }}</p>
+                                    <p class="text-white my-0 text-end">{{ $user->referrer_id }}</p>
+                                </div>
                             </div>
 
                             <div class="mt-4 pt-2 mb-2">
@@ -40,6 +47,7 @@
                                 </button> --}}
                                 {{-- <input id="refLink" type="text" class="form-control visually-hidden" placeholder="url" value="{{ $user->url }}" disabled
                                 aria-label="" aria-describedby="basic-addon1" style="overflow: hidden;"> --}}
+
                                 <div class="input-group">
                                     <input class="form-control" type="text" id="refLink" value="{{ $user->url }}" aria-describedby="basic-addon1" disabled>
                                     <button class="btn btn-dark" type="button" id="copyLink">Copy</button>
@@ -50,7 +58,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-4 mb-4">
+        <div class="col-xl-4 col-md-6 mb-4">
             <div class="card h-100">
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title mb-0">Purchase Wallet</h5>
@@ -66,7 +74,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-4 mb-4">
+        <div class="col-xl-4 col-md-6 mb-4">
             <div class="card h-100">
                 <div class="card-body">
                     @hasanyrole('user')

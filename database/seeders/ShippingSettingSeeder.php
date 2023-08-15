@@ -13,35 +13,35 @@ class ShippingSettingSeeder extends Seeder
             'name' => 'Delivery',
             'icon_class' => 'bx bxs-truck',
             'status' => 1,
-            'updated_at' => null,
             'created_by' => 1
         ],
         [
             'name' => 'Self-Pickup',
             'icon_class' => 'bx bxs-store-alt',
             'status' => 2,
-            'updated_at' => null,
             'created_by' => 1
         ]
     ];
 
     public $payment_settings = [
         [
+            'name' => 'Purchase Wallet',
+            'icon_class' => 'bx bxs-wallet',
+            'created_by' => 1
+        ],
+        [
             'name' => 'Manual Transfer',
             'icon_class' => 'bx bxl-paypal',
-            'updated_at' => null,
             'created_by' => 1
         ],
         [
             'name' => 'Online Banking',
             'icon_class' => 'bx bx-credit-card',
-            'updated_at' => null,
             'created_by' => 1
         ],
         [
             'name' => 'Payment at Counter',
             'icon_class' => 'bx bx-money',
-            'updated_at' => null,
             'created_by' => 1
         ]
     ];

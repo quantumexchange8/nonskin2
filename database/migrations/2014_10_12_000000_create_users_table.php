@@ -29,8 +29,9 @@ class CreateUsersTable extends Migration
             $table->string('role')->default('user');
             $table->string('superadmin')->default(0);
             $table->string('member_type')->default('customer');
-            $table->string('cash_wallet')->nullable();
-            $table->string('commission_wallet')->nullable();
+            $table->double('purchase_wallet', 10, 2)->nullable()->comment('Buying products, deposit/withdraw allowed');
+            $table->double('cash_wallet', 10, 2)->nullable()->comment('Commission Paid Out, can withdraw to bank account');
+            $table->double('product_wallet', 10, 2)->nullable()->comment('Add Credit like Voucher to use it');
             $table->string('bonus_quota')->nullable();
             $table->string('network')->nullable();
             $table->string('direct_sponsor')->nullable();
