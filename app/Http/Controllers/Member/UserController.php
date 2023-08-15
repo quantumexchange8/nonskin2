@@ -140,6 +140,13 @@ class UserController extends Controller
     // public function internalTransferNew() {
     //     return view('member.internal_transfer_new');
     // }
+    public function purchaseWalletDeposit(){
+        return view('member.purchase-wallet.deposit');
+    }
+    public function purchaseWalletWithdraw(){
+        return view('member.purchase-wallet.withdraw');
+    }
+
     public function purchaseWallet() {
         return view('member.purchase_wallet');
     }

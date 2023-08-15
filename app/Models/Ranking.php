@@ -10,8 +10,6 @@ class Ranking extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = 'ranking';
-
     const client = 1;
     const member = 2;
     const general_distributor = 3;

@@ -24,8 +24,8 @@ Route::group(['prefix' => 'member/', 'as' => 'member.',  'middleware' => ['auth'
 
     // Route::get('order-history', [UserController::class, 'orderHistory'])->name('order-history');
     // Route::get('products', [ProductController::class, 'index'])->name('product-list');
-    Route::get('deposit', [UserController::class, 'deposit'])->name('deposit');
-    Route::get('withdraw', [UserController::class, 'withdraw'])->name('withdraw');
+    Route::get('deposit', [UserController::class, 'purchaseWalletDeposit'])->name('deposit');
+    Route::get('withdraw', [UserController::class, 'purchaseWalletWithdraw'])->name('withdraw');
 
     Route::get('purchase-wallet', [UserController::class, 'purchaseWallet'])->name('purchase-wallet');
     Route::get('cash-wallet', [UserController::class, 'cashWallet'])->name('cash-wallet');
