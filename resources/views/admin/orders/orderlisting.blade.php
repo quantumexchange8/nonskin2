@@ -18,7 +18,6 @@
     @section('modal')
         @foreach($orders as $order)
             @include('admin.orders.modal.orderdetail')
-            {{-- @include('member.modals.order_detail_modal') --}}
         @endforeach
     @endsection
     <div class="row">
@@ -30,6 +29,20 @@
                             <button type="button" class="btn btn-success waves-effect waves-light mb-2 me-2" data-bs-toggle="modal" data-bs-target=".add-new-order"><i class="mdi mdi-plus me-1"></i> Add New Order</button>
                         </div>
                     </div> --}}
+                    <div class="input-group">
+                        <input type="date" id="date-filter" class="form-control">
+                    </div>
+
+                    <select class="form-control" id="statusFilter">
+                        <option value="">All Status</option>
+                        <option value="1">Processing</option>
+                        <option value="2">Packing</option>
+                        <option value="3">Delivering</option>
+                        <option value="4">Complete</option>
+                        <option value="5">Cancel</option>
+                    </select>
+                    
+
                     <table id="allOrder" class="stripe nowrap" style="width:100%">
                         <thead>
                             <tr>
@@ -48,7 +61,7 @@
                             @foreach($orders as $order)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td class="fw-bold">#{{$order->order_num}}</td>
+                                <td class="fw-bold">{{$order->order_num}}</td>
                                 <td>
                                     @if($order->delivery_method == 'Delivery')
                                         {{ $order->receiver}}
@@ -75,7 +88,7 @@
                                             <i class="fas fa-money-bill-alt me-2"></i> {{ $order->payment_method }}
                                     @endswitch
                                 </td>
-                                <td>
+                                <td data-status="{{ $order->status }}">
                                     @if($order->status == 1)
                                         <span class="badge badge-pill badge-soft-secondary font-size-12">
                                             Processing
@@ -148,72 +161,151 @@
             search: "Search Order ID:"
         };
 
-        new DataTable('#allOrder', {
+        var table = new DataTable('#allOrder', {
             responsive: true,
             pagingType: 'simple_numbers',
             lengthChange: false,
-            language: customLanguage // Provide the custom language object
+            order: [[0, 'desc']], // Default sorting order
+            language: customLanguage // Custom language object
         });
 
-        $(document).ready(function() {
+        // Add event listener to the date filter input
+        document.getElementById('date-filter').addEventListener('change', function() {
+            var selectedDate = this.value;
+            table.search(selectedDate).draw();
+        });
 
-            $('.btn-edit').on('click', function() {
+        document.addEventListener("DOMContentLoaded", function () {
+            const statusFilter = document.getElementById("statusFilter");
+            const tableBody = document.querySelector("#allOrder tbody");
 
-                // Show Save and Cancel buttons, hide Edit Profile button
-                $('#save-profile-button, #cancel-edit-button').removeClass('d-none');
-                $('.btn-edit').addClass('d-none');
+            statusFilter.addEventListener("change", function () {
+                const selectedStatus = statusFilter.value;
 
-                // Show input fields and hide labels
-                $('#status-section span').addClass('d-none');
-                $('#status-section select').removeClass('d-none');
-
-                $('#consignment-section span').addClass('d-none');
-                $('#consignment-section input').removeClass('d-none');
-
-                $('#courier-section span').addClass('d-none');
-                $('#courier-section input').removeClass('d-none');
-
-                $('#tracking-section span').addClass('d-none');
-                $('#tracking-section input').removeClass('d-none');
-            });
-
-            $('.btn-cancel-edit').on('click', function() {
-                // Show SweetAlert 2 confirmation dialog
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: 'Changes will be discarded.',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Yes, cancel',
-                    cancelButtonText: 'No, keep editing',
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // User confirmed, perform cancel action
-                        // For example, you can reset the form or redirect
-                        // Here, I'm using window.location to redirect to another page
-                        window.location.href = '{{ route('new-order-list') }}';
+                const rows = tableBody.querySelectorAll("tr");
+                rows.forEach(function (row) {
+                    const statusCell = row.querySelector("td[data-status]");
+                    
+                    if (!statusCell) {
+                        return; // Skip rows without data-status attribute
                     }
-                });
-            });
+                    
+                    const statusBadge = statusCell.querySelector(".badge");
 
-            $('#save-profile-button').on('click', function(event) {
-                event.preventDefault();
-
-                Swal.fire({
-                    title: 'Confirm Save',
-                    text: 'Are you sure you want to save the changes?',
-                    icon: 'question',
-                    showCancelButton: true,
-                    confirmButtonText: 'Yes, save',
-                    cancelButtonText: 'No, cancel',
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // User confirmed, submit the form
-                        $('#status-form-{{ $order->id }}').submit(); // Submit the correct form to the controller
+                    if (!selectedStatus || (statusBadge && selectedStatus === statusCell.getAttribute("data-status"))) {
+                        row.style.display = ""; // Show the row
+                    } else {
+                        row.style.display = "none"; // Hide the row
                     }
                 });
             });
         });
+
+
+        @if (!$orders->isEmpty())
+            $(document).ready(function() {
+                var isEditing = false; // Variable to track editing status
+                $('.btn-edit').on('click', function() {
+
+                    var order_id = $(this).data('order-edit');
+
+                    // Show Save and Cancel buttons, hide Edit Profile button
+                    $('#save-profile-button, #cancel-edit-button').removeClass('d-none');
+                    $('.btn-edit').addClass('d-none');
+                    $('.btn-close-modal').addClass('d-none');
+
+                    // Show input fields and hide labels
+                    $('#status-section-' + order_id + ' span').addClass('d-none');
+                     $('#status-section-' + order_id + ' select').removeClass('d-none');
+
+                    $('#consignment-section span').addClass('d-none');
+                    $('#consignment-section input').removeClass('d-none');
+
+                    $('#courier-section span').addClass('d-none');
+                    $('#courier-section input').removeClass('d-none');
+
+                    $('#tracking-section span').addClass('d-none');
+                    $('#tracking-section input').removeClass('d-none');
+                });
+
+                $('.btn-cancel-edit').on('click', function() {
+                    // Show SweetAlert 2 confirmation dialog
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: 'Changes will be discarded.',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Yes, cancel',
+                        cancelButtonText: 'No, keep editing',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // User confirmed, perform cancel action
+                            // For example, you can reset the form or redirect
+                            // Here, I'm using window.location to redirect to another page
+                            window.location.href = '{{ route('new-order-list') }}';
+                        }
+                    });
+                });
+
+                $('.reject-button').on('click', function() {
+                    var order_id = $(this).data('order-id');
+                    var order_status = $(this).data('order-status');
+
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: 'This action will reject the order. Are you sure you want to proceed?',
+                        icon: 'warning',
+                        input: 'text', // Use a text input
+                        inputLabel: 'Remark',
+                        inputPlaceholder: 'Enter your remark...',
+                        showCancelButton: true,
+                        confirmButtonText: 'Yes, reject',
+                        cancelButtonText: 'Cancel',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            const remark = result.value;
+                            if(remark) {
+                                const form = document.getElementById('reject-form-' + order_id);
+                                const remarkInput = document.createElement('input');
+                                remarkInput.type = 'hidden';
+                                remarkInput.name = 'remark';
+                                remarkInput.value = remark;
+                                form.appendChild(remarkInput);
+                                form.submit();
+                            } else {
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: 'Remark cannot be empty.',
+                                    icon: 'error',
+                                    confirmButtonText: 'Ok'
+                                });
+                            }
+                        }
+                    });
+                });
+
+                $('.btn-save-profile').on('click', function(event) {
+                    event.preventDefault();
+
+                    var order_id = $(this).data('order-id');
+
+                    Swal.fire({
+                        title: 'Confirm Save',
+                        text: 'Are you sure you want to save the changes?',
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonText: 'Yes, save',
+                        cancelButtonText: 'No, cancel',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // User confirmed, submit the form
+                             $('#status-form-' + order_id).submit(); // Submit the correct form to the controller
+                        }
+                    });
+                });
+            });
+        @endif
+        
 
     </script>
 

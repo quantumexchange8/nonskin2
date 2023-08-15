@@ -1,0 +1,20 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+class Rankings extends Model
+{
+    use HasFactory, SoftDeletes;
+
+    protected $table = 'rankings';
+
+    const client = 1;
+    const member = 2;
+    const general_distributor = 3;
+    const exclusive_distributor = 4;
+    const chief_distributor = 5;
+}

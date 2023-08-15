@@ -40,13 +40,11 @@ class ProductController extends Controller
     }
 
     public function store(Request $request) {
-        // dd($request);
+        // dd($request->all());
         $request->validate([
             'code'              => 'required',
-            'name_en'           => 'required',
-            'name_cn'           => 'required',
-            'desc_en'           => 'required',
-            'desc_cn'           => 'required',
+            'name'           => 'required',
+            'description'           => 'required',
             'price'             => 'required',
             'discount'          => 'nullable|numeric',
             'category_id'       => 'required',
@@ -83,10 +81,8 @@ class ProductController extends Controller
 
             $product = Product::create([
                 'code' => $request->code,
-                'name_en' => $request->name_en,
-                'name_cn' => $request->name_cn,
-                'desc_en' => $request->desc_en,
-                'desc_cn' => $request->desc_cn,
+                'name' => $request->name,
+                'description' => $request->description,
                 'price' => $request->price,
                 'discount' => $request->discount,
                 'category_id' => $request->category_id,
@@ -97,8 +93,8 @@ class ProductController extends Controller
                 'image_3' => $imageName3 ?? null,
                 'image_4' => $imageName4 ?? null,
                 'image_5' => $imageName5 ?? null,
-                'created_by' => Auth::id(),
-                'updated_at' => null
+                // 'created_by' => Auth::id(),
+                // 'updated_at' => null
             ]);
 
             // Upload and store the images
@@ -171,12 +167,11 @@ class ProductController extends Controller
 
     public function update(Request $request, Product $product)
     {
+        // dd($request->all());
         $request->validate([
             'code' => 'required',
-            'name_en' => 'required',
-            'name_cn' => 'required',
-            'desc_en' => 'required',
-            'desc_cn' => 'required',
+            'name' => 'required',
+            'description' => 'required',
             'price' => 'required',
             'discount' => 'nullable|numeric',
             'category_id' => 'required',
@@ -213,17 +208,15 @@ class ProductController extends Controller
 
             $product->update([
                 'code' => $request->code,
-                'name_en' => $request->name_en,
-                'name_cn' => $request->name_cn,
-                'desc_en' => $request->desc_en,
-                'desc_cn' => $request->desc_cn,
+                'name' => $request->name,
+                'description' => $request->description,
                 'price' => $request->price,
                 'discount' => $request->discount,
                 'category_id' => $request->category_id,
                 'shipping_quantity' => $request->shipping_quantity,
                 'status' => $request->status,
-                'updated_by' => Auth::id(),
-                'updated_at' => now()
+                // 'updated_by' => Auth::id(),
+                // 'updated_at' => now()
             ]);
 
             // Upload and store the images

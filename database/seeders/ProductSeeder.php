@@ -17,9 +17,7 @@ class ProductSeeder extends Seeder
             'shipping_quantity'     => 4,
             'image_1'               => 'Package.jpg',
             'status'                => 'Active',
-            'remarks'               => 'testing',
-            'created_by'            => 1,
-            'updated_by'            => 1,
+            'remarks'               => 'testing'
         ],
         [
             'code'                  => 'NonBox2',
@@ -30,9 +28,8 @@ class ProductSeeder extends Seeder
             'shipping_quantity'     => 4,
             'image_1'               => '01.png',
             'status'                => 'Active',
-            'remarks'               => 'testing',
-            'created_by'            => 1,
-            'updated_by'            => 1,
+            'remarks'               => 'testing'
+            
         ],
         [
             'code'                  => 'R001',
@@ -43,9 +40,8 @@ class ProductSeeder extends Seeder
             'shipping_quantity'     => 1,
             'image_1'               => '06.jpg',
             'status'                => 'Active',
-            'remarks'               => 'testing',
-            'created_by'            => 1,
-            'updated_by'            => 1,
+            'remarks'               => 'testing'
+            
         ],
         [
             'code'                  => 'R002',
@@ -56,9 +52,8 @@ class ProductSeeder extends Seeder
             'shipping_quantity'     => 1,
             'image_1'               => '07.jpg',
             'status'                => 'Active',
-            'remarks'               => 'testing',
-            'created_by'            => 1,
-            'updated_by'            => 1,
+            'remarks'               => 'testing'
+            
         ],
         [
             'code'                  => 'R003',
@@ -69,9 +64,7 @@ class ProductSeeder extends Seeder
             'shipping_quantity'     => 1,
             'image_1'               => '08.jpg',
             'status'                => 'Active',
-            'remarks'               => 'testing',
-            'created_by'            => 1,
-            'updated_by'            => 1,
+            'remarks'               => 'testing'
         ],
         [
             'code'                  => 'R004',
@@ -82,9 +75,7 @@ class ProductSeeder extends Seeder
             'shipping_quantity'     => 1,
             'image_1'               => '09.jpg',
             'status'                => 'Active',
-            'remarks'               => 'testing',
-            'created_by'            => 1,
-            'updated_by'            => 1,
+            'remarks'               => 'testing'
         ],
         [
             'code'                  => 'R005',
@@ -95,9 +86,7 @@ class ProductSeeder extends Seeder
             'shipping_quantity'     => 1,
             'image_1'               => '10.jpg',
             'status'                => 'Active',
-            'remarks'               => 'testing',
-            'created_by'            => 1,
-            'updated_by'            => 1,
+            'remarks'               => 'testing'
         ],
         [
             'code'                  => 'R007',
@@ -108,9 +97,7 @@ class ProductSeeder extends Seeder
             'shipping_quantity'     => 1,
             'image_1'               => '11.jpg',
             'status'                => 'Active',
-            'remarks'               => 'testing',
-            'created_by'            => 1,
-            'updated_by'            => 1,
+            'remarks'               => 'testing'
         ],
         [
             'code'                  => 'R008',
@@ -121,9 +108,7 @@ class ProductSeeder extends Seeder
             'shipping_quantity'     => 1,
             'image_1'               => '12.jpg',
             'status'                => 'Active',
-            'remarks'               => 'testing',
-            'created_by'            => 1,
-            'updated_by'            => 1,
+            'remarks'               => 'testing'
         ],
         [
             'code'                  => 'R009',
@@ -134,9 +119,7 @@ class ProductSeeder extends Seeder
             'shipping_quantity'     => 1,
             'image_1'               => '13.jpg',
             'status'                => 'Active',
-            'remarks'               => 'testing',
-            'created_by'            => 1,
-            'updated_by'            => 1,
+            'remarks'               => 'testing'
         ],
         [
             'code'                  => 'R012',
@@ -147,9 +130,7 @@ class ProductSeeder extends Seeder
             'shipping_quantity'     => 1,
             'image_1'               => '02.jpg',
             'status'                => 'Active',
-            'remarks'               => 'testing',
-            'created_by'            => 1,
-            'updated_by'            => 1,
+            'remarks'               => 'testing'
         ],
         [
             'code'                  => 'R011',
@@ -161,9 +142,7 @@ class ProductSeeder extends Seeder
             'shipping_quantity'     => 1,
             'image_1'               => '04.jpg',
             'status'                => 'Active',
-            'remarks'               => 'testing',
-            'created_by'            => 1,
-            'updated_by'            => 1,
+            'remarks'               => 'testing'
         ],
         [
             'code'                  => 'N001',
@@ -174,9 +153,7 @@ class ProductSeeder extends Seeder
             'shipping_quantity'     => 1,
             'image_1'               => '03.png',
             'status'                => 'Active',
-            'remarks'               => 'testing',
-            'created_by'            => 1,
-            'updated_by'            => 1,
+            'remarks'               => 'testing'
         ],
         [
             'code'                  => 'Br1',
@@ -187,9 +164,7 @@ class ProductSeeder extends Seeder
             'shipping_quantity'     => 1,
             'image_1'               => null,
             'status'                => 'Active',
-            'remarks'               => 'testing',
-            'created_by'            => 1,
-            'updated_by'            => 1,
+            'remarks'               => 'testing'
         ],
         [
             'code'                  => 'Br2',
@@ -200,9 +175,7 @@ class ProductSeeder extends Seeder
             'shipping_quantity'     => 1,
             'image_1'               => null,
             'status'                => 'Active',
-            'remarks'               => 'testing',
-            'created_by'            => 1,
-            'updated_by'            => 1,
+            'remarks'               => 'testing'
         ],
         [
             'code'                  => 'Travel',
@@ -213,9 +186,7 @@ class ProductSeeder extends Seeder
             'shipping_quantity'     => 1,
             'image_1'               => null,
             'status'                => 'Active',
-            'remarks'               => 'testing',
-            'created_by'            => 1,
-            'updated_by'            => 1,
+            'remarks'               => 'testing'
         ],
         [
             'code'                  => 'N002',
@@ -226,9 +197,7 @@ class ProductSeeder extends Seeder
             'shipping_quantity'     => 1,
             'image_1'               => null,
             'status'                => 'Active',
-            'remarks'               => 'testing',
-            'created_by'            => 1,
-            'updated_by'            => 1,
+            'remarks'               => 'testing'
         ],
         [
             'code'                  => 'novset2',
@@ -239,9 +208,7 @@ class ProductSeeder extends Seeder
             'shipping_quantity'     => 3,
             'image_1'               => null,
             'status'                => 'Active',
-            'remarks'               => 'testing',
-            'created_by'            => 1,
-            'updated_by'            => 1,
+            'remarks'               => 'testing'
         ],
     ];
 

@@ -67,7 +67,7 @@ class CreateUsersTable extends Migration
             $table->unsignedBigInteger('rank_id')->nullable();
             // $table->foreign('rank_id')
             //     ->references('id')
-            //     ->on('ranking')
+            //     ->on('rankings')
             //     ->onUpdate('cascade');
             $table->softDeletes();
         });

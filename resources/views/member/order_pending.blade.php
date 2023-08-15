@@ -20,9 +20,24 @@
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-body">
+
+                    <div class="input-group">
+                        <input type="date" id="date-filter-input" class="form-control">
+                    </div>
+
+                    <select class="form-control" id="statusFilter">
+                        <option value="">All Status</option>
+                        <option value="1">Processing</option>
+                        <option value="2">Packing</option>
+                        <option value="3">Delivering</option>
+                        <option value="4">Complete</option>
+                        <option value="5">Cancel</option>
+                    </select>
+
                     <table id="allOrder" class="stripe nowrap" style="width:100%">
                         <thead>
                             <tr>
+                                <th>#</th>
                                 <th>Order ID</th>
                                 <th>Price</th>
                                 <th>Shipping Type</th>
@@ -38,6 +53,7 @@
                         <tbody>
                             @foreach($orders as $order)
                             <tr>
+                                <td>{{ $loop->iteration }}</td>
                                 <td class="fw-bold">#{{$order->order_num}}</td>
                                 <td>RM {{ number_format($order->total_amount, 2) }}</td>
                                 <td>{{$order->delivery_method}}</td>
@@ -46,7 +62,7 @@
                                 <td>{{ $order->tracking_number ?? '-' }}</td>
                                 <td>{{$order->created_at->format('d/m/Y, h:i:s')}}</td>
                                 <td>{{$order->payment_method}}</td>
-                                <td>
+                                <td data-status="{{ $order->status }}">
                                     @if($order->status == 1)
                                         <span class="badge badge-pill badge-soft-secondary font-size-12">
                                             Processing
@@ -86,6 +102,7 @@
                                             </button>
                                             <form action="{{ route('cancelorder', $order->id) }}" method="POST" id="delete-form-{{ $order->id }}">
                                                 @csrf
+                                                <input type="hidden" name="remark" id="remark-{{ $order->id }}">
                                                 <button type="button" class="btn btn-link text-danger delete-button" data-order-id="{{ $order->id }}" data-order-status="{{ $order->status }}">
                                                     <i class="mdi mdi-delete font-size-18"></i>
                                                 </button>
@@ -107,10 +124,49 @@
     <script src="{{ URL::asset('assets/js/app.js') }}"></script>
     <script src="{{ URL::asset('assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
     <script>
-        new DataTable('#allOrder', {
+
+        const customLanguage = {
+            search: "Search Order ID:"
+        };
+
+        var table = new DataTable('#allOrder', {
             responsive: true,
             pagingType: 'simple_numbers',
-            lengthChange: false
+            lengthChange: false,
+            order: [[0, 'desc']], // Default sorting order
+            language: customLanguage // Custom language object
+        });
+
+        // Add event listener to the date filter input
+        document.getElementById('date-filter-input').addEventListener('change', function() {
+            var selectedDate = this.value;
+            table.search('').column(4).search(selectedDate).draw();
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const statusFilter = document.getElementById("statusFilter");
+            const tableBody = document.querySelector("#allOrder tbody");
+
+            statusFilter.addEventListener("change", function () {
+                const selectedStatus = statusFilter.value;
+
+                const rows = tableBody.querySelectorAll("tr");
+                rows.forEach(function (row) {
+                    const statusCell = row.querySelector("td[data-status]");
+                    
+                    if (!statusCell) {
+                        return; // Skip rows without data-status attribute
+                    }
+                    
+                    const statusBadge = statusCell.querySelector(".badge");
+
+                    if (!selectedStatus || (statusBadge && selectedStatus === statusCell.getAttribute("data-status"))) {
+                        row.style.display = ""; // Show the row
+                    } else {
+                        row.style.display = "none"; // Hide the row
+                    }
+                });
+            });
         });
 
         // Handle click event for "View Details" button
@@ -156,6 +212,9 @@
                             title: 'Are you sure?',
                             text: 'You will not be able to recover this order!',
                             icon: 'warning',
+                            input: 'text', // Use a text input
+                            inputLabel: 'Remark',
+                            inputPlaceholder: 'Enter your remark...',
                             showCancelButton: true,
                             confirmButtonColor: '#3085d6',
                             cancelButtonColor: '#d33',
@@ -163,9 +222,23 @@
                             cancelButtonText: 'Cancel'
                         }).then((result) => {
                             if (result.isConfirmed) {
-                                // If the user confirms, submit the form to delete the order
-                                const form = document.getElementById('delete-form-' + orderId);
-                                form.submit();
+                                const remark = result.value;
+                                if (remark) {
+                                    const form = document.getElementById('delete-form-' + orderId);
+                                    const remarkInput = document.createElement('input');
+                                    remarkInput.type = 'hidden';
+                                    remarkInput.name = 'remark';
+                                    remarkInput.value = remark;
+                                    form.appendChild(remarkInput);
+                                    form.submit();
+                                } else {
+                                    Swal.fire({
+                                        title: 'Error',
+                                        text: 'Remark cannot be empty.',
+                                        icon: 'error',
+                                        confirmButtonText: 'Ok'
+                                    });
+                                }
                             }
                         });
                     }

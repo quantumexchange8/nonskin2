@@ -22,6 +22,7 @@ class CreateProductsTable extends Migration
             $table->double('discount')->default(0);
             $table->tinyInteger('category_id');
             $table->tinyInteger('shipping_quantity')->default(1);
+            $table->double('weight')->default(0);
             $table->string('image_1')->nullable();
             $table->string('image_2')->nullable();
             $table->string('image_3')->nullable();
@@ -30,8 +31,7 @@ class CreateProductsTable extends Migration
             $table->string('status', 10)->nullable()->default('Active')->comment('Product Active/Inactive');
             $table->string('remarks', 10)->nullable()->default('Nonskin')->comment('Product remarks');
             $table->timestamps();
-            $table->integer('created_by')->unsigned()->nullable()->comment('Refers to user id');
-            $table->integer('updated_by')->unsigned()->nullable()->comment('Refers to user id');
+            $table->softDeletes();
         });
     }
 

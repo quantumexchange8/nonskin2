@@ -18,14 +18,18 @@ class CreateOrdersTable extends Migration
             $table->integer('user_id')->unsigned()->nullable()->comment('Belongs to user id');
             $table->integer('payment_id')->unsigned()->nullable()->comment('Refers to payments table');
             $table->string('order_num')->unique();
-            $table->double('total_amount',9,2)->unsigned();
+            $table->double('price', 9, 2)->default(0);
+            $table->double('discount_amt', 9, 2)->default(0);
+            $table->double('nett_price', 9, 2)->default(0);//subtotal + delivery_fee
+            $table->double('delivery_fee',4,2);
+            $table->double('product_wallet', 9, 2)->default(0);//product wallet
+            $table->double('total_amount',9,2)->unsigned(); //price - discount
             $table->string('receiver');
             $table->string('contact');
             $table->string('email');
             $table->string('delivery_method');
             $table->string('payment_method');
             $table->string('delivery_address');
-            $table->double('delivery_fee',4,2);
             $table->string('status')->default('1');
             $table->string('courier')->nullable();
             $table->string('cn')->nullable();

@@ -168,13 +168,14 @@ class UserController extends Controller
             'orders' => $orders,
         ]);
     }
-    public function cancelorder(Order $order)
+    public function cancelorder(Order $order, Request $request)
     {
-        // dd($order->status);
+        // dd($request->remark);
 
         if($order->status == 1 || $order->status == 2)
         {
             $order->update([
+                'remarks' => $request->remark,
                 'status' => 5,
             ]);
 
