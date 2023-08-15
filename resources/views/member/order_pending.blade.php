@@ -20,21 +20,36 @@
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-body">
-
-                    <div class="input-group">
-                        <input type="date" id="date-filter-input" class="form-control">
-                    </div>
-
-                    <select class="form-control" id="statusFilter">
-                        <option value="">All Status</option>
-                        <option value="1">Processing</option>
-                        <option value="2">Packing</option>
-                        <option value="3">Delivering</option>
-                        <option value="4">Complete</option>
-                        <option value="5">Cancel</option>
-                    </select>
-
                     <table id="allOrder" class="stripe nowrap" style="width:100%">
+                        <div class="row justify-content-end">
+                            <div class="col-lg-3">
+                                <label class="form-label">Status</label>
+                                <select class="mb-3 form-select" id="statusFilter">
+                                    <option value="">All Status</option>
+                                    <option value="1">Processing</option>
+                                    <option value="2">Packing</option>
+                                    <option value="3">Delivering</option>
+                                    <option value="4">Complete</option>
+                                    <option value="5">Cancel</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="form-label">From Date</label>
+                                <input type="date" id="date-filter-input" class="form-control">
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="form-label">To Date</label>
+                                <input type="date" id="date-filter-input" class="form-control">
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="form-label">Search</label>
+                                <input type="text" id="search-input" class="form-control" placeholder="Enter keywords here...">
+                            </div>
+                            {{-- <div class="col-lg-3">
+                                <label class="form-label">&nbsp;</label>
+                                <button class="btn btn-primary w-100">Search</button>
+                            </div> --}}
+                        </div>
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -131,6 +146,7 @@
 
         var table = new DataTable('#allOrder', {
             responsive: true,
+            searching: false,
             pagingType: 'simple_numbers',
             lengthChange: false,
             order: [[0, 'desc']], // Default sorting order
@@ -153,11 +169,11 @@
                 const rows = tableBody.querySelectorAll("tr");
                 rows.forEach(function (row) {
                     const statusCell = row.querySelector("td[data-status]");
-                    
+
                     if (!statusCell) {
                         return; // Skip rows without data-status attribute
                     }
-                    
+
                     const statusBadge = statusCell.querySelector(".badge");
 
                     if (!selectedStatus || (statusBadge && selectedStatus === statusCell.getAttribute("data-status"))) {

@@ -29,21 +29,33 @@
                             <button type="button" class="btn btn-success waves-effect waves-light mb-2 me-2" data-bs-toggle="modal" data-bs-target=".add-new-order"><i class="mdi mdi-plus me-1"></i> Add New Order</button>
                         </div>
                     </div> --}}
-                    <div class="input-group">
-                        <input type="date" id="date-filter" class="form-control">
-                    </div>
-
-                    <select class="form-control" id="statusFilter">
-                        <option value="">All Status</option>
-                        <option value="1">Processing</option>
-                        <option value="2">Packing</option>
-                        <option value="3">Delivering</option>
-                        <option value="4">Complete</option>
-                        <option value="5">Cancel</option>
-                    </select>
-                    
-
                     <table id="allOrder" class="stripe nowrap" style="width:100%">
+                        <div class="row justify-content-end">
+                            <div class="col-lg-4">
+                                <label class="form-label">Status</label>
+                                <select class="mb-3 form-select" id="statusFilter">
+                                    <option value="">All Status</option>
+                                    <option value="1">Processing</option>
+                                    <option value="2">Packing</option>
+                                    <option value="3">Delivering</option>
+                                    <option value="4">Complete</option>
+                                    <option value="5">Cancel</option>
+                                </select>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <label class="form-label">Date</label>
+                                <input type="date" id="date-filter" class="form-control">
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="form-label">Search</label>
+                                <input type="text" id="search-input" class="form-control" placeholder="Enter keywords here...">
+                            </div>
+                            {{-- <div class="col-lg-3">
+                                <label class="form-label">&nbsp;</label>
+                                <button class="btn btn-primary w-100">Search</button>
+                            </div> --}}
+                        </div>
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -163,6 +175,7 @@
 
         var table = new DataTable('#allOrder', {
             responsive: true,
+            searching: false,
             pagingType: 'simple_numbers',
             lengthChange: false,
             order: [[0, 'desc']], // Default sorting order
@@ -185,11 +198,11 @@
                 const rows = tableBody.querySelectorAll("tr");
                 rows.forEach(function (row) {
                     const statusCell = row.querySelector("td[data-status]");
-                    
+
                     if (!statusCell) {
                         return; // Skip rows without data-status attribute
                     }
-                    
+
                     const statusBadge = statusCell.querySelector(".badge");
 
                     if (!selectedStatus || (statusBadge && selectedStatus === statusCell.getAttribute("data-status"))) {
@@ -216,7 +229,7 @@
 
                     // Show input fields and hide labels
                     $('#status-section-' + order_id + ' span').addClass('d-none');
-                     $('#status-section-' + order_id + ' select').removeClass('d-none');
+                    $('#status-section-' + order_id + ' select').removeClass('d-none');
 
                     $('#consignment-section span').addClass('d-none');
                     $('#consignment-section input').removeClass('d-none');
@@ -305,7 +318,7 @@
                 });
             });
         @endif
-        
+
 
     </script>
 

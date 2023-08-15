@@ -67,8 +67,8 @@
                             <h2>RM 3,888.50</h2>
                         </div>
                         <div class="d-flex justify-content-between gap-3 mt-4">
-                            <button class="btn btn-primary w-100">Deposit</button>
-                            <button class="btn btn-primary w-100">Withdraw</button>
+                            <a href="{{ route('member.deposit') }}" class="btn btn-primary w-100">Deposit</a>
+                            <a href="{{ route('member.withdraw') }}" class="btn btn-primary w-100">Withdraw</a>
                         </div>
                     </div>
                 </div>

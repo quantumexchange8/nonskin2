@@ -46,7 +46,7 @@
                         </a>
                         <div id="addproduct-productinfo-collapse" class="collapse show" data-bs-parent="#addproduct-accordion">
                             <div class="p-4 border-top">
-                                <div class="mt-4 mt-xl-0">
+                                <div class="mb-3 mt-xl-0">
                                     <div class="mt-4">
                                         <label for="formFile" class="form-label required">Upload Main Image</label>
                                         <input name="image_1" class="form-control @error('image_1') is-invalid @enderror" type="file" id="formFile" value="{{ old('image_1') }}">
@@ -248,7 +248,7 @@
         </div>
         <div class="row mb-4">
             <div class="col text-end">
-                
+
                 <button type="submit" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#success-btn"> <i class=" bx bx-file me-1"></i> Save </button>
             </div> <!-- end col -->
         </div>

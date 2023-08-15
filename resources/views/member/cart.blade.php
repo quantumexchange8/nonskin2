@@ -44,7 +44,7 @@
                                     </div>
                                     <div class="flex-grow-1 align-self-center overflow-hidden">
                                         <div>
-                                            <h5 class="text-truncate font-size-16"><a href="{{ route('showdetails', $v->product->id) }}" class="text-dark">{{ $v->product->name_en }}</a></h5>
+                                            <h5 class="text-truncate font-size-16"><a href="{{ route('showdetails', $v->product->id) }}" class="text-dark">{{ $v->product->name }}</a></h5>
                                             @if ($v->product->discount > 0)
                                             <p class="mb-1">{{ $v->product->discount }}% off</p>
                                             @endif
@@ -242,7 +242,7 @@
                     url: '{{ url("member/cart/get") }}',
                     method: 'GET',
                     success: function(response) {
-                    
+
                     if (response.cart) {
                         // Update the Sub Total and Total in the cart view
                         $('.sub-total').text('RM ' + response.total_price_without_discount.toLocaleString(undefined, { minimumFractionDigits: 2 }));
