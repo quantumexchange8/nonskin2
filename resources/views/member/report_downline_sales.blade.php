@@ -17,18 +17,23 @@
                             <tr>
                                 <th>Order Number</th>
                                 <th>Member Name</th>
-                                <th>Price</th>
+                                <th>Price (RM)</th>
                                 <th>Date</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($users as $user)
+                                @foreach ($user->orders as $order)
                                 <tr>
                                     <td>{{ $order->order_num }}</td>
-                                    <td>{{ $order->user_id->name }}</td>
-                                    <td>RM {{ number_format($order->total_amount,2) }}</td>
+                                    <td>{{ $user->referrer_id }} | {{ $user->full_name }}</td>
+                                    <td>{{ number_format($order->total_amount,2) }}</td>
                                     <td>{{ $order->created_at->format('d/m/Y, h:i:s') }}</td>
+                                    {{-- <td>{{ $user->orders }}</td> --}}
+                                    {{-- <td>RM {{ number_format($user->orders->total_amount,2) }}</td> --}}
+                                    {{-- <td>{{ $user->orders->created_at->format('d/m/Y, h:i:s') }}</td> --}}
                                 </tr>
+                                @endforeach
                             @endforeach
                         </tbody>
                     </table>

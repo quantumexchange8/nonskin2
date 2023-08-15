@@ -16,7 +16,7 @@
                         <thead>
                             <tr>
                                 <th>Order Number</th>
-                                <th>Price</th>
+                                <th>Price (RM)</th>
                                 <th>Date</th>
                             </tr>
                         </thead>
@@ -24,7 +24,7 @@
                             @foreach ($orders as $order)
                                 <tr>
                                     <td>{{ $order->order_num }}</td>
-                                    <td>RM {{ number_format($order->total_amount,2) }}</td>
+                                    <td>{{ number_format($order->total_amount,2) }}</td>
                                     <td>{{ $order->created_at->format('d/m/Y, h:i:s') }}</td>
                                 </tr>
                             @endforeach
