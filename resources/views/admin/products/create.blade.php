@@ -27,13 +27,13 @@
                         <a class="text-dark">
                             <div class="p-4">
                                 <div class="d-flex align-items-center">
-                                    <div class="flex-shrink-0 me-3">
+                                    {{-- <div class="flex-shrink-0 me-3">
                                         <div class="avatar-sm">
                                             <div class="avatar-title rounded-circle bg-soft-primary text-primary">
                                                 01
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="flex-grow-1 overflow-hidden">
                                         <h5 class="font-size-16 mb-1">Product Information</h5>
                                         <p class="text-muted text-truncate mb-0">Fill all information below</p>
@@ -46,17 +46,6 @@
                         </a>
                         <div id="addproduct-productinfo-collapse" class="collapse show" data-bs-parent="#addproduct-accordion">
                             <div class="p-4 border-top">
-                                <div class="mb-3 mt-xl-0">
-                                    <div class="mt-4">
-                                        <label for="formFile" class="form-label required">Upload Main Image</label>
-                                        <input name="image_1" class="form-control @error('image_1') is-invalid @enderror" type="file" id="formFile" value="{{ old('image_1') }}">
-                                        @error('image_1')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="mb-3">
@@ -69,6 +58,32 @@
                                             @enderror
                                         </div>
                                     </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label for="formFile" class="form-label required">Upload Main Image</label>
+                                            <input name="image_1" class="form-control @error('image_1') is-invalid @enderror" type="file" id="formFile" value="{{ old('image_1') }}">
+                                            @error('image_1')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label class="form-label required" for="name">Product Name</label>
+                                            <input class="form-control @error('name') is-invalid @enderror" id="name" name="name" placeholder="Enter Product Name" type="text" value="{{ old('name') }}">
+                                            @error('name')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-lg-6">
                                         <div class="mb-3">
                                             <label for="choices-single-default" class="form-label required">Category</label>
@@ -85,23 +100,12 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
-                                            <label class="form-label required" for="name">Product Name</label>
-                                            <input class="form-control @error('name_en') is-invalid @enderror" id="name" name="name" placeholder="Enter Product Name" type="text" value="{{ old('name') }}">
-                                            @error('name_en')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="mb-3">
                                             <label class="form-label required" for="description">Description</label>
-                                            <textarea class="form-control @error('desc_en') is-invalid @enderror" name="description" id="description" placeholder="Enter English Description" rows="4">{{ old('description') }}</textarea>
+                                            <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="description" placeholder="Enter English Description" rows="4">{{ old('description') }}</textarea>
                                             @error('description')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -110,10 +114,72 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <div class="mb-3">
+                                            <label class="form-label required" for="status">Status</label>
+                                            <select name="status" class="form-select @error('status') is-invalid @enderror">
+                                                <option value="Active" selected>Active</option>
+                                                <option value="Inactive">Inactive</option>
+                                            </select>
+                                            @error('shipping_quantity')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="mb-3">
+                                            <label class="form-label required" for="shipping_quantity">Shipping Quantity</label>
+                                            {{-- <input id="shipping_quantity" name="shipping_quantity" placeholder="e.g. 2" type="number" class="form-select"> --}}
+                                            <select class="form-select @error('shipping_quantity') is-invalid @enderror" id="shipping_quantity" name="shipping_quantity" >
+                                                <option value="1" selected>1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                                <option value="7">7</option>
+                                                <option value="8">8</option>
+                                                <option value="9">9</option>
+                                                <option value="10">10</option>
+                                            </select>
+                                            @error('shipping_quantity')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <div class="mb-3">
+                                            <label class="form-label required" for="price">Price</label>
+                                            <div class="input-group">
+                                                <div class="input-group-text">RM</div>
+                                                <input class="form-control @error('price') is-invalid @enderror" id="price" name="price" placeholder="e.g. 388.50" type="number" value="{{ old('price') }}">
+                                                @error('price')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @else
+                                                    <div class="valid-feedback">Looks good</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="discount">Discount in (%) <small class="text-muted">(Optional)</small></label>
+                                            <input id="discount" name="discount" placeholder="e.g. 5 (without %)" type="number" class="form-control" value="{{ old('discount') }}">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+
                         </div>
                     </div>
-                    <div class="card">
+                    {{-- <div class="card">
                         <a>
                             <div class="p-4">
                                 <div class="d-flex align-items-center">
@@ -135,7 +201,7 @@
                             </div>
                         </a>
                         <div id="addproduct-img-collapse" data-bs-parent="#addproduct-accordion">
-                            <div class="p-4 border-top">
+                            <div class="p-4 border-top"> --}}
                                 {{-- <div class="mt-4 mt-xl-0">
                                     <div class="mt-4">
                                         <label for="formFile" class="form-label required">Upload Main Image</label>
@@ -181,68 +247,9 @@
                                         </div>
                                     </div>
                                 </div> --}}
-                                <div class="row">
-                                    <div class="col-lg-3">
-                                        <div class="mb-3">
-                                            <label class="form-label required" for="status">Status</label>
-                                            <select name="status" class="form-select @error('status') is-invalid @enderror">
-                                                <option value="Active" selected>Active</option>
-                                                <option value="Inactive">Inactive</option>
-                                            </select>
-                                            @error('shipping_quantity')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="mb-3">
-                                            <label class="form-label required" for="shipping_quantity">Shipping Quantity</label>
-                                            {{-- <input id="shipping_quantity" name="shipping_quantity" placeholder="e.g. 2" type="number" class="form-select"> --}}
-                                            <select class="form-select @error('shipping_quantity') is-invalid @enderror" id="shipping_quantity" name="shipping_quantity" >
-                                                <option value="1" selected>1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                                <option value="6">6</option>
-                                                <option value="7">7</option>
-                                                <option value="8">8</option>
-                                                <option value="9">9</option>
-                                                <option value="10">10</option>
-                                            </select>
-                                            @error('shipping_quantity')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="mb-3">
-                                            <label class="form-label required" for="price">Price</label>
-                                            <div class="input-group">
-                                                <div class="input-group-text">RM</div>
-                                                <input class="form-control @error('price') is-invalid @enderror" id="price" name="price" placeholder="e.g. 388.50" type="number" value="{{ old('price') }}">
-                                                @error('price')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                @else
-                                                    <div class="valid-feedback">Looks good</div>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="mb-3">
-                                            <label class="form-label" for="discount">Discount in (%) <small class="text-muted">(Optional)</small></label>
-                                            <input id="discount" name="discount" placeholder="e.g. 5 (without %)" type="number" class="form-control" value="{{ old('discount') }}">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            {{-- </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
@@ -275,5 +282,15 @@
     <script src="{{ URL::asset('assets/libs/dropzone/dropzone.min.js') }}"></script>
     <script src="{{ URL::asset('assets/js/pages/ecommerce-choices.init.js') }}"></script>
     <script src="{{ URL::asset('assets/js/app.js') }}"></script>
-    <script src="{{ URL::asset('assets/js/pages/form-editor.init.js') }}"></script>
+    <script src="{{ URL::asset('assets/libs/@ckeditor/@ckeditor.min.js') }}"></script>
+    <script>
+        ClassicEditor
+        .create( document.querySelector( '#description' ) )
+        .then( function(editor) {
+            editor.ui.view.editable.element.style.height = '200px';
+        } )
+        .catch( function(error) {
+            console.error( error );
+        } );
+    </script>
 @endsection

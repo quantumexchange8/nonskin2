@@ -69,7 +69,7 @@
                                         <p class="mt-4 text-muted">Description</p>
                                     </div>
                                     <div class="col-10">
-                                        <p class="mt-4 font-bold">{{ $product->description ?? 'Product description unavailable' }}</p>
+                                        <p class="mt-4 font-bold">{!! $product->description ?? 'Product description unavailable' !!}</p>
                                     </div>
                                 </div>
 

@@ -162,6 +162,9 @@ class ProductController extends Controller
         $categories = Category::where('status', 'Active')->pluck('name_en', 'id');
         $statuses = ['Active', 'Inactive'];
         $quantities = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        $title = 'Remove Picture!';
+        $text = "Are you sure you want to delete?";
+        confirmDelete($title, $text);
         return view('admin.products.edit', compact('product', 'categories', 'statuses', 'quantities'));
     }
 
@@ -270,6 +273,22 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         //
+    }
+
+    public function removePicture(Product $product){
+        // dd($product);
+        try {
+           if($product->image_1){
+            $product->image_1 = null;
+            $product->update();
+           }else{
+            return redirect()->back()->with('error', "Please upload a picture before trying to remove it!");
+           }
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', "Something went wrong!");
+        }
+
+        return redirect()->back()->with('updated', "Product's picture has been removed successfully");
     }
 
     public function productlist ()

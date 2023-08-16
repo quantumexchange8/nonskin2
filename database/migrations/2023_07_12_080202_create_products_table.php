@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
             $table->string('name')->nullable();
             $table->longText('description')->nullable();
             $table->double('price')->nullable();
-            $table->double('discount')->default(0);
+            $table->double('discount')->nullable()->default(0);
             $table->tinyInteger('category_id');
             $table->tinyInteger('shipping_quantity')->default(1);
             $table->double('weight')->default(0);

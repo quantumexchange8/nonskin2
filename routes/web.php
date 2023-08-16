@@ -40,8 +40,8 @@ Auth::routes();
 Route::resource('cart', CartController::class);
 // Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
 
-Route::get('/register', [RegisterController::class, 'register'])->name('register');
-Route::get('/register/{referral?}', [RegisterController::class, 'register'])->name('register');
+Route::get('/register', [RegisterController::class, 'register'])->name('user-register');
+Route::get('/register/{referral?}', [RegisterController::class, 'register'])->name('referral-register');
 Route::post('/add-member', [RegisterController::class, 'store'])->name('add.member');
 
 //Update User Details
@@ -59,7 +59,7 @@ Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class
  * MEMBERS
  */
 Route::group(['prefix' => 'members',  'middleware' => ['auth', 'role:user',]], function () {
-    Route::get('/dashboard', [UserController::class, 'dashboard'])->name('dashboard');
+    Route::get('/dashboard', [UserController::class, 'dashboard'])->name('user-dashboard');
 
     // Route::get('/', [MemberController::class, 'index'])->name('members.index');                                     // member Index
     // Route::get('/create', [MemberController::class, 'create'])->name('members.create');                             // member CREATE
@@ -112,7 +112,7 @@ Route::post('api/fetch-cities', [DropdownController::class, 'fetchCity']);
 // ADMIN
 Route::group(['prefix' => 'admin',  'middleware' => ['auth', 'role:superadmin|admin',]], function () {
     // dashboard
-    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin-dashboard');
 
     // announcements
     Route::get('/announcements', [AnnouncementController::class, 'list'])->name('announcements.list');
@@ -131,6 +131,7 @@ Route::group(['prefix' => 'admin',  'middleware' => ['auth', 'role:superadmin|ad
     Route::get('create_product', [ProductController::class, 'create'])->name('create');
     Route::get('/product_detail/{product}', [ProductController::class, 'show'])->name('show');
     Route::get('/product_detail/{product}/edit', [ProductController::class, 'edit'])->name('edit');
+    Route::delete('/product_detail/remove-picture/{product}', [ProductController::class, 'removePicture'])->name('remove-picture');
     Route::post('/product_detail/update/{product}', [ProductController::class, 'update'])->name('update');
     Route::post('/product_detail/destroy/{product}', [ProductController::class, 'destroy'])->name('destroy');
 
