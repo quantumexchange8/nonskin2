@@ -57,7 +57,7 @@ Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class
  * MEMBERS
  */
 Route::group(['prefix' => 'members',  'middleware' => ['auth', 'role:user',]], function () {
-    Route::get('/', [UserController::class, 'dashboard'])->name('user-dashboard');
+    Route::get('/dashboard', [UserController::class, 'dashboard'])->name('user-dashboard');
     Route::post('pending-orders/{order}', [UserController::class, 'cancelorder'])->name('cancelorder');
     Route::get('/products_list', [ProductController::class, 'productlist'])->name('product-list');
     Route::get('/products_details/{product}', [ProductController::class, 'showdetails'])->name('showdetails');
@@ -85,7 +85,7 @@ Route::group(['prefix' => 'members',  'middleware' => ['auth', 'role:user',]], f
 // ADMIN
 Route::group(['prefix' => 'admin',  'middleware' => ['auth', 'role:superadmin|admin',]], function () {
     // dashboard
-    Route::get('/', [AdminController::class, 'dashboard'])->name('admin-dashboard');
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin-dashboard');
 
     // announcements
     Route::get('/announcements', [AnnouncementController::class, 'list'])->name('announcements.list');
