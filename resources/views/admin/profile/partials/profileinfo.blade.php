@@ -90,7 +90,13 @@
             <div class="col-lg-6">
                 <div class="mb-3">
                     <label for="bank" class="form-label">Bank Name</label>
-                    <input type="text" class="form-control" placeholder="e.g. NON000100" value="{{ Auth::user()->bank_name ?? '-N/A-' }}" id="bank" name="bank" disabled required>
+                    {{-- <input type="text" class="form-control" placeholder="e.g. NON000100" value="{{ Auth::user()->bank_name ?? '-N/A-' }}" id="bank" name="bank" disabled required> --}}
+                    <select class="form-select" name="bank" id="bank" disabled>
+                        <option value="">Select Bank</option>
+                        @foreach ($banks as $bank)
+                            <option value="{{ $bank->name }}" {{ Auth::user()->bank_name == $bank->name ? 'selected' : '' }}>{{ $bank->name }}</option>
+                        @endforeach
+                    </select>
                     <div class="invalid-feedback" id="bank-error">
                         <!-- Error message will be displayed here -->
                     </div>
@@ -138,5 +144,5 @@
             </div>
         </div>
     </form>
-    
+
 </div>

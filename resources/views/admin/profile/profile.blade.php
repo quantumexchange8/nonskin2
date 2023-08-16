@@ -36,7 +36,7 @@
                         </div>
                     </div>
                 </div>
-            
+
         </div>
     </div>
 
@@ -46,7 +46,7 @@
     <script src="{{ URL::asset('assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
     <script src="{{ URL::asset('assets/js/pages/form-validation.init.js') }}"></script>
     <script>
-        
+
 
         $(document).ready(function() {
 
@@ -58,6 +58,7 @@
             $('.btn-edit-profile').on('click', function() {
                 // Enable input fields
                 $('input').prop('disabled', false);
+                $('select').prop('disabled', false);
 
                 // Show Save and Cancel buttons, hide Edit Profile button
                 $('#save-profile-button, #cancel-edit-button').removeClass('d-none');
@@ -115,7 +116,7 @@
 
             $('#full_name').on('blur', function() {
                 var full_name = $(this).val().trim();
-                
+
                 // Show error if field is blank
                 if (full_name === '') {
                     $('#full_name').addClass('is-invalid');
@@ -145,7 +146,7 @@
 
             $('#email').on('blur', function() {
                 var email = $(this).val().trim();
-                
+
                 // Show error if field is blank
                 if (email === '') {
                     $('#email').addClass('is-invalid');
@@ -175,7 +176,7 @@
 
             $('#username').on('blur', function() {
                 var username = $(this).val().trim();
-                
+
                 // Show error if field is blank
                 if (username === '') {
                     $('#username').addClass('is-invalid');
@@ -189,14 +190,14 @@
 
             $('#contact').on('blur', function() {
                 var contact = $(this).val().trim();
-                
+
                 // Show error if field is blank
                 if (contact === '') {
                     $('#contact').addClass('is-invalid');
                     $('#contact-error').text('Contact is required.');
-                } else if (!/^\d{9,10}$/.test(contact)) {
+                } else if (!/^\d{10,12}$/.test(contact)) {
                     $('#contact').addClass('is-invalid');
-                    $('#contact-error').text('Contact must be a number with 9 to 10 digits.');
+                    $('#contact-error').text('Contact must be a number with 10 to 11 digits.');
                 } else {
                     $('#contact').removeClass('is-invalid');
                     $('#contact').addClass('is-valid');
@@ -206,12 +207,15 @@
 
             $('#id_no').on('blur', function() {
                 var id_no = $(this).val().trim();
-                
+
                 // Show error if field is blank
                 if (id_no === '') {
                     $('#id_no').addClass('is-invalid');
                     $('#id_no-error').text('ID number is required.');
                     return;
+                } else if (!/^\d{8,12}$/.test(id_no)) {
+                    $('#id_no').addClass('is-invalid');
+                    $('#id_no-error').text('ID Number must be a number with 8 to 12 digits.');
                 } else {
                     $('#id_no').addClass('is-valid');
                     $('#id_no-error').text('');
@@ -220,7 +224,7 @@
 
             $('#bank').on('blur', function() {
                 var bank = $(this).val().trim();
-                
+
                 // Show error if field is blank
                 if (bank === '') {
                     $('#bank').addClass('is-invalid');
@@ -233,7 +237,7 @@
             });
             $('#holdername').on('blur', function() {
                 var holdername = $(this).val().trim();
-                
+
                 // Show error if field is blank
                 if (holdername === '') {
                     $('#holdername').addClass('is-invalid');
@@ -246,7 +250,7 @@
             });
             $('#bankacc').on('blur', function() {
                 var bankacc = $(this).val().trim();
-                
+
                 // Show error if field is blank
                 if (bankacc === '') {
                     $('#bankacc').addClass('is-invalid');
@@ -259,7 +263,7 @@
             });
             $('#bankid').on('blur', function() {
                 var bankid = $(this).val().trim();
-                
+
                 // Show error if field is blank
                 if (bankid === '') {
                     $('#bankid').addClass('is-invalid');
