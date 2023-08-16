@@ -17,6 +17,7 @@ class Order extends Model
         'courier',
         'cn',
         'tracking_number',
+        'payment_proof'
     ];
 
     // STATUS FOR ORDER

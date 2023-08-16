@@ -35,6 +35,7 @@ class CreateOrdersTable extends Migration
             $table->string('cn')->nullable();
             $table->string('tracking_number')->nullable();
             $table->longText('remarks')->nullable();
+            $table->string('payment_proof')->nullable();
             $table->timestamps();
             $table->integer('created_by')->unsigned()->nullable()->comment('Refers to user id');
             $table->integer('updated_by')->unsigned()->nullable()->comment('Refers to user id');

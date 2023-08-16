@@ -18,6 +18,7 @@ class OrderController extends Controller
     // Customer
     public function placeOrder(Request $request)
     {
+        // dd($request);
         if(auth()->user()->cart->items->count() == 0){
             return redirect()->route('member.cart');
         }
@@ -40,6 +41,11 @@ class OrderController extends Controller
         // if (!$prefixRow) {
         //     // If the prefix doesn't exist, handle it as needed (e.g., show an error)
         // }
+
+        $request->validate([
+            'payment_proof' => 'nullable|image|max:2048|mimes:jpeg,jpg,png,pdf', // Adjust the allowed mime types and file size as needed
+        ]);
+
         try {
             DB::beginTransaction();
             $newOrderNumber = $prefixRow->counter + 1;
@@ -65,6 +71,17 @@ class OrderController extends Controller
             $order->remarks             = null;
             $order->created_by          = Auth::id();
             $order->updated_at          = null;
+            
+            
+            if ($request->payment_proof != null) {
+                // dd($request->payment_proof);
+                $order->payment_proof = null;
+                
+            } else {
+                // No image uploaded, set payment_proof to null
+                $order->payment_proof = null;
+            }
+
             $order->save();
 
 

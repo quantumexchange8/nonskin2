@@ -64,7 +64,7 @@
                     <h5 class="card-title mb-0">Purchase Wallet</h5>
                     <div class="row mt-4 mt-auto">
                         <div>
-                            <h2>RM 3,888.50</h2>
+                            <h2>RM {{ number_format($user->commission_wallet, 2) }}</h2>
                         </div>
                         <div class="d-flex justify-content-between gap-3 mt-4">
                             <a href="{{ route('member.deposit') }}" class="btn btn-primary w-100">Deposit</a>

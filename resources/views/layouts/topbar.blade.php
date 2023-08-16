@@ -191,7 +191,7 @@
                     <a class="dropdown-item" href="{{ route('userprofile') }}"><i class='bx bx-user-circle text-muted font-size-18 align-middle me-1'></i> <span class="align-middle">@lang('translation.My_Account') </span></a>
                     @endhasanyrole
                     @hasanyrole('superadmin|admin')
-                    <a class="dropdown-item" href="{{ route('myProfile') }}"><i class='bx bx-user-circle text-muted font-size-18 align-middle me-1'></i> <span class="align-middle">@lang('translation.My_Account') </span></a>
+                    <a class="dropdown-item" href="{{ route('profile') }}"><i class='bx bx-user-circle text-muted font-size-18 align-middle me-1'></i> <span class="align-middle">@lang('translation.My_Account') </span></a>
                     @endhasanyrole
                     {{-- <a class="dropdown-item" href="apps-chat"><i class='bx bx-chat text-muted font-size-18 align-middle me-1'></i> <span class="align-middle">@lang('translation.Chat')</span></a> --}}
                     {{-- <a class="dropdown-item" href="pages-faqs"><i class='bx bx-buoy text-muted font-size-18 align-middle me-1'></i> <span class="align-middle">@lang('translation.Support')</span></a> --}}

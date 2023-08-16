@@ -175,21 +175,20 @@ class UserController extends Controller
     public function memberNetworkTree() {
         return view('member.member_network_tree');
     }
-    public function orderHistory() {
+    public function pendingOrder() {
         $orders = Order::with(['user', 'orderItems', 'orderItems.product'])->where('user_id', Auth::id())->get();
         // dd($orders);
         return view('member.order_pending', [
             'orders' => $orders,
         ]);
     }
-    public function cancelorder(Order $order, Request $request)
+    public function cancelorder(Order $order)
     {
-        // dd($request->remark);
+        // dd($order->status);
 
         if($order->status == 1 || $order->status == 2)
         {
             $order->update([
-                'remarks' => $request->remark,
                 'status' => 5,
             ]);
 
@@ -278,29 +277,29 @@ class UserController extends Controller
             'bank_ic' => $request->bankid,
         ]);
 
-        if($request->input('current_password') != null)
-        {
-            $current = Auth::User()->password;
-            if(hash::check($request->input('current_password'), $current))
-            {
-                $user_id = Auth::user()->id;
-                $obj_user = User::find($user_id);
-                    if($request->input('new_password') == $request->input('confirm_password'))
-                    {
-                        $obj_user->password = Hash::make($request->input('new_password'));
-                        $obj_user->save();
+        // if($request->input('current_password') != null)
+        // {
+        //     $current = Auth::User()->password;
+        //     if(hash::check($request->input('current_password'), $current))
+        //     {
+        //         $user_id = Auth::user()->id;
+        //         $obj_user = User::find($user_id);
+        //             if($request->input('new_password') == $request->input('confirm_password'))
+        //             {
+        //                 $obj_user->password = Hash::make($request->input('new_password'));
+        //                 $obj_user->save();
 
-                        Alert::success(trans('public.success'), trans('public.successful_updated_password'));
-                        return redirect()->back();
-                    } else {
-                        Alert::error(trans('public.failed'), trans('public.new_password_doesn\t_match_with_confirm_password'));
-                        return redirect()->back();
-                    }
-            } else {
-                Alert::error(trans('public.failed'), trans('public.Incorrect_current_password'));
-                return redirect()->back();
-            }
-        }
+        //                 Alert::success(trans('public.success'), trans('public.successful_updated_password'));
+        //                 return redirect()->back();
+        //             } else {
+        //                 Alert::error(trans('public.failed'), trans('public.new_password_doesn\t_match_with_confirm_password'));
+        //                 return redirect()->back();
+        //             }
+        //     } else {
+        //         Alert::error(trans('public.failed'), trans('public.Incorrect_current_password'));
+        //         return redirect()->back();
+        //     }
+        // }
 
 
         Alert::success('Success', 'Profile Updated');

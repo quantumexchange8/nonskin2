@@ -41,8 +41,8 @@ Auth::routes();
 Route::resource('cart', CartController::class);
 // Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
 
-Route::get('/register', [RegisterController::class, 'register'])->name('user-register');
-Route::get('/register/{referral?}', [RegisterController::class, 'register'])->name('referral-register');
+Route::get('/register', [RegisterController::class, 'register'])->name('register');
+Route::get('/register/{referral?}', [RegisterController::class, 'register'])->name('register');
 Route::post('/add-member', [RegisterController::class, 'store'])->name('add.member');
 
 //Update User Profile
@@ -76,6 +76,9 @@ Route::group(['prefix' => 'members',  'middleware' => ['auth', 'role:user',]], f
 
     // order
     Route::get('/invoice/{order}', [UserController::class, 'invoice'])->name('invoice');
+
+    Route::get('/search-orders', [OrderController::class, 'searchOrders'])->name('search.orders');
+
 });
 
 // Route::get('dependent-dropdown', [DropdownController::class, 'index']);
@@ -117,6 +120,11 @@ Route::group(['prefix' => 'admin',  'middleware' => ['auth', 'role:superadmin|ad
     Route::get('/orders/history', [OrderController::class, 'history'])->name('order-history-list');
 
     Route::get('/invoice/{order}', [AdminController::class, 'invoice'])->name('invoice-admin');
+
+    // profile
+    Route::get('/my_profile', [AdminController::class, 'profile'])->name('profile');
+    Route::post('/my_profile/update', [AdminController::class, 'update'])->name('update');
+    Route::post('/change_password', [AdminController::class, 'chgpassword'])->name('chgpassword');
 });
 
 // Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');

@@ -313,4 +313,40 @@ class AdminController extends Controller
         $pdf = PDF::loadView('member.orders..pdf.invoice', ['invoice' => $invoice, 'orderItems' => $orderItems, 'companyInfo' => $companyInfo]);
         return $pdf->download('invoice.pdf');
     }
+
+    public function profile()
+    {
+        return view('admin.profile.profile');
+    }
+
+    public function update(Request $request)
+    {
+        $user = Auth::user();
+
+        $user->update([
+            'full_name' => $request->full_name,
+            'username' => $request->username,
+            'email' => $request->email,
+            'contact' => $request->contact,
+            'id_no' => $request->id_no,
+            'bank_holder_name' => $request->holdername,
+            'bank_acc_no' => $request->bankacc,
+            'bank_ic' => $request->bankid,
+        ]);
+
+        Alert::success('Success', 'Profile Updated');
+        return redirect()->back();
+    }
+    
+    public function chgpassword()
+    {
+        return view('admin.profile.password');
+    }
+
+    public function updatepassword()
+    {
+
+        Alert::success('Success', 'Profile Updated');
+        return redirect()->back();
+    }
 }

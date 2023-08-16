@@ -14,7 +14,8 @@
         @slot('title') Checkout @endslot
     @endcomponent
 
-<form action="" id="checkout-form">
+<form action="{{ route('place-order') }}" method="POST" id="checkout-form" enctype="multipart/form-data">
+    @csrf
     <div class="row">
         <div class="col-xl-8">
             <div class="custom-accordion">
@@ -68,6 +69,13 @@
                     <div class="card">
                         @include('member.partials._checkout_payment_info_ship')
                     </div>
+
+                    <div id="payment-proof-section" class="card" style="display: none;">
+                        <div class="form-group">
+                            <label for="payment_proof">Payment Proof Image:</label>
+                            <input type="file" class="form-control" id="payment_proof" name="payment_proof">
+                        </div>
+                    </div>                    
                 </div>
 
                 <div id="selfpickupinfo" style="display: none;">
@@ -148,6 +156,18 @@
                 }
             });
 
+             // Attach change event handler to the payment method radio buttons
+            $('input[name="payment_method"]').change(function() {
+                const selectedPaymentMethod = $('input[name="payment_method"]:checked').val();
+                const paymentProofSection = $('#payment-proof-section');
+                
+                if (selectedPaymentMethod === 'Manual Transfer') {
+                    paymentProofSection.show();
+                } else {
+                    paymentProofSection.hide();
+                }
+            });
+
             // Attach a click event handler to the "Place Order" button
             $('#place-order-btn').click(function() {
                 // Check if delivery method and payment method are selected
@@ -204,95 +224,132 @@
                     })
                     return;
                 }
+                
 
-                // Serialize the form data
-                let formData = $('#checkout-form').serializeArray();
+                
+                    let formData = $('#checkout-form').serializeArray();
 
-                formData.push({
-                    name: '_token',
-                    value: $('meta[name="csrf-token"]').attr('content')
-                }, {
-                    name: 'user_id',
-                    value: {{ $user->id }}
-                }, {
-                    name: 'email',
-                    value: '{{ $user->email }}'
-                }, {
-                    name: 'total_amount',
-                    value: formattedTotal
-                });
-                 // Check the delivery method and add receiver and contact accordingly
-                if (selectedDeliveryMethod === 'Delivery') {
                     formData.push({
-                        name: 'receiver',
-                        value: name
+                        name: '_token',
+                        value: $('meta[name="csrf-token"]').attr('content')
                     }, {
-                        name: 'contact',
-                        value: contact
+                        name: 'user_id',
+                        value: {{ $user->id }}
+                    }, {
+                        name: 'email',
+                        value: '{{ $user->email }}'
+                    }, {
+                        name: 'total_amount',
+                        value: formattedTotal
                     });
-                } else if (selectedDeliveryMethod === 'Self-Pickup') {
-                    formData.push({
-                        name: 'receiver',
-                        value: 'company'
-                    }, {
-                        name: 'contact',
-                        value: 'company'
-                    }, {
-                        name: 'deliveryAddress',
-                        value: 'test',
-                    }
-                    
-                    );
-                }
-                // Use AJAX to post the form data to the server
-                $.ajax({
-                    url: '{{ route("place-order") }}',
-                    method: 'POST',
-                    data: formData,
-                    success: function(response) {
-                        if (response && response.message) {
-                            var timerInterval;
-                            Swal.fire({
-                            title: response.message,
-                            html: 'Please do not click on anywhere while being redirected to the payment page',
-                            timer: 3000,
-                            timerProgressBar: true,
-                            didOpen:function () {
-                                Swal.showLoading()
-                                timerInterval = setInterval(function() {
-                                var content = Swal.getHtmlContainer()
-                                if (content) {
-                                    var b = content.querySelector('b')
-                                    if (b) {
-                                        b.textContent = Swal.getTimerLeft()
-                                    }
-                                }
-                                }, 100)
-                            },
-                            onClose: function () {
-                                clearInterval(timerInterval);
-                                window.location.href = "{{ route('member.order-pending') }}";
+                    // Check the delivery method and add receiver and contact accordingly
+                    if (selectedDeliveryMethod === 'Delivery') {
+                        if(selectedPaymentMethod === 'Manual Transfer') {
+                            formData.push({
+                                name: 'receiver',
+                                value: name
+                            }, {
+                                name: 'contact',
+                                value: contact
+                            });
+
+                            // Get the payment proof file input
+                            const paymentProofInput = document.getElementById('payment_proof');
+                            if (paymentProofInput.files.length > 0) {
+                                // Add the payment_proof to the FormData
+                                formData.push({
+                                    name: 'payment_proof',
+                                    value: paymentProofInput.files[0]
+                                });
+                            } else {
+                                // Display a SweetAlert to inform the user to upload payment proof
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: 'Please upload the payment proof to proceed',
+                                });
+                                return; // Exit the function
                             }
-                            }).then(function (result) {
-                                /* Read more about handling dismissals below */
-                                if (result.dismiss === Swal.DismissReason.timer) {
+                            console.log(formData)
+                        } else {
+                            formData.push({
+                                name: 'receiver',
+                                value: name
+                            }, {
+                                name: 'contact',
+                                value: contact
+                            });
+                        }
+                        
+                    } else if (selectedDeliveryMethod === 'Self-Pickup') {
+                        formData.push({
+                            name: 'receiver',
+                            value: 'company'
+                        }, {
+                            name: 'contact',
+                            value: 'company'
+                        }, {
+                            name: 'deliveryAddress',
+                            value: 'test',
+                        }
+                        
+                        );
+                    }
+                    // console.log(formData)
+                    // Serialize the form data
+                    // Use AJAX to post the form data to the server
+                    $.ajax({
+                        url: '{{ route("place-order") }}',
+                        method: 'POST',
+                        data: formData,
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function(response) {
+                            if (response && response.message) {
+                                var timerInterval;
+                                Swal.fire({
+                                title: response.message,
+                                html: 'Please do not click on anywhere while being redirected to the payment page',
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen:function () {
+                                    Swal.showLoading()
+                                    timerInterval = setInterval(function() {
+                                    var content = Swal.getHtmlContainer()
+                                    if (content) {
+                                        var b = content.querySelector('b')
+                                        if (b) {
+                                            b.textContent = Swal.getTimerLeft()
+                                        }
+                                    }
+                                    }, 100)
+                                },
+                                onClose: function () {
+                                    clearInterval(timerInterval);
                                     window.location.href = "{{ route('member.order-pending') }}";
                                 }
-                            })
+                                }).then(function (result) {
+                                    /* Read more about handling dismissals below */
+                                    if (result.dismiss === Swal.DismissReason.timer) {
+                                        window.location.href = "{{ route('member.order-pending') }}";
+                                    }
+                                })
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            // console.log(formData);
+                            console.log(xhr);
+                            console.log(status);
+                            Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: error
+                        })
+                        return;
                         }
-                    },
-                    error: function(xhr, status, error) {
-                        // console.log(formData);
-                        console.log(xhr);
-                        console.log(status);
-                        Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: error
-                    })
-                    return;
-                    }
-                });
+                    });
+                // }
             });
         });
         function updateShippingCharge(isShippingMethod) {

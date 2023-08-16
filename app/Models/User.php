@@ -91,7 +91,7 @@ class User extends Authenticatable
 
     public function rank()
     {
-        return $this->hasOne(Ranking::class, 'id', 'rank_id');
+        return $this->hasOne(Rankings::class, 'id', 'rank_id');
     }
 
     public function orders()

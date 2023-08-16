@@ -15,9 +15,8 @@ Route::group(['prefix' => 'member/', 'as' => 'member.',  'middleware' => ['auth'
     Route::get('internal-transfer/history', [UserController::class, 'internalTransferHistory'])->name('internal-transfer-history');
     Route::get('internal-transfer/new', [UserController::class, 'internalTransferNew'])->name('new-internal-transfer');
     Route::get('member-listing', [UserController::class, 'memberListing'])->name('listing');
-    Route::get('member-listing/{user}/detail', [UserController::class, 'memberDetail'])->name('member-detail');
     Route::get('member-network-tree', [UserController::class, 'memberNetworkTree'])->name('network-tree');
-    Route::get('order-history', [UserController::class, 'orderHistory'])->name('order-pending');
+    Route::get('orders/history', [UserController::class, 'pendingOrder'])->name('order-pending');
     Route::post('pending-orders/{order}', [UserController::class, 'cancelorder'])->name('cancelorder');
 
     // Purchase Wallet Deposit & Withdraw Pages

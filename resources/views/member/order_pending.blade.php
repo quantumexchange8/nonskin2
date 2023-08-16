@@ -65,13 +65,13 @@
                             @foreach($orders as $order)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td class="fw-bold">#{{$order->order_num}}</td>
+                                <td class="fw-bold" data-order-no="{{ $order->order_num }}">{{$order->order_num}}</td>
                                 <td>RM {{ number_format($order->total_amount, 2) }}</td>
                                 <td>{{$order->delivery_method}}</td>
                                 <td>{{ $order->courier ?? '-' }}</td>
                                 <td>{{ $order->cn ?? '-' }}</td>
                                 <td>{{ $order->tracking_number ?? '-' }}</td>
-                                <td>{{$order->created_at->format('d/m/Y, h:i:s')}}</td>
+                                <td>{{$order->updated_at }}</td>
                                 <td>{{$order->payment_method}}</td>
                                 <td data-status="{{ $order->status }}">
                                     @if($order->status == 1)
@@ -142,7 +142,7 @@
 
         var table = new DataTable('#allOrder', {
             responsive: true,
-            searching: false,
+            searching: true,
             pagingType: 'simple_numbers',
             lengthChange: false,
             order: [[0, 'desc']], // Default sorting order
@@ -152,7 +152,77 @@
         // Add event listener to the date filter input
         document.getElementById('date-filter-input').addEventListener('change', function() {
             var selectedDate = this.value;
-            table.search('').column(4).search(selectedDate).draw();
+
+            // Filter the table based on the selected date
+            filterTableByDate(selectedDate);
+        });
+
+        function filterTableByDate(selectedDate) {
+            var rows = document.querySelectorAll("#allOrder tbody tr");
+
+            rows.forEach(function(row) {
+                var dateCell = row.querySelector("td:nth-child(8)"); // Assuming date is in the 8th column
+                var dateCellValue = dateCell.textContent;
+
+                // Extract the date part from the full date-time value
+                var cleanedDateCellValue = dateCellValue.split(' ')[0];
+
+                var formattedCellValue = formatDate(cleanedDateCellValue);
+                var formattedSelectedDate = formatDate(selectedDate);
+
+                if (formattedCellValue === formattedSelectedDate) {
+                    row.style.display = "table-row"; // Show the row
+                } else {
+                    row.style.display = "none"; // Hide the row
+                }
+            });
+        }
+
+        function formatDate(date) {
+            // Convert date format from 'YYYY-MM-DD' to 'DD/MM/YYYY'
+            var parts = date.split("-");
+            var formattedDate = parts[2] + "/" + parts[1] + "/" + parts[0];
+            return formattedDate;
+        }
+
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const tableBody = document.querySelector("#allOrder tbody");
+            const searchInput = document.getElementById("search-input");
+            const dataTable = $('#allOrder').DataTable(); // Initialize DataTables
+
+            // Store order data globally
+            const orders = []; // An array to store all order objects
+            const rows = tableBody.querySelectorAll("tr");
+
+            // Populate the orders array with data from the rows
+            rows.forEach(function (row) {
+                const orderNumberCell = row.querySelector("td[data-order-no]");
+                if (orderNumberCell) {
+                    const orderNumber = orderNumberCell.getAttribute("data-order-no");
+                    orders.push({
+                        orderNumber: orderNumber.toLowerCase(),
+                        row: row,
+                    });
+                }
+            });
+
+            searchInput.addEventListener("input", function () {
+                const searchText = searchInput.value.trim().toLowerCase();
+
+                // Filter orders that match the search
+                const filteredOrders = orders.filter(order => order.orderNumber.includes(searchText));
+
+                // Update the visibility of rows based on filteredOrders
+                rows.forEach(row => {
+                    const isVisible = filteredOrders.some(filteredOrder => filteredOrder.row === row);
+                    row.style.display = isVisible ? "" : "none";
+                });
+
+                // Update DataTables search term and redraw
+                dataTable.search(searchText).draw();
+            });
         });
 
         document.addEventListener("DOMContentLoaded", function () {
