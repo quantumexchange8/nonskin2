@@ -25,6 +25,7 @@ use App\Http\Controllers\admin\AdminController;
 |
 */
 
+// Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
 
 //Language Translation
 Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
@@ -44,7 +45,7 @@ Route::get('/register', [RegisterController::class, 'register'])->name('user-reg
 Route::get('/register/{referral?}', [RegisterController::class, 'register'])->name('referral-register');
 Route::post('/add-member', [RegisterController::class, 'store'])->name('add.member');
 
-//Update User Details
+//Update User Profile
 Route::get('/my-profile',[App\Http\Controllers\HomeController::class, 'myProfile'])->name('myProfile');
 Route::post('/update-profile', [App\Http\Controllers\HomeController::class, 'updateProfile'])->name('updateProfile');
 Route::post('/update-address', [App\Http\Controllers\HomeController::class, 'updateAddress'])->name('updateAddress');
@@ -52,23 +53,11 @@ Route::post('/toggle-default-address', [App\Http\Controllers\HomeController::cla
 Route::post('/update-bank', [App\Http\Controllers\HomeController::class, 'updateBank'])->name('updateBank');
 Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('updatePassword');
 
-// Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
-
-
 /**
  * MEMBERS
  */
 Route::group(['prefix' => 'members',  'middleware' => ['auth', 'role:user',]], function () {
-    Route::get('/dashboard', [UserController::class, 'dashboard'])->name('user-dashboard');
-
-    // Route::get('/', [MemberController::class, 'index'])->name('members.index');                                     // member Index
-    // Route::get('/create', [MemberController::class, 'create'])->name('members.create');                             // member CREATE
-    // Route::get('/delete/{customer}', [MemberController::class, 'delete'])->name('members.delete');                  // member DELETE
-    // Route::get('/show/{customer}', [MemberController::class, 'show'])->name('members.show');                        // member SHOW
-    // Route::get('/edit/{customer}', [MemberController::class, 'edit'])->name('members.edit');                        // member EDIT
-    // Route::post('/', [MemberController::class, 'store'])->name('members.store');                                    // store
-    // Route::post('/update/{customer}', [MemberController::class, 'update'])->name('members.update');                 // update
-    // Route::post('/destroy/{customer}', [MemberController::class, 'destroy'])->name('members.destroy');              // destroy
+    Route::get('/', [UserController::class, 'dashboard'])->name('user-dashboard');
     Route::post('pending-orders/{order}', [UserController::class, 'cancelorder'])->name('cancelorder');
     Route::get('/products_list', [ProductController::class, 'productlist'])->name('product-list');
     Route::get('/products_details/{product}', [ProductController::class, 'showdetails'])->name('showdetails');
@@ -87,32 +76,16 @@ Route::group(['prefix' => 'members',  'middleware' => ['auth', 'role:user',]], f
 
     // order
     Route::get('/invoice/{order}', [UserController::class, 'invoice'])->name('invoice');
-
-});
-/**
- * PRODUCTS
- */
-Route::group(['prefix' => 'consumer/products',  'middleware' => 'auth'], function () {
-    Route::get('/create', [ProductController::class, 'create'])->name('products.create');                           // product CREATE
-    Route::get('/delete/{product}', [ProductController::class, 'delete'])->name('products.delete');                 // product DELETE
-    Route::get('/{product}', [ProductController::class, 'show'])->name('products.show');                            // product SHOW
-    Route::get('/edit/{product}', [ProductController::class, 'edit'])->name('products.edit');                       // product EDIT
-    Route::post('/update/{product}', [ProductController::class, 'update'])->name('products.update');                // update
-    Route::post('/destroy/{product}', [ProductController::class, 'destroy'])->name('products.destroy');             // destroy
 });
 
-
-// Route::get('/announcement/index', [AnnouncementController::class, 'index'])->name('announcements.index');
-
-
-Route::get('dependent-dropdown', [DropdownController::class, 'index']);
-Route::post('api/fetch-states', [DropdownController::class, 'fetchState']);
-Route::post('api/fetch-cities', [DropdownController::class, 'fetchCity']);
+// Route::get('dependent-dropdown', [DropdownController::class, 'index']);
+// Route::post('api/fetch-states', [DropdownController::class, 'fetchState']);
+// Route::post('api/fetch-cities', [DropdownController::class, 'fetchCity']);
 
 // ADMIN
 Route::group(['prefix' => 'admin',  'middleware' => ['auth', 'role:superadmin|admin',]], function () {
     // dashboard
-    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin-dashboard');
+    Route::get('/', [AdminController::class, 'dashboard'])->name('admin-dashboard');
 
     // announcements
     Route::get('/announcements', [AnnouncementController::class, 'list'])->name('announcements.list');
@@ -121,9 +94,9 @@ Route::group(['prefix' => 'admin',  'middleware' => ['auth', 'role:superadmin|ad
     Route::post('/announcements', [AnnouncementController::class, 'store'])->name('announcements.store');
 
     // order
-    Route::get('/orders/listing', [AdminController::class, 'allorder'])->name('new-order-list');
-    Route::post('/orders/listing/{order}/reject', [AdminController::class, 'reject'])->name('rejectorder');
-    Route::post('/orders/listing/{order}/pack', [AdminController::class, 'packing'])->name('packing');
+    Route::get('/orders', [AdminController::class, 'orderListing'])->name('orders.listing');
+    Route::post('/orders/{order}/reject', [AdminController::class, 'reject'])->name('orders.rejectorder');
+    Route::post('/orders/{order}/pack', [AdminController::class, 'packing'])->name('orders.packing');
 
     // product
     Route::get('product_listing', [ProductController::class, 'listing'])->name('list');

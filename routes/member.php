@@ -39,7 +39,7 @@ Route::group(['prefix' => 'member/', 'as' => 'member.',  'middleware' => ['auth'
 });
 Route::post('/updateQty/{itemId}/{action}', [CartController::class, 'updateQty'])->name('updateQty');
 
-// Route::delete('/cart/{cart}/item/{productId}', [CartController::class, 'destroy'])->name('cart.destroy');
+Route::delete('/cart/{cart}/item/{productId}', [CartController::class, 'destroy'])->name('cart.item.destroy');
 
 // AJAX
 Route::group(['prefix' => 'member/',  'middleware' => 'auth', 'middleware' => 'role:user'], function () {
@@ -50,6 +50,6 @@ Route::group(['prefix' => 'member/',  'middleware' => 'auth', 'middleware' => 'r
     Route::post('/get-shipping-charge', [CartController::class, 'getShippingCharge'])->name('get-shipping-charge');
     Route::get('get-cart-count', [CartController::class, 'getCartCount'])->name('cart.count');
     Route::post('/products/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
-    // Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
+    Route::post('/cart/update', [CartController::class, 'update'])->name('ajax.cart.update');
     Route::post('/ajax-place-order', [OrderController::class, 'placeOrder'])->name('place-order');
 });

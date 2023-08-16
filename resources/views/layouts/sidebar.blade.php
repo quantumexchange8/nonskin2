@@ -33,7 +33,7 @@
                 {{-- <li class="menu-title" data-key="t-menu">{{ auth::user()->ranking_name }}</li> --}}
                 @hasanyrole('superadmin|admin')
                 <li>
-                    <a href="{{ url('/admin/dashboard') }}">
+                    <a href="{{ url('/admin') }}">
                         <i class="bx bx-tachometer icon nav-icon"></i>
                         <span class="menu-item" data-key="t-dashboards">@lang('translation.Dashboard')</span>
                     </a>
@@ -42,7 +42,7 @@
 
                 @hasanyrole('user')
                 <li>
-                    <a href="{{ url('/members/dashboard') }}">
+                    <a href="{{ url('/members') }}">
                         <i class="bx bx-tachometer icon nav-icon"></i>
                         <span class="menu-item" data-key="t-dashboards">@lang('translation.Dashboard')</span>
                     </a>
@@ -116,7 +116,7 @@
                             {{-- <li><a href="{{ route('member.order-pending') }}">@lang('translation.All Orders')</a></li> --}}
                             {{-- <li><a href="{{ route('member.order-history') }}" data-key="t-order-history">History</a></li> --}}
                         {{-- @endhasanyrole --}}
-                        <li><a href="{{ route('new-order-list') }}">@lang('translation.Order') @lang('translation.Listing')</a>
+                        <li><a href="{{ route('orders.listing') }}">@lang('translation.Order') @lang('translation.Listing')</a>
                         </li>
                             {{-- <li><a href="{{ route('admin.order-history-list') }}">@lang('translation.History')</a></li> --}}
                     </ul>

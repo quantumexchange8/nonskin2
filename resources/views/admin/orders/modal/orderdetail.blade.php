@@ -12,7 +12,7 @@
                         </button>
                     </a>
                 </div>
-            <form action="{{ route('packing', $order->id)}}" method="POST" id="status-form-{{ $order->id }}">
+            <form action="{{ route('orders.packing', $order->id)}}" method="POST" id="status-form-{{ $order->id }}">
                 @csrf
                 <div class="modal-body">
                     <p class="mb-2">Order Id: <span class="text-primary" id="order-id">{{$order->order_num}}</span></p>
@@ -139,7 +139,7 @@
                         <button type="button" class="btn btn-secondary btn-edit" disabled>Update Status</button>
                     @else
                         <input type="hidden" name="remark" id="remark-{{ $order->id }}">
-                        
+
                         <button type="button" class="btn btn-success btn-edit"
                             data-order-edit="{{ $order->id }}"
                             data-order-status="{{ $order->status }}"

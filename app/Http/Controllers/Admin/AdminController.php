@@ -221,7 +221,7 @@ class AdminController extends Controller
         return view('admin.settings.company-info', compact('infos'));
     }
 
-    public function allorder() {
+    public function orderListing() {
         // $orders = Order::where('status', 'New')->get();
         // $ordersJson = json_encode($orders);
         // dd($orders);

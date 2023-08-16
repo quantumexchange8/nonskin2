@@ -13,6 +13,8 @@
     @include('member.modals.message-modal')
     @endif
 
+    @include('includes.alerts')
+
             <div class="row">
                 @if($cartItems->isEmpty())
                     <div class="col-xl-12 pt-4 pb-4 d-flex flex-column">
@@ -21,20 +23,6 @@
                     </div>
                 @endif
                 <div class="col-xl-8">
-                    @if(session('success'))
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <i class="mdi mdi-check-all me-2"></i>
-                        {{ session('success') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                    @endif
-                    @If(session('error'))
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <i class="mdi mdi-block-helper me-2"></i>
-                        {{ session('error') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                    @endif
                     @forelse ($cartItems as $k => $v)
                         <div class="card border shadow-none">
                             <div class="card-body">
@@ -279,7 +267,7 @@
             // Function to update cart item and cart via AJAX
             function updateCartItem(productId, quantity, productPrice) {
                 $.ajax({
-                    url: '{{ route("cart.update") }}',
+                    url: '{{ route("ajax.cart.update") }}',
                     method: 'POST',
                     data: {
                         product_id: productId,
@@ -298,7 +286,7 @@
             $('.checkout').click(function() {
                 // Send an AJAX request to handle the checkout process
                 $.ajax({
-                    url: '{{ route("cart.update") }}',
+                    url: '{{ route("ajax.cart.update") }}',
                     method: 'POST',
                     data: {
                         product_id: productId,

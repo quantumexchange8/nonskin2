@@ -12,7 +12,7 @@
                         <p>Are you sure you want to remove this item from cart?</p>
                     </div>
                     <div class="modal-footer">
-                        <form action="{{ route('cart.destroy', ['cart' => $v->cart->id, 'productId' => $v->product->id]) }}" method="POST">
+                        <form action="{{ route('cart.item.destroy', ['cart' => $v->cart->id, 'productId' => $v->product->id]) }}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-primary remove-button">Save changes</button>

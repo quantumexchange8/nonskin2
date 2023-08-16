@@ -143,7 +143,7 @@
                                         {{-- </form> --}}
 
                                         {{-- <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Cancel" data-bs-original-title="Cancel" class="text-danger"> --}}
-                                            <form action="{{ route('rejectorder', $order->id) }}" method="POST" id="reject-form-{{ $order->id }}">
+                                            <form action="{{ route('orders.rejectorder', $order->id) }}" method="POST" id="reject-form-{{ $order->id }}">
                                                 @csrf
                                                 <input type="hidden" name="remark" id="remark-{{ $order->id }}">
                                                 <button type="button" class="btn btn-link text-danger reject-button" data-order-id="{{ $order->id }}" data-order-status="{{ $order->status }}">
@@ -255,7 +255,7 @@
                             // User confirmed, perform cancel action
                             // For example, you can reset the form or redirect
                             // Here, I'm using window.location to redirect to another page
-                            window.location.href = '{{ route('new-order-list') }}';
+                            window.location.href = '{{ route('orders.listing') }}';
                         }
                     });
                 });

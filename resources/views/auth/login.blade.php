@@ -78,7 +78,7 @@
                                     </div>
 
                                     <div class="mt-4 text-center">
-                                        <p class="mb-0">Do not have an account ? <a href="{{ route('register') }}" class="fw-medium text-primary"> Signup
+                                        <p class="mb-0">Do not have an account ? <a href="{{ route('user-register') }}" class="fw-medium text-primary"> Signup
                                                 now </a> </p>
                                     </div>
                                 </form>
