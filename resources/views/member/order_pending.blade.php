@@ -22,7 +22,7 @@
                 <div class="card-body">
                     <table id="allOrder" class="stripe nowrap" style="width:100%">
                         <div class="row justify-content-end">
-                            <div class="col-lg-3">
+                            <div class="col-lg-4">
                                 <label class="form-label">Status</label>
                                 <select class="mb-3 form-select" id="statusFilter">
                                     <option value="">All Status</option>
@@ -33,15 +33,11 @@
                                     <option value="5">Cancel</option>
                                 </select>
                             </div>
-                            <div class="col-lg-3">
-                                <label class="form-label">From Date</label>
+                            <div class="col-lg-4">
+                                <label class="form-label">Date</label>
                                 <input type="date" id="date-filter-input" class="form-control">
                             </div>
-                            <div class="col-lg-3">
-                                <label class="form-label">To Date</label>
-                                <input type="date" id="date-filter-input" class="form-control">
-                            </div>
-                            <div class="col-lg-3">
+                            <div class="col-lg-4">
                                 <label class="form-label">Search</label>
                                 <input type="text" id="search-input" class="form-control" placeholder="Enter keywords here...">
                             </div>
