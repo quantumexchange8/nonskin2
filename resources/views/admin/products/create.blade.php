@@ -159,7 +159,7 @@
                                             <label class="form-label required" for="price">Price</label>
                                             <div class="input-group">
                                                 <div class="input-group-text">RM</div>
-                                                <input class="form-control @error('price') is-invalid @enderror" id="price" name="price" placeholder="e.g. 388.50" type="number" value="{{ old('price') }}">
+                                                <input class="form-control @error('price') is-invalid @enderror" id="price" name="price" placeholder="e.g. 388.50" type="number" step=".01" value="{{ old('price') }}">
                                                 @error('price')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @else

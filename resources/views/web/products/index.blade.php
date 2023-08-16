@@ -271,13 +271,7 @@
                                                                 <i class="mdi mdi-heart-outline"></i>
                                                             </a>
                                                         </div> --}}
-                                                        @hasanyrole('user')
-                                                        <a href="{{ route('showdetails', $product->id) }}">
-                                                            <img src="{{ asset('images/products/' . $product->image_1) }}"
-                                                                alt="{{ $product->name }}" class="img-fluid mx-auto d-block"
-                                                                style="width: 70% !important;">
-                                                        </a>
-                                                        @endhasanyrole
+
                                                         @hasanyrole('superadmin|admin')
                                                         <a href="{{ route('show', $product->id) }}">
                                                             <img src="{{ $product->image_1 !== null ? asset('images/products/' . $product->image_1) : asset('assets/images/nonskin/non-logo.jpg') }}"
@@ -289,9 +283,6 @@
                                                         <div class="d-flex justify-content-between align-items-end">
                                                             <div>
                                                                 <h5 class="mb-1">
-                                                                    @hasanyrole('user')
-                                                                    <a href="{{ route('showdetails', $product->id) }}" class="font-size-14">{{ Str::limit($product->name, 21, '...') }}</a>
-                                                                    @endhasanyrole
                                                                     @hasanyrole('superadmin|admin')
                                                                     <a href="{{ route('show', $product->id) }}" class="font-size-14">{{ Str::limit($product->name, 21, '...') }}</a>
                                                                     @endhasanyrole
@@ -305,24 +296,11 @@
                                                                         RM{{ number_format($product->price - ($product->price * $product->discount) / 100, 2, '.', ',') }}
                                                                     @else
                                                                         RM{{ number_format($product->price, 2, '.', ',') }}
+                                                                        @if ($product->status == 'Inactive')
+                                                                        <p class="badge badge-soft-danger font-size-12">Inactive</p>
+                                                                        @endif
                                                                     @endif
                                                                 </h5>
-                                                            </div>
-                                                            <div>
-                                                                {{-- <ul class="list-inline mb-0 text-muted product-color">
-                                                            <li class="list-inline-item">
-                                                                Colors :
-                                                            </li>
-                                                            <li class="list-inline-item">
-                                                                <i class="mdi mdi-circle text-dark"></i>
-                                                            </li>
-                                                            <li class="list-inline-item">
-                                                                <i class="mdi mdi-circle text-light"></i>
-                                                            </li>
-                                                            <li class="list-inline-item">
-                                                                <i class="mdi mdi-circle text-primary"></i>
-                                                            </li>
-                                                        </ul> --}}
                                                             </div>
                                                         </div>
                                                         <form action="{{ route('cart.add') }}" method="POST">
