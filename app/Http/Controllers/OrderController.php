@@ -47,6 +47,11 @@ class OrderController extends Controller
         ]);
 
         try {
+            if ($request->hasFile('payment_proof')){
+                $imageName1 = time().'.'.$request->payment_proof->extension();
+                $request->payment_proof->move(public_path('images/payment-proof'), $imageName1);
+            }
+
             DB::beginTransaction();
             $newOrderNumber = $prefixRow->counter + 1;
             $prefixRow->update(
@@ -65,22 +70,28 @@ class OrderController extends Controller
             $order->email               = $email;
             $order->delivery_method     = $deliveryMethod;
             $order->payment_method      = $paymentMethod;
+            $order->payment_proof      = $imageName1;
             $order->delivery_address    = $deliveryAddress;
             $order->delivery_fee        = $deliveryMethod == 'Delivery' ? $deliveryFee : 0;
             $order->status              = 1;//processing
             $order->remarks             = null;
             $order->created_by          = Auth::id();
             $order->updated_at          = null;
-            
-            
-            if ($request->payment_proof != null) {
-                // dd($request->payment_proof);
-                $order->payment_proof = null;
-                
-            } else {
-                // No image uploaded, set payment_proof to null
-                $order->payment_proof = null;
+
+            if ($request->hasFile('payment_proof')) {
+                $image1 = $request->file('payment_proof');
+                $order->payment_proof = $imageName1;
             }
+
+
+            // if ($request->payment_proof != null) {
+            //     // dd($request->payment_proof);
+            //     $order->payment_proof = null;
+
+            // } else {
+            //     // No image uploaded, set payment_proof to null
+            //     $order->payment_proof = null;
+            // }
 
             $order->save();
 
