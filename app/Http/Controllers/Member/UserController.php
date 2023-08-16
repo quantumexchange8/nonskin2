@@ -143,8 +143,15 @@ class UserController extends Controller
     public function purchaseWalletDeposit(){
         return view('member.purchase-wallet.deposit');
     }
+    public function purchaseWalletTopup(){
+        return view('member.purchase-wallet.topup');
+    }
+    public function purchaseWalletTopupStore(){
+        return redirect()->back()->with('success', 'Topup Request Successful');
+    }
     public function purchaseWalletWithdraw(){
-        return view('member.purchase-wallet.withdraw');
+        $user = Auth::user();
+        return view('member.purchase-wallet.withdraw', compact('user'));
     }
 
     public function purchaseWallet() {
@@ -232,13 +239,6 @@ class UserController extends Controller
     // public function topupPending() {
     //     return view('member.topup_pending');
     // }
-
-    public function deposit() {
-        return view('member.wallet_deposit');
-    }
-    public function withdrawal() {
-        return view('member.wallet_withdrawal');
-    }
 
     // public function withdrawalHistory() {
     //     return view('member.withdrawal_history');

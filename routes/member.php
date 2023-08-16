@@ -11,8 +11,6 @@ Route::group(['prefix' => 'member/', 'as' => 'member.',  'middleware' => ['auth'
     Route::get('cart', [UserController::class, 'cart'])->name('cart');
     Route::get('cart/checkout', [UserController::class, 'checkout'])->name('checkout');
     Route::get('commission', [UserController::class, 'commission'])->name('commission');
-    // Route::get('wallet/deposit', [UserController::class, 'deposit'])->name('wallet-deposit');
-    // Route::get('wallet/withdrawal', [UserController::class, 'withdrawal'])->name('wallet-withdrawal');
     Route::get('bonus', [UserController::class, 'bonus'])->name('bonus');
     Route::get('internal-transfer/history', [UserController::class, 'internalTransferHistory'])->name('internal-transfer-history');
     Route::get('internal-transfer/new', [UserController::class, 'internalTransferNew'])->name('new-internal-transfer');
@@ -22,8 +20,10 @@ Route::group(['prefix' => 'member/', 'as' => 'member.',  'middleware' => ['auth'
     Route::get('order-history', [UserController::class, 'orderHistory'])->name('order-pending');
     Route::post('pending-orders/{order}', [UserController::class, 'cancelorder'])->name('cancelorder');
 
-
+    // Purchase Wallet Deposit & Withdraw Pages
     Route::get('deposit', [UserController::class, 'purchaseWalletDeposit'])->name('deposit');
+    Route::get('topup', [UserController::class, 'purchaseWalletTopup'])->name('topup');
+    Route::post('topup', [UserController::class, 'purchaseWalletTopupStore'])->name('topup.store');
     Route::get('withdraw', [UserController::class, 'purchaseWalletWithdraw'])->name('withdraw');
 
     Route::get('purchase-wallet', [UserController::class, 'purchaseWallet'])->name('purchase-wallet');

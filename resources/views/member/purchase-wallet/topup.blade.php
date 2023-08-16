@@ -1,18 +1,17 @@
 @extends('layouts.master')
-@section('title') Purchase Wallet Deposit @endsection
+@section('title') Purchase Wallet Topup @endsection
 
 @section('content')
     @component('components.breadcrumb')
     @slot('url') {{ url('/') }} @endslot
     @slot('li_1') Home @endslot
-    @slot('title') Purchase Wallet Deposit @endslot
+    @slot('title') Purchase Wallet Topup @endslot
     @endcomponent
 
     <div class="row">
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-body">
-                    <!-- Topup using ePay method -->
                     <form action="" method="POST">
                         @csrf
                         <a class="text-dark">
@@ -26,7 +25,7 @@
                                         </div>
                                     </div> --}}
                                     <div class="flex-grow-1 overflow-hidden">
-                                        <h5 class="font-size-16 mb-1">Deposit Amount</h5>
+                                        <h5 class="font-size-16 mb-1">Manual Transfer</h5>
                                         <p class="text-muted text-truncate mb-0">Fill in the amount that you want to deposit</p>
                                     </div>
 
@@ -46,11 +45,31 @@
                                         @enderror
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="mb-3">
+                                        <label class="form-label required" for="receipt">Upload Receipt</label>
+                                        <input class="form-control" type="file" name="receipt" id="receipt">
+                                        @error('amount')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="mb-3">
+                                        <label class="form-label required" for="remarks">Remarks</label>
+                                        <input class="form-control @error('remarks') is-invalid @enderror" id="remarks" name="remarks" placeholder="e.g 1000.00" type="number" step="0.01" value="{{ old('remarks') }}">
+                                        @error('remarks')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
                                 <div class="row mb-4">
                                     <div class="">
-                                        <button type="submit" class="btn btn-primary"> ePay </button>
-                                        <span>OR</span>
-                                        <a href="{{ route('member.topup') }}" class="btn btn-outline-primary"> Manual Transfer to Nonskin Account </a>
+                                        <button type="submit" class="btn btn-primary"> Submit </button>
                                     </div> <!-- end col -->
                                 </div>
                             </div>
@@ -60,7 +79,6 @@
             </div>
         </div>
     </div>
-
 
 @endsection
 @section('script')
