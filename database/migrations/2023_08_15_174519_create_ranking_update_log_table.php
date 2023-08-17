@@ -22,12 +22,8 @@ class CreateRankingUpdateLogTable extends Migration
             $table->double('target_package_amount');
             $table->double('user_group_sales');
             $table->double('target_group_sales');
-            $table->integer('user_cultivate_member_amount')->default(null);
-            $table->integer('target_cultivate_member_amount')->default(null);
-            $table->integer('target_cultivate_type_id')->default(null);
-            $table->longText('referrals_with_target_cultivate_type')
-                  ->charset('utf8mb4')
-                  ->collation('utf8mb4_0900_ai_ci');
+            $table->double('user_group_package');
+            $table->double('target_group_package');
             $table->double('user_personal_sales');
             $table->double('target_personal_sales');
             $table->string('type', 10)->charset('utf8mb4')->collation('utf8mb4_unicode_ci');

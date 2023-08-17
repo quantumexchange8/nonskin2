@@ -266,6 +266,19 @@ class AdminController extends Controller
             'tracking_number' => $request->tracking_number,
         ]);
 
+        if($order->status == 4){
+
+            $user = User::find($order->user_id);
+
+            if ($user) {
+                // Update the user's personal_sales with the order's total_amount
+                $user->personal_sales += $order->total_amount;
+                $user->group_sales += $order->total_amount;
+                $user->save();
+            }
+        }
+        
+
         Alert::success('Success', 'Status has been updated');
         return redirect()->back();
     }

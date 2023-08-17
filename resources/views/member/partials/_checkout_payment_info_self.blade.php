@@ -37,5 +37,19 @@
                 @endforeach
             </div>
         </div>
+
+        <div id="purchase-wallet-balance-section2" class="card" style="display: none">
+            <div>
+                <span>Purchase Wallet Balance</span><br>
+                <h3>RM {{ number_format($user->purchase_wallet, 2) }}</h3>
+            </div>
+
+            <div>
+                <a href="#">
+                    <button class="btn btn-primary">Top Up</button>
+                </a>
+                
+            </div>
+        </div>
     </div>
 </div>
