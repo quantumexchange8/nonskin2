@@ -11,16 +11,18 @@
     <div class="row">
         <div class="col-xl-12">
             <div class="row">
-                <div class="col-lg-2 col-md-6">
+                <div class="col-lg-3 col-md-6">
                     <div class="card">
-                        <div class="card-body" role="button" data-bs-toggle="modal" data-bs-toggle="">
-                            <div class="avatar">
-                                <span class="avatar-title bg-soft-primary rounded">
-                                    <i class='mdi mdi-account-group text-primary font-size-24'></i>
-                                </span>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between mb-4">
+                                <div class="avatar">
+                                    <span class="avatar-title bg-soft-primary rounded">
+                                        <i class='mdi mdi-ticket text-primary font-size-24'></i>
+                                    </span>
+                                </div>
+                                <p class="mt-2">New Order</p>
                             </div>
-                            <p class="text-muted mt-4 mb-0">Overall User</p>
-                            <h4 class="mt-1 mb-0"> 3,888 <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
+                            <h4 class="mb-0"> 3,888 <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
                             <div>
                                 {{-- <div class="py-3 my-1">
                                     <div id="mini-1" data-colors='["#3980c0"]'></div>
@@ -29,93 +31,303 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-2 col-md-6">
+                <div class="col-lg-3 col-md-6">
                     <div class="card">
-                        <div class="card-body" role="button" data-bs-toggle="modal" data-bs-toggle="">
-                            <div class="avatar">
-                                <span class="avatar-title bg-soft-purple rounded">
-                                    <i class="mdi mdi-hexagram text-purple font-size-24"></i>
-                                </span>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between mb-4">
+                                <div class="avatar">
+                                    <span class="avatar-title bg-soft-primary rounded">
+                                        <i class='mdi mdi-package-variant text-primary font-size-24'></i>
+                                    </span>
+                                </div>
+                                <p class="mt-2">Packing</p>
                             </div>
-                            <p class="text-muted mt-4 mb-0">Total Chief Distributor</p>
-                            <h4 class="mt-1 mb-0">88 <!-- <sup class="text-danger fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 19%</sup> --></h4>
+                            <h4 class="mb-0"> 3,888 <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
                             <div>
                                 {{-- <div class="py-3 my-1">
-                                    <div id="mini-2" data-colors='["#33a186"]'></div>
+                                    <div id="mini-1" data-colors='["#3980c0"]'></div>
                                 </div> --}}
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="col-lg-2 col-md-6">
+                <div class="col-lg-3 col-md-6">
                     <div class="card">
-                        <div class="card-body" role="button" data-bs-toggle="modal" data-bs-toggle="">
-                            <div class="avatar">
-                                <span class="avatar-title bg-soft-danger rounded">
-                                    <i class='mdi mdi-star text-danger font-size-24'></i>
-                                </span>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between mb-4">
+                                <div class="avatar">
+                                    <span class="avatar-title bg-soft-primary rounded">
+                                        <i class='mdi mdi-truck text-primary font-size-24'></i>
+                                    </span>
+                                </div>
+                                <p class="mt-2">Delivering</p>
                             </div>
-                            <p class="text-muted mt-4 mb-0">Total Exclusive Distributor</p>
-                            <h4 class="mt-1 mb-0">188 <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 22%</sup> --></h4>
+                            <h4 class="mb-0"> 3,888 <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
                             <div>
                                 {{-- <div class="py-3 my-1">
-                                    <div id="mini-3" data-colors='["#3980c0"]'></div>
+                                    <div id="mini-1" data-colors='["#3980c0"]'></div>
                                 </div> --}}
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-2 col-md-6">
+                <div class="col-lg-3 col-md-6">
                     <div class="card">
-                        <div class="card-body" role="button" data-bs-toggle="modal" data-bs-toggle="">
-                            <div class="avatar">
-                                <span class="avatar-title bg-soft-warning rounded">
-                                    <i class="mdi mdi-star-four-points text-warning font-size-24"></i>
-                                </span>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between mb-4">
+                                <div class="avatar">
+                                    <span class="avatar-title bg-soft-primary rounded">
+                                        <i class='mdi mdi-check-circle text-primary font-size-24'></i>
+                                    </span>
+                                </div>
+                                <p class="mt-2">Completed</p>
                             </div>
-                            <p class="text-muted mt-4 mb-0">Total General Distributor</p>
-                            <h4 class="mt-1 mb-0">888<!-- <sup class="text-danger fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 18%</sup> --></h4>
+                            <h4 class="mb-0"> 3,888 <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
                             <div>
                                 {{-- <div class="py-3 my-1">
-                                    <div id="mini-4" data-colors='["#33a186"]'></div>
+                                    <div id="mini-1" data-colors='["#3980c0"]'></div>
                                 </div> --}}
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="col-lg-2 col-md-6">
+                <div class="col-lg-3 col-md-6">
                     <div class="card">
-                        <div class="card-body" role="button" data-bs-toggle="modal" data-bs-toggle="">
-                            <div class="avatar">
-                                <span class="avatar-title bg-soft-primary rounded">
-                                    <i class="mdi mdi-star-three-points text-primary font-size-24"></i>
-                                </span>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between mb-4">
+                                <div class="avatar">
+                                    <span class="avatar-title bg-soft-primary rounded">
+                                        <i class='mdi mdi-close-circle text-primary font-size-24'></i>
+                                    </span>
+                                </div>
+                                <p class="mt-2">Cancelled</p>
                             </div>
-                            <p class="text-muted mt-4 mb-0">Total Members</p>
-                            <h4 class="mt-1 mb-0">2,888 <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 22%</sup> --></h4>
+                            <h4 class="mb-0"> 3,888 <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
                             <div>
                                 {{-- <div class="py-3 my-1">
-                                    <div id="mini-3" data-colors='["#3980c0"]'></div>
+                                    <div id="mini-1" data-colors='["#3980c0"]'></div>
                                 </div> --}}
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-2 col-md-6">
+                <div class="col-lg-3 col-md-6">
                     <div class="card">
-                        <div class="card-body" role="button" data-bs-toggle="modal" data-bs-toggle="">
-                            <div class="avatar">
-                                <span class="avatar-title bg-soft-success rounded">
-                                    <i class="mdi mdi-account-multiple-outline text-success font-size-24"></i>
-                                </span>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between mb-4">
+                                <div class="avatar">
+                                    <span class="avatar-title bg-soft-primary rounded">
+                                        <i class='mdi mdi-ticket text-primary font-size-24'></i>
+                                    </span>
+                                </div>
+                                <p class="mt-2">Total Orders</p>
                             </div>
-                            <p class="text-muted mt-4 mb-0">New User</p>
-                            <h4 class="mt-1 mb-0">88 <!-- <sup class="text-danger fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 18%</sup> --></h4>
+                            <h4 class="mb-0"> 3,888 <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
                             <div>
                                 {{-- <div class="py-3 my-1">
-                                    <div id="mini-4" data-colors='["#33a186"]'></div>
+                                    <div id="mini-1" data-colors='["#3980c0"]'></div>
+                                </div> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between mb-4">
+                                <div class="avatar">
+                                    <span class="avatar-title bg-soft-primary rounded">
+                                        <i class='bx bxs-package text-primary font-size-24'></i>
+                                    </span>
+                                </div>
+                                <p class="mt-2">Total Products</p>
+                            </div>
+                            <h4 class="mb-0"> 3,888 <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
+                            <div>
+                                {{-- <div class="py-3 my-1">
+                                    <div id="mini-1" data-colors='["#3980c0"]'></div>
+                                </div> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between mb-4">
+                                <div class="avatar">
+                                    <span class="avatar-title bg-soft-primary rounded">
+                                        <i class='bx bx-dollar text-primary font-size-24'></i>
+                                    </span>
+                                </div>
+                                <p class="mt-2">Total Sales</p>
+                            </div>
+                            <h4 class="mb-0">RM 3,888 <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
+                            <div>
+                                {{-- <div class="py-3 my-1">
+                                    <div id="mini-1" data-colors='["#3980c0"]'></div>
+                                </div> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between mb-4">
+                                <div class="avatar">
+                                    <span class="avatar-title bg-soft-primary rounded">
+                                        <i class='mdi mdi-account-group text-primary font-size-24'></i>
+                                    </span>
+                                </div>
+                                <p class="mt-2">Total Members</p>
+                            </div>
+                            <h4 class="mb-0"> 3,888 <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
+                            <div>
+                                {{-- <div class="py-3 my-1">
+                                    <div id="mini-1" data-colors='["#3980c0"]'></div>
+                                </div> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between mb-4">
+                                <div class="avatar">
+                                    <span class="avatar-title bg-soft-purple rounded">
+                                        <i class="mdi mdi-hexagram text-purple font-size-24"></i>
+                                    </span>
+                                </div>
+                                <p class="mt-2">Chief Distributors</p>
+                            </div>
+                            <h4 class="mb-0"> 3,888 <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
+                            <div>
+                                {{-- <div class="py-3 my-1">
+                                    <div id="mini-1" data-colors='["#3980c0"]'></div>
+                                </div> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between mb-4">
+                                <div class="avatar">
+                                    <span class="avatar-title bg-soft-danger rounded">
+                                        <i class='mdi mdi-star text-danger font-size-24'></i>
+                                    </span>
+                                </div>
+                                <p class="mt-2">Exclusive Distributors</p>
+                            </div>
+                            <h4 class="mb-0"> 3,888 <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
+                            <div>
+                                {{-- <div class="py-3 my-1">
+                                    <div id="mini-1" data-colors='["#3980c0"]'></div>
+                                </div> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between mb-4">
+                                <div class="avatar">
+                                    <span class="avatar-title bg-soft-warning rounded">
+                                        <i class="mdi mdi-star-four-points text-warning font-size-24"></i>
+                                    </span>
+                                </div>
+                                <p class="mt-2">General Distributors</p>
+                            </div>
+                            <h4 class="mb-0"> 3,888 <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
+                            <div>
+                                {{-- <div class="py-3 my-1">
+                                    <div id="mini-1" data-colors='["#3980c0"]'></div>
+                                </div> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between mb-4">
+                                <div class="avatar">
+                                    <span class="avatar-title bg-soft-success rounded">
+                                        <i class="mdi mdi-star-three-points text-success font-size-24"></i>
+                                    </span>
+                                </div>
+                                <p class="mt-2">Members</p>
+                            </div>
+                            <h4 class="mb-0"> 3,888 <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
+                            <div>
+                                {{-- <div class="py-3 my-1">
+                                    <div id="mini-1" data-colors='["#3980c0"]'></div>
+                                </div> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between mb-4">
+                                <div class="avatar">
+                                    <span class="avatar-title bg-soft-primary rounded">
+                                        <i class="mdi mdi-account-multiple-outline text-primary font-size-24"></i>
+                                    </span>
+                                </div>
+                                <p class="mt-2">New Clients</p>
+                            </div>
+                            <h4 class="mb-0"> 3,888 <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
+                            <div>
+                                {{-- <div class="py-3 my-1">
+                                    <div id="mini-1" data-colors='["#3980c0"]'></div>
+                                </div> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between mb-4">
+                                <div class="avatar">
+                                    <span class="avatar-title bg-soft-primary rounded">
+                                        <i class="bx bxs-coin-stack text-primary font-size-24"></i>
+                                    </span>
+                                </div>
+                                <p class="mt-2">Pending Deposit</p>
+                            </div>
+                            <h4 class="mb-0"> 3,888 <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
+                            <div>
+                                {{-- <div class="py-3 my-1">
+                                    <div id="mini-1" data-colors='["#3980c0"]'></div>
+                                </div> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between mb-4">
+                                <div class="avatar">
+                                    <span class="avatar-title bg-soft-primary rounded">
+                                        <i class="bx bxs-coin-stack text-primary font-size-24"></i>
+                                    </span>
+                                </div>
+                                <p class="mt-2">Pending Withdrawal</p>
+                            </div>
+                            <h4 class="mb-0"> 3,888 <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
+                            <div>
+                                {{-- <div class="py-3 my-1">
+                                    <div id="mini-1" data-colors='["#3980c0"]'></div>
                                 </div> --}}
                             </div>
                         </div>
@@ -134,7 +346,7 @@
     <script>
          $(document).ready(function () {
             var copyText = document.getElementById("refLink");
-            
+
             $("#copyLink").click(function () {
                 copyText.select();
                 copyText.setSelectionRange(0, 99999); // For mobile devices

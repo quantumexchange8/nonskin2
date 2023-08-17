@@ -13,6 +13,7 @@ use App\Models\Address;
 use App\Models\PaymentSetting;
 use App\Models\DeliverySetting;
 use App\Models\CompanyInfo;
+use App\Models\Ranking;
 use App\Http\Middleware\CheckCartItem;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -34,10 +35,10 @@ class UserController extends Controller
 
         $user = Auth::user();
         $user->url = url('') .'/register/' . $user->referrer_id;
+        $next_rank = Ranking::where('id', $user->rank_id+1)->pluck('name')->first();
+        $referral = User::where('upline_id', Auth::id())->count();
 
-        return view('member.dashboard', [
-            'user' => $user,
-        ]);
+        return view('member.dashboard', compact('user', 'next_rank', 'referral'));
     }
 
     public function announcement() {
