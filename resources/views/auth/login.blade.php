@@ -97,7 +97,7 @@
                         <script>
                             document.write(new Date().getFullYear())
 
-                        </script> Nonskin. Designed by Current Tech</p>
+                        </script> Nonskin</p>
                     </div>
                 </div>
             </div>

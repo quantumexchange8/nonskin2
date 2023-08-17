@@ -5,6 +5,8 @@ use App\Http\Controllers\Member\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ReportController;
 
 Route::group(['prefix' => 'member/', 'as' => 'member.',  'middleware' => ['auth', 'role:superadmin|admin|user',]], function () {
     Route::get('announcement', [UserController::class, 'announcement'])->name('announcement');
@@ -19,22 +21,23 @@ Route::group(['prefix' => 'member/', 'as' => 'member.',  'middleware' => ['auth'
     Route::get('orders/history', [UserController::class, 'pendingOrder'])->name('order-pending');
     Route::post('pending-orders/{order}', [UserController::class, 'cancelorder'])->name('cancelorder');
 
-    // Purchase Wallet Deposit & Withdraw Pages
-    Route::get('deposit', [UserController::class, 'purchaseWalletDeposit'])->name('deposit');
-    Route::get('topup', [UserController::class, 'purchaseWalletTopup'])->name('topup');
-    Route::post('topup', [UserController::class, 'purchaseWalletTopupStore'])->name('topup.store');
-    Route::get('withdraw', [UserController::class, 'purchaseWalletWithdraw'])->name('withdraw');
 
-    Route::get('purchase-wallet', [UserController::class, 'purchaseWallet'])->name('purchase-wallet');
+
+    // Route::get('purchase-wallet', [UserController::class, 'purchaseWallet'])->name('purchase-wallet');
+    // Route::get('pending-topup', [UserController::class, 'pendingTopup'])->name('pending-topup');
+    // Route::get('topup-history', [UserController::class, 'topupHistory'])->name('topup-history');
+
     Route::get('cash-wallet', [UserController::class, 'cashWallet'])->name('cash-wallet');
     Route::get('product-wallet', [UserController::class, 'productWallet'])->name('product-wallet');
 
 
-    Route::get('report-downline-sales', [UserController::class, 'reportDownlineSales'])->name('report-downline-sales');
-    Route::get('report-leadership', [UserController::class, 'reportLeadership'])->name('report-leadership');
-    Route::get('report-levelling', [UserController::class, 'reportLevelling'])->name('report-levelling');
-    Route::get('report-sales', [UserController::class, 'reportSales'])->name('report-sales');
-    Route::get('report-wallet', [UserController::class, 'reportWallet'])->name('report-wallet');
+
+
+    Route::get('report-downline-sales', [ReportController::class, 'reportDownlineSales'])->name('report-downline-sales');
+    Route::get('report-leadership', [ReportController::class, 'reportLeadership'])->name('report-leadership');
+    Route::get('report-levelling', [ReportController::class, 'reportLevelling'])->name('report-levelling');
+    Route::get('report-sales', [ReportController::class, 'reportSales'])->name('report-sales');
+    Route::get('report-wallet', [ReportController::class, 'reportWallet'])->name('report-wallet');
 });
 Route::post('/updateQty/{itemId}/{action}', [CartController::class, 'updateQty'])->name('updateQty');
 

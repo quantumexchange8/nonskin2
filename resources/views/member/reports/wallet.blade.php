@@ -1,18 +1,18 @@
 @extends('layouts.master')
-@section('title') Purchase Wallet @endsection
+@section('title') Wallet Report @endsection
 
 @section('content')
     @component('components.breadcrumb')
     @slot('url') {{ url('/') }} @endslot
     @slot('li_1') Home @endslot
-    @slot('title') Purchase Wallet @endslot
+    @slot('title') Wallet Report @endslot
     @endcomponent
 
     <div class="row">
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-body">
-                    <table id="purchaseWallet" class="stripe nowrap" style="width:100%">
+                    <table id="reportWallet" class="stripe nowrap" style="width:100%">
                         <div class="row justify-content-end">
                             <div class="col-lg-4">
                                 <label class="form-label">From Date</label>
@@ -67,7 +67,7 @@
 @section('script')
     <script src="{{ URL::asset('assets/js/app.js') }}"></script>
     <script>
-        new DataTable('#purchaseWallet', {
+        new DataTable('#reportWallet', {
             responsive: true,
             searching: false,
             lengthChange: false,

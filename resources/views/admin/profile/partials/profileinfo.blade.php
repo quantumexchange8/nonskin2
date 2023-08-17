@@ -9,7 +9,7 @@
         <p class="text-muted">{{ Auth::user()->ranking_name }}</p>
     </div>
 
-    <form action="{{ route('update')}}" method="POST" id="profile-form" class="needs-validation" novalidate>
+    <form action="{{ route('admin.updateProfile')}}" method="POST" id="profile-form" class="needs-validation" novalidate>
         @csrf
         <div class="row">
             {{-- <div class="col-lg-6">

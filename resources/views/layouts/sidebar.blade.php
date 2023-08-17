@@ -124,32 +124,38 @@
                 @endhasanyrole
 
                 @hasanyrole('superadmin|admin')
-                <li>
+                {{-- <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bx bxs-wallet icon nav-icon"></i>
                             <span class="menu-item" data-key="t-multi-level">@lang('translation.Wallets')</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
-                            {{-- <li><a href="{{ route('admin.pending-deposit') }}">@lang('translation.pending-deposit')</a></li> --}}
+                            <li><a href="{{ route('admin.pending-deposit') }}">@lang('translation.pending-deposit')</a></li>
                             <li><a href="#">@lang('translation.Purchase Wallet')</a></li>
-                            <li><a href="#">@lang('translation.Cash Wallet')</a></li>
-                            <li><a href="#">@lang('translation.Product Wallet')</a></li>
-                            {{-- <li><a href="{{ route('admin.pending-withdrawal') }}">@lang('translation.pending-withdrawal')</a></li> --}}
-                            {{-- <li><a href="{{ route('admin.order-history-list') }}">@lang('translation.History')</a></li> --}}
+                            <li><a href="{{ route('admin.cash-wallet') }}">@lang('translation.Cash Wallet')</a></li>
+                            <li><a href="{{ route('admin.product-wallet') }}">@lang('translation.Product Wallet')</a></li>
+                            <li><a href="{{ route('admin.pending-withdrawal') }}">@lang('translation.pending-withdrawal')</a></li>
+                            <li><a href="{{ route('admin.order-history-list') }}">@lang('translation.History')</a></li>
                     </ul>
-                </li>
+                </li> --}}
                 @endhasanyrole
 
-                {{-- <li>
+                <li>
                 <a href="javascript: void(0);" class="has-arrow">
-                    <i class="bx bx-dollar icon nav-icon"></i>
-                    <span class="menu-item" data-key="t-multi-level">@lang('translation.Top Up')</span>
+                    <i class="bx bxs-wallet icon nav-icon"></i>
+                    <span class="menu-item">@lang('translation.Purchase Wallet')</span>
                 </a>
                 <ul class="sub-menu" aria-expanded="true">
-                    <li><a href="{{ route('member.topup-pending') }}" data-key="t-topup-pending">@lang('translation.Pending')</a></li>
-                    <li><a href="{{ route('member.topup-history') }}" data-key="t-topup-history">@lang('translation.History')</a></li>
+                    @hasanyrole('user')
+                    <li><a href="{{ route('member.deposit') }}">@lang('translation.Deposit')</a></li>
+                    <li><a href="{{ route('member.withdraw') }}">@lang('translation.Withdrawal')</a></li>
+                    @endhasanyrole
+                    @hasanyrole('superadmin|admin')
+                    <li><a href="{{ route('admin.pending-deposit') }}">@lang('translation.Pending') @lang('translation.Deposit')</a></li>
+                    <li><a href="{{ route('admin.pending-withdrawal') }}">@lang('translation.Pending') @lang('translation.Withdrawal')</a></li>
+                    @endhasanyrole
                 </ul>
-                </li> --}}
+                </li>
                 {{-- <li>
                 <a href="javascript: void(0);" class="has-arrow">
                     <i class="bx bx-dollar icon nav-icon"></i>
@@ -173,11 +179,6 @@
                 </li> --}}
 
                 @hasanyrole('user')
-                    <li><a href="{{ route('member.purchase-wallet') }}">
-                            <i class="bx bxs-wallet icon icon nav-icon"></i>
-                            <span class="menu-item">@lang('translation.Purchase Wallet')</span>
-                        </a>
-                    </li>
                     <li><a href="{{ route('member.cash-wallet') }}">
                             <i class="bx bx-dollar icon icon nav-icon"></i>
                             <span class="menu-item">@lang('translation.Cash Wallet')</span>
@@ -221,20 +222,6 @@
                     </ul>
                 </li>
 
-                @hasanyrole('user')
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow">
-                        <i class="bx bxs-user icon nav-icon"></i>
-                        <span class="menu-item" data-key="t-multi-level">@lang('translation.My_Account')</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="true">
-                        <li><a href="{{ route('userprofile') }}">@lang('translation.Profile')</a></li>
-                        <li><a href="{{ route('changepassword') }}">@lang('translation.Change Password')</a></li>
-                        <li><a href="{{ route('shippingaddress') }}">@lang('translation.Shipping Address')</a></li>
-                    </ul>
-                </li>
-                @endhasanyrole
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bx bxs-report icon nav-icon"></i>
@@ -249,8 +236,8 @@
                             <li><a href="{{ route('member.report-wallet') }}">@lang('translation.Wallet')</a></li>
                         @endhasanyrole
                         @hasanyrole('superadmin|admin')
-                            <li><a href="#">@lang('translation.Sales')</a></li>
-                            <li><a href="#">@lang('translation.Wallet')</a></li>
+                            <li><a href="{{ route('admin.report-sales') }}">@lang('translation.Sales')</a></li>
+                            <li><a href="{{ route('admin.report-wallet') }}">@lang('translation.Wallet')</a></li>
                         @endhasanyrole
                     </ul>
                 </li>

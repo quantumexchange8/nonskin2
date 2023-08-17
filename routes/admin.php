@@ -2,8 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\AdminController;
+use App\Http\Controllers\member\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\HomeController;
 
 // Settings
 Route::group(['prefix' => 'admin/settings', 'as' => 'admin.settings.',  'middleware' => ['auth', 'role:superadmin|admin',]], function () {
@@ -17,4 +20,27 @@ Route::group(['prefix' => 'admin/settings', 'as' => 'admin.settings.',  'middlew
     Route::post('/bank/update', [AdminController::class, 'bankStore'])->name('bank-store');
     Route::delete('/bank/destroy/{bank}', [AdminController::class, 'bankDestroy'])->name('bank-destroy');
     Route::get('/company-info', [AdminController::class, 'companyInfo'])->name('company-info');
+});
+
+// Reports
+Route::group(['prefix' => 'admin/', 'as' => 'admin.',  'middleware' => ['auth', 'role:superadmin|admin',]], function () {
+    // Route::get('report-downline-sales', [ReportController::class, 'reportDownlineSales'])->name('report-downline-sales');
+    // Route::get('report-leadership', [ReportController::class, 'reportLeadership'])->name('report-leadership');
+    // Route::get('report-levelling', [ReportController::class, 'reportLevelling'])->name('report-levelling');
+    Route::get('sales-report', [ReportController::class, 'reportSales'])->name('report-sales');
+    Route::get('wallet-report', [ReportController::class, 'reportWallet'])->name('report-wallet');
+});
+
+// Profile
+Route::group(['prefix' => 'admin/', 'as' => 'admin.',  'middleware' => ['auth', 'role:superadmin|admin',]], function () {
+    Route::get('my-profile', [AdminController::class, 'profile'])->name('profile');
+    Route::post('my-profile/update', [AdminController::class, 'updateProfile'])->name('updateProfile');
+
+    Route::get('/change-password', [AdminController::class, 'changePassword'])->name('changePassword');
+    Route::post('/check-current-password', [UserController::class, 'checkCurrentPass'])->name('checkCurrentPass');
+    Route::post('change-password/{user}', [HomeController::class, 'updatePassword'])->name('updatePassword');
+
+    Route::post('check-unique-fullname', [UserController::class, 'checkUniqueFullName'])->name('checkUniqueFullName');
+    Route::post('check-unique-username', [AdminController::class, 'checkUniqueUsername'])->name('checkUniqueUsername');
+    Route::post('check-unique-email', [UserController::class, 'checkUniqueEmail'])->name('checkUniqueEmail');
 });

@@ -140,22 +140,14 @@ class UserController extends Controller
     // public function internalTransferNew() {
     //     return view('member.internal_transfer_new');
     // }
-    public function purchaseWalletDeposit(){
-        return view('member.purchase-wallet.deposit');
-    }
-    public function purchaseWalletTopup(){
-        return view('member.purchase-wallet.topup');
-    }
-    public function purchaseWalletTopupStore(){
-        return redirect()->back()->with('success', 'Topup Request Successful');
-    }
-    public function purchaseWalletWithdraw(){
-        $user = Auth::user();
-        return view('member.purchase-wallet.withdraw', compact('user'));
-    }
 
-    public function purchaseWallet() {
-        return view('member.purchase_wallet');
+
+
+    public function pendingTopup() {
+        return view('member.pending_topup');
+    }
+    public function topupHistory() {
+        return view('member.topup_history');
     }
     public function cashWallet() {
         return view('member.cash_wallet');
@@ -210,27 +202,7 @@ class UserController extends Controller
         // ProductController
     }
 
-    public function reportSales() {
-        $orders = Order::where('user_id', Auth::id())->latest()->get();
-        return view('member.report_sales', compact('orders'));
-    }
-    public function reportDownlineSales() {
-        $users = User::where('upline_id', Auth::id())
-            ->whereHas('orders') // Make sure the relationship method name is correct
-            ->get();
 
-            // dd($users[0]->orders);
-        return view('member.report_downline_sales', compact('users'));
-    }
-    public function reportLeadership() {
-        return view('member.report_leadership');
-    }
-    public function reportLevelling() {
-        return view('member.report_levelling');
-    }
-    public function reportWallet() {
-        return view('member.report_wallet');
-    }
 
     // public function topupHistory() {
     //     return view('member.topup_history');

@@ -6,7 +6,7 @@
             </div>
             <div class="col-sm-6">
                 <div class="text-sm-end d-none d-sm-block">
-                    Designed by <a href="javascript:void(0)" target="_blank" class="text-reset">Currenttech</a>
+                    <a href="javascript:void(0)" target="_blank" class="text-reset"></a>
                 </div>
             </div>
         </div>

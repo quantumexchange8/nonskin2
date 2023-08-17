@@ -40,13 +40,19 @@ class User extends Authenticatable
         'postcode',
         'state',
         'country',
+        'delivery_address_1',
+        'delivery_address_2',
+        'delivery_city',
+        'delivery_postcode',
+        'delivery_state',
+        'delivery_country',
         'bank_name',
         'bank_holder_name',
         'bank_acc_no',
         'bank_ic',
-        'created_by',
+        // 'created_by',
         'created_at',
-        'updated_by',
+        // 'updated_by',
         'updated_at'
     ];
 

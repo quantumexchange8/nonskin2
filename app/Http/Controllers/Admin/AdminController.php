@@ -319,7 +319,7 @@ class AdminController extends Controller
         return view('admin.profile.profile');
     }
 
-    public function update(Request $request)
+    public function updateProfile(Request $request)
     {
         $user = Auth::user();
 
@@ -338,7 +338,7 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
-    public function chgpassword()
+    public function changePassword()
     {
         return view('admin.profile.password');
     }

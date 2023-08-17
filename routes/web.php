@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Member\UserController;
+use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProductController;
@@ -11,9 +13,8 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\DropdownController;
 use App\Http\Controllers\AnnouncementController;
-use App\Http\Controllers\Member\UserController;
-use App\Http\Controllers\admin\AdminController;
-
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ReportController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -44,6 +45,11 @@ Route::resource('cart', CartController::class);
 Route::get('/register', [RegisterController::class, 'register'])->name('register');
 Route::get('/register/{referral?}', [RegisterController::class, 'register'])->name('register');
 Route::post('/add-member', [RegisterController::class, 'store'])->name('add.member');
+Route::post('/check-unique-fullname', [RegisterController::class, 'checkUniqueFullname'])->name('registerUniqueFullname');
+Route::post('/check-unique-username', [RegisterController::class, 'checkUniqueUsername'])->name('registerUniqueUsername');
+Route::post('/check-unique-email', [RegisterController::class, 'checkUniqueEmail'])->name('registerUniqueEmail');
+Route::post('/check-unique-contact', [RegisterController::class, 'checkUniqueContact'])->name('registerUniqueContact');
+
 
 //Update User Profile
 Route::get('/my-profile',[App\Http\Controllers\HomeController::class, 'myProfile'])->name('myProfile');
@@ -79,6 +85,12 @@ Route::group(['prefix' => 'members',  'middleware' => ['auth', 'role:user',]], f
 
     Route::get('/search-orders', [OrderController::class, 'searchOrders'])->name('search.orders');
 
+    // Wallets
+    Route::get('deposit', [PaymentController::class, 'purchaseWalletDeposit'])->name('member.deposit');
+    Route::get('topup', [PaymentController::class, 'purchaseWalletTopup'])->name('member.topup');
+    Route::post('topup', [PaymentController::class, 'purchaseWalletTopupStore'])->name('member.topup.store');
+    Route::get('withdraw', [PaymentController::class, 'purchaseWalletWithdraw'])->name('member.withdraw');
+    Route::post('withdraw', [PaymentController::class, 'purchaseWalletWithdrawStore'])->name('member.withdraw.store');
 });
 
 // Route::get('dependent-dropdown', [DropdownController::class, 'index']);
@@ -121,13 +133,15 @@ Route::group(['prefix' => 'admin',  'middleware' => ['auth', 'role:superadmin|ad
 
     Route::get('/invoice/{order}', [AdminController::class, 'invoice'])->name('invoice-admin');
 
-    // profile
-    Route::get('/my_profile', [AdminController::class, 'profile'])->name('profile');
-    Route::post('/my_profile/update', [AdminController::class, 'update'])->name('update');
-    Route::post('/change_password', [AdminController::class, 'chgpassword'])->name('chgpassword');
-    Route::post('/check-unique-fullname', [UserController::class, 'checkUniqueFullName'])->name('admin.checkUniqueFullName');
-    Route::post('/check-unique-username', [AdminController::class, 'checkUniqueUsername'])->name('admin.checkUniqueUsername');
-    Route::post('/check-unique-email', [UserController::class, 'checkUniqueEmail'])->name('admin.checkUniqueEmail');
+
+
+    // Wallets
+    Route::get('/pending-deposit', [PaymentController::class, 'pendingDeposit'])->name('admin.pending-deposit');
+    Route::get('/pending-withdrawal', [PaymentController::class, 'pendingWithdrawal'])->name('admin.pending-withdrawal');
+
+    Route::get('cash-wallet', [AdminController::class, 'cashWallet'])->name('admin.cash-wallet');
+    Route::get('product-wallet', [AdminController::class, 'productWallet'])->name('admin.product-wallet');
+
 });
 
 // Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');

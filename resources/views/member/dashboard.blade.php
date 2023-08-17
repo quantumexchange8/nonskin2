@@ -64,7 +64,7 @@
                     <h5 class="card-title mb-0">Purchase Wallet</h5>
                     <div class="row mt-4 mt-auto">
                         <div>
-                            <h2>RM {{ number_format($user->commission_wallet, 2) }}</h2>
+                            <h2>RM {{ number_format($user->purchase_wallet,2) }}</h2>
                         </div>
                         <div class="d-flex justify-content-between gap-3 mt-4">
                             <a href="{{ route('member.deposit') }}" class="btn btn-primary w-100">Deposit</a>
@@ -80,11 +80,11 @@
                     @hasanyrole('user')
                     <div class="d-flex justify-content-between mb-3 p-2 border border-primary rounded wave-effects" role="button" data-bs-toggle="modal" data-bs-target="">
                         <h6 class="align-self-center">Cash Wallet</h6>
-                        <h2>RM2,880.50</h2>
+                        <h2>RM {{ number_format($user->cash_wallet,2) }}</h2>
                     </div>
                     <div class="d-flex justify-content-between mb-3 p-2 border border-primary rounded" role="button" data-bs-toggle="modal" data-bs-target="">
                             <h6 class="align-self-center">Product Wallet</h6>
-                            <h2>RM2,880.50</h2>
+                            <h2>RM {{ number_format($user->product_wallet,2) }}</h2>
                     </div>
                     @endhasanyrole
                     @hasanyrole('superadmin|admin')

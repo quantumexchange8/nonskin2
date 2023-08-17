@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Rankings;
+use App\Models\Ranking;
 
 
 class RankingsSeeder extends Seeder
@@ -12,10 +12,13 @@ class RankingsSeeder extends Seeder
         [
             'level' => 1,
             'name' => 'Client',
-            'personal_sales' => 0, 
+            'personal_sales' => 0,
             'package_requirement' => 0,
             'group_sale_requirement' => 0,
             'group_package' => 0,
+            'level_discount' => 0,
+            'direct_member' => null,
+            'direct_member_rank' => null,
             'rank_short' => 'Client',
             'category' => 'normal',
             'upgrade_ranking_sales' => 0,
@@ -28,6 +31,9 @@ class RankingsSeeder extends Seeder
             'package_requirement' => 6376,
             'group_sale_requirement' => 0,
             'group_package' => 0,
+            'level_discount' => 10,
+            'direct_member' => null,
+            'direct_member_rank' => null,
             'rank_short' => 'member',
             'category' => 'normal',
             'upgrade_ranking_sales' => 0,
@@ -40,6 +46,9 @@ class RankingsSeeder extends Seeder
             'package_requirement' => 16000,
             'group_sale_requirement' => 6376,
             'group_package' => 0,
+            'level_discount' => 35,
+            'direct_member' => null,
+            'direct_member_rank' => null,
             'rank_short' => 'GD',
             'category' => 'normal',
             'upgrade_ranking_sales' => 0,
@@ -52,6 +61,9 @@ class RankingsSeeder extends Seeder
             'package_requirement' => 48000,
             'group_sale_requirement' => 32000,
             'group_package' => 0,
+            'level_discount' => 45,
+            'direct_member' => null,
+            'direct_member_rank' => null,
             'rank_short' => 'ED',
             'category' => 'normal',
             'upgrade_ranking_sales' => 0,
@@ -64,6 +76,9 @@ class RankingsSeeder extends Seeder
             'package_requirement' => 0,
             'group_sale_requirement' => 39000,
             'group_package' => 0,
+            'level_discount' => 50,
+            'direct_member' => null,
+            'direct_member_rank' => null,
             'rank_short' => 'CD',
             'category' => 'normal',
             'upgrade_ranking_sales' => 0,
@@ -76,6 +91,9 @@ class RankingsSeeder extends Seeder
             'package_requirement' => 0,
             'group_sale_requirement' => 0,
             'group_package' => 0,
+            'level_discount' => 0,
+            'direct_member' => null,
+            'direct_member_rank' => null,
             'rank_short' => 'Client',
             'category' => 'promotion',
             'upgrade_ranking_sales' => 0,
@@ -88,6 +106,9 @@ class RankingsSeeder extends Seeder
             'package_requirement' => 3188,
             'group_sale_requirement' => 0,
             'group_package' => 0,
+            'level_discount' => 10,
+            'direct_member' => null,
+            'direct_member_rank' => null,
             'rank_short' => 'member',
             'category' => 'promotion',
             'upgrade_ranking_sales' => 0,
@@ -100,6 +121,9 @@ class RankingsSeeder extends Seeder
             'package_requirement' => 8000,
             'group_sale_requirement' => 3188,
             'group_package' => 0,
+            'level_discount' => 35,
+            'direct_member' => null,
+            'direct_member_rank' => null,
             'rank_short' => 'GD',
             'category' => 'promotion',
             'upgrade_ranking_sales' => 0,
@@ -112,6 +136,9 @@ class RankingsSeeder extends Seeder
             'package_requirement' => 24000,
             'group_sale_requirement' => 16000,
             'group_package' => 0,
+            'level_discount' => 45,
+            'direct_member' => null,
+            'direct_member_rank' => null,
             'rank_short' => 'ED',
             'category' => 'promotion',
             'upgrade_ranking_sales' => 0,
@@ -124,6 +151,9 @@ class RankingsSeeder extends Seeder
             'package_requirement' => 0,
             'group_sale_requirement' => 32000,
             'group_package' => 0,
+            'level_discount' => 50,
+            'direct_member' => null,
+            'direct_member_rank' => null,
             'rank_short' => 'CD',
             'category' => 'promotion',
             'upgrade_ranking_sales' => 0,
@@ -134,7 +164,7 @@ class RankingsSeeder extends Seeder
     public function run()
     {
         foreach ($this->ranks as $rank) {
-            Rankings::create($rank);
+            Ranking::create($rank);
         }
     }
 }

@@ -88,7 +88,7 @@
                             isFormEdited = false;
 
                             // Navigate to the clicked tab
-                            window.location.href = '{{ route('profile') }}';
+                            window.location.href = '{{ route('admin.profile') }}';
                         }
                     });
                 }
@@ -109,7 +109,7 @@
                         // User confirmed, perform cancel action
                         // For example, you can reset the form or redirect
                         // Here, I'm using window.location to redirect to another page
-                        window.location.href = '{{ route('profile') }}';
+                        window.location.href = '{{ route('admin.profile') }}';
                     }
                 });
             });

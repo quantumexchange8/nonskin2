@@ -17,9 +17,9 @@ use App\Models\{State, BankSetting};
                 <div class="col-md-8 col-lg-8 col-xl-10">
 
                     <div class="text-center mb-4">
-                        <a href="index">
+                        {{-- <a href="index"> --}}
                             <img src="{{ URL::asset('assets/images/nonskin/non-logo.jpg') }}" alt="" height="100"> <span class="logo-txt"></span>
-                        </a>
+                        {{-- </a> --}}
                     </div>
 
                     <div class="card">
@@ -94,7 +94,10 @@ use App\Models\{State, BankSetting};
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
                                                             <label for="basicpill-lastname-input" class="form-label required">Username</label>
-                                                            <input type="text" class="form-control" placeholder="e.g. Johnny" name="username" required>
+                                                            <input type="text" class="form-control" placeholder="e.g. Johnny" name="username" id="username" required>
+                                                            <div class="invalid-feedback" id="username-error">
+                                                                <!-- Error message will be displayed here -->
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div><!-- end row -->
@@ -102,13 +105,19 @@ use App\Models\{State, BankSetting};
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
                                                             <label for="basicpill-phoneno-input" class="form-label required">Full Name</label>
-                                                            <input type="text" class="form-control" placeholder="e.g. John Lee Doe" name="name" required>
+                                                            <input type="text" class="form-control" placeholder="e.g. John Lee Doe" name="full_name" id="full_name" required>
+                                                            <div class="invalid-feedback" id="full-name-error">
+                                                                <!-- Error message will be displayed here -->
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
-                                                            <label for="basicpill-email-input" class="form-label required">ID</label>
+                                                            <label for="basicpill-email-input" class="form-label required">Identification No. / Passport No.</label>
                                                             <input type="number" class="form-control" placeholder="e.g. 900101023434" name="id_no" required>
+                                                            <div class="invalid-feedback" id="id-no-error">
+                                                                <!-- Error message will be displayed here -->
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div><!-- end row -->
@@ -116,13 +125,19 @@ use App\Models\{State, BankSetting};
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
                                                             <label for="basicpill-phoneno-input" class="form-label required">Contact</label>
-                                                            <input type="number" class="form-control" placeholder="e.g. 01178781515" name="contact" required>
+                                                            <input type="number" class="form-control" placeholder="e.g. 01178781515" name="contact" id="contact" required>
+                                                            <div class="invalid-feedback" id="contact-error">
+                                                                <!-- Error message will be displayed here -->
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
                                                             <label for="basicpill-email-input" class="form-label required">Email</label>
-                                                            <input type="email" class="form-control" placeholder="e.g. john.doe@yahoo.com" name="email" required>
+                                                            <input type="email" class="form-control" placeholder="e.g. john.doe@yahoo.com" name="email" id="email" required>
+                                                            <div class="invalid-feedback" id="email-error">
+                                                                <!-- Error message will be displayed here -->
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div><!-- end row -->
@@ -130,13 +145,19 @@ use App\Models\{State, BankSetting};
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
                                                             <label for="basicpill-phoneno-input" class="form-label required">Password</label>
-                                                            <input type="password" class="form-control" placeholder="Enter Password" name="password" required>
+                                                            <input type="password" class="form-control" placeholder="Enter Password" name="password" id="password" required>
+                                                            <div class="invalid-feedback" id="password-error">
+                                                                <!-- Error message will be displayed here -->
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
                                                             <label for="basicpill-email-input" class="form-label required">Confirm Password</label>
-                                                            <input type="password" class="form-control" placeholder="Enter Confirm Password" name="password_confirmation" required autocomplete="new-password">
+                                                            <input type="password" class="form-control" placeholder="Enter Confirm Password" name="password_confirmation" id="password_confirmation" required autocomplete="new-password">
+                                                            <div class="invalid-feedback" id="password-confirmation-error">
+                                                                <!-- Error message will be displayed here -->
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div><!-- end row -->
@@ -155,15 +176,20 @@ use App\Models\{State, BankSetting};
                                                         <div class="col-lg-6">
                                                             <div class="mb-3">
                                                                 <label for="address_1" class="form-label required">Address Line 1</label>
-                                                                <input type="text" class="form-control" placeholder="e.g. No. 1, Jalan Api 1" name="address_1" required>
+                                                                <input type="text" class="form-control" placeholder="e.g. No. 1, Jalan Api 1" name="address_1" id="address_1" required>
+                                                                <div class="invalid-feedback" id="address-1-error">
+                                                                    <!-- Error message will be displayed here -->
+                                                                </div>
                                                             </div>
                                                         </div>
 
                                                         <div class="col-lg-6">
                                                             <div class="mb-3">
-                                                                <label for="address_2"
-                                                                    class="form-label">Address Line 2</label>
-                                                                <input type="text" class="form-control" placeholder="e.g. Taman Api" name="address_2">
+                                                                <label for="address_2" class="form-label">Address Line 2</label>
+                                                                <input type="text" class="form-control" placeholder="e.g. Taman Api" name="address_2" id="address_2">
+                                                                <div class="invalid-feedback" id="address-2-error">
+                                                                    <!-- Error message will be displayed here -->
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div><!-- end row -->
@@ -171,15 +197,20 @@ use App\Models\{State, BankSetting};
                                                         <div class="col-lg-6">
                                                             <div class="mb-3">
                                                                 <label for="postcode" class="form-label required">Postcode</label>
-                                                                <input type="number" class="form-control" placeholder="e.g. 81300" name="postcode" required min="5">
+                                                                <input type="number" class="form-control" placeholder="e.g. 81300" name="postcode" id="postcode" required min="5">
+                                                                <div class="invalid-feedback" id="postcode-error">
+                                                                    <!-- Error message will be displayed here -->
+                                                                </div>
                                                             </div>
                                                         </div>
 
                                                         <div class="col-lg-6">
                                                             <div class="mb-3">
-                                                                <label for="city"
-                                                                    class="form-label required">City</label>
-                                                                <input type="text" class="form-control" placeholder="e.g. Johor Bahru" name="city" required>
+                                                                <label for="city" class="form-label required">City</label>
+                                                                <input type="text" class="form-control" placeholder="e.g. Johor Bahru" name="city" id="city" required>
+                                                                <div class="invalid-feedback" id="city-error">
+                                                                    <!-- Error message will be displayed here -->
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div><!-- end row -->
@@ -243,7 +274,7 @@ use App\Models\{State, BankSetting};
                                                         <div class="col-lg-6">
                                                             <div class="mb-3">
                                                                 <label for="bank_holder_name" class="form-label required">Bank Holder Name</label>
-                                                                <input type="text" class="form-control" placeholder="e.g. John Lee Doe" name="bank_holder_name" required>
+                                                                <input type="text" class="form-control" placeholder="e.g. John Lee Doe" name="bank_holder_name" id="bank_holder_name" required>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -251,14 +282,14 @@ use App\Models\{State, BankSetting};
                                                         <div class="col-lg-6">
                                                             <div class="mb-3">
                                                                 <label for="bank_acc_no" class="form-label required">Bank Acc Number</label>
-                                                                <input type="number" class="form-control" placeholder="Enter Bank Acc Number" name="bank_acc_no" required>
+                                                                <input type="number" class="form-control" placeholder="Enter Bank Acc Number" name="bank_acc_no" id="bank_acc_no" required>
                                                             </div>
                                                         </div>
 
                                                         <div class="col-lg-6">
                                                             <div class="mb-3">
                                                                 <label for="bank_ic" class="form-label required">Bank Identification Number</label>
-                                                                <input type="number" class="form-control" placeholder="Enter Bank Identification Number" name="bank_ic" required>
+                                                                <input type="number" class="form-control" placeholder="Enter Bank Identification Number" name="bank_ic" id="bank_ic" required>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -294,7 +325,7 @@ use App\Models\{State, BankSetting};
                             <script>
                                 document.write(new Date().getFullYear())
                             </script>
-                            Nonskin. Designed by Current Tech
+                            Nonskin
                         </p>
                     </div>
                 </div>
@@ -308,11 +339,11 @@ use App\Models\{State, BankSetting};
 @section('script')
     {{-- <script src="{{ URL::asset('assets/js/app.js') }}"></script> --}}
     <script>
-        var currentTab = 0;
+        let currentTab = 0;
         showTab(currentTab);
 
         function showTab(n) {
-            var x = document.getElementsByClassName("wizard-tab");
+            let x = document.getElementsByClassName("wizard-tab");
             x[n].style.display = "block";
 
             if (n == 0) {
@@ -333,7 +364,7 @@ use App\Models\{State, BankSetting};
 
         function nextPrev(n) {
             // This function will figure out which tab to display
-            var x = document.getElementsByClassName("wizard-tab");
+            let x = document.getElementsByClassName("wizard-tab");
 
             // Hide the current tab:
             x[currentTab].style.display = "none";
@@ -349,12 +380,12 @@ use App\Models\{State, BankSetting};
         }
 
         function validateForm(n) {
-            var x = document.getElementsByClassName("wizard-tab");
-            var isValid = true;
-            var inputs = x[currentTab].querySelectorAll("input[required], select[required]");
+            let x = document.getElementsByClassName("wizard-tab");
+            let isValid = true;
+            let inputs = x[currentTab].querySelectorAll("input[required], select[required]");
 
             // Validate required fields in the current tab
-            for (var i = 0; i < inputs.length; i++) {
+            for (let i = 0; i < inputs.length; i++) {
                 if (!inputs[i].value.trim()) {
                     isValid = false;
                     inputs[i].classList.add("is-invalid");
@@ -377,11 +408,210 @@ use App\Models\{State, BankSetting};
         }
 
         function fixStepIndicator(n) {
-            var i, x = document.getElementsByClassName("list-item");
+            let i, x = document.getElementsByClassName("list-item");
             for (i = 0; i < x.length; i++) {
             x[i].className = x[i].className.replace(" active", "");
             }
             x[n].className += " active";
         }
+
+        $('#username').on('blur', function() {
+            let username = $(this).val().trim();
+
+            // Show error if field is blank
+            if (username === '') {
+                $('#username').addClass('is-invalid');
+                $('#username-error').text('Username is required.');
+                return;
+            }
+
+            $.ajax({
+                url: '{{ route('registerUniqueUsername') }}',
+                type: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: { username: username },
+                success: function(response) {
+                    if (response.unique === false) {
+                        console.log(response);
+                        $('#username').addClass('is-invalid');
+                        $('#username-error').text('Username is already taken.');
+                    } else {
+                        $('#username').removeClass('is-invalid');
+                        $('#username').addClass('is-valid');
+                        $('#username-error').text('');
+                    }
+                }
+            });
+        });
+
+        $('#full_name').on('blur', function() {
+            let full_name = $(this).val().trim();
+
+            // Show error if field is blank
+            if (full_name === '') {
+                $('#full_name').addClass('is-invalid');
+                $('#full-name-error').text('Full name is required.');
+                return;
+            }
+
+            $.ajax({
+                url: '{{ route('registerUniqueFullname') }}',
+                type: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: { full_name: full_name },
+                success: function(response) {
+                    if (response.unique === false) {
+                        $('#full_name').addClass('is-invalid');
+                        $('#full-name-error').text('Full name is already taken.');
+                    } else {
+                        $('#full_name').removeClass('is-invalid');
+                        $('#full_name').addClass('is-valid');
+                        $('#full-name-error').text('');
+                    }
+                }
+            });
+        });
+
+        $('#email').on('blur', function() {
+            let email = $(this).val().trim();
+
+            // Show error if field is blank
+            if (email === '') {
+                $('#email').addClass('is-invalid');
+                $('#email-error').text('Email is required.');
+                return;
+            }
+
+            $.ajax({
+                url: '{{ route('registerUniqueEmail') }}',
+                type: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: { email: email },
+                success: function(response) {
+                    if (response.unique === false) {
+                        $('#email').addClass('is-invalid');
+                        $('#email-error').text('Email is already taken.');
+                    } else if(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)) {
+                        $('#email').addClass('is-invalid');
+                        $('#email-error').text('This email address is invalid.');
+                    } else {
+                        $('#email').removeClass('is-invalid');
+                        $('#email').addClass('is-valid');
+                        $('#email-error').text('');
+                    }
+                }
+            });
+        });
+        $('#contact').on('blur', function() {
+            let email = $(this).val().trim();
+
+            // Show error if field is blank
+            if (email === '') {
+                $('#contact').addClass('is-invalid');
+                $('#contact-error').text('Contact is required.');
+                return;
+            }
+
+            $.ajax({
+                url: '{{ route('registerUniqueContact') }}',
+                type: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: { contact: contact },
+                success: function(response) {
+                    if (response.unique === false) {
+                        $('#contact').addClass('is-invalid');
+                        $('#contact-error').text('Contact is already taken.');
+                    } else if (!/^\d{10,12}$/.test(contact)) {
+                        $('#contact').addClass('is-invalid');
+                        $('#contact-error').text('Contact must be a number with 10 to 11 digits.');
+                    } else {
+                        $('#contact').removeClass('is-invalid');
+                        $('#contact').addClass('is-valid');
+                        $('#contact-error').text('');
+                    }
+                }
+            });
+        });
+
+        $('#id_no').on('blur', function() {
+            let id_no = $(this).val().trim();
+
+            // Show error if field is blank
+            if (id_no === '') {
+                $('#id_no').addClass('is-invalid');
+                $('#id_no-error').text('ID number is required.');
+                return;
+            } else if (!/^\d{8,12}$/.test(id_no)) {
+                $('#id_no').addClass('is-invalid');
+                $('#id_no-error').text('ID Number must be a number with 8 to 12 digits.');
+            } else {
+                $('#id_no').addClass('is-valid');
+                $('#id_no-error').text('');
+            }
+        });
+
+        $('#bank').on('blur', function() {
+            let bank = $(this).val().trim();
+
+            // Show error if field is blank
+            if (bank === '') {
+                $('#bank').addClass('is-invalid');
+                $('#bank-error').text('ID number is required.');
+                return;
+            } else {
+                $('#bank').addClass('is-valid');
+                $('#bank-error').text('');
+            }
+        });
+        $('#holdername').on('blur', function() {
+            let holdername = $(this).val().trim();
+
+            // Show error if field is blank
+            if (holdername === '') {
+                $('#holdername').addClass('is-invalid');
+                $('#holdername-error').text('ID number is required.');
+                return;
+            } else {
+                $('#holdername').addClass('is-valid');
+                $('#holdername-error').text('');
+            }
+        });
+        $('#bankacc').on('blur', function() {
+            let bankacc = $(this).val().trim();
+
+            // Show error if field is blank
+            if (bankacc === '') {
+                $('#bankacc').addClass('is-invalid');
+                $('#bankacc-error').text('ID number is required.');
+                return;
+            } else {
+                $('#bankacc').addClass('is-valid');
+                $('#bankacc-error').text('');
+            }
+        });
+        $('#bankid').on('blur', function() {
+            let bankid = $(this).val().trim();
+
+            // Show error if field is blank
+            if (bankid === '') {
+                $('#bankid').addClass('is-invalid');
+                $('#bankid-error').text('ID number is required.');
+                return;
+            } else if (!/^\d{8,12}$/.test(bankid)) {
+                $('#bankid').addClass('is-invalid');
+                $('#bankid-error').text('ID Number must be a number with 8 to 12 digits.');
+            } else {
+                $('#bankid').addClass('is-valid');
+                $('#bankid-error').text('');
+            }
+        });
     </script>
 @endsection

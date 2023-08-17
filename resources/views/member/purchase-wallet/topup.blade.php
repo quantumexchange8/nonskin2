@@ -12,7 +12,7 @@
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="" method="POST">
+                    <form action="{{ route('member.topup.store') }}" method="POST">
                         @csrf
                         <a class="text-dark">
                             <div class="p-4">
@@ -59,7 +59,7 @@
                                 <div class="row">
                                     <div class="mb-3">
                                         <label class="form-label required" for="remarks">Remarks</label>
-                                        <input class="form-control @error('remarks') is-invalid @enderror" id="remarks" name="remarks" placeholder="e.g 1000.00" type="number" step="0.01" value="{{ old('remarks') }}">
+                                        <input class="form-control @error('remarks') is-invalid @enderror" id="remarks" name="remarks" placeholder="e.g Topup" type="text" value="{{ old('remarks') }}">
                                         @error('remarks')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>

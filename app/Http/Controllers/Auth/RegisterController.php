@@ -13,6 +13,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 use Auth;
 
 class RegisterController extends Controller
@@ -87,43 +88,43 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\Models\User
      */
-    protected function create(array $data)
-    {
-        // dd($data);
-        if (request()->has('avatar')) {
-            $avatar = request()->file('avatar');
-            $avatarName = time() . '.' . $avatar->getClientOriginalExtension();
-            $avatarPath = public_path('/images/');
-            $avatar->move($avatarPath, $avatarName);
-        }
+    // protected function create(array $data)
+    // {
+    //     // dd($data);
+    //     if (request()->has('avatar')) {
+    //         $avatar = request()->file('avatar');
+    //         $avatarName = time() . '.' . $avatar->getClientOriginalExtension();
+    //         $avatarPath = public_path('/images/');
+    //         $avatar->move($avatarPath, $avatarName);
+    //     }
 
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'avatar' => "/images/" . $avatarName,
-            'referral' => $data['referral'],
-            'full_name' => $data['full_name'],
-            'id_no' => $data['id_no'],
-            'contact' => $data['contact'],
-            'username' => $data['username'],
+    //     return User::create([
+    //         'name' => $data['name'],
+    //         'email' => $data['email'],
+    //         'password' => Hash::make($data['password']),
+    //         'avatar' => "/images/" . $avatarName,
+    //         'referral' => $data['referral'],
+    //         'full_name' => $data['full_name'],
+    //         'id_no' => $data['id_no'],
+    //         'contact' => $data['contact'],
+    //         'username' => $data['username'],
 
-            'address_1' => $data['address_1'],
-            'address_2' => $data['address_2'],
-            'city' => $data['city'],
-            'postcode' => $data['postcode'],
-            'state' => $data['state'],
-            'country' => $data['country'],
+    //         'address_1' => $data['address_1'],
+    //         'address_2' => $data['address_2'],
+    //         'city' => $data['city'],
+    //         'postcode' => $data['postcode'],
+    //         'state' => $data['state'],
+    //         'country' => $data['country'],
 
-            'bank_name' => $data['bank_name'],
-            'bank_holder_name' => $data['bank_holder_name'],
-            'bank_acc_no' => $data['bank_acc_no'],
-            'bank_ic' => $data['bank_ic'],
-        ]);
-    }
+    //         'bank_name' => $data['bank_name'],
+    //         'bank_holder_name' => $data['bank_holder_name'],
+    //         'bank_acc_no' => $data['bank_acc_no'],
+    //         'bank_ic' => $data['bank_ic'],
+    //     ]);
+    // }
 
     public function register(Request $request, $referral = null) {
-        
+
         $banks = BankSetting::pluck('name', 'id');
         // dd($referral);
         return view('auth.register', [
@@ -136,93 +137,121 @@ class RegisterController extends Controller
         // $validator = $this->validator($request->all());
 
         // if user inputs referral in registration form
-        
+
         if($request->referral != null){
             $uplineId = User::where('referrer_id', $request->referral)->first();
-            
+
             if(!$uplineId) {
                 return back()->withInput($request->input())->withErrors(['error_messages'=>'Invalid referral code!']);
             }
 
             $upline_user_id = $uplineId->id;
             if(empty($uplineId['hierarchyList'])){
-                $hierarchyList = "-" . $upline_user_id . "-";
+                $hierarchyList = "-" . 3 . "-";
             } else {
                 $hierarchyList = $uplineId['hierarchyList'] . $upline_user_id . "-";
             }
-           
+
         }
         $memberPrefix = 'NON';
         // Find the corresponding row in the 'prefixes' table based on the prefix
         $prefixRow = Prefix::where('prefix', $memberPrefix)->first();
 
-        $newMemberNumber = $prefixRow->counter + 1;
+        try {
+            DB::beginTransaction();
+            $newMemberNumber = $prefixRow->counter + 1;
             $prefixRow->update(
                 [
                     'counter' => $newMemberNumber,
                     'updated_by' => Auth::id()
                 ]
             );
-
-        $user = User::create([
-            'upline_id'     => $referral ?? 3,
-            'referrer_id'   => $memberPrefix . str_pad($newMemberNumber, $prefixRow->padding, '0', STR_PAD_LEFT),
-            'hierarchyList' => $hierarchyList,
-            'email'         => $request->email,
-            'password'      => Hash::make($request->password),
-            // 'avatar'     => "/images/" . $avatarName,
-            'avatar'        => '',
-            'name'          => $request->name,
-            'id_no'         => $request->id_no,
-            'contact'       => $request->contact,
-            'username'      => $request->username,
-            'role_id'       => 4,
-            'role'          =>'user',
-            'ranking_id'    => 5,
-            'ranking_name'  => 'client',
-            'bank_name'         => $request->bank_name,
-            'bank_holder_name'  => $request->bank_holder_name,
-            'bank_acc_no'       => $request->bank_acc_no,
-            'bank_ic'           => $request->bank_ic,
-            'address_1'     => $request->address_1,
-            'address_2'     => $request->address_2,
-            'city'          => $request->city,
-            'postcode'      => $request->postcode,
-            'state'         => $request->state,
-            'country'       => $request->country,
-        ]);
-        $user->assignRole('user');
-
-        if($user->wasRecentlyCreated){
-            $user->update(
-                [
-                    'created_at' => $user->created_at,
-                    'updated_at' => now(),
-                    'created_by' => $user->id,
-                    'updated_by' => $user->id
-                ]
-            );
-            Address::create([
-                'user_id'       => $user->id,
-                'name'          => $request->name,
+            $user = User::create([
+                'upline_id'     => $referral ?? 3,
+                'referrer_id'   => $memberPrefix . str_pad($newMemberNumber, $prefixRow->padding, '0', STR_PAD_LEFT),
+                'hierarchyList' => $hierarchyList,
+                'email'         => $request->email,
+                'password'      => Hash::make($request->password),
+                // 'avatar'     => "/images/" . $avatarName,
+                'avatar'        => '',
+                'full_name'     => $request->full_name,
+                'id_no'         => $request->id_no,
                 'contact'       => $request->contact,
-                'address_1'     => $request->address_1,
-                'address_2'     => $request->address_2,
-                'city'          => $request->city,
-                'postcode'      => $request->postcode,
-                'state'         => $request->state,
-                'country'       => $request->country,
-                'created_by'    => $user->id,
+                'username'      => $request->username,
+                'role'          =>'user',
+                'rank_id'       => 1,
+                'bank_name'         => $request->bank_name,
+                'bank_holder_name'  => $request->bank_holder_name,
+                'bank_acc_no'       => $request->bank_acc_no,
+                'bank_ic'           => $request->bank_ic,
+                'address_1'             => $request->address_1,
+                'address_2'             => $request->address_2,
+                'city'                  => $request->city,
+                'postcode'              => $request->postcode,
+                'state'                 => $request->state,
+                'country'               => $request->country,
+                'delivery_address_1'    => $request->address_1,
+                'delivery_address_2'    => $request->address_2,
+                'delivery_city'         => $request->city,
+                'delivery_postcode'     => $request->postcode,
+                'delivery_state'        => $request->state,
+                'delivery_country'      => $request->country,
+                // 'created_at' => now(),
+                // 'updated_at' => now(),
             ]);
-            Cart::create([
-                'user_id'       => $user->id,
-                'created_by'    => $user->id
-            ]);
-            return redirect()
-            ->route('login')
-            ->with("added", "User successfully created!");
-        }else{
+            $user->assignRole('user');
+
+            if($user->wasRecentlyCreated){
+                Address::create([
+                    'user_id'       => $user->id,
+                    'name'          => $request->name,
+                    'contact'       => $request->contact,
+                    'address_1'     => $request->address_1,
+                    'address_2'     => $request->address_2,
+                    'city'          => $request->city,
+                    'postcode'      => $request->postcode,
+                    'state'         => $request->state,
+                    'country'       => $request->country,
+                    'created_by'    => $user->id,
+                ]);
+                Cart::create([
+                    'user_id'       => $user->id,
+                    'created_by'    => $user->id
+                ]);
+                DB::commit();
+                return redirect()
+                ->route('login')
+                ->with("added", "User successfully created!");
+            }
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            dd($th);
             return redirect()->back()->with("error", "Please try register again");
         }
+    }
+
+    public function checkUniqueFullName(Request $request)
+    {
+        $full_name = $request->input('full_name');
+        $isUnique = !User::where('full_name', $full_name)->exists();
+        return response()->json(['unique' => $isUnique]);
+    }
+    public function checkUniqueUsername(Request $request)
+    {
+        $username = $request->input('username');
+        $isUnique = !User::where('username', $username)->exists();
+        return response()->json(['unique' => $isUnique]);
+    }
+
+    public function checkUniqueEmail(Request $request)
+    {
+        $email = $request->input('email');
+        $isUnique = !User::where('email', $email)->exists();
+        return response()->json(['unique' => $isUnique]);
+    }
+    public function checkUniqueContact(Request $request){
+        $contact = $request->input('contact');
+        $isUnique = !User::where('contact', $contact)->exists();
+        return response()->json(['unique' => $isUnique]);
     }
 }
