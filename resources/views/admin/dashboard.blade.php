@@ -22,7 +22,7 @@
                                 </div>
                                 <p class="mt-2">New Order</p>
                             </div>
-                            <h4 class="mb-0"> 3,888 <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
+                            <h4 class="mb-0">{{ $res->new_order }} <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
                             <div>
                                 {{-- <div class="py-3 my-1">
                                     <div id="mini-1" data-colors='["#3980c0"]'></div>
@@ -42,7 +42,7 @@
                                 </div>
                                 <p class="mt-2">Packing</p>
                             </div>
-                            <h4 class="mb-0"> 3,888 <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
+                            <h4 class="mb-0">{{ $res->packing }} <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
                             <div>
                                 {{-- <div class="py-3 my-1">
                                     <div id="mini-1" data-colors='["#3980c0"]'></div>
@@ -62,7 +62,7 @@
                                 </div>
                                 <p class="mt-2">Delivering</p>
                             </div>
-                            <h4 class="mb-0"> 3,888 <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
+                            <h4 class="mb-0">{{ $res->delivering }} <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
                             <div>
                                 {{-- <div class="py-3 my-1">
                                     <div id="mini-1" data-colors='["#3980c0"]'></div>
@@ -82,7 +82,7 @@
                                 </div>
                                 <p class="mt-2">Completed</p>
                             </div>
-                            <h4 class="mb-0"> 3,888 <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
+                            <h4 class="mb-0">{{ $res->completed }} <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
                             <div>
                                 {{-- <div class="py-3 my-1">
                                     <div id="mini-1" data-colors='["#3980c0"]'></div>
@@ -102,7 +102,7 @@
                                 </div>
                                 <p class="mt-2">Cancelled</p>
                             </div>
-                            <h4 class="mb-0"> 3,888 <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
+                            <h4 class="mb-0">{{ $res->cancelled }} <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
                             <div>
                                 {{-- <div class="py-3 my-1">
                                     <div id="mini-1" data-colors='["#3980c0"]'></div>
@@ -122,7 +122,7 @@
                                 </div>
                                 <p class="mt-2">Total Orders</p>
                             </div>
-                            <h4 class="mb-0"> 3,888 <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
+                            <h4 class="mb-0">{{ $res->total_orders }} <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
                             <div>
                                 {{-- <div class="py-3 my-1">
                                     <div id="mini-1" data-colors='["#3980c0"]'></div>
@@ -142,7 +142,7 @@
                                 </div>
                                 <p class="mt-2">Total Products</p>
                             </div>
-                            <h4 class="mb-0"> 3,888 <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
+                            <h4 class="mb-0">{{ $res->total_products }} <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
                             <div>
                                 {{-- <div class="py-3 my-1">
                                     <div id="mini-1" data-colors='["#3980c0"]'></div>
@@ -162,7 +162,7 @@
                                 </div>
                                 <p class="mt-2">Total Sales</p>
                             </div>
-                            <h4 class="mb-0">RM 3,888 <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
+                            <h4 class="mb-0">RM {{ number_format($res->total_sales,2) }} <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
                             <div>
                                 {{-- <div class="py-3 my-1">
                                     <div id="mini-1" data-colors='["#3980c0"]'></div>
@@ -184,7 +184,7 @@
                                 </div>
                                 <p class="mt-2">Total Members</p>
                             </div>
-                            <h4 class="mb-0"> 3,888 <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
+                            <h4 class="mb-0">{{ $res->total_members }} <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
                             <div>
                                 {{-- <div class="py-3 my-1">
                                     <div id="mini-1" data-colors='["#3980c0"]'></div>
@@ -204,7 +204,7 @@
                                 </div>
                                 <p class="mt-2">Chief Distributors</p>
                             </div>
-                            <h4 class="mb-0"> 3,888 <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
+                            <h4 class="mb-0">{{ $res->chief_distributors }} <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
                             <div>
                                 {{-- <div class="py-3 my-1">
                                     <div id="mini-1" data-colors='["#3980c0"]'></div>
@@ -224,7 +224,7 @@
                                 </div>
                                 <p class="mt-2">Exclusive Distributors</p>
                             </div>
-                            <h4 class="mb-0"> 3,888 <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
+                            <h4 class="mb-0">{{ $res->exclusive_distributors }} <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
                             <div>
                                 {{-- <div class="py-3 my-1">
                                     <div id="mini-1" data-colors='["#3980c0"]'></div>
@@ -244,7 +244,7 @@
                                 </div>
                                 <p class="mt-2">General Distributors</p>
                             </div>
-                            <h4 class="mb-0"> 3,888 <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
+                            <h4 class="mb-0">{{ $res->general_distributors }} <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
                             <div>
                                 {{-- <div class="py-3 my-1">
                                     <div id="mini-1" data-colors='["#3980c0"]'></div>
@@ -264,7 +264,7 @@
                                 </div>
                                 <p class="mt-2">Members</p>
                             </div>
-                            <h4 class="mb-0"> 3,888 <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
+                            <h4 class="mb-0">{{ $res->members }} <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
                             <div>
                                 {{-- <div class="py-3 my-1">
                                     <div id="mini-1" data-colors='["#3980c0"]'></div>
@@ -284,7 +284,7 @@
                                 </div>
                                 <p class="mt-2">New Clients</p>
                             </div>
-                            <h4 class="mb-0"> 3,888 <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
+                            <h4 class="mb-0">{{ $res->clients }} <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
                             <div>
                                 {{-- <div class="py-3 my-1">
                                     <div id="mini-1" data-colors='["#3980c0"]'></div>
@@ -304,7 +304,7 @@
                                 </div>
                                 <p class="mt-2">Pending Deposit</p>
                             </div>
-                            <h4 class="mb-0"> 3,888 <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
+                            <h4 class="mb-0">{{ $res->pending_deposit }} <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
                             <div>
                                 {{-- <div class="py-3 my-1">
                                     <div id="mini-1" data-colors='["#3980c0"]'></div>
@@ -324,7 +324,7 @@
                                 </div>
                                 <p class="mt-2">Pending Withdrawal</p>
                             </div>
-                            <h4 class="mb-0"> 3,888 <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
+                            <h4 class="mb-0">{{ $res->pending_withdrawal }} <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
                             <div>
                                 {{-- <div class="py-3 my-1">
                                     <div id="mini-1" data-colors='["#3980c0"]'></div>

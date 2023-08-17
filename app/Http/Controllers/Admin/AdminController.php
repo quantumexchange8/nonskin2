@@ -12,6 +12,8 @@ use App\Models\BankSetting;
 use App\Models\ShippingCharge;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Payment;
+use App\Models\Product;
 use Validator;
 use Response;
 use Redirect;
@@ -25,7 +27,28 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
-        return view('admin.dashboard');
+        $res = DB::table('orders')
+        ->selectRaw('
+            COUNT(*) as total_orders,
+            SUM(CASE WHEN status = 1 THEN 1 ELSE 0 END) as new_order,
+            SUM(CASE WHEN status = 2 THEN 1 ELSE 0 END) as packing,
+            SUM(CASE WHEN status = 3 THEN 1 ELSE 0 END) as delivering,
+            SUM(CASE WHEN status = 4 THEN 1 ELSE 0 END) as completed,
+            SUM(CASE WHEN status = 5 THEN 1 ELSE 0 END) as cancelled,
+            (SELECT COUNT(*) FROM products WHERE status = "Active") as total_products,
+            (SELECT SUM(total_amount) FROM orders WHERE status = 4) as total_sales,
+            (SELECT COUNT(*) FROM users WHERE role = "user") as total_members,
+            (SELECT COUNT(*) FROM users WHERE rank_id = 5) as chief_distributors,
+            (SELECT COUNT(*) FROM users WHERE rank_id = 4) as exclusive_distributors,
+            (SELECT COUNT(*) FROM users WHERE rank_id = 3) as general_distributors,
+            (SELECT COUNT(*) FROM users WHERE rank_id = 2) as members,
+            (SELECT COUNT(*) FROM users WHERE rank_id = 1) as clients,
+            (SELECT COUNT(*) FROM payments WHERE type = "Deposit" AND status = "Pending") as pending_deposit,
+            (SELECT COUNT(*) FROM payments WHERE type = "Withdraw" AND status = "Pending") as pending_withdrawal
+        ')
+        ->first();
+
+        return view('admin.dashboard', compact('res'));
     }
     public function memberList(){
         $states = State::select('id', 'name')->get();
@@ -277,7 +300,7 @@ class AdminController extends Controller
                 $user->save();
             }
         }
-        
+
 
         Alert::success('Success', 'Status has been updated');
         return redirect()->back();
