@@ -16,7 +16,7 @@
                         <div class="row mb-3">
                             <div class="col-lg-3">
                                 <label class="form-label">Status</label>
-                                <select class="form-select" name="status" id="status">
+                                <select class="form-select status-input" name="status">
                                     <option value="">All</option>
                                     @foreach (App\Enums\PaymentStatus::cases() as $status)
                                         <option value="{{ $status->value }}">{{ $status->value }}</option>
