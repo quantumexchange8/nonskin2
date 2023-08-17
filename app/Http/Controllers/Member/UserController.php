@@ -74,44 +74,62 @@ class UserController extends Controller
             ->whereHas('address', function ($query) {
                 $query->where('user_id', Auth::id());
             })
-            ->select('id', 'full_name', 'contact', 'email')
             ->first();
 
         // $shipping_methods = DeliverySetting::
 
         $cartItems = $user->cart ? $user->cart->items : collect();
 
+
+
         $subtotal = 0;
         $totalDiscount = 0; // Initialize totalDiscount variable outside the loop
         $discountedPrice = 0;
         $discount = 0;
+        $product_price = 0;
+        $discount_percent_amount = 0;
         foreach ($cartItems as $item) {
             if ($item->product->discount == 0) {
-                $subtotal += $item->product->price * $item->quantity;
+                $product_price = $item->product->price;
+
+                if($user->rank_id == 2) {
+                    $member_discount_amount = 10;
+
+                    $discount_percent_amount = $member_discount_amount * ($product_price/100); // 10% amount of product price
+
+                    $discounted_product_price = $product_price - $discount_percent_amount; //product price - 10%
+
+                    $subtotal += $discounted_product_price * $item->quantity;
+                }
+
             } else {
                 $discountedPrice = $item->product->price - ($item->product->price * ($item->product->discount / 100));
                 $discount = $item->product->price * ($item->product->discount / 100);
                 $totalDiscount += $discount * $item->quantity; // Accumulate the discount for each product
                 $subtotal += $discountedPrice * $item->quantity;
+
+                $product_price = $item->product->price;
             }
         }
 
         // Calculate the total price with discount
-        $totalPriceWithDiscount = $subtotal - $totalDiscount;
+        // $totalPriceWithDiscount = $subtotal - $totalDiscount;
 
         // ... (existing code)
 
         if ($cartItems->count() > 0) {
             return view('member.checkout', [
                 'cartItems' => $cartItems,
+                'product_price' => $product_price,
                 'user' => $user,
                 'payment_methods' => $payment_methods,
                 'delivery_methods' => $delivery_methods,
+                'discount_percent_amount' => $discount_percent_amount,
                 'subtotal' => $subtotal,
                 'discountedPrice' => $discountedPrice,
                 'discount' => $discount,
                 'totalDiscount' => $totalDiscount,
-                'totalPriceWithDiscount' => $totalPriceWithDiscount,
+                // 'totalPriceWithDiscount' => $totalPriceWithDiscount,
                 'default_address' => $default_address,
                 'payment_selfpick' => $payment_selfpick,
                 'shipping_address' => $shipping_address,

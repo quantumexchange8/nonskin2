@@ -8,6 +8,7 @@ use App\Models\OrderItem;
 use App\Models\Payment;
 use App\Models\Cart;
 use App\Models\CartItem;
+use App\Models\WalletHistory;
 use Illuminate\Http\Request;
 use Okipa\Grid\DataGrid;
 use Auth;
@@ -28,8 +29,10 @@ class OrderController extends Controller
         $receiver           = $request->input('receiver');
         $contact            = $request->input('contact');
         $email              = $request->input('email');
+        $price              = $request->input('price');
         $deliveryMethod     = $request->input('delivery_method');
         $paymentMethod      = $request->input('payment_method');
+        $discountAmt        = $request->input('discount_amt');
         $deliveryAddress    = $request->input('address');
         $deliveryFee        = $request->input('delivery_fee');
 
@@ -54,6 +57,20 @@ class OrderController extends Controller
                 $request->payment_proof->move(public_path('images/payment-proof'), $imageName1);
             }
 
+            if($paymentMethod == 'Purchase Wallet'){
+                $user = Auth::user();
+    
+                //  Calculate purchase Wallet Deduct product amount
+                $balance = $user->purchase_wallet;
+                
+                if($balance >= $totalAmount) {
+                    $balance_remain = $balance - $totalAmount;
+                    
+                    $user->purchase_wallet = $balance_remain;
+                    $user->save();
+                }
+            }
+
             DB::beginTransaction();
             $newOrderNumber = $prefixRow->counter + 1;
             $prefixRow->update(
@@ -67,9 +84,12 @@ class OrderController extends Controller
             $order->user_id             = $id;
             $order->order_num           = $orderPrefix . str_pad($newOrderNumber, $prefixRow->padding, '0', STR_PAD_LEFT);
             $order->total_amount        = $totalAmount;
+            $order->nett_price          = $totalAmount;
             $order->receiver            = $receiver;
             $order->contact             = $contact;
             $order->email               = $email;
+            $order->price               = $price;
+            $order->discount_amt        = $discountAmt;
             $order->delivery_method     = $deliveryMethod;
             $order->payment_method      = $paymentMethod;
             $order->delivery_address    = $deliveryAddress;
@@ -111,6 +131,15 @@ class OrderController extends Controller
                 'updated_by' => Auth::id()
             ]);
 
+            $wallet = new WalletHistory();
+            $wallet->user_id =  Auth::id();
+            $wallet->wallet_type = 'purchase_wallet';
+            $wallet->type = 'purchase';
+            $wallet->cash_in = null;
+            $wallet->cash_out = $totalAmount;
+            $wallet->balance = Auth::user()->purchase_wallet;
+            $wallet->save();
+
             foreach(auth()->user()->cart->items as $item) {
                 $orderItem                  = new OrderItem();
                 $orderItem->order_num       = $order->order_num;
@@ -142,6 +171,15 @@ class OrderController extends Controller
             // Handle the exception as needed (e.g., log the error, return an error response)
             return response()->json(['error' => $e->getMessage()], 500);
         }
+    }
+
+    public function getUserPurchaseWalletBalance(){
+
+        $user = Auth::user();
+        $purchaseWalletBalance = $user->purchase_wallet;
+
+        return response()->json(['purchase_wallet_balance' => $purchaseWalletBalance]);
+
     }
 
     // Admin
