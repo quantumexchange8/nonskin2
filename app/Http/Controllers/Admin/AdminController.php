@@ -337,7 +337,7 @@ class AdminController extends Controller
         Alert::success('Success', 'Profile Updated');
         return redirect()->back();
     }
-    
+
     public function chgpassword()
     {
         return view('admin.profile.password');
@@ -348,5 +348,15 @@ class AdminController extends Controller
 
         Alert::success('Success', 'Profile Updated');
         return redirect()->back();
+    }
+
+    public function checkUniqueUsername(Request $request)
+    {
+        $username = $request->input('username');
+        $user = Auth::user();
+
+        $isUnique = !User::where('username', $username)->where('id', '!=', $user->id)->exists();
+
+        return response()->json(['unique' => $isUnique]);
     }
 }

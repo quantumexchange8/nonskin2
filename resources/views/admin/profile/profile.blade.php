@@ -125,7 +125,7 @@
                 }
 
                 $.ajax({
-                    url: '{{ route('checkUniqueFullName') }}',
+                    url: '{{ route('admin.checkUniqueFullName') }}',
                     type: 'POST',
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -155,7 +155,7 @@
                 }
 
                 $.ajax({
-                    url: '{{ route('checkUniqueEmail') }}',
+                    url: '{{ route('admin.checkUniqueEmail') }}',
                     type: 'POST',
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -165,6 +165,9 @@
                         if (response.unique === false) {
                             $('#email').addClass('is-invalid');
                             $('#email-error').text('Email is already taken.');
+                        } else if(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)) {
+                            $('#email').addClass('is-invalid');
+                            $('#email-error').text('This email address is invalid.');
                         } else {
                             $('#email').removeClass('is-invalid');
                             $('#email').addClass('is-valid');
@@ -173,20 +176,37 @@
                     }
                 });
             });
-
             $('#username').on('blur', function() {
                 var username = $(this).val().trim();
 
                 // Show error if field is blank
                 if (username === '') {
                     $('#username').addClass('is-invalid');
-                    $('#username-error').text('Username is required.');
+                    $('#username-error').text('Email is required.');
                     return;
-                } else {
-                    $('#username').addClass('is-valid');
-                    $('#username-error').text('');
                 }
+
+                $.ajax({
+                    url: '{{ route('admin.checkUniqueUsername') }}',
+                    type: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: { username: username },
+                    success: function(response) {
+                        if (response.unique === false) {
+                            $('#username').addClass('is-invalid');
+                            $('#username-error').text('Username is already taken.');
+                        } else {
+                            $('#username').removeClass('is-invalid');
+                            $('#username').addClass('is-valid');
+                            $('#username-error').text('');
+                        }
+                    }
+                });
             });
+
+
 
             $('#contact').on('blur', function() {
                 var contact = $(this).val().trim();
@@ -269,6 +289,9 @@
                     $('#bankid').addClass('is-invalid');
                     $('#bankid-error').text('ID number is required.');
                     return;
+                } else if (!/^\d{8,12}$/.test(bankid)) {
+                    $('#bankid').addClass('is-invalid');
+                    $('#bankid-error').text('ID Number must be a number with 8 to 12 digits.');
                 } else {
                     $('#bankid').addClass('is-valid');
                     $('#bankid-error').text('');

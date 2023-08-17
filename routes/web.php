@@ -125,6 +125,9 @@ Route::group(['prefix' => 'admin',  'middleware' => ['auth', 'role:superadmin|ad
     Route::get('/my_profile', [AdminController::class, 'profile'])->name('profile');
     Route::post('/my_profile/update', [AdminController::class, 'update'])->name('update');
     Route::post('/change_password', [AdminController::class, 'chgpassword'])->name('chgpassword');
+    Route::post('/check-unique-fullname', [UserController::class, 'checkUniqueFullName'])->name('admin.checkUniqueFullName');
+    Route::post('/check-unique-username', [AdminController::class, 'checkUniqueUsername'])->name('admin.checkUniqueUsername');
+    Route::post('/check-unique-email', [UserController::class, 'checkUniqueEmail'])->name('admin.checkUniqueEmail');
 });
 
 // Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
