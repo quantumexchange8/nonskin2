@@ -175,6 +175,7 @@
                 const selectedPaymentMethod = $('input[name="payment_method"]:checked').val();
                 const selectedAddressRadio = $('input[name="address"]:checked');
                 const input = document.querySelector("#address");
+                
 
                 const totalElement = document.getElementById('total');
                 const totalAmount = Number(totalElement.innerText.match(/\d+\.\d+/)[0]);
@@ -226,41 +227,29 @@
                 }
                 
 
-                
-                    let formData = $('#checkout-form').serializeArray();
-
-                    formData.push({
-                        name: '_token',
-                        value: $('meta[name="csrf-token"]').attr('content')
-                    }, {
-                        name: 'user_id',
-                        value: {{ $user->id }}
-                    }, {
-                        name: 'email',
-                        value: '{{ $user->email }}'
-                    }, {
-                        name: 'total_amount',
-                        value: formattedTotal
-                    });
                     // Check the delivery method and add receiver and contact accordingly
                     if (selectedDeliveryMethod === 'Delivery') {
                         if(selectedPaymentMethod === 'Manual Transfer') {
-                            formData.push({
-                                name: 'receiver',
-                                value: name
-                            }, {
-                                name: 'contact',
-                                value: contact
-                            });
 
+                            let formData = new FormData();
+
+                            // Append the fields that are always present
+                            formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
+                            formData.append('user_id', {{ $user->id }});
+                            formData.append('email', '{{ $user->email }}');
+                            formData.append('total_amount', formattedTotal);
+                            formData.append('delivery_method', selectedDeliveryMethod); // Append delivery method
+                            formData.append('address', $('input[name="address"]:checked').val()); // Append address
+                            formData.append('payment_method', selectedPaymentMethod); // Append payment method
+                            formData.append('delivery_fee', shippingCharge ); // Append delivery fee
+                            formData.append('receiver', name);
+                            formData.append('contact', contact);
+                            
                             // Get the payment proof file input
                             const paymentProofInput = document.getElementById('payment_proof');
                             if (paymentProofInput.files.length > 0) {
                                 // Add the payment_proof to the FormData
-                                formData.push({
-                                    name: 'payment_proof',
-                                    value: paymentProofInput.files[0]
-                                });
+                                formData.append('payment_proof', paymentProofInput.files[0]);
                             } else {
                                 // Display a SweetAlert to inform the user to upload payment proof
                                 Swal.fire({
@@ -270,8 +259,76 @@
                                 });
                                 return; // Exit the function
                             }
+
+                            $.ajax({
+                                url: '{{ route("place-order") }}',
+                                method: 'POST',
+                                data: formData,
+                                processData: false,
+                                contentType: false,
+                                success: function(response) {
+                                    if (response && response.message) {
+                                        var timerInterval;
+                                        Swal.fire({
+                                        title: response.message,
+                                        html: 'Please do not click on anywhere while being redirected to the payment page',
+                                        timer: 3000,
+                                        timerProgressBar: true,
+                                        didOpen:function () {
+                                            Swal.showLoading()
+                                            timerInterval = setInterval(function() {
+                                            var content = Swal.getHtmlContainer()
+                                            if (content) {
+                                                var b = content.querySelector('b')
+                                                if (b) {
+                                                    b.textContent = Swal.getTimerLeft()
+                                                }
+                                            }
+                                            }, 100)
+                                        },
+                                        onClose: function () {
+                                            clearInterval(timerInterval);
+                                            window.location.href = "{{ route('member.order-pending') }}";
+                                        }
+                                        }).then(function (result) {
+                                            /* Read more about handling dismissals below */
+                                            if (result.dismiss === Swal.DismissReason.timer) {
+                                                window.location.href = "{{ route('member.order-pending') }}";
+                                            }
+                                        })
+                                    }
+                                },
+                                error: function(xhr, status, error) {
+                                    // console.log(formData);
+                                    console.log(xhr);
+                                    console.log(status);
+                                    Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: error
+                                })
+                                return;
+                                }
+                            });
                             console.log(formData)
                         } else {
+
+                            let formData = $('#checkout-form').serializeArray();
+
+                            formData.push({
+                                name: '_token',
+                                value: $('meta[name="csrf-token"]').attr('content')
+                            }, {
+                                name: 'user_id',
+                                value: {{ $user->id }}
+                            }, {
+                                name: 'email',
+                                value: '{{ $user->email }}'
+                            }, {
+                                name: 'total_amount',
+                                value: formattedTotal
+                            });
+
                             formData.push({
                                 name: 'receiver',
                                 value: name
@@ -279,7 +336,57 @@
                                 name: 'contact',
                                 value: contact
                             });
+
+                            $.ajax({
+                                url: '{{ route("place-order") }}',
+                                method: 'POST',
+                                data: formData,
+                                success: function(response) {
+                                    if (response && response.message) {
+                                        var timerInterval;
+                                        Swal.fire({
+                                        title: response.message,
+                                        html: 'Please do not click on anywhere while being redirected to the payment page',
+                                        timer: 3000,
+                                        timerProgressBar: true,
+                                        didOpen:function () {
+                                            Swal.showLoading()
+                                            timerInterval = setInterval(function() {
+                                            var content = Swal.getHtmlContainer()
+                                            if (content) {
+                                                var b = content.querySelector('b')
+                                                if (b) {
+                                                    b.textContent = Swal.getTimerLeft()
+                                                }
+                                            }
+                                            }, 100)
+                                        },
+                                        onClose: function () {
+                                            clearInterval(timerInterval);
+                                            window.location.href = "{{ route('member.order-pending') }}";
+                                        }
+                                        }).then(function (result) {
+                                            /* Read more about handling dismissals below */
+                                            if (result.dismiss === Swal.DismissReason.timer) {
+                                                window.location.href = "{{ route('member.order-pending') }}";
+                                            }
+                                        })
+                                    }
+                                },
+                                error: function(xhr, status, error) {
+                                    console.log(xhr);
+                                    console.log(status);
+                                    Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: error
+                                    })
+                                    return;
+                                }
+
+                            });
                         }
+                        
                         
                     } else if (selectedDeliveryMethod === 'Self-Pickup') {
                         formData.push({
@@ -298,64 +405,62 @@
                     // console.log(formData)
                     // Serialize the form data
                     // Use AJAX to post the form data to the server
-                    $.ajax({
-                        url: '{{ route("place-order") }}',
-                        method: 'POST',
-                        data: formData,
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        success: function(response) {
-                            if (response && response.message) {
-                                var timerInterval;
-                                Swal.fire({
-                                title: response.message,
-                                html: 'Please do not click on anywhere while being redirected to the payment page',
-                                timer: 3000,
-                                timerProgressBar: true,
-                                didOpen:function () {
-                                    Swal.showLoading()
-                                    timerInterval = setInterval(function() {
-                                    var content = Swal.getHtmlContainer()
-                                    if (content) {
-                                        var b = content.querySelector('b')
-                                        if (b) {
-                                            b.textContent = Swal.getTimerLeft()
-                                        }
-                                    }
-                                    }, 100)
-                                },
-                                onClose: function () {
-                                    clearInterval(timerInterval);
-                                    window.location.href = "{{ route('member.order-pending') }}";
-                                }
-                                }).then(function (result) {
-                                    /* Read more about handling dismissals below */
-                                    if (result.dismiss === Swal.DismissReason.timer) {
-                                        window.location.href = "{{ route('member.order-pending') }}";
-                                    }
-                                })
-                            }
-                        },
-                        error: function(xhr, status, error) {
-                            // console.log(formData);
-                            console.log(xhr);
-                            console.log(status);
-                            Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: error
-                        })
-                        return;
-                        }
-                    });
+                    // $.ajax({
+                    //     url: '{{ route("place-order") }}',
+                    //     method: 'POST',
+                    //     data: formData,
+                    //     success: function(response) {
+                    //         if (response && response.message) {
+                    //             var timerInterval;
+                    //             Swal.fire({
+                    //             title: response.message,
+                    //             html: 'Please do not click on anywhere while being redirected to the payment page',
+                    //             timer: 3000,
+                    //             timerProgressBar: true,
+                    //             didOpen:function () {
+                    //                 Swal.showLoading()
+                    //                 timerInterval = setInterval(function() {
+                    //                 var content = Swal.getHtmlContainer()
+                    //                 if (content) {
+                    //                     var b = content.querySelector('b')
+                    //                     if (b) {
+                    //                         b.textContent = Swal.getTimerLeft()
+                    //                     }
+                    //                 }
+                    //                 }, 100)
+                    //             },
+                    //             onClose: function () {
+                    //                 clearInterval(timerInterval);
+                    //                 window.location.href = "{{ route('member.order-pending') }}";
+                    //             }
+                    //             }).then(function (result) {
+                    //                 /* Read more about handling dismissals below */
+                    //                 if (result.dismiss === Swal.DismissReason.timer) {
+                    //                     window.location.href = "{{ route('member.order-pending') }}";
+                    //                 }
+                    //             })
+                    //         }
+                    //     },
+                    //     error: function(xhr, status, error) {
+                    //         // console.log(formData);
+                    //         console.log(xhr);
+                    //         console.log(status);
+                    //         Swal.fire({
+                    //         icon: 'error',
+                    //         title: 'Oops...',
+                    //         text: error
+                    //     })
+                    //     return;
+                    //     }
+                    // });
                 // }
             });
         });
+        let shippingCharge = 0; // Initialize the shipping charge to 0
         function updateShippingCharge(isShippingMethod) {
             const deliveryMethod = $('input[name="delivery_method"]:checked').val();
             const shippingElement = document.getElementById('shipping');
-            let shippingCharge = 0; // Initialize the shipping charge to 0
+            
 
             if (deliveryMethod === 'Delivery') {
                  // Check if any address is selected

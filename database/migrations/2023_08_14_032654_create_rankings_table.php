@@ -20,12 +20,13 @@ class CreateRankingsTable extends Migration
             $table->double('personal_sales', 9, 2);
             $table->double('package_requirement', 9, 2);
             $table->double('group_sale_requirement',9, 2);
-            $table->string('direct_member')->nullable();
-            $table->string('direct_member_rank')->nullable();
+            $table->double('group_package', 9, 2);
             $table->timestamps();
             $table->softDeletes();
             $table->string('rank_short', 255);
             $table->string('category', 255);
+            $table->double('upgrade_ranking_sales', 9, 2)->default(0);
+            $table->double('upgrade_level');
         });
     }
 

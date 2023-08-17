@@ -150,7 +150,7 @@
         </div> <!-- end col -->
         <div class="col">
             <div class="text-end mt-2 mt-sm-0">
-                <button type="submit" class="btn btn-success" id="place-order-btn">
+                <button type="button" class="btn btn-success" id="place-order-btn">
                     <i class="mdi mdi-cart-outline me-1"></i> Place Order
                 </button>
             </div>

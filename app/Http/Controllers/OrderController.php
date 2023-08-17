@@ -18,7 +18,7 @@ class OrderController extends Controller
     // Customer
     public function placeOrder(Request $request)
     {
-        // dd($request);
+        // dd($request->all());
         if(auth()->user()->cart->items->count() == 0){
             return redirect()->route('member.cart');
         }
@@ -41,12 +41,14 @@ class OrderController extends Controller
         // if (!$prefixRow) {
         //     // If the prefix doesn't exist, handle it as needed (e.g., show an error)
         // }
-
+            
         $request->validate([
-            'payment_proof' => 'nullable|image|max:2048|mimes:jpeg,jpg,png,pdf', // Adjust the allowed mime types and file size as needed
+            'payment_proof' => 'nullable|image|max:2048', // Adjust the allowed mime types and file size as needed
         ]);
 
         try {
+            $imageName1 = null; // Initialize the variable
+
             if ($request->hasFile('payment_proof')){
                 $imageName1 = time().'.'.$request->payment_proof->extension();
                 $request->payment_proof->move(public_path('images/payment-proof'), $imageName1);
@@ -70,29 +72,16 @@ class OrderController extends Controller
             $order->email               = $email;
             $order->delivery_method     = $deliveryMethod;
             $order->payment_method      = $paymentMethod;
-            $order->payment_proof      = $imageName1;
             $order->delivery_address    = $deliveryAddress;
             $order->delivery_fee        = $deliveryMethod == 'Delivery' ? $deliveryFee : 0;
             $order->status              = 1;//processing
             $order->remarks             = null;
             $order->created_by          = Auth::id();
             $order->updated_at          = null;
-
-            if ($request->hasFile('payment_proof')) {
-                $image1 = $request->file('payment_proof');
+            
+            if ($imageName1 !== null) {
                 $order->payment_proof = $imageName1;
             }
-
-
-            // if ($request->payment_proof != null) {
-            //     // dd($request->payment_proof);
-            //     $order->payment_proof = null;
-
-            // } else {
-            //     // No image uploaded, set payment_proof to null
-            //     $order->payment_proof = null;
-            // }
-
             $order->save();
 
 
@@ -151,7 +140,7 @@ class OrderController extends Controller
         } catch (\Throwable $e) {
             DB::rollback();
             // Handle the exception as needed (e.g., log the error, return an error response)
-            return response()->json(['error' => 'An error occurred while placing the order'], 500);
+            return response()->json(['error' => $e->getMessage()], 500);
         }
     }
 
