@@ -198,7 +198,7 @@
                         <div class="d-flex justify-content-between mb-4">
                             <div class="avatar">
                                 <span class="avatar-title bg-soft-success rounded">
-                                    <i class="mdi mdi-star-three-points text-success font-size-24"></i>
+                                    <i class="mdi mdi-gift text-success font-size-24"></i>
                                 </span>
                             </div>
                             <p class="mt-2">Current Bonus</p>
@@ -213,7 +213,7 @@
                         <div class="d-flex justify-content-between mb-4">
                             <div class="avatar">
                                 <span class="avatar-title bg-soft-success rounded">
-                                    <i class="mdi mdi-star-three-points text-success font-size-24"></i>
+                                    <i class="mdi mdi-gift text-success font-size-24"></i>
                                 </span>
                             </div>
                             <p class="mt-2">Next Bonus</p>
@@ -228,7 +228,7 @@
                         <div class="d-flex justify-content-between mb-4">
                             <div class="avatar">
                                 <span class="avatar-title bg-soft-success rounded">
-                                    <i class="mdi mdi-star-three-points text-success font-size-24"></i>
+                                    <i class="mdi mdi-lan text-success font-size-24"></i>
                                 </span>
                             </div>
                             <p class="mt-2">Total Referrals</p>
@@ -243,7 +243,7 @@
                         <div class="d-flex justify-content-between mb-4">
                             <div class="avatar">
                                 <span class="avatar-title bg-soft-success rounded">
-                                    <i class="mdi mdi-star-three-points text-success font-size-24"></i>
+                                    <i class="mdi mdi-currency-usd text-success font-size-24"></i>
                                 </span>
                             </div>
                             <p class="mt-2">Total Commission</p>
@@ -258,7 +258,7 @@
                         <div class="d-flex justify-content-between mb-4">
                             <div class="avatar">
                                 <span class="avatar-title bg-soft-success rounded">
-                                    <i class="mdi mdi-star-three-points text-success font-size-24"></i>
+                                    <i class="mdi mdi-currency-usd text-success font-size-24"></i>
                                 </span>
                             </div>
                             <p class="mt-2">Total Sales</p>
@@ -276,7 +276,7 @@
                         <div class="d-flex justify-content-between mb-4">
                             <div class="avatar">
                                 <span class="avatar-title bg-soft-success rounded">
-                                    <i class="mdi mdi-star-three-points text-success font-size-24"></i>
+                                    <i class="mdi mdi-currency-usd text-success font-size-24"></i>
                                 </span>
                             </div>
                             <p class="mt-2">Daily Sales</p>
@@ -294,7 +294,7 @@
                         <div class="d-flex justify-content-between mb-4">
                             <div class="avatar">
                                 <span class="avatar-title bg-soft-success rounded">
-                                    <i class="mdi mdi-star-three-points text-success font-size-24"></i>
+                                    <i class="mdi mdi-currency-usd text-success font-size-24"></i>
                                 </span>
                             </div>
                             <p class="mt-2">Quarterly Sales</p>
@@ -312,7 +312,7 @@
                         <div class="d-flex justify-content-between mb-4">
                             <div class="avatar">
                                 <span class="avatar-title bg-soft-success rounded">
-                                    <i class="mdi mdi-star-three-points text-success font-size-24"></i>
+                                    <i class="mdi mdi-currency-usd text-success font-size-24"></i>
                                 </span>
                             </div>
                             <p class="mt-2">Annual Sales</p>
