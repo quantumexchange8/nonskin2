@@ -235,6 +235,12 @@ class RegisterController extends Controller
         }
     }
 
+    public function checkExistingReferral(Request $request)
+    {
+        $referral = $request->input('referral');
+        $isExist = User::where('referrer_id', $referral)->exists();
+        return response()->json(['exist' => $isExist]);
+    }
     public function checkUniqueFullName(Request $request)
     {
         $full_name = $request->input('full_name');

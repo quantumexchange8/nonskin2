@@ -85,9 +85,15 @@ use App\Models\{State, BankSetting};
                                                         <div class="mb-3">
                                                             <label for="basicpill-firstname-input" class="form-label">Referral <small class="text-muted">(Optional)</small></label>
                                                             @if($referral != null)
-                                                                <input type="text" class="form-control" placeholder="e.g. NON000000003" name="referral" value="{{ $referral ?: null}}">
+                                                                <input type="text" class="form-control" placeholder="e.g. NON000000003" name="referral" id="referral" value="{{ $referral ?: null}}">
+                                                                <div class="invalid-feedback" id="referral-error">
+                                                                    <!-- Error message will be displayed here -->
+                                                                </div>
                                                             @else
-                                                                <input type="text" class="form-control" placeholder="e.g. NON000000003" name="referral">
+                                                                <input type="text" class="form-control" placeholder="e.g. NON000000003" name="referral" id="referral">
+                                                                <div class="invalid-feedback" id="referral-error">
+                                                                    <!-- Error message will be displayed here -->
+                                                                </div>
                                                             @endif
                                                         </div>
                                                     </div>
@@ -430,7 +436,30 @@ use App\Models\{State, BankSetting};
             x[n].className += " active";
         }
 
-        $('#username').on('blur', function() {
+        $('#referral').on('keyup', function() {
+            let referral = $(this).val().trim();
+
+            $.ajax({
+                url: '{{ route('registerExistingReferral') }}',
+                type: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: { referral: referral },
+                success: function(response) {
+                    if (response.exist === false) {
+                        $('#referral').addClass('is-invalid');
+                        $('#referral-error').text('Referral does not exist.');
+                    } else {
+                        $('#referral').removeClass('is-invalid');
+                        $('#referral').addClass('is-valid');
+                        $('#referral-error').text('');
+                    }
+                }
+            });
+        });
+
+        $('#username').on('keyup', function() {
             let username = $(this).val().trim();
 
             // Show error if field is blank
@@ -461,7 +490,7 @@ use App\Models\{State, BankSetting};
             });
         });
 
-        $('#full_name').on('blur', function() {
+        $('#full_name').on('keyup', function() {
             let full_name = $(this).val().trim();
 
             // Show error if field is blank
@@ -491,7 +520,7 @@ use App\Models\{State, BankSetting};
             });
         });
 
-        $('#email').on('blur', function() {
+        $('#email').on('keyup', function() {
             let email = $(this).val().trim();
 
             // Show error if field is blank
@@ -526,7 +555,7 @@ use App\Models\{State, BankSetting};
                 }
             });
         });
-        $('#contact').on('blur', function() {
+        $('#contact').on('keyup', function() {
             let contact = $(this).val().trim();
 
             // Show error if field is blank
@@ -563,35 +592,30 @@ use App\Models\{State, BankSetting};
             var password = $('#password').val().trim();
             var passwordConfirmation = $('#password_confirmation').val().trim();
 
-            if (password.length < 8 || passwordConfirmation.length < 8) {
+            if (password.length < 8) {
                 $('#password').addClass('is-invalid');
-                $('#password_confirmation').addClass('is-invalid');
                 $('#password-error').text('Password must be at least 8 characters.');
-                $('#password_confirmation-error').text('Passwords do not match.');
-            } else if (password.length !== passwordConfirmation.length) {
-                $('#password').addClass('is-invalid');
+            } else if (passwordConfirmation !== password) { // Check if passwords match
                 $('#password_confirmation').addClass('is-invalid');
                 $('#password_confirmation-error').text('Passwords do not match.');
-                return false;
-            } else{
+            } else {
                 $('#password').removeClass('is-invalid');
                 $('#password').addClass('is-valid');
                 $('#password_confirmation').removeClass('is-invalid');
                 $('#password_confirmation').addClass('is-valid');
                 $('#password_confirmation-error').text('');
-                return true;
             }
         }
 
-        $('#password').on('blur', function() {
+        $('#password').on('keyup', function() {
             validatePasswordFields();
         });
 
-        $('#password_confirmation').on('blur', function() {
+        $('#password_confirmation').on('keyup', function() {
             validatePasswordFields();
         });
 
-        $('#id_no').on('blur', function() {
+        $('#id_no').on('keyup', function() {
             let id_no = $(this).val().trim();
 
             // Show error if field is blank
@@ -603,12 +627,13 @@ use App\Models\{State, BankSetting};
                 $('#id_no').addClass('is-invalid');
                 $('#id-no-error').text('ID Number must be a number with 8 to 12 digits.');
             } else {
+                $('#id_no').removeClass('is-invalid');
                 $('#id_no').addClass('is-valid');
                 $('#id-no-error').text('');
             }
         });
 
-        $('#address_1').on('blur', function() {
+        $('#address_1').on('keyup', function() {
             let address1 = $(this).val().trim();
 
             // Show error if field is blank
@@ -622,7 +647,7 @@ use App\Models\{State, BankSetting};
                 $('#address_1-error').text('');
             }
         });
-        $('#address_2').on('blur', function() {
+        $('#address_2').on('keyup', function() {
             let address2 = $(this).val().trim();
 
             // Show error if field is blank
@@ -632,7 +657,7 @@ use App\Models\{State, BankSetting};
                 $('#address_2-error').text('');
             }
         });
-        $('#postcode').on('blur', function() {
+        $('#postcode').on('keyup', function() {
             let postcode = $(this).val().trim();
 
             // Show error if field is blank
@@ -640,13 +665,17 @@ use App\Models\{State, BankSetting};
                 $('#postcode').addClass('is-invalid');
                 $('#postcode-error').text('This field is required.');
                 return;
-            } else {
+            } else if (postcode.length !== 5) {
+                $('#postcode').addClass('is-invalid');
+                $('#postcode-error').text('Check the postcode.');
+            }
+            else {
                 $('#postcode').removeClass('is-invalid');
                 $('#postcode').addClass('is-valid');
                 $('#postcode-error').text('');
             }
         });
-        $('#city').on('blur', function() {
+        $('#city').on('keyup', function() {
             let city = $(this).val().trim();
 
             // Show error if field is blank
@@ -660,7 +689,7 @@ use App\Models\{State, BankSetting};
                 $('#city-error').text('');
             }
         });
-        $('#bank_name').on('blur', function() {
+        $('#bank_name').on('keyup', function() {
             let bank = $(this).val().trim();
 
             // Show error if field is blank
@@ -674,7 +703,7 @@ use App\Models\{State, BankSetting};
                 $('#bank_name-error').text('');
             }
         });
-        $('#bank_holder_name').on('blur', function() {
+        $('#bank_holder_name').on('keyup', function() {
             let holdername = $(this).val().trim();
 
             // Show error if field is blank
@@ -688,7 +717,7 @@ use App\Models\{State, BankSetting};
                 $('#bank_holder_name-error').text('');
             }
         });
-        $('#bank_acc_no').on('blur', function() {
+        $('#bank_acc_no').on('keyup', function() {
             let bankaccno = $(this).val().trim();
 
             // Show error if field is blank
@@ -702,7 +731,7 @@ use App\Models\{State, BankSetting};
                 $('#bank_acc_no-error').text('');
             }
         });
-        $('#bank_ic').on('blur', function() {
+        $('#bank_ic').on('keyup', function() {
             let bankid = $(this).val().trim();
 
             // Show error if field is blank
@@ -724,6 +753,8 @@ use App\Models\{State, BankSetting};
             $('#copy-id-no').change(function() {
                 if ($(this).is(':checked')) {
                     $('#bank_ic').val($('#id_no').val());
+                }else{
+                    $('#bank_ic').val($('').val());
                 }
             });
         });
@@ -731,6 +762,8 @@ use App\Models\{State, BankSetting};
             $('#copy-full-name').change(function() {
                 if ($(this).is(':checked')) {
                     $('#bank_holder_name').val($('#full_name').val());
+                }else {
+                    $('#bank_holder_name').val($('').val());
                 }
             });
         });

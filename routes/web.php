@@ -45,6 +45,7 @@ Route::resource('cart', CartController::class);
 Route::get('/register', [RegisterController::class, 'register'])->name('register');
 Route::get('/register/{referral?}', [RegisterController::class, 'register'])->name('register');
 Route::post('/add-member', [RegisterController::class, 'store'])->name('add.member');
+Route::post('/check-existing-referral', [RegisterController::class, 'checkExistingReferral'])->name('registerExistingReferral');
 Route::post('/check-unique-fullname', [RegisterController::class, 'checkUniqueFullname'])->name('registerUniqueFullname');
 Route::post('/check-unique-username', [RegisterController::class, 'checkUniqueUsername'])->name('registerUniqueUsername');
 Route::post('/check-unique-email', [RegisterController::class, 'checkUniqueEmail'])->name('registerUniqueEmail');
