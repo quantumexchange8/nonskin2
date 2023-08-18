@@ -82,12 +82,12 @@
                         // User confirmed, perform cancel action
                         // For example, you can reset the form or redirect
                         // Here, I'm using window.location to redirect to another page
-                        window.location.href = '{{ route('changepassword') }}';
+                        window.location.href = '{{ route('admin.changePassword') }}';
                     }
                 });
             });
 
-            $('#current_password').on('blur', function() {
+            $('#current_password').on('keyup', function() {
                 let current_password = $(this).val().trim();
 
                 // Show error if field is blank
@@ -105,7 +105,6 @@
                     },
                     data: { current_password: current_password },
                     success: function(response) {
-                        console.log(response);
                         if (response.match === false) {
                             $('#current_password').addClass('is-invalid');
                             $('#current_password-error').text('Current Password does not match');
@@ -136,25 +135,29 @@
                 var password = $('#password').val().trim();
                 var passwordConfirmation = $('#password_confirmation').val().trim();
 
-                if (password.length !== passwordConfirmation.length) {
+                if (password.length < 8) {
                     $('#password').addClass('is-invalid');
+                    $('#password-error').text('Password must be at least 8 characters.');
+                    return false;
+                } else if (passwordConfirmation !== password) { // Check if passwords match
                     $('#password_confirmation').addClass('is-invalid');
                     $('#password_confirmation-error').text('Passwords do not match.');
                     return false;
                 } else {
                     $('#password').removeClass('is-invalid');
+                    $('#password').addClass('is-valid');
                     $('#password_confirmation').removeClass('is-invalid');
+                    $('#password_confirmation').addClass('is-valid');
                     $('#password_confirmation-error').text('');
                     return true;
                 }
             }
 
-
-            $('#password').on('blur', function() {
+            $('#password').on('keyup', function() {
                 validatePasswordFields();
             });
 
-            $('#password_confirmation').on('blur', function() {
+            $('#password_confirmation').on('keyup', function() {
                 validatePasswordFields();
             });
 

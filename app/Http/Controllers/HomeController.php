@@ -181,9 +181,9 @@ class HomeController extends Controller
         {
             $user_id = Auth::user()->id;
             $obj_user = User::find($user_id);
-                if($request->input('new_password') == $request->input('confirm_password'))
+                if($request->input('password') == $request->input('password_confirmation'))
                 {
-                    $obj_user->password = Hash::make($request->input('new_password'));
+                    $obj_user->password = Hash::make($request->input('password'));
                     $obj_user->save();
 
                     Alert::success(trans('public.success'), trans('public.successful_updated_password'));

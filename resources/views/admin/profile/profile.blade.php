@@ -44,10 +44,7 @@
 @section('script')
     <script src="{{ URL::asset('assets/js/app.js') }}"></script>
     <script src="{{ URL::asset('assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
-    <script src="{{ URL::asset('assets/js/pages/form-validation.init.js') }}"></script>
     <script>
-
-
         $(document).ready(function() {
 
             var isFormEdited = false;
@@ -58,7 +55,6 @@
             $('.btn-edit-profile').on('click', function() {
                 // Enable input fields
                 $('input').prop('disabled', false);
-                $('select').prop('disabled', false);
 
                 // Show Save and Cancel buttons, hide Edit Profile button
                 $('#save-profile-button, #cancel-edit-button').removeClass('d-none');
@@ -114,80 +110,32 @@
                 });
             });
 
-            $('#full_name').on('blur', function() {
-                var full_name = $(this).val().trim();
+            $('#full_name').on('keyup', function() {
+                let full_name = $(this).val().trim();
 
-                // Show error if field is blank
                 if (full_name === '') {
                     $('#full_name').addClass('is-invalid');
                     $('#full-name-error').text('Full name is required.');
                     return;
+                } else {
+                    $('#full_name').removeClass('is-invalid');
+                    $('#full_name').addClass('is-valid');
+                    $('#full-name-error').text('');
                 }
-
-                $.ajax({
-                    url: '{{ route('admin.checkUniqueFullName') }}',
-                    type: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data: { full_name: full_name },
-                    success: function(response) {
-                        if (response.unique === false) {
-                            $('#full_name').addClass('is-invalid');
-                            $('#full-name-error').text('Full name is already taken.');
-                        } else {
-                            $('#full_name').removeClass('is-invalid');
-                            $('#full_name').addClass('is-valid');
-                            $('#full-name-error').text('');
-                        }
-                    }
-                });
             });
 
-            $('#email').on('blur', function() {
-                var email = $(this).val().trim();
-
-                // Show error if field is blank
-                if (email === '') {
-                    $('#email').addClass('is-invalid');
-                    $('#email-error').text('Email is required.');
-                    return;
-                }
-
-                $.ajax({
-                    url: '{{ route('admin.checkUniqueEmail') }}',
-                    type: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data: { email: email },
-                    success: function(response) {
-                        if (response.unique === false) {
-                            $('#email').addClass('is-invalid');
-                            $('#email-error').text('Email is already taken.');
-                        } else if(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)) {
-                            $('#email').addClass('is-invalid');
-                            $('#email-error').text('This email address is invalid.');
-                        } else {
-                            $('#email').removeClass('is-invalid');
-                            $('#email').addClass('is-valid');
-                            $('#email-error').text('');
-                        }
-                    }
-                });
-            });
-            $('#username').on('blur', function() {
-                var username = $(this).val().trim();
+            $('#username').on('keyup', function() {
+                let username = $(this).val().trim();
 
                 // Show error if field is blank
                 if (username === '') {
                     $('#username').addClass('is-invalid');
-                    $('#username-error').text('Email is required.');
+                    $('#username-error').text('Username is required.');
                     return;
                 }
 
                 $.ajax({
-                    url: '{{ route('admin.checkUniqueUsername') }}',
+                    url: '{{ route('admin.registerUniqueUsername') }}',
                     type: 'POST',
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -195,6 +143,7 @@
                     data: { username: username },
                     success: function(response) {
                         if (response.unique === false) {
+                            console.log(response);
                             $('#username').addClass('is-invalid');
                             $('#username-error').text('Username is already taken.');
                         } else {
@@ -206,96 +155,101 @@
                 });
             });
 
+            $('#email').on('keyup', function() {
+                var email = $(this).val().trim();
 
+                // Show error if field is blank
+                if (email === '') {
+                    $('#email').addClass('is-invalid');
+                    $('#email-error').text('Email is required.');
+                    return;
+                }
 
-            $('#contact').on('blur', function() {
-                var contact = $(this).val().trim();
+                $.ajax({
+                    url: '{{ route('admin.registerUniqueEmail') }}',
+                    type: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: { email: email },
+                    success: function(response) {
+                        if (response.unique === false) {
+                            $('#email').addClass('is-invalid');
+                            $('#email-error').text('Email is already taken.');
+                        } else {
+                            $('#email').removeClass('is-invalid');
+                            $('#email').addClass('is-valid');
+                            $('#email-error').text('');
+                        }
+                    }
+                });
+            });
+
+            $('#contact').on('keyup', function() {
+                let contact = $(this).val().trim();
 
                 // Show error if field is blank
                 if (contact === '') {
                     $('#contact').addClass('is-invalid');
                     $('#contact-error').text('Contact is required.');
-                } else if (!/^\d{10,12}$/.test(contact)) {
-                    $('#contact').addClass('is-invalid');
-                    $('#contact-error').text('Contact must be a number with 10 to 11 digits.');
-                } else {
-                    $('#contact').removeClass('is-invalid');
-                    $('#contact').addClass('is-valid');
-                    $('#contact-error').text('');
+                    return;
                 }
+
+                $.ajax({
+                    url: '{{ route('admin.registerUniqueContact') }}',
+                    type: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: { contact: contact },
+                    success: function(response) {
+                        if (response.unique === false) {
+                            $('#contact').addClass('is-invalid');
+                            $('#contact-error').text('Contact is already taken.');
+                        } else if (!/^\d{10,12}$/.test(contact)) {
+                            $('#contact').addClass('is-invalid');
+                            $('#contact-error').text('Contact must be a number with 10 to 11 digits.');
+                        } else {
+                            $('#contact').removeClass('is-invalid');
+                            $('#contact').addClass('is-valid');
+                            $('#contact-error').text('');
+                        }
+                    }
+                });
             });
 
-            $('#id_no').on('blur', function() {
-                var id_no = $(this).val().trim();
+            $('#id_no').on('keyup', function() {
+                let id_no = $(this).val().trim();
 
                 // Show error if field is blank
                 if (id_no === '') {
                     $('#id_no').addClass('is-invalid');
-                    $('#id_no-error').text('ID number is required.');
-                    return;
+                    $('#id-no-error').text('Idenfication / Passport No. is required.');
                 } else if (!/^\d{8,12}$/.test(id_no)) {
                     $('#id_no').addClass('is-invalid');
-                    $('#id_no-error').text('ID Number must be a number with 8 to 12 digits.');
-                } else {
-                    $('#id_no').addClass('is-valid');
-                    $('#id_no-error').text('');
+                    $('#id-no-error').text('Idenfication / Passport No. must be a number with 8 to 12 digits.');
                 }
-            });
-
-            $('#bank').on('blur', function() {
-                var bank = $(this).val().trim();
-
-                // Show error if field is blank
-                if (bank === '') {
-                    $('#bank').addClass('is-invalid');
-                    $('#bank-error').text('ID number is required.');
-                    return;
-                } else {
-                    $('#bank').addClass('is-valid');
-                    $('#bank-error').text('');
-                }
-            });
-            $('#holdername').on('blur', function() {
-                var holdername = $(this).val().trim();
-
-                // Show error if field is blank
-                if (holdername === '') {
-                    $('#holdername').addClass('is-invalid');
-                    $('#holdername-error').text('ID number is required.');
-                    return;
-                } else {
-                    $('#holdername').addClass('is-valid');
-                    $('#holdername-error').text('');
-                }
-            });
-            $('#bankacc').on('blur', function() {
-                var bankacc = $(this).val().trim();
-
-                // Show error if field is blank
-                if (bankacc === '') {
-                    $('#bankacc').addClass('is-invalid');
-                    $('#bankacc-error').text('ID number is required.');
-                    return;
-                } else {
-                    $('#bankacc').addClass('is-valid');
-                    $('#bankacc-error').text('');
-                }
-            });
-            $('#bankid').on('blur', function() {
-                var bankid = $(this).val().trim();
-
-                // Show error if field is blank
-                if (bankid === '') {
-                    $('#bankid').addClass('is-invalid');
-                    $('#bankid-error').text('ID number is required.');
-                    return;
-                } else if (!/^\d{8,12}$/.test(bankid)) {
-                    $('#bankid').addClass('is-invalid');
-                    $('#bankid-error').text('ID Number must be a number with 8 to 12 digits.');
-                } else {
-                    $('#bankid').addClass('is-valid');
-                    $('#bankid-error').text('');
-                }
+                $.ajax({
+                    url: '{{ route('admin.registerUniqueID') }}',
+                    type: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: { id_no: id_no },
+                    success: function(response) {
+                        if (response.unique === false) {
+                            $('#id_no').addClass('is-invalid');
+                            $('#id-no-error').text('Idenfication No. is already taken.');
+                        } else if (!/^\d{8,12}$/.test(id_no)) {
+                            $('#id_no').addClass('is-invalid');
+                            $('#id-no-error').text('Idenfication / Passport No. must be a number with 8 to 12 digits.');
+                        } else {
+                            $('#id_no').removeClass('is-invalid');
+                            $('#id_no').addClass('is-valid');
+                            $('#id-no-error').text('');
+                        }
+                    }
+                });
             });
 
             // Handle Save button click (you can modify this based on your form submission)

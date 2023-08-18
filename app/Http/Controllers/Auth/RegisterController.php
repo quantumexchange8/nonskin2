@@ -235,29 +235,24 @@ class RegisterController extends Controller
         }
     }
 
-    public function checkExistingReferral(Request $request)
-    {
+    public function checkExistingReferral(Request $request){
         $referral = $request->input('referral');
         $isExist = User::where('referrer_id', $referral)->exists();
         return response()->json(['exist' => $isExist]);
     }
-    public function checkUniqueFullName(Request $request)
-    {
-        $full_name = $request->input('full_name');
-        $isUnique = !User::where('full_name', $full_name)->exists();
-        return response()->json(['unique' => $isUnique]);
-    }
-    public function checkUniqueUsername(Request $request)
-    {
+    public function checkUniqueUsername(Request $request){
         $username = $request->input('username');
         $isUnique = !User::where('username', $username)->exists();
         return response()->json(['unique' => $isUnique]);
     }
-
-    public function checkUniqueEmail(Request $request)
-    {
+    public function checkUniqueEmail(Request $request){
         $email = $request->input('email');
         $isUnique = !User::where('email', $email)->exists();
+        return response()->json(['unique' => $isUnique]);
+    }
+    public function checkUniqueID(Request $request){
+        $id_no = $request->input('id_no');
+        $isUnique = !User::where('id_no', $id_no)->exists();
         return response()->json(['unique' => $isUnique]);
     }
     public function checkUniqueContact(Request $request){

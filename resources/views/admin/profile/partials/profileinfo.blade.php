@@ -9,7 +9,7 @@
         <p class="text-muted">{{ Auth::user()->ranking_name }}</p>
     </div>
 
-    <form action="{{ route('admin.updateProfile')}}" method="POST" id="profile-form" class="needs-validation" novalidate>
+    <form action="{{ route('admin.updateProfile')}}" method="POST" id="profile-form" class="needs-validation">
         @csrf
         <div class="row">
             {{-- <div class="col-lg-6">
@@ -60,7 +60,7 @@
         <div class="row">
             <div class="col-lg-6">
                 <div class="mb-3">
-                    <label for="id_no" class="form-label">ID Number</label>
+                    <label for="id_no" class="form-label">Identification / Passport No.</label>
                     <input type="text" class="form-control id-input" placeholder="e.g. 900101023434" value="{{ Auth::user()->id_no ?? '-N/A-' }}" id="id_no" name="id_no" disabled required>
                     <div class="invalid-feedback" id="id_no-error">
                         <!-- Error message will be displayed here -->
@@ -83,52 +83,6 @@
 
                     <label for="rank" class="form-label">Ranking</label>
                     <input type="text" class="form-control" value="{{ $rankText }}" id="rank" name="rank" readonly style="background: #F5F6F8">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="mb-3">
-                    <label for="bank" class="form-label">Bank Name</label>
-                    {{-- <input type="text" class="form-control" placeholder="e.g. NON000100" value="{{ Auth::user()->bank_name ?? '-N/A-' }}" id="bank" name="bank" disabled required> --}}
-                    <select class="form-select" name="bank" id="bank" disabled>
-                        <option value="">Select Bank</option>
-                        @foreach ($banks as $bank)
-                            <option value="{{ $bank->name }}" {{ Auth::user()->bank_name == $bank->name ? 'selected' : '' }}>{{ $bank->name }}</option>
-                        @endforeach
-                    </select>
-                    <div class="invalid-feedback" id="bank-error">
-                        <!-- Error message will be displayed here -->
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="mb-3">
-                    <label for="holdername" class="form-label">Bank Holder Name</label>
-                    <input type="text" class="form-control" placeholder="e.g. Johnny" value="{{ Auth::user()->bank_holder_name ?? '-N/A-' }}" id="holdername" name="holdername" disabled required>
-                    <div class="invalid-feedback" id="holdername-error">
-                        <!-- Error message will be displayed here -->
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="mb-3">
-                    <label for="bankacc" class="form-label">Bank Account Number</label>
-                    <input type="text" class="form-control" placeholder="e.g. John Lee Doe" value="{{ Auth::user()->bank_acc_no ?? '-N/A-' }}" id="bankacc" name="bankacc" disabled required>
-                    <div class="invalid-feedback" id="bankacc-error">
-                        <!-- Error message will be displayed here -->
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="mb-3">
-                    <label for="bankid" class="form-label">Bank ID Number</label>
-                    <input type="text" class="form-control" placeholder="e.g. 900101023434" value="{{ Auth::user()->bank_ic ?? '-N/A-' }}" id="bankid" name="bankid" disabled required>
-                    <div class="invalid-feedback" id="bankid-error">
-                        <!-- Error message will be displayed here -->
-                    </div>
                 </div>
             </div>
         </div>

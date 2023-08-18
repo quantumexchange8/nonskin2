@@ -493,31 +493,15 @@ use App\Models\{State, BankSetting};
         $('#full_name').on('keyup', function() {
             let full_name = $(this).val().trim();
 
-            // Show error if field is blank
             if (full_name === '') {
                 $('#full_name').addClass('is-invalid');
                 $('#full-name-error').text('Full name is required.');
                 return;
+            } else {
+                $('#full_name').removeClass('is-invalid');
+                $('#full_name').addClass('is-valid');
+                $('#full-name-error').text('');
             }
-
-            $.ajax({
-                url: '{{ route('registerUniqueFullname') }}',
-                type: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                data: { full_name: full_name },
-                success: function(response) {
-                    if (response.unique === false) {
-                        $('#full_name').addClass('is-invalid');
-                        $('#full-name-error').text('Full name is already taken.');
-                    } else {
-                        $('#full_name').removeClass('is-invalid');
-                        $('#full_name').addClass('is-valid');
-                        $('#full-name-error').text('');
-                    }
-                }
-            });
         });
 
         $('#email').on('keyup', function() {
@@ -588,6 +572,40 @@ use App\Models\{State, BankSetting};
             });
         });
 
+        $('#id_no').on('keyup', function() {
+            let id_no = $(this).val().trim();
+
+            // Show error if field is blank
+            if (id_no === '') {
+                $('#id_no').addClass('is-invalid');
+                $('#id-no-error').text('Idenfication / Passport No. is required.');
+            } else if (!/^\d{8,12}$/.test(id_no)) {
+                $('#id_no').addClass('is-invalid');
+                $('#id-no-error').text('Idenfication / Passport No. must be a number with 8 to 12 digits.');
+            }
+            $.ajax({
+                url: '{{ route('registerUniqueID') }}',
+                type: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: { id_no: id_no },
+                success: function(response) {
+                    if (response.unique === false) {
+                        $('#id_no').addClass('is-invalid');
+                        $('#id-no-error').text('Idenfication No. is already taken.');
+                    } else if (!/^\d{8,12}$/.test(id_no)) {
+                        $('#id_no').addClass('is-invalid');
+                        $('#id-no-error').text('Idenfication / Passport No. must be a number with 8 to 12 digits.');
+                    } else {
+                        $('#id_no').removeClass('is-invalid');
+                        $('#id_no').addClass('is-valid');
+                        $('#id-no-error').text('');
+                    }
+                }
+            });
+        });
+
         function validatePasswordFields() {
             var password = $('#password').val().trim();
             var passwordConfirmation = $('#password_confirmation').val().trim();
@@ -613,24 +631,6 @@ use App\Models\{State, BankSetting};
 
         $('#password_confirmation').on('keyup', function() {
             validatePasswordFields();
-        });
-
-        $('#id_no').on('keyup', function() {
-            let id_no = $(this).val().trim();
-
-            // Show error if field is blank
-            if (id_no === '') {
-                $('#id_no').addClass('is-invalid');
-                $('#id-no-error').text('ID number is required.');
-                return;
-            } else if (!/^\d{8,12}$/.test(id_no)) {
-                $('#id_no').addClass('is-invalid');
-                $('#id-no-error').text('ID Number must be a number with 8 to 12 digits.');
-            } else {
-                $('#id_no').removeClass('is-invalid');
-                $('#id_no').addClass('is-valid');
-                $('#id-no-error').text('');
-            }
         });
 
         $('#address_1').on('keyup', function() {

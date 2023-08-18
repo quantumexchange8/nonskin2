@@ -34,7 +34,7 @@
                     <button type="button" class="btn btn-primary btn-change-pass" id="change-password-button"><i class="mdi mdi-pencil me-1"></i>Change Password</button>
 
                     <!-- Add Save and Cancel buttons with a class of 'd-none' to initially hide them -->
-                    <button type="submit" class="btn btn-success btn-save-profile d-none" id="save-profile-button"><i class="mdi mdi-content-save me-1"></i>Save</button>
+                    <button type="button" class="btn btn-success btn-save-profile d-none" id="save-profile-button"><i class="mdi mdi-content-save me-1"></i>Save</button>
                     <button type="button" class="btn btn-danger btn-cancel-edit d-none" id="cancel-edit-button">Cancel</button>
                 </div>
             </div>

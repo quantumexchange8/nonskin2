@@ -46,7 +46,7 @@ Route::get('/register', [RegisterController::class, 'register'])->name('register
 Route::get('/register/{referral?}', [RegisterController::class, 'register'])->name('register');
 Route::post('/add-member', [RegisterController::class, 'store'])->name('add.member');
 Route::post('/check-existing-referral', [RegisterController::class, 'checkExistingReferral'])->name('registerExistingReferral');
-Route::post('/check-unique-fullname', [RegisterController::class, 'checkUniqueFullname'])->name('registerUniqueFullname');
+Route::post('/check-unique-id', [RegisterController::class, 'checkUniqueID'])->name('registerUniqueID');
 Route::post('/check-unique-username', [RegisterController::class, 'checkUniqueUsername'])->name('registerUniqueUsername');
 Route::post('/check-unique-email', [RegisterController::class, 'checkUniqueEmail'])->name('registerUniqueEmail');
 Route::post('/check-unique-contact', [RegisterController::class, 'checkUniqueContact'])->name('registerUniqueContact');
@@ -144,6 +144,17 @@ Route::group(['prefix' => 'admin',  'middleware' => ['auth', 'role:superadmin|ad
     Route::get('cash-wallet', [AdminController::class, 'cashWallet'])->name('admin.cash-wallet');
     Route::get('product-wallet', [AdminController::class, 'productWallet'])->name('admin.product-wallet');
 
+    // Profile
+    Route::get('my-profile', [AdminController::class, 'profile'])->name('admin.profile');
+    Route::post('my-profile/update', [AdminController::class, 'updateProfile'])->name('admin.updateProfile');
+    Route::post('/check-unique-id', [AdminController::class, 'checkUniqueID'])->name('admin.registerUniqueID');
+    Route::post('/check-unique-username', [AdminController::class, 'checkUniqueUsername'])->name('admin.registerUniqueUsername');
+    Route::post('/check-unique-email', [AdminController::class, 'checkUniqueEmail'])->name('admin.registerUniqueEmail');
+    Route::post('/check-unique-contact', [AdminController::class, 'checkUniqueContact'])->name('admin.registerUniqueContact');
+
+    Route::get('/change-password', [AdminController::class, 'changePassword'])->name('admin.changePassword');
+    Route::post('change-password/{user}', [HomeController::class, 'updatePassword'])->name('admin.updatePassword');
+    Route::post('/check-current-password', [UserController::class, 'checkCurrentPass'])->name('admin.checkCurrentPass');
 });
 
 // Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');

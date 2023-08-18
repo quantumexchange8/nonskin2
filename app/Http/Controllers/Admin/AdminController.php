@@ -365,34 +365,35 @@ class AdminController extends Controller
             'email' => $request->email,
             'contact' => $request->contact,
             'id_no' => $request->id_no,
-            'bank_holder_name' => $request->holdername,
-            'bank_acc_no' => $request->bankacc,
-            'bank_ic' => $request->bankid,
         ]);
 
         Alert::success('Success', 'Profile Updated');
         return redirect()->back();
     }
 
-    public function changePassword()
-    {
+    public function changePassword(){
         return view('admin.profile.password');
     }
 
-    public function updatepassword()
-    {
-
-        Alert::success('Success', 'Profile Updated');
-        return redirect()->back();
-    }
-
-    public function checkUniqueUsername(Request $request)
-    {
+    public function checkUniqueUsername(Request $request){
         $username = $request->input('username');
-        $user = Auth::user();
-
-        $isUnique = !User::where('username', $username)->where('id', '!=', $user->id)->exists();
-
+        $isUnique = !User::where('username', $username)->exists();
         return response()->json(['unique' => $isUnique]);
     }
+    public function checkUniqueEmail(Request $request){
+        $email = $request->input('email');
+        $isUnique = !User::where('email', $email)->exists();
+        return response()->json(['unique' => $isUnique]);
+    }
+    public function checkUniqueID(Request $request){
+        $id_no = $request->input('id_no');
+        $isUnique = !User::where('id_no', $id_no)->exists();
+        return response()->json(['unique' => $isUnique]);
+    }
+    public function checkUniqueContact(Request $request){
+        $contact = $request->input('contact');
+        $isUnique = !User::where('contact', $contact)->exists();
+        return response()->json(['unique' => $isUnique]);
+    }
+
 }

@@ -31,16 +31,3 @@ Route::group(['prefix' => 'admin/', 'as' => 'admin.',  'middleware' => ['auth', 
     Route::get('wallet-report', [ReportController::class, 'reportWallet'])->name('report-wallet');
 });
 
-// Profile
-Route::group(['prefix' => 'admin/', 'as' => 'admin.',  'middleware' => ['auth', 'role:superadmin|admin',]], function () {
-    Route::get('my-profile', [AdminController::class, 'profile'])->name('profile');
-    Route::post('my-profile/update', [AdminController::class, 'updateProfile'])->name('updateProfile');
-
-    Route::get('/change-password', [AdminController::class, 'changePassword'])->name('changePassword');
-    Route::post('/check-current-password', [UserController::class, 'checkCurrentPass'])->name('checkCurrentPass');
-    Route::post('change-password/{user}', [HomeController::class, 'updatePassword'])->name('updatePassword');
-
-    Route::post('check-unique-fullname', [UserController::class, 'checkUniqueFullName'])->name('checkUniqueFullName');
-    Route::post('check-unique-username', [AdminController::class, 'checkUniqueUsername'])->name('checkUniqueUsername');
-    Route::post('check-unique-email', [UserController::class, 'checkUniqueEmail'])->name('checkUniqueEmail');
-});
