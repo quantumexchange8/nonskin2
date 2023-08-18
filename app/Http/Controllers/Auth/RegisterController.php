@@ -145,14 +145,19 @@ class RegisterController extends Controller
                 return back()->withInput($request->input())->withErrors(['error_messages'=>'Invalid referral code!']);
             }
 
-            $upline_user_id = $uplineId->id;
             if(empty($uplineId['hierarchyList'])){
-                $hierarchyList = "-" . 3 . "-";
+                $hierarchyList = "-" . $upline_user_id . "-";
             } else {
+                $upline_user_id = $uplineId->id;
                 $hierarchyList = $uplineId['hierarchyList'] . $upline_user_id . "-";
             }
+            // $hierarchyList = $uplineId['hierarchyList'] . $upline_user_id . "-";
 
+        }else{
+            $upline_user_id = 3;
+            $hierarchyList = "-" . 3 . "-";
         }
+
         $memberPrefix = 'NON';
         // Find the corresponding row in the 'prefixes' table based on the prefix
         $prefixRow = Prefix::where('prefix', $memberPrefix)->first();
@@ -167,13 +172,13 @@ class RegisterController extends Controller
                 ]
             );
             $user = User::create([
-                'upline_id'     => $referral ?? 3,
+                'upline_id'     => $upline_user_id,
                 'referrer_id'   => $memberPrefix . str_pad($newMemberNumber, $prefixRow->padding, '0', STR_PAD_LEFT),
                 'hierarchyList' => $hierarchyList,
                 'email'         => $request->email,
                 'password'      => Hash::make($request->password),
                 // 'avatar'     => "/images/" . $avatarName,
-                'avatar'        => '',
+                'avatar'        => null,
                 'full_name'     => $request->full_name,
                 'id_no'         => $request->id_no,
                 'contact'       => $request->contact,
@@ -225,7 +230,7 @@ class RegisterController extends Controller
             }
         } catch (\Throwable $th) {
             DB::rollBack();
-            dd($th);
+            // dd($th);
             return redirect()->back()->with("error", "Please try register again");
         }
     }

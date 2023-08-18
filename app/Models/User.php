@@ -50,6 +50,7 @@ class User extends Authenticatable
         'bank_holder_name',
         'bank_acc_no',
         'bank_ic',
+        'rank_id',
         // 'created_by',
         'created_at',
         // 'updated_by',

@@ -93,7 +93,7 @@ use App\Models\{State, BankSetting};
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
-                                                            <label for="basicpill-lastname-input" class="form-label required">Username</label>
+                                                            <label for="username" class="form-label required">Username</label>
                                                             <input type="text" class="form-control" placeholder="e.g. Johnny" name="username" id="username" required>
                                                             <div class="invalid-feedback" id="username-error">
                                                                 <!-- Error message will be displayed here -->
@@ -104,7 +104,7 @@ use App\Models\{State, BankSetting};
                                                 <div class="row">
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
-                                                            <label for="basicpill-phoneno-input" class="form-label required">Full Name</label>
+                                                            <label for="full_name" class="form-label required">Full Name</label>
                                                             <input type="text" class="form-control" placeholder="e.g. John Lee Doe" name="full_name" id="full_name" required>
                                                             <div class="invalid-feedback" id="full-name-error">
                                                                 <!-- Error message will be displayed here -->
@@ -113,8 +113,8 @@ use App\Models\{State, BankSetting};
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
-                                                            <label for="basicpill-email-input" class="form-label required">Identification No. / Passport No.</label>
-                                                            <input type="number" class="form-control" placeholder="e.g. 900101023434" name="id_no" required>
+                                                            <label for="id_no" class="form-label required">Identification No. / Passport No.</label>
+                                                            <input type="number" class="form-control" placeholder="e.g. 900101023434" name="id_no" id="id_no" required>
                                                             <div class="invalid-feedback" id="id-no-error">
                                                                 <!-- Error message will be displayed here -->
                                                             </div>
@@ -124,7 +124,7 @@ use App\Models\{State, BankSetting};
                                                 <div class="row">
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
-                                                            <label for="basicpill-phoneno-input" class="form-label required">Contact</label>
+                                                            <label for="contact" class="form-label required">Contact</label>
                                                             <input type="number" class="form-control" placeholder="e.g. 01178781515" name="contact" id="contact" required>
                                                             <div class="invalid-feedback" id="contact-error">
                                                                 <!-- Error message will be displayed here -->
@@ -133,7 +133,7 @@ use App\Models\{State, BankSetting};
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
-                                                            <label for="basicpill-email-input" class="form-label required">Email</label>
+                                                            <label for="email" class="form-label required">Email</label>
                                                             <input type="email" class="form-control" placeholder="e.g. john.doe@yahoo.com" name="email" id="email" required>
                                                             <div class="invalid-feedback" id="email-error">
                                                                 <!-- Error message will be displayed here -->
@@ -144,7 +144,7 @@ use App\Models\{State, BankSetting};
                                                 <div class="row">
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
-                                                            <label for="basicpill-phoneno-input" class="form-label required">Password</label>
+                                                            <label for="password" class="form-label required">Password</label>
                                                             <input type="password" class="form-control" placeholder="Enter Password" name="password" id="password" required>
                                                             <div class="invalid-feedback" id="password-error">
                                                                 <!-- Error message will be displayed here -->
@@ -153,9 +153,9 @@ use App\Models\{State, BankSetting};
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
-                                                            <label for="basicpill-email-input" class="form-label required">Confirm Password</label>
+                                                            <label for="password_confirmation" class="form-label required">Confirm Password</label>
                                                             <input type="password" class="form-control" placeholder="Enter Confirm Password" name="password_confirmation" id="password_confirmation" required autocomplete="new-password">
-                                                            <div class="invalid-feedback" id="password-confirmation-error">
+                                                            <div class="invalid-feedback" id="password_confirmation-error">
                                                                 <!-- Error message will be displayed here -->
                                                             </div>
                                                         </div>
@@ -264,7 +264,7 @@ use App\Models\{State, BankSetting};
                                                         <div class="col-lg-6">
                                                             <div class="mb-3">
                                                                 <label class="form-label required">Bank Name</label>
-                                                                <select class="form-select" name="bank_name" required>
+                                                                <select class="form-select" name="bank_name" id="bank_name" required>
                                                                     @foreach ($banks as $bank)
                                                                         <option class="form-select" value="{{ $bank->name }}">{{ $bank->name }}</option>
                                                                     @endforeach
@@ -273,8 +273,14 @@ use App\Models\{State, BankSetting};
                                                         </div>
                                                         <div class="col-lg-6">
                                                             <div class="mb-3">
-                                                                <label for="bank_holder_name" class="form-label required">Bank Holder Name</label>
+                                                                <span class="d-flex justify-content-between">
+                                                                    <label for="bank_holder_name" class="form-label required">Bank Holder Name</label>
+                                                                    <label for="copy-id-no font-size-12">Same as Full Name? <input class="form-checkbox" type="checkbox" id="copy-full-name" /></label>
+                                                                </span>
                                                                 <input type="text" class="form-control" placeholder="e.g. John Lee Doe" name="bank_holder_name" id="bank_holder_name" required>
+                                                                <div class="invalid-feedback" id="bank_holder_name-error">
+                                                                    <!-- Error message will be displayed here -->
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -283,13 +289,22 @@ use App\Models\{State, BankSetting};
                                                             <div class="mb-3">
                                                                 <label for="bank_acc_no" class="form-label required">Bank Acc Number</label>
                                                                 <input type="number" class="form-control" placeholder="Enter Bank Acc Number" name="bank_acc_no" id="bank_acc_no" required>
+                                                                <div class="invalid-feedback" id="bank_acc_no-error">
+                                                                    <!-- Error message will be displayed here -->
+                                                                </div>
                                                             </div>
                                                         </div>
 
                                                         <div class="col-lg-6">
                                                             <div class="mb-3">
+                                                                <span class="d-flex justify-content-between">
                                                                 <label for="bank_ic" class="form-label required">Bank Identification Number</label>
+                                                                    <label for="copy-id-no font-size-12">Same as IC No? <input class="form-checkbox" type="checkbox" id="copy-id-no" /></label>
+                                                                </span>
                                                                 <input type="number" class="form-control" placeholder="Enter Bank Identification Number" name="bank_ic" id="bank_ic" required>
+                                                                <div class="invalid-feedback" id="bank_ic-error">
+                                                                    <!-- Error message will be displayed here -->
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -486,6 +501,12 @@ use App\Models\{State, BankSetting};
                 return;
             }
 
+            if (email.indexOf('@') === -1) {
+                $('#email').addClass('is-invalid');
+                $('#email-error').text('The email address is invalid.');
+                return;
+            }
+
             $.ajax({
                 url: '{{ route('registerUniqueEmail') }}',
                 type: 'POST',
@@ -497,9 +518,6 @@ use App\Models\{State, BankSetting};
                     if (response.unique === false) {
                         $('#email').addClass('is-invalid');
                         $('#email-error').text('Email is already taken.');
-                    } else if(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)) {
-                        $('#email').addClass('is-invalid');
-                        $('#email-error').text('This email address is invalid.');
                     } else {
                         $('#email').removeClass('is-invalid');
                         $('#email').addClass('is-valid');
@@ -509,10 +527,10 @@ use App\Models\{State, BankSetting};
             });
         });
         $('#contact').on('blur', function() {
-            let email = $(this).val().trim();
+            let contact = $(this).val().trim();
 
             // Show error if field is blank
-            if (email === '') {
+            if (contact === '') {
                 $('#contact').addClass('is-invalid');
                 $('#contact-error').text('Contact is required.');
                 return;
@@ -541,77 +559,180 @@ use App\Models\{State, BankSetting};
             });
         });
 
+        function validatePasswordFields() {
+            var password = $('#password').val().trim();
+            var passwordConfirmation = $('#password_confirmation').val().trim();
+
+            if (password.length < 8 || passwordConfirmation.length < 8) {
+                $('#password').addClass('is-invalid');
+                $('#password_confirmation').addClass('is-invalid');
+                $('#password-error').text('Password must be at least 8 characters.');
+                $('#password_confirmation-error').text('Passwords do not match.');
+            } else if (password.length !== passwordConfirmation.length) {
+                $('#password').addClass('is-invalid');
+                $('#password_confirmation').addClass('is-invalid');
+                $('#password_confirmation-error').text('Passwords do not match.');
+                return false;
+            } else{
+                $('#password').removeClass('is-invalid');
+                $('#password').addClass('is-valid');
+                $('#password_confirmation').removeClass('is-invalid');
+                $('#password_confirmation').addClass('is-valid');
+                $('#password_confirmation-error').text('');
+                return true;
+            }
+        }
+
+        $('#password').on('blur', function() {
+            validatePasswordFields();
+        });
+
+        $('#password_confirmation').on('blur', function() {
+            validatePasswordFields();
+        });
+
         $('#id_no').on('blur', function() {
             let id_no = $(this).val().trim();
 
             // Show error if field is blank
             if (id_no === '') {
                 $('#id_no').addClass('is-invalid');
-                $('#id_no-error').text('ID number is required.');
+                $('#id-no-error').text('ID number is required.');
                 return;
             } else if (!/^\d{8,12}$/.test(id_no)) {
                 $('#id_no').addClass('is-invalid');
-                $('#id_no-error').text('ID Number must be a number with 8 to 12 digits.');
+                $('#id-no-error').text('ID Number must be a number with 8 to 12 digits.');
             } else {
                 $('#id_no').addClass('is-valid');
-                $('#id_no-error').text('');
+                $('#id-no-error').text('');
             }
         });
 
-        $('#bank').on('blur', function() {
+        $('#address_1').on('blur', function() {
+            let address1 = $(this).val().trim();
+
+            // Show error if field is blank
+            if (address1 === '') {
+                $('#address_1').addClass('is-invalid');
+                $('#address_1-error').text('This field is required.');
+                return;
+            } else {
+                $('#address_1').removeClass('is-invalid');
+                $('#address_1').addClass('is-valid');
+                $('#address_1-error').text('');
+            }
+        });
+        $('#address_2').on('blur', function() {
+            let address2 = $(this).val().trim();
+
+            // Show error if field is blank
+            if (address2 !== '') {
+                $('#address_2').removeClass('is-invalid');
+                $('#address_2').addClass('is-valid');
+                $('#address_2-error').text('');
+            }
+        });
+        $('#postcode').on('blur', function() {
+            let postcode = $(this).val().trim();
+
+            // Show error if field is blank
+            if (postcode === '') {
+                $('#postcode').addClass('is-invalid');
+                $('#postcode-error').text('This field is required.');
+                return;
+            } else {
+                $('#postcode').removeClass('is-invalid');
+                $('#postcode').addClass('is-valid');
+                $('#postcode-error').text('');
+            }
+        });
+        $('#city').on('blur', function() {
+            let city = $(this).val().trim();
+
+            // Show error if field is blank
+            if (city === '') {
+                $('#city').addClass('is-invalid');
+                $('#city-error').text('This field is required.');
+                return;
+            } else {
+                $('#city').removeClass('is-invalid');
+                $('#city').addClass('is-valid');
+                $('#city-error').text('');
+            }
+        });
+        $('#bank_name').on('blur', function() {
             let bank = $(this).val().trim();
 
             // Show error if field is blank
             if (bank === '') {
-                $('#bank').addClass('is-invalid');
-                $('#bank-error').text('ID number is required.');
+                $('#bank_name').addClass('is-invalid');
+                $('#bank_name-error').text('This field is required.');
                 return;
             } else {
-                $('#bank').addClass('is-valid');
-                $('#bank-error').text('');
+                $('#bank_name').removeClass('is-invalid');
+                $('#bank_name').addClass('is-valid');
+                $('#bank_name-error').text('');
             }
         });
-        $('#holdername').on('blur', function() {
+        $('#bank_holder_name').on('blur', function() {
             let holdername = $(this).val().trim();
 
             // Show error if field is blank
             if (holdername === '') {
-                $('#holdername').addClass('is-invalid');
-                $('#holdername-error').text('ID number is required.');
+                $('#bank_holder_name').addClass('is-invalid');
+                $('#bank_holder_name-error').text('This field is required.');
                 return;
             } else {
-                $('#holdername').addClass('is-valid');
-                $('#holdername-error').text('');
+                $('#bank_holder_name').removeClass('is-invalid');
+                $('#bank_holder_name').addClass('is-valid');
+                $('#bank_holder_name-error').text('');
             }
         });
-        $('#bankacc').on('blur', function() {
-            let bankacc = $(this).val().trim();
+        $('#bank_acc_no').on('blur', function() {
+            let bankaccno = $(this).val().trim();
 
             // Show error if field is blank
-            if (bankacc === '') {
-                $('#bankacc').addClass('is-invalid');
-                $('#bankacc-error').text('ID number is required.');
+            if (bankaccno === '') {
+                $('#bank_acc_no').addClass('is-invalid');
+                $('#bank_acc_no-error').text('This field is required.');
                 return;
             } else {
-                $('#bankacc').addClass('is-valid');
-                $('#bankacc-error').text('');
+                $('#bank_acc_no').removeClass('is-invalid');
+                $('#bank_acc_no').addClass('is-valid');
+                $('#bank_acc_no-error').text('');
             }
         });
-        $('#bankid').on('blur', function() {
+        $('#bank_ic').on('blur', function() {
             let bankid = $(this).val().trim();
 
             // Show error if field is blank
             if (bankid === '') {
-                $('#bankid').addClass('is-invalid');
-                $('#bankid-error').text('ID number is required.');
+                $('#bank_ic').addClass('is-invalid');
+                $('#bank_ic-error').text('This field is required.');
                 return;
             } else if (!/^\d{8,12}$/.test(bankid)) {
-                $('#bankid').addClass('is-invalid');
-                $('#bankid-error').text('ID Number must be a number with 8 to 12 digits.');
+                $('#bank_ic').addClass('is-invalid');
+                $('#bank_ic-error').text('ID Number must be a number with 8 to 12 digits.');
             } else {
-                $('#bankid').addClass('is-valid');
-                $('#bankid-error').text('');
+                $('#bank_ic').removeClass('is-invalid');
+                $('#bank_ic').addClass('is-valid');
+                $('#bank_ic-error').text('');
             }
+        });
+
+        $(document).ready(function() {
+            $('#copy-id-no').change(function() {
+                if ($(this).is(':checked')) {
+                    $('#bank_ic').val($('#id_no').val());
+                }
+            });
+        });
+        $(document).ready(function() {
+            $('#copy-full-name').change(function() {
+                if ($(this).is(':checked')) {
+                    $('#bank_holder_name').val($('#full_name').val());
+                }
+            });
         });
     </script>
 @endsection
