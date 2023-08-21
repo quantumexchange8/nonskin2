@@ -61,7 +61,7 @@
                                         <p class="mt-4 text-muted">Category</p>
                                     </div>
                                     <div class="col-10">
-                                        <p class="mt-4 font-bold">{{ $product->category->name }}</p>
+                                        <p class="mt-4 font-bold">{{ $product->category->name_en }}</p>
                                     </div>
                                 </div>
                                 <div class="row">
