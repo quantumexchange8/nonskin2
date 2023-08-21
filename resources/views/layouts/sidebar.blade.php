@@ -217,7 +217,7 @@
                         @endhasanyrole
                         @hasanyrole('superadmin|admin')
                             <li><a href="{{ route('member-list') }}">@lang('translation.Member') @lang('translation.Listing')</a></li>
-                            <li><a href="{{ route('member.network-tree') }}">@lang('translation.Network-tree')</a></li>
+                            <li><a href="{{ route('admin.network-tree') }}">@lang('translation.Network-tree')</a></li>
                         @endhasanyrole
                     </ul>
                 </li>

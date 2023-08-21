@@ -206,8 +206,33 @@ class UserController extends Controller
 
         return view('member.member_listing', compact('members'));
     }
-    public function memberNetworkTree() {
-        return view('member.member_network_tree');
+    public function memberNetworkTree(Request $request) {
+
+        $user = Auth::user();
+        $role = Auth::user()->role;
+        $member_id = $request->member;
+        $type = $user->type;
+
+        if ($role == 'superadmin' || $role == 'admin') {
+            if ($member_id) {
+                $members = User::where('id', $member_id)->get();
+                if ($members->isEmpty())
+                    return abort(404);
+            } else {
+                $members = User::where('upline_id',  NULL)->where('superadmin', '0')->get();
+                // dd('here');
+            }
+        } else {
+            $id = $user->id;
+            if ($member_id) {
+                $members = User::query()->where('id', $member_id)->where('hierarchyList', 'like', '%-' . $id . '-%')->get();
+                if ($members->isEmpty())
+                    return abort(404);
+            } else
+                $members = User::where('id',  $id)->get();
+        }
+
+        return view('member.member_network_tree', ['members' => $members]);
     }
     public function pendingOrder() {
         $orders = Order::with(['user', 'orderItems', 'orderItems.product'])->where('user_id', Auth::id())->get();

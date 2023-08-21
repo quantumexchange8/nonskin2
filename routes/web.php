@@ -136,6 +136,8 @@ Route::group(['prefix' => 'admin',  'middleware' => ['auth', 'role:superadmin|ad
 
     Route::get('/invoice/{order}', [AdminController::class, 'invoice'])->name('invoice-admin');
 
+    Route::get('member-network-tree', [UserController::class, 'memberNetworkTree'])->name('admin.network-tree');
+
 
 
     // Wallets
