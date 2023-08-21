@@ -20,9 +20,9 @@
                                         <i class='mdi mdi-ticket text-primary font-size-24'></i>
                                     </span>
                                 </div>
-                                <p class="mt-2">New Order</p>
+                                <h4 class="mt-2">{{ $res->new_order }}</h4>
                             </div>
-                            <h4 class="mb-0">{{ $res->new_order }} <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
+                            <p class="mb-0"> New Order</p><!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></p>
                             <div>
                                 {{-- <div class="py-3 my-1">
                                     <div id="mini-1" data-colors='["#3980c0"]'></div>

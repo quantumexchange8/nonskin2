@@ -103,7 +103,7 @@ class UserController extends Controller
 
         $cartItems = $user->cart ? $user->cart->items : collect();
 
-
+        // dd($cartItems);
 
         $subtotal = 0;
         $totalDiscount = 0; // Initialize totalDiscount variable outside the loop
@@ -111,29 +111,56 @@ class UserController extends Controller
         $discount = 0;
         $product_price = 0;
         $discount_percent_amount = 0;
+        $total_discounted = 0;
+        
         foreach ($cartItems as $item) {
             if ($item->product->discount == 0) {
                 $product_price = $item->product->price;
-
-                if($user->rank_id == 2) {
+        
+                if ($user->rank_id == 2) {
                     $member_discount_amount = 10;
+                } elseif ($user->rank_id == 3) {
+                    $member_discount_amount = 35;
+                } elseif ($user->rank_id == 4) {
+                    $member_discount_amount = 45;
+                } elseif ($user->rank_id == 5) {
+                    $member_discount_amount = 50;
+                } else {
+                    $member_discount_amount = 0; // Handle other ranks if needed
+                }
+        
+                $discount_percent_amount = $member_discount_amount * ($product_price / 100);
+                $discounted_product_price = $product_price - $discount_percent_amount;
+        
+                // Accumulate values for each item
+                $subtotal += $discounted_product_price * $item->quantity;
+                $total_discounted += $discount_percent_amount * $item->quantity;
+            } else {
 
-                    $discount_percent_amount = $member_discount_amount * ($product_price/100); // 10% amount of product price
-
-                    $discounted_product_price = $product_price - $discount_percent_amount; //product price - 10%
-
-                    $subtotal += $discounted_product_price * $item->quantity;
+                if ($user->rank_id == 2) {
+                    $member_discount_amount = 10;
+                } elseif ($user->rank_id == 3) {
+                    $member_discount_amount = 35;
+                } elseif ($user->rank_id == 4) {
+                    $member_discount_amount = 45;
+                } elseif ($user->rank_id == 5) {
+                    $member_discount_amount = 50;
+                } else {
+                    $member_discount_amount = 0; // Handle other ranks if needed
                 }
 
-            } else {
                 $discountedPrice = $item->product->price - ($item->product->price * ($item->product->discount / 100));
                 $discount = $item->product->price * ($item->product->discount / 100);
-                $totalDiscount += $discount * $item->quantity; // Accumulate the discount for each product
+                
+                // Accumulate values for each item
+                $totalDiscount += $discount * $item->quantity;
                 $subtotal += $discountedPrice * $item->quantity;
-
+        
                 $product_price = $item->product->price;
             }
         }
+
+        
 
         // Calculate the total price with discount
         // $totalPriceWithDiscount = $subtotal - $totalDiscount;
@@ -152,10 +179,11 @@ class UserController extends Controller
                 'discountedPrice' => $discountedPrice,
                 'discount' => $discount,
                 'totalDiscount' => $totalDiscount,
-                // 'totalPriceWithDiscount' => $totalPriceWithDiscount,
+                'total_discounted' => $total_discounted,
                 'default_address' => $default_address,
                 'payment_selfpick' => $payment_selfpick,
                 'shipping_address' => $shipping_address,
+                'member_discount_amount' => $member_discount_amount,
             ]);
         }
 
@@ -376,6 +404,30 @@ class UserController extends Controller
 
         $pdf = PDF::loadView('member.orders..pdf.invoice', ['invoice' => $invoice, 'orderItems' => $orderItems, 'companyInfo' => $companyInfo]);
         return $pdf->download('invoice.pdf');
+    }
+
+    public function uploadpayment(Request $request,Order $order) 
+    {
+        // dd($request->all());
+        $request->validate([
+            'payment_proof' => 'nullable|image|max:2048', // Adjust the allowed mime types and file size as needed
+        ]);
+
+        $imageName1 = null;
+        if ($request->hasFile('payment_proof')){
+            // dd($request->all());
+            $imageName1 = time().'.'.$request->payment_proof->extension();
+            $request->payment_proof->move(public_path('images/payment-proof'), $imageName1);
+
+            $order->payment_proof = $imageName1;
+            $order->status = 1;
+            $order->save();
+
+            Alert::success('Success', 'Uploaded the Payment Slip');
+            return redirect()->back();
+        }
+
+        return redirect()->back();
     }
 
     public function ShippingAddress()

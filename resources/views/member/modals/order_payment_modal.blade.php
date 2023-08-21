@@ -1,8 +1,8 @@
-<div class="modal fade" id="orderdetailsModal_{{ $order->id }}" tabindex="-1" role="dialog" aria-labelledby="orderdetailsModalLabel" aria-hidden="true">
+<div class="modal fade" id="orderPaymentModal_{{ $order->id }}" tabindex="-1" role="dialog" aria-labelledby="orderPaymentModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="orderdetailsModalLabel">Order Details</h5>
+                <h5 class="modal-title" id="orderPaymentModalLabel">Order Details</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -16,17 +16,10 @@
                 <p class="mb-2">Order Id: <span class="text-primary" id="order-id">{{$order->order_num}}</span></p>
                 <p class="mb-2">Receiver Name: <span class="text-primary" id="receiver-name">{{$order->receiver}}</span></p>
                 <p class="mb-2">Deliver Address: <span class="text-primary" id="receiver-name">{{$order->delivery_address}}</span></p>
+                <p class="mb-2">Status: <span class="text-primary" id="receiver-name">@if($order->status == 9) <span style="color:red">Pending Payment</span> @endif</span></p>
                 <p class="mb-2">Courier: <span class="text-primary" id="receiver-name">{{$order->courier}}</span></p>
                 <p class="mb-2">Consignment Note: <span class="text-primary" id="receiver-name">{{$order->cn}}</span></p>
                 <p class="mb-4">Tracking Number: <span class="text-primary" id="receiver-name">{{$order->tracking_no}}</span></p>
-                @if($order->payment_method == 'Manual Transfer')
-                    <p class="mb-4">
-                        Payment Slip: 
-                        <span class="text-primary" id="receiver-name">
-                            <button class="btn btn-success" data-toggle="modal" data-target="#paymentSlipModal">View</button>
-                        </span>
-                    </p>
-                @endif
                 <div class="table-responsive">
                     <table class="table align-middle table-nowrap">
                         <thead>
@@ -127,12 +120,16 @@
 
                         </tbody>
                     </table>
-                    @if($order->payment_method == 'Manual Transfer')
-                        <div style="display: flex;justify-content: center;">
-                            <img src="{{ asset('images/payment-proof/' . $order->payment_proof) }}" alt="" >
-                        </div>
-                    @endif
                 </div>
+            <form action="{{ route('uploadpayment', $order->id) }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div>
+                    <label for="payment_proof">Payment Slip</label>
+                    <input type="file" class="form-control" id="payment_proof" name="payment_proof">
+                </div>
+                <button type="submit" class="btn btn-success">Upload</button>
+            </form>
+                
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
