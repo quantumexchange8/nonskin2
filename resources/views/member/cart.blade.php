@@ -23,18 +23,21 @@
                     </div>
                 @endif
                 <div class="col-xl-8">
-                    @forelse ($cartItems as $k => $v)
+                    @php
+                        $userCart = App\Models\CartItem::where('cart_id', Auth::user()->cart->id)->get();
+                    @endphp
+                    @forelse ($userCart as $row)
                         <div class="card border shadow-none">
                             <div class="card-body">
                                 <div class="d-flex align-items-start border-bottom pb-3">
                                     <div class="me-4">
-                                        <img src="{{ asset('images/products/' . $v->product->image_1) }}" alt="" class="avatar-md">
+                                        <img src="{{ asset('images/products/' . $row->product->image_1) }}" alt="" class="avatar-md">
                                     </div>
                                     <div class="flex-grow-1 align-self-center overflow-hidden">
                                         <div>
-                                            <h5 class="text-truncate font-size-16"><a href="{{ route('showdetails', $v->product->id) }}" class="text-dark">{{ $v->product->name }}</a></h5>
-                                            @if ($v->product->discount > 0)
-                                            <p class="mb-1">{{ $v->product->discount }}% off</p>
+                                            <h5 class="text-truncate font-size-16"><a href="{{ route('showdetails', $row->product->id) }}" class="text-dark">{{ $row->product->name }}</a></h5>
+                                            @if ($row->product->discount > 0)
+                                            <p class="mb-1">{{ $row->product->discount }}% off</p>
                                             @endif
 
                                             {{-- <p>Size : <span class="fw-medium">08</span></p> --}}
@@ -44,10 +47,38 @@
                                         <ul class="list-inline mb-0 font-size-16">
                                                 <!-- Delete button -->
                                             <li class="list-inline-item">
-                                                <button class="btn text-muted px-1 font-size-20" data-bs-toggle="modal" data-bs-target=".cart-remove-item">
+                                                <button class="btn text-muted px-1 font-size-20 delete-button" data-bs-toggle="modal" data-bs-target="#cart-remove-modal-{{ $row->cart->id }}-{{ $row->product_id }}" data-cart-id="{{ $row->cart->id }}" data-product_id="{{ $row->product_id }}">
                                                     <i class="mdi mdi-trash-can-outline"></i>
                                                 </button>
-                                                @include('member.modals.cart-remove-item')
+                                                {{-- {{ $row->cart->id }} --}}
+                                                {{-- @include('member.modals.cart-remove-item') --}}
+                                                <div class="card-body">
+                                                    <div>
+                                                        <!-- center modal -->
+                                                        <div class="modal fade cart-remove-item" id="cart-remove-modal-{{ $row->cart->id }}-{{ $row->product_id }}" tabindex="-1" role="dialog" aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title">Remove item from cart?</h5>
+                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <p>Are you sure you want to remove this item from cart?</p>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <form action="{{ route('cart.item.destroy', ['cart' => $row->cart->id, 'productId' => $row->product->id]) }}" method="POST">
+                                                                            @csrf
+                                                                            @method('DELETE')
+                                                                            <button type="submit" class="btn btn-primary remove-button">Save changes</button>
+                                                                        </form>
+                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                                    </div>
+                                                                </div><!-- /.modal-content -->
+                                                            </div><!-- /.modal-dialog -->
+                                                        </div><!-- /.modal -->
+                                                    </div>
+                                                </div><!-- end card body -->
+                                                
                                             </li>
                                             <!-- Like button -->
                                             {{-- <li class="list-inline-item">
@@ -63,10 +94,10 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="mt-3">
-                                                <p class="text-muted mb-2">Unit Price {{number_format($v->product->price, 2)}}</p>
-                                                <h5 class="font-size-16">RM {{ number_format(($v->product->price*(100-$v->product->discount)/100),2,'.') }}</h5>
-                                                @if ($v->product->discount > 0)
-                                                <del class="text-muted">RM {{ number_format($v->product->price,2,'.',',') }}</del>
+                                                <p class="text-muted mb-2">Unit Price {{number_format($row->product->price, 2)}}</p>
+                                                <h5 class="font-size-16">RM {{ number_format(($row->product->price*(100-$row->product->discount)/100),2,'.') }}</h5>
+                                                @if ($row->product->discount > 0)
+                                                <del class="text-muted">RM {{ number_format($row->product->price,2,'.',',') }}</del>
                                                 @endif
                                             </div>
                                         </div>
@@ -75,11 +106,11 @@
                                                 <p class="text-muted mb-2">Quantity</p>
                                                 <div class="d-inline-flex">
                                                     <div class="input-group">
-                                                        <button type="button" class="btn btn-light btn-sm minus-btn" data-product-id="{{ $v->product->id }}" data-product-price="{{ $v->product->price }}">
+                                                        <button type="button" class="btn btn-light btn-sm minus-btn" data-product-id="{{ $row->product->id }}" data-product-price="{{ $row->product->price }}">
                                                             <i class="bx bx-minus"></i>
                                                         </button>
-                                                        <input type="text" class="form-control quantity-input" name="quantity" value="{{ $v->quantity }}" data-product-id="{{ $v->product->id }}" data-product-price="{{ $v->product->price }}">
-                                                        <button type="button" class="btn btn-light btn-sm plus-btn" data-product-id="{{ $v->product->id }}" data-product-price="{{ $v->product->price }}">
+                                                        <input type="text" class="form-control quantity-input" name="quantity" value="{{ $row->quantity }}" data-product-id="{{ $row->product->id }}" data-product-price="{{ $row->product->price }}">
+                                                        <button type="button" class="btn btn-light btn-sm plus-btn" data-product-id="{{ $row->product->id }}" data-product-price="{{ $row->product->price }}">
                                                             <i class="bx bx-plus"></i>
                                                         </button>
                                                     </div>
@@ -89,9 +120,9 @@
                                         <div class="col-md-4">
                                             <div class="mt-3">
                                                 <p class="text-muted mb-2">Total</p>
-                                                <h5 class="font-size-16 total" data-product-id="{{ $v->product->id }}">RM {{ number_format(($v->product->price*(100-$v->product->discount)/100) * $v->quantity,2,'.') }}</h5>
-                                                @if ($v->product->discount > 0)
-                                                <del class="text-muted product-discount" data-product-id="{{ $v->product->id }}">RM {{ number_format($v->product->price*$v->quantity,2,'.',',') }}</del>
+                                                <h5 class="font-size-16 total" data-product-id="{{ $row->product->id }}">RM {{ number_format(($row->product->price * (100-$row->product->discount)/100) * $row->quantity,2,'.') }}</h5>
+                                                @if ($row->product->discount > 0)
+                                                <del class="text-muted product-discount" data-product-id="{{ $row->product->id }}">RM {{ number_format($row->product->price * $row->quantity,2,'.',',') }}</del>
                                                 @endif
                                             </div>
                                         </div>

@@ -13,6 +13,7 @@
     @section('modal')
         @foreach($orders as $order)
             @include('member.modals.order_detail_modal')
+            @include('member.modals.order_payment_modal')
         @endforeach
     @endsection
 
@@ -31,6 +32,7 @@
                                     <option value="3">Delivering</option>
                                     <option value="4">Complete</option>
                                     <option value="5">Cancel</option>
+                                    <option value="9">Pending Payment</option>
                                 </select>
                             </div>
                             <div class="col-lg-4">
@@ -90,6 +92,10 @@
                                         <span class="badge badge-pill badge-soft-success font-size-12">
                                             Complete
                                         </span>
+                                    @elseif($order->status == 9)
+                                        <span class="badge badge-pill badge-soft-danger font-size-12">
+                                            Pending Payment
+                                        </span>
                                         @else
                                         <span class="badge badge-pill badge-soft-danger font-size-12">
                                             Cancelled
@@ -108,6 +114,11 @@
                                             {{-- <button type="button" class="btn btn-link view-invoice-button" data-bs-toggle="modal" data-bs-target="#orderinvoice{{ $order->id }}" id="{{$order->id}}">
                                                 <i class="mdi mdi-printer-settings"></i>
                                             </button> --}}
+                                            @if($order->status == 9)
+                                                <button type="button" class="btn btn-link btn-sm btn-rounded upload-payment-button" data-bs-toggle="modal" data-bs-target="#orderPaymentModal_{{ $order->id }}" id="{{$order->id}}">
+                                                    <i class="mdi mdi-upload"></i>
+                                                </button>
+                                            @endif
                                             <button type="button" class="btn btn-link btn-sm btn-rounded view-detail-button" data-bs-toggle="modal" data-bs-target="#orderdetailsModal_{{ $order->id }}" id="{{$order->id}}">
                                                 <i class="mdi mdi-printer-settings"></i>
                                             </button>

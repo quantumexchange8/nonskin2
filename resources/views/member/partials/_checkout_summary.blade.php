@@ -19,19 +19,26 @@
                     <th scope="row"><img src="{{ asset('images/products/' . $v->product->image_1) }}"
                             alt="product-img" title="product-img" class="avatar-md"></th>
                     <td>
-                        <h5 class="font-size-14 text-truncate"><a href="#"
-                                class="text-dark">{{ $v->product->name_en }}</a></h5>
+                        <h5 class="font-size-14 text-truncate">{{ $v->product->name }}</h5>
                         @if($v->product->discount == 0)
                             <p class="text-muted mb-0">RM {{ number_format($v->price,2,'.',',') }} x {{ $v->quantity,2 }}</p>
+                            <p class="font-size-12">({{$member_discount_amount}} % Off)</p>
                         @else
-                        <p class="text-muted mb-0">RM {{ number_format($v->price,2,'.',',') }} x {{ $v->quantity,2 }}</p>
-                        <p class="font-size-12">({{ $v->product->discount }}% off)</p>
+                            <p class="text-muted mb-0">RM {{ number_format($v->price,2,'.',',') }} x {{ $v->quantity,2 }}</p>
+                            <p class="font-size-12">({{ $v->product->discount }}% off)</p>
                         @endif
                     </td>
                     @if($v->product->discount > 0)
-                        <td>RM {{ number_format($v->price * $v->quantity,2,'.',',') }}</td>
+                        <td>
+                            RM {{ number_format($v->price * $v->quantity,2,'.',',') }}
+                        </td>
                     @else
-                        <td>RM {{ number_format($v->price * $v->quantity,2,'.',',') }}</td>
+                        <td>
+                            RM {{ number_format($v->price * $v->quantity,2,'.',',') }}
+                            <p class="text-muted mb-0">
+                               - RM {{ $discount_percent_amount }}
+                            </p>
+                        </td>
                     @endif
 
                 </tr>
@@ -48,7 +55,7 @@
                 @endphp
                 <tr>
                     <td colspan="2">
-                        <h5 class="font-size-14 m-0">Total Amount :</h5>
+                        <h5 class="font-size-14 m-0">Total :</h5>
                     </td>
                     <td> RM {{ number_format(($totalAmount) ,2,'.',',') }}</td>
                 </tr>
@@ -56,8 +63,19 @@
                     <td colspan="2">
                         <h5 class="font-size-14 m-0">Total Discount :</h5>
                     </td>
-                    <td>- RM {{ number_format($totalDiscount,2,'.',',') }}</td>
+                    <td>- RM {{ number_format($total_discounted,2,'.',',') }}</td>
                 </tr>
+                @if($user->product_wallet > 0)
+                <tr>
+                    <td colspan="2">
+                        <h5 class="font-size-14 m-0">Product Wallet Applied:</h5>
+                    </td>
+                    <td>
+                        <input type="number" class="form-control error-input" min="0" max="{{$user->product_wallet}}" id="wallet-input" name="product_wallet">
+                    </td>
+                </tr>
+                @endif
+                
                 <tr>
                     <td colspan="2">
                         <h5 class="font-size-14 m-0">Total Shipping Charge :</h5>
@@ -65,12 +83,12 @@
                     <td id="shipping">RM 0.00</td>
                     <input type="hidden" name="delivery_fee" id="delivery-fee-input">
                 </tr>
-                <tr>
+                {{-- <tr>
                     <td colspan="2">
                         <h5 class="font-size-14 m-0">Merchandise Sub Total :</h5>
                     </td>
                     <td>RM {{ number_format($subtotal,2,'.',',') }}</td>
-                </tr>
+                </tr> --}}
 
                 <tr class="bg-light" >
                     <td colspan="2">
@@ -96,7 +114,7 @@
                             alt="product-img" title="product-img" class="avatar-md"></th>
                     <td>
                         <h5 class="font-size-14 text-truncate"><a href="#"
-                                class="text-dark">{{ $v->product->name_en }}</a></h5>
+                                class="text-dark">{{ $v->product->name }}</a></h5>
                         @if($v->product->discount == 0)
                             <p class="text-muted mb-0">RM {{ number_format($v->price,2,'.',',') }} x {{ $v->quantity,2 }}</p>
                         @else

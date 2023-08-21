@@ -45,8 +45,8 @@
             </div>
 
             <div>
-                <a href="#">
-                    <button class="btn btn-primary">Top Up</button>
+                <a href="{{ route('member.deposit') }}">
+                    <button class="btn btn-primary" type="button">Top Up</button>
                 </a>
                 
             </div>

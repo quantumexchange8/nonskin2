@@ -14,6 +14,12 @@
         @slot('title') Checkout @endslot
     @endcomponent
 
+    <style>
+        .error-input {
+            border-color: red;
+            color: red;
+        }
+    </style>
 <form action="{{ route('place-order') }}" method="POST" id="checkout-form" enctype="multipart/form-data">
     @csrf
     <div class="row">
@@ -248,9 +254,12 @@
                 }
                 
 
-                    // Check the delivery method and add receiver and contact accordingly
+                    // Check the delivery method post to controller accordingly
                     if (selectedDeliveryMethod === 'Delivery') {
                         if(selectedPaymentMethod === 'Manual Transfer') {
+
+                            const walletInput = document.getElementById('wallet-input');
+                            const walletAmount = parseFloat(walletInput.value) || 0;
 
                             let formData = new FormData();
 
@@ -267,6 +276,7 @@
                             formData.append('contact', contact);
                             formData.append('price', '{{ $product_price }}');
                             formData.append('discount_amt', '{{ $discount_percent_amount }}');
+                            formData.append('product_wallet', walletAmount);
                             
                             // Get the payment proof file input
                             const paymentProofInput = document.getElementById('payment_proof');
@@ -274,13 +284,7 @@
                                 // Add the payment_proof to the FormData
                                 formData.append('payment_proof', paymentProofInput.files[0]);
                             } else {
-                                // Display a SweetAlert to inform the user to upload payment proof
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Oops...',
-                                    text: 'Please upload the payment proof to proceed',
-                                });
-                                return; // Exit the function
+                                formData.append('payment_proof', null);
                             }
 
                             $.ajax({
@@ -297,6 +301,8 @@
                                         html: 'Please do not click on anywhere while being redirected to the payment page',
                                         timer: 3000,
                                         timerProgressBar: true,
+                                        allowOutsideClick: false, // Prevent outside click
+                                        showConfirmButton: false, // Hide the confirm button
                                         didOpen:function () {
                                             Swal.showLoading()
                                             timerInterval = setInterval(function() {
@@ -333,8 +339,14 @@
                                 return;
                                 }
                             });
-                            console.log(formData)
+
                         } else if ( selectedPaymentMethod === 'Purchase Wallet') {
+
+                            const walletInput = document.getElementById('wallet-input');
+                            const walletAmount = parseFloat(walletInput.value) || 0;
+
+                            const totalPrice = Number({{ $subtotal }});
+                            const proWallet = Number({{ $user->product_wallet }});
 
                             $.ajax({
                                 url: '{{ route("get-user-purchase-wallet-balance") }}',
@@ -343,93 +355,108 @@
                                     const UserPurchaseWalletBalance = response.purchase_wallet_balance;
                                     
                                     // Check if the user's purchase wallet balance is sufficient
-                                    if (UserPurchaseWalletBalance >= formattedTotal) {
-                                        let formData = $('#checkout-form').serializeArray();
+                                    if(walletAmount <= totalPrice) {
+                                        if (UserPurchaseWalletBalance >= formattedTotal) {
+                                            let formData = $('#checkout-form').serializeArray();
 
-                                        formData.push({
-                                            name: '_token',
-                                            value: $('meta[name="csrf-token"]').attr('content')
-                                        }, {
-                                            name: 'user_id',
-                                            value: {{ $user->id }}
-                                        }, {
-                                            name: 'email',
-                                            value: '{{ $user->email }}'
-                                        }, {
-                                            name: 'price',
-                                            value: '{{ $product_price }}'
-                                        }, {
-                                            name: 'discount_amt',
-                                            value: '{{ $discount_percent_amount }}'
-                                        }, {
-                                            name: 'total_amount',
-                                            value: formattedTotal
-                                        });
+                                            formData.push({
+                                                name: '_token',
+                                                value: $('meta[name="csrf-token"]').attr('content')
+                                            }, {
+                                                name: 'user_id',
+                                                value: {{ $user->id }}
+                                            }, {
+                                                name: 'email',
+                                                value: '{{ $user->email }}'
+                                            }, {
+                                                name: 'price',
+                                                value: '{{ $product_price }}'
+                                            }, {
+                                                name: 'discount_amt',
+                                                value: '{{ $discount_percent_amount }}'
+                                            }, {
+                                                name: 'total_amount',
+                                                value: formattedTotal
+                                            }, {
+                                                name: 'product_wallet',
+                                                value: walletAmount
+                                            });
 
-                                        formData.push({
-                                            name: 'receiver',
-                                            value: name
-                                        }, {
-                                            name: 'contact',
-                                            value: contact
-                                        });
+                                            formData.push({
+                                                name: 'receiver',
+                                                value: name
+                                            }, {
+                                                name: 'contact',
+                                                value: contact
+                                            });
 
-                                        $.ajax({
-                                            url: '{{ route("place-order") }}',
-                                            method: 'POST',
-                                            data: formData,
-                                            success: function(response) {
-                                                if (response && response.message) {
-                                                    var timerInterval;
-                                                    Swal.fire({
-                                                    title: response.message,
-                                                    html: 'Please do not click on anywhere while being redirected to the payment page',
-                                                    timer: 3000,
-                                                    timerProgressBar: true,
-                                                    didOpen:function () {
-                                                        Swal.showLoading()
-                                                        timerInterval = setInterval(function() {
-                                                        var content = Swal.getHtmlContainer()
-                                                        if (content) {
-                                                            var b = content.querySelector('b')
-                                                            if (b) {
-                                                                b.textContent = Swal.getTimerLeft()
+                                            $.ajax({
+                                                url: '{{ route("place-order") }}',
+                                                method: 'POST',
+                                                data: formData,
+                                                success: function(response) {
+                                                    if (response && response.message) {
+                                                        var timerInterval;
+                                                        Swal.fire({
+                                                        title: response.message,
+                                                        html: 'Please do not click on anywhere while being redirected to the payment page',
+                                                        timer: 3000,
+                                                        timerProgressBar: true,
+                                                        allowOutsideClick: false, // Prevent outside click
+                                                        showConfirmButton: false, // Hide the confirm button
+                                                        didOpen:function () {
+                                                            Swal.showLoading()
+                                                            timerInterval = setInterval(function() {
+                                                            var content = Swal.getHtmlContainer()
+                                                            if (content) {
+                                                                var b = content.querySelector('b')
+                                                                if (b) {
+                                                                    b.textContent = Swal.getTimerLeft()
+                                                                }
                                                             }
-                                                        }
-                                                        }, 100)
-                                                    },
-                                                    onClose: function () {
-                                                        clearInterval(timerInterval);
-                                                        window.location.href = "{{ route('member.order-pending') }}";
-                                                    }
-                                                    }).then(function (result) {
-                                                        /* Read more about handling dismissals below */
-                                                        if (result.dismiss === Swal.DismissReason.timer) {
+                                                            }, 100)
+                                                        },
+                                                        onClose: function () {
+                                                            clearInterval(timerInterval);
                                                             window.location.href = "{{ route('member.order-pending') }}";
                                                         }
+                                                        }).then(function (result) {
+                                                            /* Read more about handling dismissals below */
+                                                            if (result.dismiss === Swal.DismissReason.timer) {
+                                                                window.location.href = "{{ route('member.order-pending') }}";
+                                                            }
+                                                        })
+                                                    }
+                                                },
+                                                error: function(xhr, status, error) {
+                                                    console.log(xhr);
+                                                    console.log(status);
+                                                    Swal.fire({
+                                                    icon: 'error',
+                                                    title: 'Oops...',
+                                                    text: error
                                                     })
+                                                    return;
                                                 }
-                                            },
-                                            error: function(xhr, status, error) {
-                                                console.log(xhr);
-                                                console.log(status);
-                                                Swal.fire({
-                                                icon: 'error',
-                                                title: 'Oops...',
-                                                text: error
-                                                })
-                                                return;
-                                            }
 
-                                        });
+                                            });
+                                        } else {
+                                            // User has insufficient balance, show an error message
+                                            Swal.fire({
+                                                icon: 'error',
+                                                title: 'Insufficient Purchase Wallet Balance',
+                                                text: 'Your purchase wallet balance is not sufficient to complete this transaction.',
+                                            });
+                                        }
                                     } else {
-                                        // User has insufficient balance, show an error message
                                         Swal.fire({
-                                            icon: 'error',
-                                            title: 'Insufficient Purchase Wallet Balance',
-                                            text: 'Your purchase wallet balance is not sufficient to complete this transaction.',
-                                        });
+                                        icon: 'error',
+                                        title: 'Invalid Amount...',
+                                        text: 'Insufficient Amount'
+                                        })
+                                        return;
                                     }
+                                    
                                 },
                                 error: function(xhr, status, error) {
                                     console.error(error);
@@ -437,6 +464,9 @@
                             });
 
                         } else {
+
+                            const walletInput = document.getElementById('wallet-input');
+                            const walletAmount = parseFloat(walletInput.value) || 0;
 
                             let formData = $('#checkout-form').serializeArray();
 
@@ -463,6 +493,9 @@
                             }, {
                                 name: 'contact',
                                 value: contact
+                            }, {
+                                name: 'product_wallet',
+                                value: walletAmount
                             });
 
                             $.ajax({
@@ -477,6 +510,8 @@
                                         html: 'Please do not click on anywhere while being redirected to the payment page',
                                         timer: 3000,
                                         timerProgressBar: true,
+                                        allowOutsideClick: false, // Prevent outside click
+                                        showConfirmButton: false, // Hide the confirm button
                                         didOpen:function () {
                                             Swal.showLoading()
                                             timerInterval = setInterval(function() {
@@ -518,6 +553,10 @@
                         
                     } else if (selectedDeliveryMethod === 'Self-Pickup') {
                         if(selectedPaymentMethod === 'Manual Transfer'){
+
+                            const walletInput = document.getElementById('wallet-input');
+                            const walletAmount = parseFloat(walletInput.value) || 0;
+
                             let formData = new FormData();
 
                             // Append the fields that are always present
@@ -533,19 +572,15 @@
                             formData.append('contact', contact);
                             formData.append('price', '{{ $product_price }}');
                             formData.append('discount_amt', '{{ $discount_percent_amount }}');
+                            formData.append('product_wallet', walletAmount);
+
                             // Get the payment proof file input
                             const paymentProofInput = document.getElementById('payment_proof2');
                             if (paymentProofInput.files.length > 0) {
                                 // Add the payment_proof to the FormData
                                 formData.append('payment_proof', paymentProofInput.files[0]);
                             } else {
-                                // Display a SweetAlert to inform the user to upload payment proof
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Oops...',
-                                    text: 'Please upload the payment proof to proceed',
-                                });
-                                return; // Exit the function
+                                formData.append('payment_proof', null);
                             }
 
                             $.ajax({
@@ -562,6 +597,8 @@
                                         html: 'Please do not click on anywhere while being redirected to the payment page',
                                         timer: 3000,
                                         timerProgressBar: true,
+                                        allowOutsideClick: false, // Prevent outside click
+                                        showConfirmButton: false, // Hide the confirm button
                                         didOpen:function () {
                                             Swal.showLoading()
                                             timerInterval = setInterval(function() {
@@ -599,106 +636,130 @@
                                 }
                             });
                         } else if (selectedPaymentMethod === 'Purchase Wallet') {
+
+                            const walletInput = document.getElementById('wallet-input');
+                            const walletAmount = parseFloat(walletInput.value) || 0;
+
+                            const totalPrice = Number({{ $subtotal }});
+
                             $.ajax({
                                 url: '{{ route("get-user-purchase-wallet-balance") }}',
                                 method: 'GET',
                                 success: function(response) {
                                     const UserPurchaseWalletBalance = response.purchase_wallet_balance;
                                     
-                                    // Check if the user's purchase wallet balance is sufficient
-                                    if (UserPurchaseWalletBalance >= formattedTotal) {
-                                        let formData = $('#checkout-form').serializeArray();
+                                    if(walletAmount >= 0 && walletAmount <= totalPrice) {
+                                        // Check if the user's purchase wallet balance is sufficient
+                                        if (UserPurchaseWalletBalance >= formattedTotal) {
+                                            let formData = $('#checkout-form').serializeArray();
 
-                                        formData.push({
-                                            name: '_token',
-                                            value: $('meta[name="csrf-token"]').attr('content')
-                                        }, {
-                                            name: 'user_id',
-                                            value: {{ $user->id }}
-                                        }, {
-                                            name: 'email',
-                                            value: '{{ $user->email }}'
-                                        }, {
-                                            name: 'price',
-                                            value: '{{ $product_price }}'
-                                        }, {
-                                            name: 'discount_amt',
-                                            value: '{{ $discount_percent_amount }}'
-                                        }, {
-                                            name: 'total_amount',
-                                            value: formattedTotal
-                                        });
+                                            formData.push({
+                                                name: '_token',
+                                                value: $('meta[name="csrf-token"]').attr('content')
+                                            }, {
+                                                name: 'user_id',
+                                                value: {{ $user->id }}
+                                            }, {
+                                                name: 'email',
+                                                value: '{{ $user->email }}'
+                                            }, {
+                                                name: 'price',
+                                                value: '{{ $product_price }}'
+                                            }, {
+                                                name: 'discount_amt',
+                                                value: '{{ $discount_percent_amount }}'
+                                            }, {
+                                                name: 'total_amount',
+                                                value: formattedTotal
+                                            }, {
+                                                name: 'product_wallet',
+                                                value: walletAmount
+                                            });
 
-                                        formData.push({
-                                            name: 'receiver',
-                                            value: '{{ $user->full_name }}'
-                                        }, {
-                                            name: 'contact',
-                                            value: {{ $user->contact }}
-                                        });
+                                            formData.push({
+                                                name: 'receiver',
+                                                value: '{{ $user->full_name }}'
+                                            }, {
+                                                name: 'contact',
+                                                value: {{ $user->contact }}
+                                            });
 
-                                        $.ajax({
-                                            url: '{{ route("place-order") }}',
-                                            method: 'POST',
-                                            data: formData,
-                                            success: function(response) {
-                                                if (response && response.message) {
-                                                    var timerInterval;
-                                                    Swal.fire({
-                                                    title: response.message,
-                                                    html: 'Please do not click on anywhere while being redirected to the payment page',
-                                                    timer: 3000,
-                                                    timerProgressBar: true,
-                                                    didOpen:function () {
-                                                        Swal.showLoading()
-                                                        timerInterval = setInterval(function() {
-                                                        var content = Swal.getHtmlContainer()
-                                                        if (content) {
-                                                            var b = content.querySelector('b')
-                                                            if (b) {
-                                                                b.textContent = Swal.getTimerLeft()
+                                            $.ajax({
+                                                url: '{{ route("place-order") }}',
+                                                method: 'POST',
+                                                data: formData,
+                                                success: function(response) {
+                                                    if (response && response.message) {
+                                                        var timerInterval;
+                                                        Swal.fire({
+                                                        title: response.message,
+                                                        html: 'Please do not click on anywhere while being redirected to the payment page',
+                                                        timer: 3000,
+                                                        timerProgressBar: true,
+                                                        allowOutsideClick: false, // Prevent outside click
+                                                        showConfirmButton: false, // Hide the confirm button
+                                                        didOpen:function () {
+                                                            Swal.showLoading()
+                                                            timerInterval = setInterval(function() {
+                                                            var content = Swal.getHtmlContainer()
+                                                            if (content) {
+                                                                var b = content.querySelector('b')
+                                                                if (b) {
+                                                                    b.textContent = Swal.getTimerLeft()
+                                                                }
                                                             }
-                                                        }
-                                                        }, 100)
-                                                    },
-                                                    onClose: function () {
-                                                        clearInterval(timerInterval);
-                                                        window.location.href = "{{ route('member.order-pending') }}";
-                                                    }
-                                                    }).then(function (result) {
-                                                        /* Read more about handling dismissals below */
-                                                        if (result.dismiss === Swal.DismissReason.timer) {
+                                                            }, 100)
+                                                        },
+                                                        onClose: function () {
+                                                            clearInterval(timerInterval);
                                                             window.location.href = "{{ route('member.order-pending') }}";
                                                         }
+                                                        }).then(function (result) {
+                                                            /* Read more about handling dismissals below */
+                                                            if (result.dismiss === Swal.DismissReason.timer) {
+                                                                window.location.href = "{{ route('member.order-pending') }}";
+                                                            }
+                                                        })
+                                                    }
+                                                },
+                                                error: function(xhr, status, error) {
+                                                    console.log(xhr);
+                                                    console.log(status);
+                                                    Swal.fire({
+                                                    icon: 'error',
+                                                    title: 'Oops...',
+                                                    text: error
                                                     })
+                                                    return;
                                                 }
-                                            },
-                                            error: function(xhr, status, error) {
-                                                console.log(xhr);
-                                                console.log(status);
-                                                Swal.fire({
-                                                icon: 'error',
-                                                title: 'Oops...',
-                                                text: error
-                                                })
-                                                return;
-                                            }
 
-                                        });
+                                            });
+                                        } else {
+                                            // User has insufficient balance, show an error message
+                                            Swal.fire({
+                                                icon: 'error',
+                                                title: 'Insufficient Purchase Wallet Balance',
+                                                text: 'Your purchase wallet balance is not sufficient to complete this transaction.',
+                                            });
+                                        }
                                     } else {
-                                        // User has insufficient balance, show an error message
                                         Swal.fire({
-                                            icon: 'error',
-                                            title: 'Insufficient Purchase Wallet Balance',
-                                            text: 'Your purchase wallet balance is not sufficient to complete this transaction.',
-                                        });
+                                        icon: 'error',
+                                        title: 'Invalid Amount...',
+                                        text: 'Insufficient Amount'
+                                        })
+                                        return;
                                     }
+                                    
                                 },
                                 error: function(xhr, status, error) {
                                     console.error(error);
                                 }
                             });
                         } else {
+
+                            const walletInput = document.getElementById('wallet-input');
+                            const walletAmount = parseFloat(walletInput.value) || 0;
 
                             let formData = $('#checkout-form').serializeArray();
                             
@@ -717,6 +778,9 @@
                             }, {
                                 name: 'price',
                                 value: '{{ $product_price }}'
+                            }, {
+                                name: 'product_wallet',
+                                value: walletAmount
                             });
 
                             formData.push({
@@ -739,6 +803,8 @@
                                         html: 'Please do not click on anywhere while being redirected to the payment page',
                                         timer: 3000,
                                         timerProgressBar: true,
+                                        allowOutsideClick: false, // Prevent outside click
+                                        showConfirmButton: false, // Hide the confirm button
                                         didOpen:function () {
                                             Swal.showLoading()
                                             timerInterval = setInterval(function() {
@@ -779,27 +845,19 @@
                     }
             });
         });
-        let shippingCharge = 0; // Initialize the shipping charge to 0
+
+        // update shipping fee base on user selection address
+        let shippingCharge = 0; 
         function updateShippingCharge(isShippingMethod) {
             const deliveryMethod = $('input[name="delivery_method"]:checked').val();
             const shippingElement = document.getElementById('shipping');
-            
+            const selectedAddress = $('input[name="address"]:checked');
 
-            if (deliveryMethod === 'Delivery') {
+            if (deliveryMethod === 'Delivery' && selectedAddress.length > 0) {
                  // Check if any address is selected
-                const selectedAddress = $('input[name="address"]:checked');
-                if (selectedAddress.length > 0) {
-                    // If the shipping method is selected and an address is chosen, use the shipping charge from the user's address
-                    shippingCharge = parseFloat(selectedAddress.data('shipping-charge'));
-                    console.log(shippingCharge)
-                }else{
-                    shippingCharge = 0;
-                }
-                // console.log(selectedAddress)
-            } else if (deliveryMethod === 'Self-Pickup') {
-                // If self-pickup method is selected, the shipping charge should be 0
+                 shippingCharge = parseFloat(selectedAddress.data('shipping-charge'));
+            } else {
                 shippingCharge = 0;
-                
             }
 
             const shippingAmount = shippingCharge.toFixed(2);
@@ -818,6 +876,61 @@
             totalElement.innerText = `RM ${totalAmount}`;
         }
 
+        // Call the function when the address or delivery method changes
+        $('input[name="delivery_method"], input[name="address"]').on('change', updateShippingCharge);
 
+        function updateTotalAmount() {
+            const walletInput = document.getElementById('wallet-input');
+            const walletAmount = parseFloat(walletInput.value) || 0; // Get the value from the input or default to 0
+
+            const maxWalletBalance = parseFloat({{ $user->product_wallet }});
+
+            // Calculate the total amount to pay
+            const totalPrice = Number({{ $subtotal }}); 
+
+            let totalAmount = (totalPrice + shippingCharge - walletAmount).toFixed(2);
+
+            const placeOrderButton = document.getElementById('place-order-btn');
+
+            if (totalAmount < 0) {
+                totalAmount = 0;
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Insufficient Purchase Wallet Balance',
+                    text: 'Your purchase wallet balance is not sufficient to complete this transaction.',
+                });
+                walletInput.classList.add('error-input');
+                walletInput.classList.add('disable');
+                
+                // Disable the "Place Order" button
+                placeOrderButton.disabled = true;
+            } else if (walletAmount > maxWalletBalance) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Insufficient Purchase Wallet Balance',
+                    text: 'Your product wallet balance has exceeded the limit.',
+                });
+                walletInput.classList.add('error-input');
+                walletInput.classList.add('disable');
+
+                // Disable the "Place Order" button
+                placeOrderButton.disabled = true;
+            } else {
+                walletInput.classList.remove('error-input');
+                walletInput.classList.remove('disable');
+
+                // Enable the "Place Order" button
+                placeOrderButton.disabled = false;
+            }
+
+            const totalElement = document.getElementById('total');
+            totalElement.innerText = `RM ${totalAmount}`;
+        }
+
+
+
+    // Call the function when the wallet input changes
+    document.getElementById('wallet-input').addEventListener('input', updateTotalAmount);
+    
     </script>
 @endsection

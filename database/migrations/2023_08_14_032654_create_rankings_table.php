@@ -22,8 +22,6 @@ class CreateRankingsTable extends Migration
             $table->double('group_sale_requirement',9, 2);
             $table->double('group_package', 9, 2);
             $table->double('level_discount',5, 2);
-            $table->string('direct_member')->nullable();
-            $table->string('direct_member_rank')->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->string('rank_short', 255);

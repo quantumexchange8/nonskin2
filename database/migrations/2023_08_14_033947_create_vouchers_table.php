@@ -18,10 +18,10 @@ class CreateVouchersTable extends Migration
             $table->string('voucher_no');
             $table->string('name');
             $table->string('amount');
-            $table->string('status');
             $table->string('direct_member');
             $table->string('direct_member_rank');
             $table->double('min_total_sales', 9, 2);
+            $table->unsignedBigInteger('rank_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

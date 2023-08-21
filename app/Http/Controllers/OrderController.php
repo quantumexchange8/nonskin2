@@ -19,6 +19,7 @@ class OrderController extends Controller
     // Customer
     public function placeOrder(Request $request)
     {
+        $user = Auth::user();
         // dd($request->all());
         if(auth()->user()->cart->items->count() == 0){
             return redirect()->route('member.cart');
@@ -35,6 +36,7 @@ class OrderController extends Controller
         $discountAmt        = $request->input('discount_amt');
         $deliveryAddress    = $request->input('address');
         $deliveryFee        = $request->input('delivery_fee');
+        $ProductWallet      = $request->input('product_wallet');
 
         $orderPrefix = 'NONOD'; // Prefix for Order Number
         $transactionPrefix = 'NONT';
@@ -44,10 +46,13 @@ class OrderController extends Controller
         // if (!$prefixRow) {
         //     // If the prefix doesn't exist, handle it as needed (e.g., show an error)
         // }
-            
-        $request->validate([
-            'payment_proof' => 'nullable|image|max:2048', // Adjust the allowed mime types and file size as needed
-        ]);
+        
+        if($request->hasFile('payment_proof') != null) {
+            $request->validate([
+                'payment_proof' => 'nullable|image|max:2048', // Adjust the allowed mime types and file size as needed
+            ]);
+        }
+        
 
         try {
             $imageName1 = null; // Initialize the variable
@@ -57,8 +62,29 @@ class OrderController extends Controller
                 $request->payment_proof->move(public_path('images/payment-proof'), $imageName1);
             }
 
+            // $ProductWallet = $user->product_wallet;
+            //     if($ProductWallet >= $totalAmount) {
+            //         $remain_balance = $ProductWallet - $totalAmount; //remainging balance for product wallet
+                    
+            //         if($remain_balance >= 0) {
+            //             $user->product_wallet = $remain_balance;
+            //             $user->save();
+
+            //             $total_payment = 0;
+            //         } else {
+            //             dd($remain_balance);
+            //             $afterDeductBalance = $totalAmount - $ProductWallet;
+            //             $total_payment = $afterDeductBalance;
+            //         }
+            //     } else {
+            //         $balance_to_pay = $totalAmount - $ProductWallet; //need to pay balance amount
+            //         $user->product_wallet = 0;
+            //         $user->save();
+
+            //         $total_payment = $balance_to_pay;
+            //     }
+
             if($paymentMethod == 'Purchase Wallet'){
-                $user = Auth::user();
     
                 //  Calculate purchase Wallet Deduct product amount
                 $balance = $user->purchase_wallet;
@@ -66,9 +92,13 @@ class OrderController extends Controller
                 if($balance >= $totalAmount) {
                     $balance_remain = $balance - $totalAmount;
                     
+                    $user->product_wallet -= $ProductWallet;
                     $user->purchase_wallet = $balance_remain;
                     $user->save();
                 }
+            } else {
+                $user->product_wallet -= $ProductWallet;
+                $user->save();
             }
 
             DB::beginTransaction();
@@ -79,30 +109,57 @@ class OrderController extends Controller
                     'updated_by' => Auth::id()
                 ]
             );
-            // Save the form data to the Order model
-            $order                      = new Order();
-            $order->user_id             = $id;
-            $order->order_num           = $orderPrefix . str_pad($newOrderNumber, $prefixRow->padding, '0', STR_PAD_LEFT);
-            $order->total_amount        = $totalAmount;
-            $order->nett_price          = $totalAmount;
-            $order->receiver            = $receiver;
-            $order->contact             = $contact;
-            $order->email               = $email;
-            $order->price               = $price;
-            $order->discount_amt        = $discountAmt;
-            $order->delivery_method     = $deliveryMethod;
-            $order->payment_method      = $paymentMethod;
-            $order->delivery_address    = $deliveryAddress;
-            $order->delivery_fee        = $deliveryMethod == 'Delivery' ? $deliveryFee : 0;
-            $order->status              = 1;//processing
-            $order->remarks             = null;
-            $order->created_by          = Auth::id();
-            $order->updated_at          = null;
-            
-            if ($imageName1 !== null) {
-                $order->payment_proof = $imageName1;
+            if($paymentMethod == 'Manual Transfer') {
+                // Save the form data to the Order model
+                $order                      = new Order();
+                $order->user_id             = $id;
+                $order->order_num           = $orderPrefix . str_pad($newOrderNumber, $prefixRow->padding, '0', STR_PAD_LEFT);
+                $order->total_amount        = $totalAmount;
+                $order->nett_price          = $totalAmount;
+                $order->receiver            = $receiver;
+                $order->contact             = $contact;
+                $order->email               = $email;
+                $order->price               = $price;
+                $order->discount_amt        = $discountAmt;
+                $order->delivery_method     = $deliveryMethod;
+                $order->payment_method      = $paymentMethod;
+                $order->delivery_address    = $deliveryAddress;
+                $order->delivery_fee        = $deliveryMethod == 'Delivery' ? $deliveryFee : 0;
+                $order->status              = 1;//processing
+                $order->remarks             = null;
+                $order->created_by          = Auth::id();
+                $order->updated_at          = null;
+                if ($imageName1 !== null) {
+                    $order->payment_proof = $imageName1;
+                    $order->status = 1; // Processing
+                } else {
+                    $order->payment_proof = null;
+                    $order->status = 9; // Pending payment
+                }
+                $order->save();
+            } else {
+                $order                      = new Order();
+                $order->user_id             = $id;
+                $order->order_num           = $orderPrefix . str_pad($newOrderNumber, $prefixRow->padding, '0', STR_PAD_LEFT);
+                $order->total_amount        = $totalAmount;
+                $order->nett_price          = $totalAmount;
+                $order->receiver            = $receiver;
+                $order->contact             = $contact;
+                $order->email               = $email;
+                $order->price               = $price;
+                $order->discount_amt        = $discountAmt;
+                $order->delivery_method     = $deliveryMethod;
+                $order->payment_method      = $paymentMethod;
+                $order->delivery_address    = $deliveryAddress;
+                $order->delivery_fee        = $deliveryMethod == 'Delivery' ? $deliveryFee : 0;
+                $order->status              = 1;//processing
+                $order->remarks             = null;
+                $order->created_by          = Auth::id();
+                $order->updated_at          = null;
+
+                $order->save();
             }
-            $order->save();
+            
 
 
             $newTransactionNumber = $prefixRow2->counter + 1;
