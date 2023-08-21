@@ -273,7 +273,7 @@
                     <td>{{ $item->product->name }}</td>
                     <td>RM {{ number_format($item['price'],2) }}</td>
                     <td>{{ $item['quantity'] }}</td>
-                    <td align="right">RM {{ number_format($item['price'],2) }}</td>
+                    <td align="right">RM {{ number_format($item['price'] * $item['quantity'], 2) }}</td>
                 </tr>
                 @php($total += $item['price'] * $item['quantity'])
             @endforeach

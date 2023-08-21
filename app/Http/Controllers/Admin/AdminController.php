@@ -359,7 +359,7 @@ class AdminController extends Controller
         //                         ->select('order_items.*', 'products.name_en as product_name_en', 'products.name_cn as product_name_cn')
         //                         ->get();
         $orderItems = OrderItem::where('order_num', $order->order_num)->with(['product'])->get();
-        $companyInfo = CompanyInfo::all()->keyBy('key');
+        $companyInfo = CompanyInfo::get()->first();
 
         $pdf = PDF::loadView('member.orders..pdf.invoice', ['invoice' => $invoice, 'orderItems' => $orderItems, 'companyInfo' => $companyInfo]);
         return $pdf->download('invoice.pdf');
