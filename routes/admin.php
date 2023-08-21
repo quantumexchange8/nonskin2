@@ -20,6 +20,7 @@ Route::group(['prefix' => 'admin/settings', 'as' => 'admin.settings.',  'middlew
     Route::post('/bank/update', [AdminController::class, 'bankStore'])->name('bank-store');
     Route::delete('/bank/destroy/{bank}', [AdminController::class, 'bankDestroy'])->name('bank-destroy');
     Route::get('/company-info', [AdminController::class, 'companyInfo'])->name('company-info');
+    Route::post('/company-info/update', [AdminController::class, 'companyInfoStore'])->name('company-info-store');
 });
 
 // Reports

@@ -11,7 +11,11 @@
                 {{ $v->content }}
             </div>
             <div class="modal-footer">
+                @if(request()->route()->getName() == 'member.announcement')
                 <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Close</button>
+                @else
+                <button type="button" class="btn btn-secondary waves-effect" data-bs-toggle="modal" data-bs-target="#announcementModal">Close</button>
+                @endif
             </div>
         </div>
     </div>

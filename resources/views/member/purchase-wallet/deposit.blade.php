@@ -48,9 +48,9 @@
                                 </div>
                                 <div class="row mb-4">
                                     <div class="">
-                                        <button type="submit" class="btn btn-primary"> ePay </button>
-                                        <span>OR</span>
-                                        <a href="{{ route('member.topup') }}" class="btn btn-outline-primary"> Manual Transfer to Nonskin Account </a>
+                                        <button type="submit" class="px-2 btn btn-primary"> ePay </button>
+                                        <span class="px-2"> or </span>
+                                        <a href="{{ route('member.topup') }}" class="px-2 link"> Manual Transfer to Nonskin Account </a>
                                     </div> <!-- end col -->
                                 </div>
                             </div>

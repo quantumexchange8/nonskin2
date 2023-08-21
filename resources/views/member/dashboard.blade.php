@@ -8,6 +8,15 @@
     @slot('title') Dashboard @endslot
     @endcomponent
 
+    @if (session('show_announcement'))
+        @foreach ($announcements as $k => $v)
+            @include('member.modals.announcement-detail')
+        @endforeach
+        @if ($announcements->isNotEmpty())
+            @include('member.modals.announcement-popup')
+        @endif
+    @endif
+
     <div class="container-fluid container-row">
         <div class="row">
             <div class="col-xl-3 col-md-6 mb-4">
@@ -358,6 +367,28 @@
                         console.log('Alert closed');
                     }
                 });
+            });
+        });
+    </script>
+    @if (session('show_announcement'))
+        @if ($announcements->isNotEmpty())
+            <script>
+                $(document).ready(function() {
+                    let announcementModal = new bootstrap.Modal(document.getElementById('announcementModal'));
+                    announcementModal.show();
+                    $('#announcementModal img').addClass('img-fluid');
+                })
+            </script>
+        @endif
+    @endif
+    <script>
+        $(document).ready(function() {
+            $('.announcement-link').click(function() {
+                $('#announcementModal').modal('hide'); // Close the popup modal
+            });
+
+            $('#announcementModal').on('hidden.bs.modal', function() {
+                $('.open-detail-modal').click(); // Open the detail modal
             });
         });
     </script>

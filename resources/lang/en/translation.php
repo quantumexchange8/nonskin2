@@ -78,6 +78,7 @@
         "amount" => "Amount",
         "close" => "Close",
         "last updated at" => "Last Updated At",
+        "View All Announcement" => "View All Announcement",
 
         //buttons
         'save changes' => 'Save changes',

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Member;
 
 use App\Models\Announcement;
+use App\Models\AnnouncementLog;
 use App\Models\User;
 use App\Models\Cart;
 use App\Models\CartItem;
@@ -22,6 +23,7 @@ use Illuminate\Support\Facades\Redirect;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Auth;
 Use Alert;
+use Session;
 
 class UserController extends Controller
 {
@@ -38,7 +40,28 @@ class UserController extends Controller
         $next_rank = Ranking::where('id', $user->rank_id+1)->pluck('name')->first();
         $referral = User::where('upline_id', Auth::id())->count();
 
-        return view('member.dashboard', compact('user', 'next_rank', 'referral'));
+        $announcements = [];
+        if (Session::has('show_announcement')) {
+            $announcements = Announcement::query()->where('status', 1)->where('popup', true)->latest()->get();
+            if ($announcements->isNotEmpty()) {
+                $popup_once_announcements = $announcements->where('popup_once', true);
+                if ($popup_once_announcements->isNotEmpty()) {
+                    $ids = $popup_once_announcements->pluck('id');
+
+                    $readAnnouncements = AnnouncementLog::where('user', $user->id)->whereIn('announcementId', $ids)->pluck('announcementId');
+
+                    $announcements = $announcements->whereNotIn('id', $readAnnouncements);
+
+                    $unreadAnnouncementsIds = $popup_once_announcements->whereNotIn('id', $readAnnouncements)->pluck('id');
+
+                    foreach ($unreadAnnouncementsIds as $id) {
+                        AnnouncementLog::create(['user' => $user->id, 'announcementId' => intval($id)]);
+                    }
+                }
+            }
+        }
+        // dd($announcements);
+        return view('member.dashboard', compact('user', 'next_rank', 'referral', 'announcements'));
     }
 
     public function announcement() {
@@ -349,7 +372,7 @@ class UserController extends Controller
         //                         ->select('order_items.*', 'products.name_en as product_name_en', 'products.name_cn as product_name_cn')
         //                         ->get();
         $orderItems = OrderItem::where('order_num', $order->order_num)->with(['product'])->get();
-        $companyInfo = CompanyInfo::all()->keyBy('key');
+        $companyInfo = CompanyInfo::get()->first();
 
         $pdf = PDF::loadView('member.orders..pdf.invoice', ['invoice' => $invoice, 'orderItems' => $orderItems, 'companyInfo' => $companyInfo]);
         return $pdf->download('invoice.pdf');

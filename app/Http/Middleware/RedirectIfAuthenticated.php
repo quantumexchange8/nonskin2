@@ -26,7 +26,7 @@ class RedirectIfAuthenticated
                 $user = Auth::user();
                 $role = $user->role;
                 if($role == 'user') {
-                    return redirect('members/dashboard');
+                    return redirect('members/dashboard')->with('show_announcement', true);
                 } elseif ($role == 'superadmin' || $role == 'admin') {
                     return redirect('admin/dashboard');
                 }

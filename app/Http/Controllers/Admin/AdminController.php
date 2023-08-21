@@ -160,9 +160,7 @@ class AdminController extends Controller
                 'name_en'    => $categoryData['name_en'],
                 'name_cn'    => $categoryData['name_cn'],
                 'status'     => $categoryData['status'],
-                'created_by' => $category->created_by ?? Auth::id(),
                 'created_at' => $category->created_at ?? now(),
-                'updated_by' => Auth::id(),
                 'updated_at' => now()
             ]);
         if ($category->wasRecentlyCreated){
@@ -192,9 +190,7 @@ class AdminController extends Controller
             [
                 'name'       => $chargeData['name'],
                 'amount'     => $chargeData['amount'],
-                'created_by' => $charge->created_by ?? Auth::id(),
                 'created_at' => $charge->created_at ?? now(),
-                'updated_by' => Auth::id(),
                 'updated_at' => now()
             ]);
         if ($charge->wasRecentlyCreated){
@@ -223,9 +219,7 @@ class AdminController extends Controller
             ['id' => $bankData['id']],
             [
                 'name'       => $bankData['name'],
-                'created_by' => $bank->created_by ?? Auth::id(),
                 'created_at' => $bank->created_at ?? now(),
-                'updated_by' => Auth::id(),
                 'updated_at' => now()
             ]);
         if ($bank->wasRecentlyCreated){
@@ -240,8 +234,29 @@ class AdminController extends Controller
     }
 
     public function companyInfo() {
-        $infos = CompanyInfo::get();
-        return view('admin.settings.company-info', compact('infos'));
+        $info = CompanyInfo::get()->first();
+        return view('admin.settings.company-info', compact('info'));
+    }
+    public function companyInfoStore(Request $request) {
+        $infoData = $request->only('id', 'name', 'contact', 'address', 'register_no', 'description');
+        // dd($infoData);
+        $info = CompanyInfo::find($infoData['id']);
+        $info = CompanyInfo::updateOrCreate(
+            ['id' => $infoData['id']],
+            [
+                'name'       => $infoData['name'],
+                'contact'    => $infoData['contact'],
+                'address'    => $infoData['address'],
+                'register_no'=> $infoData['register_no'],
+                'description'=> $infoData['description'],
+                'created_at' => $info->created_at ?? now(),
+                'updated_at' => now()
+            ]);
+        if ($info->wasRecentlyCreated){
+            return redirect()->back()->with('created', 'Company info created successfully');
+        }else{
+            return redirect()->back()->with('updated', 'Company info updated successfully');
+        }
     }
 
     public function orderListing() {
@@ -377,22 +392,30 @@ class AdminController extends Controller
 
     public function checkUniqueUsername(Request $request){
         $username = $request->input('username');
-        $isUnique = !User::where('username', $username)->exists();
+        $isUnique = !User::where('username', $username)
+                    ->where('id', '!=', Auth::id())
+                    ->exists();
         return response()->json(['unique' => $isUnique]);
     }
     public function checkUniqueEmail(Request $request){
         $email = $request->input('email');
-        $isUnique = !User::where('email', $email)->exists();
+        $isUnique = !User::where('email', $email)
+                    ->where('id', '!=', Auth::id())
+                    ->exists();
         return response()->json(['unique' => $isUnique]);
     }
     public function checkUniqueID(Request $request){
         $id_no = $request->input('id_no');
-        $isUnique = !User::where('id_no', $id_no)->exists();
+        $isUnique = !User::where('id_no', $id_no)
+                    ->where('id', '!=', Auth::id())
+                    ->exists();
         return response()->json(['unique' => $isUnique]);
     }
     public function checkUniqueContact(Request $request){
         $contact = $request->input('contact');
-        $isUnique = !User::where('contact', $contact)->exists();
+        $isUnique = !User::where('contact', $contact)
+                    ->where('id', '!=', Auth::id())
+                    ->exists();
         return response()->json(['unique' => $isUnique]);
     }
 

@@ -101,7 +101,7 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="col-4">
+                                        {{-- <div class="col-4">
                                             <div class="mb-3">
                                                 <label for="start_date" class="form-label required">Start Date</label>
                                                 <div class="md-10">
@@ -126,7 +126,7 @@
                                                     </span>
                                                 @enderror
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="col-4">
                                             <div class="mb-3">
                                                 <label class="form-label" for="status">Popup</label>

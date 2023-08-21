@@ -159,13 +159,16 @@
             <img src="{{ public_path('images/black-logo.jpeg') }}">
         </div>
         <div class="float-right text-right mt-10">
-            <p class="m-0 pt-5 text-bold w-100">{{ $companyInfo['Name']['value'] }}</p>
-            @php($address = explode("\n", $companyInfo['Address']['value']))
-            @foreach ($address as $row)
-                <p class="m-0 pt-5 text-bold w-100">{{ $row }}</p>
-            @endforeach
+            <p class="m-0 pt-5 text-bold w-100">{{ $companyInfo['name'] }}</p>
+            <p class="m-0 pt-5 text-bold w-100">
+                @php
+                    $addressLines = explode(',', $companyInfo['address']);
+                    $formattedAddress = implode(',<br>', $addressLines);
+                    echo $formattedAddress;
+                @endphp
+            </p>
 
-            <p class="m-0 pt-5 text-bold w-100">{{ $companyInfo['Contact']['value'] }}</p>
+            <p class="m-0 pt-5 text-bold w-100">{{ $companyInfo['contact'] }}</p>
         </div>
 
         <div style="clear: both;"></div>
@@ -270,7 +273,7 @@
                     <td>{{ $item->product->name }}</td>
                     <td>RM {{ number_format($item['price'],2) }}</td>
                     <td>{{ $item['quantity'] }}</td>
-                    <td align="right">RM {{ number_format($item['price'],2) }} * {{ $item['quantity'] }}</td>
+                    <td align="right">RM {{ number_format($item['price'],2) }}</td>
                 </tr>
                 @php($total += $item['price'] * $item['quantity'])
             @endforeach
@@ -280,10 +283,12 @@
                         <div class="total-left w-70 float-left" align="right">
                             <p>Shipping Fee</p>
                             <p>Grand Total Price</p>
+                            <p>Payment Method</p>
                         </div>
                         <div class="total-right w-30 float-left text-bold" align="right">
                             <p>RM {{ number_format($invoice['delivery_fee'],2) }}</p>
                             <p>RM {{ number_format($total + $invoice['delivery_fee'],2) }}</p>
+                            <p>{{ $invoice['payment_method'] }}</p>
                         </div>
                         <div style="clear: both;"></div>
                     </div>

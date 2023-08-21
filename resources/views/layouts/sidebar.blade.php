@@ -212,7 +212,7 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
                         @hasanyrole('user')
-                            <li><a href="{{ route('member.listing') }}">@lang('translation.member-listing')</a></li>
+                            {{-- <li><a href="{{ route('member.listing') }}">@lang('translation.member-listing')</a></li> --}}
                             <li><a href="{{ route('member.network-tree') }}">@lang('translation.Network-tree')</a></li>
                         @endhasanyrole
                         @hasanyrole('superadmin|admin')

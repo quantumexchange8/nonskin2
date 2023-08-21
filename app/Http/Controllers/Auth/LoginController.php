@@ -56,7 +56,7 @@ class LoginController extends Controller
     //         'username' => $request['email'],
     //         'password' => $request['password'],
     //     ];
-        
+
     //     if(Auth::attempt($credentials)) {
     //         return redirect()->intended('members/dashboard')
     //                     ->withSuccess('Signed in');

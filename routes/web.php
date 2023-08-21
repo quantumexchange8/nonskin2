@@ -35,6 +35,7 @@ Route::get('/', function () {
     return view('auth/login');
 });
 
+
 Auth::routes();
 // Route::get('/login', [LoginController::class, 'login'])->name('login');
 // Route::post('/customlogin', [LoginController::class, 'customlogin'])->name('customlogin');

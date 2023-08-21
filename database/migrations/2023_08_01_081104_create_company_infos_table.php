@@ -15,8 +15,11 @@ class CreateCompanyInfosTable extends Migration
     {
         Schema::create('company_infos', function (Blueprint $table) {
             $table->id();
-            $table->string('key', 100)->nullable()->default('text');
-            $table->longText('value')->nullable();
+            $table->string('name', 100)->nullable();
+            $table->longText('address', 200)->nullable();
+            $table->string('contact', 20)->nullable();
+            $table->string('register_no', 20)->nullable();
+            $table->longText('description')->nullable();
             $table->timestamps();
         });
     }
