@@ -17,6 +17,7 @@ class CreatePaymentsTable extends Migration
             $table->id();
             $table->string('payment_num')->nullable();
             $table->string('type')->nullable();
+            $table->string('payment_method')->nullable();
             $table->integer('user_id')->unsigned()->comment('Refers to user id');
             $table->double('amount',9,2)->unsigned()->comment('Amount that user needs to pay');
             $table->string('gateway')->nullable();

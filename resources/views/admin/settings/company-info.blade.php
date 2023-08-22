@@ -46,7 +46,26 @@
                         <div class="mb-3 row col-md-6">
                             <label for="example-text-input" class="col-md-2 col-form-label">Description</label>
                             <div class="col-md-10">
-                                <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="description" placeholder="Enter Description" rows="4">{{ $info->description }}</textarea>
+                                <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="description" placeholder="Enter Description" rows="4" value="{{ $info->description }}"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 row col-md-6">
+                            <label for="bank_name" class="col-md-2 col-form-label">Bank Name</label>
+                            <div class="col-md-10">
+                                <input class="form-control @error('bank_name') is-invalid @enderror" name="bank_name" id="bank_name" placeholder="Enter bank name" rows="4" value="{{ $info->bank_name }}"></input>
+                            </div>
+                        </div>
+                        <div class="mb-3 row col-md-6">
+                            <label for="bank_holder_name" class="col-md-2 col-form-label">Bank Holder Name</label>
+                            <div class="col-md-10">
+                                <input class="form-control @error('bank_holder_name') is-invalid @enderror" name="bank_holder_name" id="bank_holder_name" placeholder="Enter holder name" rows="4" value="{{ $info->bank_holder_name }}" ></input>
+                            </div>
+                        </div>
+                        <div class="mb-3 row col-md-6">
+                            <label for="bank_acc" class="col-md-2 col-form-label">Bank Account No.</label>
+                            <div class="col-md-10">
+                                <input class="form-control @error('bank_acc') is-invalid @enderror" name="bank_acc" id="bank_acc" placeholder="Enter bank account" rows="4" value="{{ $info->bank_acc }}" ></input>
                             </div>
                         </div>
                         <div class="mb-3">

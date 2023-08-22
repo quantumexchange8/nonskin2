@@ -927,10 +927,58 @@
             totalElement.innerText = `RM ${totalAmount}`;
         }
 
+        function updateTotalAmount2() {
+            const walletInput = document.getElementById('wallet-input2');
+            const walletAmount = parseFloat(walletInput.value) || 0; // Get the value from the input or default to 0
+
+            const maxWalletBalance = parseFloat({{ $user->product_wallet }});
+
+            // Calculate the total amount to pay
+            const totalPrice = Number({{ $subtotal }}); 
+
+            let totalAmount = (totalPrice + shippingCharge - walletAmount).toFixed(2);
+
+            const placeOrderButton = document.getElementById('place-order-btn');
+
+            if (totalAmount < 0) {
+                totalAmount = 0;
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Insufficient Purchase Wallet Balance',
+                    text: 'Your purchase wallet balance is not sufficient to complete this transaction.',
+                });
+                walletInput.classList.add('error-input');
+                walletInput.classList.add('disable');
+                
+                // Disable the "Place Order" button
+                placeOrderButton.disabled = true;
+            } else if (walletAmount > maxWalletBalance) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Insufficient Purchase Wallet Balance',
+                    text: 'Your product wallet balance has exceeded the limit.',
+                });
+                walletInput.classList.add('error-input');
+                walletInput.classList.add('disable');
+
+                // Disable the "Place Order" button
+                placeOrderButton.disabled = true;
+            } else {
+                walletInput.classList.remove('error-input');
+                walletInput.classList.remove('disable');
+
+                // Enable the "Place Order" button
+                placeOrderButton.disabled = false;
+            }
+
+            const totalElement = document.getElementById('total2');
+            totalElement.innerText = `RM ${totalAmount}`;
+        }
 
 
     // Call the function when the wallet input changes
     document.getElementById('wallet-input').addEventListener('input', updateTotalAmount);
+    document.getElementById('wallet-input2').addEventListener('input', updateTotalAmount2);
     
     </script>
 @endsection

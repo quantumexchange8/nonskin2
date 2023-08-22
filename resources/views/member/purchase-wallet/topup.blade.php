@@ -12,7 +12,7 @@
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('member.topup.store') }}" method="POST">
+                    <form action="{{ route('member.topup.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <a class="text-dark">
                             <div class="p-4">
@@ -72,6 +72,29 @@
                                         <button type="submit" class="btn btn-primary"> Submit </button>
                                     </div> <!-- end col -->
                                 </div>
+                                <div class="flex-grow-1 overflow-hidden">
+                                    <h5 class="font-size-16 mb-1">Company Information</h5>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="remarks">Bank Name</label>
+                                        <input class="form-label" for="remarks" value="{{$companyInfo->bank_name}}" disabled>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="remarks">Bank Holder Name</label>
+                                        <input class="form-label" for="remarks" value="{{$companyInfo->bank_holder_name}}" disabled>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="remarks">Bank Account Number</label>
+                                        <input class="form-label" for="remarks" value="{{$companyInfo->bank_acc}}" disabled>
+                                    </div>
+                                </div>
+                            </div>
                             </div>
                         </div>
                     </form>

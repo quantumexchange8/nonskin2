@@ -88,21 +88,56 @@
                                     <th>Amount (RM)</th>
                                     <th>Receipt</th>
                                     <th>Status</th>
-                                    <th>Remarks</th>
+                                    <th>Remark</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @foreach ($orders as $order) --}}
+                                @foreach ($deposits as $row)
                                     <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $row->payment_num }}</td>
+                                        <td>{{ $row->updated_at }}</td>
+                                        <td>{{ $row->amount }}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary btn-sm btn-rounded btn-view-receipt" data-bs-toggle="modal" data-bs-target="#paymentSlipModal_{{ $row->id }}" id="{{ $row->id }}">
+                                                View payment slip
+                                            </button>
+                                            @include('member.modals.receipt')
+                                        </td>
+                                        <td>
+                                            @if( $row->status == 'Pending')
+                                                <span class="badge badge-pill badge-soft-secondary font-size-12">
+                                                    Pending
+                                                </span>
+                                            @elseif($row->status == 'Approved')
+                                                <span class="badge badge-pill badge-soft-success font-size-12">
+                                                    Approved
+                                                </span>
+                                            @elseif ( $row->status == 'Failed')
+                                                <span class="badge badge-pill badge-soft-danger font-size-12">
+                                                    Failed
+                                                </span>
+                                            @endif
+                                            
+                                        </td>
+                                        <td>{{ $row->remarks }}</td>
+                                        @if($row->status == 'Failed')
+                                        <td>
+                                            <form action="{{ route('member.new-payslip', $row->id) }}" method="POST" enctype="multipart/form-data">
+                                                @csrf
+                                                <button class="btn btn-link btn-edit-receipt" type="button" data-bs-toggle="modal" data-bs-target="#editSlipModal_{{ $row->id }}" id="{{ $row->id }}">
+                                                    <i class="mdi mdi-pencil"></i>
+                                                </button>
+                                                @include('member.modals.edit-receipt')
+                                            </form>
+                                            
+                                        </td>
+                                        @else
                                         <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        @endif
                                     </tr>
-                                {{-- @endforeach --}}
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

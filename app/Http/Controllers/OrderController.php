@@ -62,27 +62,8 @@ class OrderController extends Controller
                 $request->payment_proof->move(public_path('images/payment-proof'), $imageName1);
             }
 
-            // $ProductWallet = $user->product_wallet;
-            //     if($ProductWallet >= $totalAmount) {
-            //         $remain_balance = $ProductWallet - $totalAmount; //remainging balance for product wallet
-                    
-            //         if($remain_balance >= 0) {
-            //             $user->product_wallet = $remain_balance;
-            //             $user->save();
+            $nettprice = $price - $discountAmt + $deliveryFee;
 
-            //             $total_payment = 0;
-            //         } else {
-            //             dd($remain_balance);
-            //             $afterDeductBalance = $totalAmount - $ProductWallet;
-            //             $total_payment = $afterDeductBalance;
-            //         }
-            //     } else {
-            //         $balance_to_pay = $totalAmount - $ProductWallet; //need to pay balance amount
-            //         $user->product_wallet = 0;
-            //         $user->save();
-
-            //         $total_payment = $balance_to_pay;
-            //     }
 
             if($paymentMethod == 'Purchase Wallet'){
     
@@ -115,13 +96,14 @@ class OrderController extends Controller
                 $order->user_id             = $id;
                 $order->order_num           = $orderPrefix . str_pad($newOrderNumber, $prefixRow->padding, '0', STR_PAD_LEFT);
                 $order->total_amount        = $totalAmount;
-                $order->nett_price          = $totalAmount;
+                $order->nett_price          = $nettprice;
                 $order->receiver            = $receiver;
                 $order->contact             = $contact;
                 $order->email               = $email;
                 $order->price               = $price;
                 $order->discount_amt        = $discountAmt;
                 $order->delivery_method     = $deliveryMethod;
+                $order->product_wallet      = $ProductWallet;
                 $order->payment_method      = $paymentMethod;
                 $order->delivery_address    = $deliveryAddress;
                 $order->delivery_fee        = $deliveryMethod == 'Delivery' ? $deliveryFee : 0;
@@ -142,12 +124,13 @@ class OrderController extends Controller
                 $order->user_id             = $id;
                 $order->order_num           = $orderPrefix . str_pad($newOrderNumber, $prefixRow->padding, '0', STR_PAD_LEFT);
                 $order->total_amount        = $totalAmount;
-                $order->nett_price          = $totalAmount;
+                $order->nett_price          = $nettprice;
                 $order->receiver            = $receiver;
                 $order->contact             = $contact;
                 $order->email               = $email;
                 $order->price               = $price;
                 $order->discount_amt        = $discountAmt;
+                $order->product_wallet      = $ProductWallet;
                 $order->delivery_method     = $deliveryMethod;
                 $order->payment_method      = $paymentMethod;
                 $order->delivery_address    = $deliveryAddress;
@@ -161,32 +144,34 @@ class OrderController extends Controller
             }
             
 
-
-            $newTransactionNumber = $prefixRow2->counter + 1;
-            $prefixRow2->update(
-                [
-                    'counter' => $newTransactionNumber,
+            if($paymentMethod == 'Online Banking') {
+                $newTransactionNumber = $prefixRow2->counter + 1;
+                $prefixRow2->update(
+                    [
+                        'counter' => $newTransactionNumber,
+                        'updated_by' => Auth::id()
+                    ]
+                );
+                $payment                = new Payment();
+                $payment->payment_num   = $transactionPrefix . str_pad($newTransactionNumber, $prefixRow2->padding, '0', STR_PAD_LEFT);
+                $payment->type          = 'Deposit';
+                $payment->user_id       = Auth::id();
+                $payment->amount        = $totalAmount;
+                $payment->gateway       = null;
+                $payment->status        = 'Pending';
+                $payment->remarks       = null;
+                $payment->receipt       = null;
+                $payment->updated_at    = null;
+                $payment->created_by    = Auth::id();
+                $payment->save();
+    
+                $order->update([
+                    'payment_id' => $payment->id,
+                    'created_at' => $order->created_at,
                     'updated_by' => Auth::id()
-                ]
-            );
-            $payment                = new Payment();
-            $payment->payment_num   = $transactionPrefix . str_pad($newTransactionNumber, $prefixRow2->padding, '0', STR_PAD_LEFT);
-            $payment->type          = 'Deposit';
-            $payment->user_id       = Auth::id();
-            $payment->amount        = $totalAmount;
-            $payment->gateway       = 'none';
-            $payment->status        = 'Pending';
-            $payment->remarks       = null;
-            $payment->receipt       = null;
-            $payment->updated_at    = null;
-            $payment->created_by    = Auth::id();
-            $payment->save();
-
-            $order->update([
-                'payment_id' => $payment->id,
-                'created_at' => $order->created_at,
-                'updated_by' => Auth::id()
-            ]);
+                ]);
+            }
+            
 
             $wallet = new WalletHistory();
             $wallet->user_id =  Auth::id();

@@ -24,7 +24,8 @@ class Payment extends Model
         'bank_ic',
         'reason',
         'created_by',
-        'updated_by'
+        'updated_by',
+        'payment_method'
     ];
 
     public function order()

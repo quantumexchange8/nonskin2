@@ -28,7 +28,7 @@ class Order extends Model
     const complete = 4; // succesfully
     const cancel = 5; //cancel or pending refund
     const reject = 6; //reject
-    const pending_payment = 9; //pending payment
+    const unpaid = 9; //pending payment
 
     /**
      * Get all of the orderItems for the Order

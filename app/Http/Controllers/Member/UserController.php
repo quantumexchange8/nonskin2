@@ -15,6 +15,7 @@ use App\Models\PaymentSetting;
 use App\Models\DeliverySetting;
 use App\Models\CompanyInfo;
 use App\Models\Ranking;
+use App\Models\WalletHistory;
 use App\Http\Middleware\CheckCartItem;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -453,6 +454,35 @@ class UserController extends Controller
         }
 
         return redirect()->back();
+    }
+
+    public function redeemCommission(Request $request)
+    {
+        $user = Auth::user();
+
+        if($user->cash_wallet > 0 ) {
+            $cashwallet_amount = $user->cash_wallet;
+
+            $user->purchase_wallet += $cashwallet_amount;
+            $user->cash_wallet = 0;
+            $user->save();
+
+            $wallet = new WalletHistory();
+                $wallet->user_id =  $user->id;
+                $wallet->wallet_type = 'cash_wallet';
+                $wallet->type = 'redeem';
+                $wallet->cash_in = null;
+                $wallet->cash_out = $cashwallet_amount;
+                $wallet->balance = $user->cash_wallet;
+                $wallet->save();
+
+            Alert::success('Success', 'Redeemed the cash wallet');
+            return redirect()->back();  
+        } else {
+            Alert::error('Fail', 'you have no cash wallet balance');
+            return redirect()->back();
+        }
+        
     }
 
     public function ShippingAddress()

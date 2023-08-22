@@ -94,7 +94,19 @@
                             </div>
                             <p class="mt-2">Cash Wallet</p>
                         </div>
-                        <h2 class="mb-0 mt-5">RM {{ number_format($user->cash_wallet,2) }}</h2>
+                        <div>
+                            <h2 class="mb-0 mt-5">RM {{ number_format($user->cash_wallet,2) }}</h2>
+                        </div>
+                        <div class="d-flex justify-content-between gap-3 mt-4">
+                            <form action="{{ route('redeem-commission') }}" method="POST" id="redeem-form">
+                                @csrf
+                                <button class="btn btn-primary 2-100 btn-redeem" type="submit" id="redeem-button">
+                                    Redeem
+                                </button>
+                            </form>
+                            
+                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -392,4 +404,40 @@
             });
         });
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const redeemForm = document.getElementById('redeem-form');
+            const redeemButton = document.getElementById('redeem-button');
+            const cashWallet = {{ $user->cash_wallet }};
+            
+            redeemButton.addEventListener('click', function (event) {
+                event.preventDefault();
+                if (cashWallet > 0) {
+                    Swal.fire({
+                        title: 'Confirm Redemption',
+                        text: 'Are you sure you want to redeem your commission?',
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonText: 'Yes, Redeem',
+                        cancelButtonText: 'Cancel'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // If the user confirms, prevent the default form submission and submit the form programmatically
+                             // Prevent the default form submission
+                            redeemForm.submit();
+                        }
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'You do not have cash wallet balance.',
+                        icon: 'error',
+                        confirmButtonText: 'Ok'
+                    });
+                    event.preventDefault(); // Prevent the default form submission
+                }
+            });
+        });
+    </script>
+    
 @endsection

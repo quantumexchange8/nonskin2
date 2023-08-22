@@ -66,6 +66,7 @@ Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class
  */
 Route::group(['prefix' => 'members',  'middleware' => ['auth', 'role:user',]], function () {
     Route::get('/dashboard', [UserController::class, 'dashboard'])->name('user-dashboard');
+    Route::post('/redeem-cashwallet', [UserController::class, 'redeemCommission'])->name('redeem-commission');
     Route::post('pending-orders/{order}', [UserController::class, 'cancelorder'])->name('cancelorder');
     Route::get('/products_list', [ProductController::class, 'productlist'])->name('product-list');
     Route::get('/products_details/{product}', [ProductController::class, 'showdetails'])->name('showdetails');
@@ -95,6 +96,7 @@ Route::group(['prefix' => 'members',  'middleware' => ['auth', 'role:user',]], f
     Route::post('topup', [PaymentController::class, 'purchaseWalletTopupStore'])->name('member.topup.store');
     Route::get('withdraw', [PaymentController::class, 'purchaseWalletWithdraw'])->name('member.withdraw');
     Route::post('withdraw', [PaymentController::class, 'purchaseWalletWithdrawStore'])->name('member.withdraw.store');
+    Route::post('new-payslip/{row}', [PaymentController::class, 'newpayslip'])->name('member.new-payslip');
 });
 
 // Route::get('dependent-dropdown', [DropdownController::class, 'index']);
@@ -143,6 +145,8 @@ Route::group(['prefix' => 'admin',  'middleware' => ['auth', 'role:superadmin|ad
 
     // Wallets
     Route::get('/pending-deposit', [PaymentController::class, 'pendingDeposit'])->name('admin.pending-deposit');
+    Route::post('/pending-approve/{deposit}', [PaymentController::class, 'approveDeposit'])->name('admin.approve-deposit');
+    Route::post('/pending-reject/{deposit}', [PaymentController::class, 'rejectDeposit'])->name('admin.reject-deposit');
     Route::get('/pending-withdrawal', [PaymentController::class, 'pendingWithdrawal'])->name('admin.pending-withdrawal');
 
     Route::get('cash-wallet', [AdminController::class, 'cashWallet'])->name('admin.cash-wallet');

@@ -14,6 +14,9 @@ class CompanyInfo extends Model
         'address',
         'contact',
         'register_no',
-        'description'
+        'description',
+        'bank_name',
+        'bank_acc',
+        'bank_holder_name'
     ];
 }

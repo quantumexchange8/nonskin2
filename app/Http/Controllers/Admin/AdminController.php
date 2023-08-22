@@ -238,7 +238,7 @@ class AdminController extends Controller
         return view('admin.settings.company-info', compact('info'));
     }
     public function companyInfoStore(Request $request) {
-        $infoData = $request->only('id', 'name', 'contact', 'address', 'register_no', 'description');
+        $infoData = $request->only('id', 'name', 'contact', 'address', 'register_no', 'description', 'bank_name', 'bank_holder_name', 'bank_acc');
         // dd($infoData);
         $info = CompanyInfo::find($infoData['id']);
         $info = CompanyInfo::updateOrCreate(
@@ -249,8 +249,9 @@ class AdminController extends Controller
                 'address'    => $infoData['address'],
                 'register_no'=> $infoData['register_no'],
                 'description'=> $infoData['description'],
-                'created_at' => $info->created_at ?? now(),
-                'updated_at' => now()
+                'bank_name'=> $infoData['bank_name'],
+                'bank_holder_name'=> $infoData['bank_holder_name'],
+                'bank_acc'=> $infoData['bank_acc']
             ]);
         if ($info->wasRecentlyCreated){
             return redirect()->back()->with('created', 'Company info created successfully');
@@ -310,8 +311,8 @@ class AdminController extends Controller
 
             if ($user) {
                 // Update the user's personal_sales with the order's total_amount
-                $user->personal_sales += $order->total_amount;
-                $user->group_sales += $order->total_amount;
+                $user->personal_sales += $order->nett_price;
+                $user->group_sales += $order->nett_price;
                 $user->save();
             }
         }

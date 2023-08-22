@@ -20,6 +20,9 @@ class CreateCompanyInfosTable extends Migration
             $table->string('contact', 20)->nullable();
             $table->string('register_no', 20)->nullable();
             $table->longText('description')->nullable();
+            $table->string('bank_name')->nullable();
+            $table->string('bank_acc')->nullable();
+            $table->string('bank_holder_name')->nullable();
             $table->timestamps();
         });
     }
