@@ -26,11 +26,23 @@
                                 </div> --}}
                                 <div class="swiper product-thumbnail-slider rounded border overflow-hidden position-relative">
                                     <div class="swiper-wrapper">
-                                        <div class="swiper-slide"><img src="{{ asset('images/products/' . $product->image_1) }}" alt="{{ $product->name }}" class="img-fluid d-block" /></div>
-                                        <div class="swiper-slide"><img src="{{ asset('images/products/' . $product->image_2) }}" alt="{{ $product->name }}" class="img-fluid d-block" /></div>
-                                        <div class="swiper-slide"><img src="{{ asset('images/products/' . $product->image_3) }}" alt="{{ $product->name }}" class="img-fluid d-block" /></div>
-                                        <div class="swiper-slide"><img src="{{ asset('images/products/' . $product->image_4) }}" alt="{{ $product->name_en }}" class="img-fluid d-block" /></div>
-                                        <div class="swiper-slide"><img src="{{ asset('assets/images/product/img-5.png') }}" alt="{{ $product->name_en }}" class="img-fluid d-block" /></div>
+                                        @if (isset($product->image_1))
+                                        <img src="{{ asset('images/products/' . $product->image_1) }}" alt="Image 1 of Product" class="swiper-slide object-fit-contain" style="height: 650px;" />
+                                        @else
+                                        <img src="{{ asset('assets/images/nonskin/non-logo.jpg') }}" alt="Image 1 of Product" class="swiper-slide object-fit-contain" style="height: 650px;" />
+                                        @endif
+                                        @if (isset($product->image_2))
+                                        <img src="{{ asset('images/products/' . $product->image_2) }}" alt="Image 2 of Product" class="swiper-slide object-fit-contain" style="height: 650px;" />
+                                        @endif
+                                        @if (isset($product->image_3))
+                                        <img src="{{ asset('images/products/' . $product->image_3) }}" alt="Image 3 of Product" class="swiper-slide object-fit-contain" style="height: 650px;" />
+                                        @endif
+                                        @if (isset($product->image_4))
+                                        <img src="{{ asset('images/products/' . $product->image_4) }}" alt="Image 4 of Product" class="swiper-slide object-fit-contain" style="height: 650px;" />
+                                        @endif
+                                        @if (isset($product->image_5))
+                                        <img src="{{ asset('images/products/' . $product->image_5) }}" alt="Image 5 of Product" class="swiper-slide object-fit-contain" style="height: 650px;" />
+                                        @endif
                                     </div>
 
                                     <div class="d-none d-md-block">
@@ -38,11 +50,61 @@
                                         <div class="swiper-button-prev"></div>
                                     </div>
                                 </div>
+                                <div class="product-desc-color mt-3">
+                                    {{-- <h5 class="font-size-14">Colors :</h5> --}}
+                                    <ul class="list-inline text-center">
+                                        @if (isset($product->image_1))
+                                            <li class="list-inline-item">
+                                                <a href="#" class="thumbnail-selector" data-index="1" data-bs-toggle="tooltip" data-bs-placement="top" title="Image 1">
+                                                    <div class="product-color-item">
+                                                        <img src="{{ asset('images/products/' . $product->image_1) }}" alt="" class="avatar-md">
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        @endif
+                                        @if (isset($product->image_2))
+                                            <li class="list-inline-item">
+                                                <a href="#" class="thumbnail-selector" data-index="2" data-bs-toggle="tooltip" data-bs-placement="top" title="Image 2">
+                                                    <div class="product-color-item">
+                                                        <img src="{{ asset('images/products/' . $product->image_2) }}" alt="" class="avatar-md">
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        @endif
+                                        @if (isset($product->image_3))
+                                        <li class="list-inline-item">
+                                            <a href="#" class="thumbnail-selector" data-index="3" data-bs-toggle="tooltip" data-bs-placement="top" title="Image 3">
+                                                <div class="product-color-item">
+                                                    <img src="{{ asset('images/products/' . $product->image_3) }}" alt="" class="avatar-md">
+                                                </div>
+                                            </a>
+                                        </li>
+                                        @endif
+                                        @if (isset($product->image_4))
+                                            <li class="list-inline-item">
+                                                <a href="#" class="thumbnail-selector" data-index="4" data-bs-toggle="tooltip" data-bs-placement="top" title="Image 4">
+                                                    <div class="product-color-item">
+                                                        <img src="{{ asset('images/products/' . $product->image_4) }}" alt="" class="avatar-md">
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        @endif
+                                        @if (isset($product->image_5))
+                                            <li class="list-inline-item">
+                                                <a href="#" class="thumbnail-selector" data-index="5" data-bs-toggle="tooltip" data-bs-placement="top" title="Image 5">
+                                                    <div class="product-color-item">
+                                                        <img src="{{ asset('images/products/' . $product->image_5) }}" alt="" class="avatar-md">
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        @endif
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                         <div class="col-xl-8">
                             <div class="mt-4 mt-xl-3 ps-xl-4">
-                                <h4 class="font-size-20 mb-3">{{ $product->name_en }}</h4>
+                                <h4 class="font-size-20 mb-3">{{ $product->name }}</h4>
                                 @if ($product->discount != 0)
                                     <h5 class="mt-4 pt-2"><del class="text-muted me-2 font-size-14">RM{{ number_format($product->price,2,".",",") }}</del>RM{{ number_format($product->price - ($product->price * $product->discount/100),2,".",",") }} <span class="text-danger font-size-14 ms-2">- {{ $product->discount }} % Off</span></h5>
                                 @else
@@ -89,73 +151,6 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <div id="color-img" class="modal fade" tabindex="-1" aria-labelledby="color-imgLabel" aria-hidden="true" data-bs-scroll="true">
-        <div class="modal-dialog  modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="color-imgLabel">Product Images</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="product-desc-color">
-                        <ul class="list-inline mb-0">
-                            <li class="list-inline-item">
-                                <a href="#" class="active" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Gray">
-                                    <div class="product-color-item">
-                                        <img src="{{ URL::asset('assets/images/product/img-1.png') }}" alt="" class="avatar-md">
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Dark">
-                                    <div class="product-color-item">
-                                        <img src="{{ URL::asset('assets/images/product/img-2.png') }}" alt="" class="avatar-md">
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Purple">
-                                    <div class="product-color-item">
-                                        <img src="{{ URL::asset('assets/images/product/img-3.png') }}" alt="" class="avatar-md">
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Sky">
-                                    <div class="product-color-item">
-                                        <img src="{{ URL::asset('assets/images/product/img-4.png') }}" alt="" class="avatar-md">
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Green">
-                                    <div class="product-color-item">
-                                        <img src="{{ URL::asset('assets/images/product/img-5.png') }}" alt="" class="avatar-md">
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="White">
-                                    <div class="product-color-item">
-                                        <img src="{{ URL::asset('assets/images/product/img-6.png') }}" alt="" class="avatar-md">
-                                    </div>
-                                </a>
-                            </li>
-
-                        </ul>
-
-                    </div>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
     </div>
 
 @endsection
@@ -222,4 +217,44 @@
             });
         });
     </script>
+    <script>
+        $(document).ready(function() {
+            let gallerySwiper = new Swiper('.product-thumbnail-slider', {
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                loop: true,
+            });
+
+            $('.thumbnail-selector').on('click', function(e) {
+                e.preventDefault();
+                let clickedIndex = $(this).data('index');
+                gallerySwiper.slideTo(clickedIndex);
+
+                $('.thumbnail-selector').removeClass('active');
+                $(this).addClass('active');
+            });
+
+            $('.next-image').on('click', function() {
+                gallerySwiper.slideNext();
+                updateActiveThumbnail();
+            });
+
+            $('.prev-image').on('click', function() {
+                gallerySwiper.slidePrev();
+                updateActiveThumbnail();
+            });
+
+            $('.thumbnail-selector[data-index="0"]').addClass('active');
+
+            function updateActiveThumbnail() {
+                let activeSlideIndex = gallerySwiper.realIndex;
+                $('.thumbnail-selector').removeClass('active');
+                $('.thumbnail-selector[data-index="' + activeSlideIndex + '"]').addClass('active');
+            }
+        });
+    </script>
+
+
 @endsection

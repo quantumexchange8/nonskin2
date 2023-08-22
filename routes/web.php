@@ -125,7 +125,7 @@ Route::group(['prefix' => 'admin',  'middleware' => ['auth', 'role:superadmin|ad
     Route::get('create_product', [ProductController::class, 'create'])->name('create');
     Route::get('/product_detail/{product}', [ProductController::class, 'show'])->name('show');
     Route::get('/product_detail/{product}/edit', [ProductController::class, 'edit'])->name('edit');
-    Route::delete('/product_detail/remove-picture/{product}', [ProductController::class, 'removePicture'])->name('remove-picture');
+    Route::delete('/product_detail/remove-picture/{product}/{imageNumber}', [ProductController::class, 'removePicture'])->name('remove-picture');
     Route::post('/product_detail/update/{product}', [ProductController::class, 'update'])->name('update');
     Route::post('/product_detail/destroy/{product}', [ProductController::class, 'destroy'])->name('destroy');
 

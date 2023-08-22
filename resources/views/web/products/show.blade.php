@@ -1,3 +1,5 @@
+<!-- Not using this page -->
+
 @extends('layouts.master')
 @section('title') {{ $product->name_en }} @endsection
 
@@ -26,17 +28,79 @@
                                 </div> --}}
                                 <div class="swiper product-thumbnail-slider rounded border overflow-hidden position-relative">
                                     <div class="swiper-wrapper">
-                                        <div class="swiper-slide"><img src="{{ asset('images/products/' . $product->image_1) }}" alt="{{ $product->name_en }}" class="img-fluid d-block" /></div>
-                                        <div class="swiper-slide"><img src="{{ asset('images/products/' . $product->image_2) }}" alt="{{ $product->name_en }}" class="img-fluid d-block" /></div>
-                                        <div class="swiper-slide"><img src="{{ asset('images/products/' . $product->image_3) }}" alt="{{ $product->name_en }}" class="img-fluid d-block" /></div>
-                                        <div class="swiper-slide"><img src="{{ asset('images/products/' . $product->image_4) }}" alt="{{ $product->name_en }}" class="img-fluid d-block" /></div>
-                                        <div class="swiper-slide"><img src="{{ asset('assets/images/product/img-5.png') }}" alt="{{ $product->name_en }}" class="img-fluid d-block" /></div>
+                                        @if (isset($product->image_1))
+                                        <img src="{{ asset('images/products/' . $product->image_1) }}" alt="Image 1 of Product" class="swiper-slide object-fit-contain" style="height: 650px;" />
+                                        @else
+                                        <img src="{{ asset('assets/images/nonskin/non-logo.jpg') }}" alt="Image 1 of Product" class="swiper-slide object-fit-contain" style="height: 650px;" />
+                                        @endif
+                                        @if (isset($product->image_2))
+                                        <img src="{{ asset('images/products/' . $product->image_2) }}" alt="Image 2 of Product" class="swiper-slide object-fit-contain" style="height: 650px;" />
+                                        @endif
+                                        @if (isset($product->image_3))
+                                        <img src="{{ asset('images/products/' . $product->image_3) }}" alt="Image 3 of Product" class="swiper-slide object-fit-contain" style="height: 650px;" />
+                                        @endif
+                                        @if (isset($product->image_4))
+                                        <img src="{{ asset('images/products/' . $product->image_4) }}" alt="Image 4 of Product" class="swiper-slide object-fit-contain" style="height: 650px;" />
+                                        @endif
+                                        @if (isset($product->image_5))
+                                        <img src="{{ asset('images/products/' . $product->image_5) }}" alt="Image 5 of Product" class="swiper-slide object-fit-contain" style="height: 650px;" />
+                                        @endif
                                     </div>
 
                                     <div class="d-none d-md-block">
                                         <div class="swiper-button-next"></div>
                                         <div class="swiper-button-prev"></div>
                                     </div>
+                                </div>
+                                <div class="product-desc-color mt-3">
+                                    {{-- <h5 class="font-size-14">Colors :</h5> --}}
+                                    <ul class="list-inline text-center">
+                                        @if (isset($product->image_1))
+                                            <li class="list-inline-item">
+                                                <a href="#" class="thumbnail-selector" data-index="1" data-bs-toggle="tooltip" data-bs-placement="top" title="Image 1">
+                                                    <div class="product-color-item">
+                                                        <img src="{{ asset('images/products/' . $product->image_1) }}" alt="" class="avatar-md">
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        @endif
+                                        @if (isset($product->image_2))
+                                            <li class="list-inline-item">
+                                                <a href="#" class="thumbnail-selector" data-index="2" data-bs-toggle="tooltip" data-bs-placement="top" title="Image 2">
+                                                    <div class="product-color-item">
+                                                        <img src="{{ asset('images/products/' . $product->image_2) }}" alt="" class="avatar-md">
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        @endif
+                                        @if (isset($product->image_3))
+                                        <li class="list-inline-item">
+                                            <a href="#" class="thumbnail-selector" data-index="3" data-bs-toggle="tooltip" data-bs-placement="top" title="Image 3">
+                                                <div class="product-color-item">
+                                                    <img src="{{ asset('images/products/' . $product->image_3) }}" alt="" class="avatar-md">
+                                                </div>
+                                            </a>
+                                        </li>
+                                        @endif
+                                        @if (isset($product->image_4))
+                                            <li class="list-inline-item">
+                                                <a href="#" class="thumbnail-selector" data-index="4" data-bs-toggle="tooltip" data-bs-placement="top" title="Image 4">
+                                                    <div class="product-color-item">
+                                                        <img src="{{ asset('images/products/' . $product->image_4) }}" alt="" class="avatar-md">
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        @endif
+                                        @if (isset($product->image_5))
+                                            <li class="list-inline-item">
+                                                <a href="#" class="thumbnail-selector" data-index="5" data-bs-toggle="tooltip" data-bs-placement="top" title="Image 5">
+                                                    <div class="product-color-item">
+                                                        <img src="{{ asset('images/products/' . $product->image_5) }}" alt="" class="avatar-md">
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        @endif
+                                    </ul>
                                 </div>
 
                                 {{-- <div class="mt-4">
@@ -439,6 +503,44 @@
                     }
                 });
             });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            let gallerySwiper = new Swiper('.product-thumbnail-slider', {
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                loop: true,
+            });
+
+            $('.thumbnail-selector').on('click', function(e) {
+                e.preventDefault();
+                let clickedIndex = $(this).data('index');
+                gallerySwiper.slideTo(clickedIndex);
+
+                $('.thumbnail-selector').removeClass('active');
+                $(this).addClass('active');
+            });
+
+            $('.next-image').on('click', function() {
+                gallerySwiper.slideNext();
+                updateActiveThumbnail();
+            });
+
+            $('.prev-image').on('click', function() {
+                gallerySwiper.slidePrev();
+                updateActiveThumbnail();
+            });
+
+            $('.thumbnail-selector[data-index="0"]').addClass('active');
+
+            function updateActiveThumbnail() {
+                let activeSlideIndex = gallerySwiper.realIndex;
+                $('.thumbnail-selector').removeClass('active');
+                $('.thumbnail-selector[data-index="' + activeSlideIndex + '"]').addClass('active');
+            }
         });
     </script>
 @endsection

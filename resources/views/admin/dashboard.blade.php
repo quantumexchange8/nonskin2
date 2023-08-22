@@ -12,24 +12,26 @@
         <div class="col-xl-12">
             <div class="row">
                 <div class="col-lg-3 col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between mb-4">
-                                <div class="avatar">
-                                    <span class="avatar-title bg-soft-primary rounded">
-                                        <i class='mdi mdi-ticket text-primary font-size-24'></i>
-                                    </span>
+                    <a href="{{ route('orders.listing') }}">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between mb-4">
+                                    <div class="avatar">
+                                        <span class="avatar-title bg-soft-primary rounded">
+                                            <i class='mdi mdi-ticket text-primary font-size-24'></i>
+                                        </span>
+                                    </div>
+                                    <h4 class="mt-2">{{ $res->new_order ?? 0 }}</h4>
                                 </div>
-                                <h4 class="mt-2">{{ $res->new_order }}</h4>
-                            </div>
-                            <p class="mb-0"> New Order</p><!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></p>
-                            <div>
-                                {{-- <div class="py-3 my-1">
-                                    <div id="mini-1" data-colors='["#3980c0"]'></div>
-                                </div> --}}
+                                <p class="mb-0"> New Order</p><!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></p>
+                                <div>
+                                    {{-- <div class="py-3 my-1">
+                                        <div id="mini-1" data-colors='["#3980c0"]'></div>
+                                    </div> --}}
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <div class="card">
@@ -42,7 +44,7 @@
                                 </div>
                                 <p class="mt-2">Packing</p>
                             </div>
-                            <h4 class="mb-0">{{ $res->packing }} <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
+                            <h4 class="mb-0">{{ $res->packing ?? 0 }} <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
                             <div>
                                 {{-- <div class="py-3 my-1">
                                     <div id="mini-1" data-colors='["#3980c0"]'></div>
@@ -62,7 +64,7 @@
                                 </div>
                                 <p class="mt-2">Delivering</p>
                             </div>
-                            <h4 class="mb-0">{{ $res->delivering }} <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
+                            <h4 class="mb-0">{{ $res->delivering ?? 0 }} <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
                             <div>
                                 {{-- <div class="py-3 my-1">
                                     <div id="mini-1" data-colors='["#3980c0"]'></div>
@@ -82,7 +84,7 @@
                                 </div>
                                 <p class="mt-2">Completed</p>
                             </div>
-                            <h4 class="mb-0">{{ $res->completed }} <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
+                            <h4 class="mb-0">{{ $res->completed ?? 0 }} <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
                             <div>
                                 {{-- <div class="py-3 my-1">
                                     <div id="mini-1" data-colors='["#3980c0"]'></div>
@@ -102,7 +104,7 @@
                                 </div>
                                 <p class="mt-2">Cancelled</p>
                             </div>
-                            <h4 class="mb-0">{{ $res->cancelled }} <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
+                            <h4 class="mb-0">{{ $res->cancelled ?? 0 }} <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
                             <div>
                                 {{-- <div class="py-3 my-1">
                                     <div id="mini-1" data-colors='["#3980c0"]'></div>
