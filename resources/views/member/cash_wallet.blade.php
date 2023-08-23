@@ -36,26 +36,26 @@
                                 <th>#</th>
                                 <th>Wallet Type</th>
                                 <th>Type</th>
-                                <th>Remarks</th>
                                 <th>Cash In</th>
                                 <th>Cash Out</th>
                                 <th>Balance</th>
+                                <th>Remarks</th>
                                 <th>Date</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- @foreach ($orders as $order) --}}
+                            @foreach ($cashWallets as $cashWallet)
                                 <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>RM </td>
-                                    <td>RM </td>
-                                    <td>RM </td>
-                                    <td></td>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $cashWallet->wallet_type }}</td>
+                                    <td>{{ $cashWallet->type }}</td>
+                                    <td>{{ $cashWallet->cash_in ?? '0' }}</td>
+                                    <td>{{ $cashWallet->cash_out ?? '0' }}</td>
+                                    <td>{{ $cashWallet->balance }}</td>
+                                    <td>{{ $cashWallet->remarks }}</td>
+                                    <td>{{ $cashWallet->updated_at }}</td>
                                 </tr>
-                            {{-- @endforeach --}}
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

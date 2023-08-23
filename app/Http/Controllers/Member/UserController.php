@@ -80,9 +80,29 @@ class UserController extends Controller
         ->latest()
         ->get();
 
+        $user = Auth::user();
+        if ($user->rank_id == 2) {
+            $member_discount_amount = 10;
+        } elseif ($user->rank_id == 3) {
+            $member_discount_amount = 35;
+        } elseif ($user->rank_id == 4) {
+            $member_discount_amount = 45;
+        } elseif ($user->rank_id == 5) {
+            $member_discount_amount = 50;
+        } else {
+            $member_discount_amount = 0; // Handle other ranks if needed
+        }
         $subtotal = 0;
 
-        return view('member.cart', compact('cartItems', 'subtotal', 'cart'));
+        $disAmt = $cartItems->sum('discount_price');
+        
+        return view('member.cart', [
+            'cartItems' => $cartItems,
+            'subtotal' => $subtotal,
+            'cart' => $cart,
+            'discountAmt' => $member_discount_amount,
+            'disAmt' => $disAmt
+        ]);
     }
 
     public function checkout()
@@ -92,6 +112,7 @@ class UserController extends Controller
         $delivery_methods = DeliverySetting::get();
         $default_address = Address::where('id', 1)->first();
         $shipping_address = Address::where('user_id', auth()->user()->id)->get();
+        $companyInfo = CompanyInfo::first();
 
         $user = User::with('cart.items', 'address.shippingCharge')
             ->where('id', Auth::id())
@@ -185,6 +206,7 @@ class UserController extends Controller
                 'payment_selfpick' => $payment_selfpick,
                 'shipping_address' => $shipping_address,
                 'member_discount_amount' => $member_discount_amount,
+                'companyInfo' => $companyInfo
             ]);
         }
 
@@ -221,7 +243,14 @@ class UserController extends Controller
         return view('member.topup_history');
     }
     public function cashWallet() {
-        return view('member.cash_wallet');
+
+        $user = Auth::user();
+
+        $cashWallets = WalletHistory::where('wallet_type', 'Cash Wallet')->where('user_id', $user->id)->get();
+        // dd($cashWallets);
+        return view('member.cash_wallet', [
+            'cashWallets' => $cashWallets
+        ]);
     }
     public function productWallet() {
         return view('member.product_wallet');
@@ -469,8 +498,8 @@ class UserController extends Controller
 
             $wallet = new WalletHistory();
                 $wallet->user_id =  $user->id;
-                $wallet->wallet_type = 'cash_wallet';
-                $wallet->type = 'redeem';
+                $wallet->wallet_type = 'Cash Wallet';
+                $wallet->type = 'Redeem';
                 $wallet->cash_in = null;
                 $wallet->cash_out = $cashwallet_amount;
                 $wallet->balance = $user->cash_wallet;

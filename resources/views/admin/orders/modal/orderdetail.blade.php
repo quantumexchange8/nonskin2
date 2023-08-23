@@ -26,6 +26,31 @@
                     <p class="mb-2">Deliver Method: <span class="text-primary" >{{$order->delivery_method}}</span></p>
                     <p class="mb-2">Deliver Address: <span class="text-primary" >{{$order->delivery_address}}</span></p>
                     @endif
+                    @if($order->delivery_method == 'Self-Pickup')
+                    <div class="mb-2" id="status-section-{{ $order->id }}">
+                        <label class="mb-2">Status:</label>
+                        @if ($order->status == 1)
+                            <span class="text-primary" >Processing</span>
+                        @elseif ($order->status == 2)
+                            <span class="text-primary">Packing</span>
+                        @elseif ($order->status == 4)
+                            <span class="text-primary">Complete</span>
+                        @elseif ($order->status == 5)
+                            <span class="text-primary">Cancel</span>
+                        @elseif ($order->status == 6)
+                            <span class="text-primary">Rejected</span>
+                        @elseif ($order->status == 6)
+                            <span class="text-primary">Unpaid</span>
+                        @endif
+                        <select class="form-control d-none" name="status">
+                            <option value="1" {{ $order->status == 1 ? 'selected' : '' }}>Processing</option>
+                            <option value="2" {{ $order->status == 2 ? 'selected' : '' }}>Packing</option>
+                            <option value="4" {{ $order->status == 4 ? 'selected' : '' }}>Complete</option>
+                            <option value="5" {{ $order->status == 5 ? 'selected' : '' }}>Cancel</option>
+                            <option value="9" {{ $order->status == 5 ? 'selected' : '' }}>Unpaid</option>
+                        </select>
+                    </div>
+                    @else
                     <div class="mb-2" id="status-section-{{ $order->id }}">
                         <label class="mb-2">Status:</label>
                         @if ($order->status == 1)
@@ -49,6 +74,8 @@
                             <option value="5" {{ $order->status == 5 ? 'selected' : '' }}>Cancel</option>
                         </select>
                     </div>
+                    @endif
+                    
                     <div class="mb-2" id="courier-section">
                         <label class="mb-2">Courier:</label>
                         <span class="text-primary" >{{$order->courier}}</span>

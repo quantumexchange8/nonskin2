@@ -36,7 +36,7 @@
                         <td>
                             RM {{ number_format($v->price * $v->quantity,2,'.',',') }}
                             <p class="text-muted mb-0">
-                               - RM {{ $discount_percent_amount }}
+                               - RM {{ $v->discount_price * $v->quantity }}
                             </p>
                         </td>
                     @endif
@@ -58,6 +58,7 @@
                         <h5 class="font-size-14 m-0">Total :</h5>
                     </td>
                     <td> RM {{ number_format(($totalAmount) ,2,'.',',') }}</td>
+                    <input type="hidden" id="totalAmountValue" value="{{ $totalAmount }}">
                 </tr>
                 <tr>
                     <td colspan="2">
@@ -65,16 +66,17 @@
                     </td>
                     <td>- RM {{ number_format($total_discounted,2,'.',',') }}</td>
                 </tr>
-                @if($user->product_wallet > 0)
+                
                 <tr>
                     <td colspan="2">
                         <h5 class="font-size-14 m-0">Product Wallet Applied:</h5>
+                        <small>balance: RM <b>{{ $user->product_wallet }}</b></small>
                     </td>
                     <td>
                         <input type="number" class="form-control error-input" min="0" max="{{$user->product_wallet}}" id="wallet-input" name="product_wallet">
                     </td>
                 </tr>
-                @endif
+                
                 
                 <tr>
                     <td colspan="2">
@@ -128,7 +130,7 @@
                     <td>
                         RM {{ number_format($v->price * $v->quantity,2,'.',',') }}
                         <p class="text-muted mb-0">
-                           - RM {{ $discount_percent_amount }}
+                           - RM {{ $v->discount_price * $v->quantity }}
                         </p>
                     </td>
                     @endif
@@ -139,15 +141,14 @@
                     <td colspan="2">
                         <h5 class="font-size-14 m-0">Total :</h5>
                     </td>
-                    <td>RM {{ number_format($subtotal,2,'.',',') }}</td>
+                    <td>RM {{ number_format($totalAmount,2,'.',',') }}</td>
                 </tr>
                 <tr>
                     <td colspan="2">
                         <h5 class="font-size-14 m-0">Total Discount :</h5>
                     </td>
-                    <td>- RM {{ number_format($totalAmount,2,'.',',') }}</td>
+                    <td>- RM {{ number_format($total_discounted,2,'.',',') }}</td>
                 </tr>
-                @if($user->product_wallet > 0)
                 <tr>
                     <td colspan="2">
                         <h5 class="font-size-14 m-0">Product Wallet Applied:</h5>
@@ -156,7 +157,6 @@
                         <input type="number" class="form-control error-input" min="0" max="{{$user->product_wallet}}" id="wallet-input2" name="product_wallet">
                     </td>
                 </tr>
-                @endif
                 <tr>
                     <td colspan="2">
                         <h5 class="font-size-14 m-0">Total Shipping Charge :</h5>

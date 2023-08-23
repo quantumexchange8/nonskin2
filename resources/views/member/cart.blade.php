@@ -120,7 +120,9 @@
                                         <div class="col-md-4">
                                             <div class="mt-3">
                                                 <p class="text-muted mb-2">Total</p>
-                                                <h5 class="font-size-16 total" data-product-id="{{ $row->product->id }}">RM {{ number_format(($row->product->price * (100-$row->product->discount)/100) * $row->quantity,2,'.') }}</h5>
+                                                <del><h5 class="font-size-16 total" data-product-id="{{ $row->product->id }}">RM {{ number_format(($row->product->price * (100-$row->product->discount)/100) * $row->quantity,2,'.') }}</h5></del> 
+                                                <h6>{{ $discountAmt }}% Off</h6>
+                                                <h4>RM {{ number_format($row->price - $row->discount_price ,2,'.') }}</h4>
                                                 @if ($row->product->discount > 0)
                                                 <del class="text-muted product-discount" data-product-id="{{ $row->product->id }}">RM {{ number_format($row->product->price * $row->quantity,2,'.',',') }}</del>
                                                 @endif
@@ -152,7 +154,7 @@
                                             </tr>
                                             <tr>
                                                 <td>Total Discount : </td>
-                                                <td class="text-end total-discount">- RM 0</td>
+                                                <td class="text-end">- RM {{ $disAmt }}</td>
                                             </tr>
                                             <tr class="bg-light">
                                                 <th>Total Merchandise:</th>

@@ -235,7 +235,9 @@ class AdminController extends Controller
 
     public function companyInfo() {
         $info = CompanyInfo::get()->first();
-        return view('admin.settings.company-info', compact('info'));
+        $banks = BankSetting::select('id', 'name')->orderBy('name')->get();
+
+        return view('admin.settings.company-info', compact('info', 'banks'));
     }
     public function companyInfoStore(Request $request) {
         $infoData = $request->only('id', 'name', 'contact', 'address', 'register_no', 'description', 'bank_name', 'bank_holder_name', 'bank_acc');

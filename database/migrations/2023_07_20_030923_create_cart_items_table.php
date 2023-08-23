@@ -21,6 +21,7 @@ class CreateCartItemsTable extends Migration
             $table->double('price',7,2)->comment('Price of the product');
             $table->double('nett_price')->default(0);
             $table->double('discount_price')->nullable();
+            $table->double('total_amount')->nullable();
             $table->timestamps();
             $table->integer('created_by')->unsigned()->nullable()->comment('Refers to user id');
             $table->integer('updated_by')->unsigned()->nullable()->comment('Refers to user id');

@@ -189,7 +189,7 @@
                             <span class="menu-item">@lang('translation.Product Wallet')</span>
                         </a>
                     </li>
-                    <li>
+                    {{-- <li>
                         <a href="javascript: void(0);" class="has-arrow">
                             <i class="mdi mdi-gift icon nav-icon"></i>
                             <span class="menu-item" data-key="t-multi-level">@lang('translation.my-rewards')</span>
@@ -197,7 +197,7 @@
                         <ul class="sub-menu" aria-expanded="true">
                             <li><a href="{{ route('member.bonus') }}">@lang('translation.reward-voucher')</a></li>
                         </ul>
-                    </li>
+                    </li> --}}
                 @endhasanyrole
 
                 <li>

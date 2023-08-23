@@ -20,8 +20,8 @@ class CreateOrdersTable extends Migration
             $table->string('order_num')->unique();
             $table->double('price', 9, 2)->default(0);
             $table->double('discount_amt', 9, 2)->default(0);
-            $table->double('nett_price', 9, 2)->default(0);//subtotal + delivery_fee
             $table->double('delivery_fee',4,2);
+            $table->double('nett_price', 9, 2)->default(0);//subtotal + delivery_fee
             $table->double('product_wallet', 9, 2)->default(0);//product wallet
             $table->double('total_amount',9,2)->unsigned(); //price - discount
             $table->string('receiver');

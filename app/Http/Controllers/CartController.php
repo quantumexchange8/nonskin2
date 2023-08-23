@@ -205,14 +205,40 @@ class CartController extends Controller
             $cartItem->updated_by = Auth::id();
             $cartItem->save();
         } else {
+
+            $user = Auth::user();
+            if ($user->rank_id == 2) {
+                $member_discount_amount = 10;
+            } elseif ($user->rank_id == 3) {
+                $member_discount_amount = 35;
+            } elseif ($user->rank_id == 4) {
+                $member_discount_amount = 45;
+            } elseif ($user->rank_id == 5) {
+                $member_discount_amount = 50;
+            } else {
+                $member_discount_amount = 0; // Handle other ranks if needed
+            }
+
+            // calculate product total amount before discount
+            $total_price = $productPrice * $quantity;
+            // calculate after discount amount 
+            $discount_percent_amount = $member_discount_amount * ($productPrice / 100);
+            $total_discount_amount = $discount_percent_amount * $quantity;
+
+
+            $subtotal = $total_price - $total_discount_amount; 
+
             // Create a new cart item for the product with the input quantity
             $userCartItem = CartItem::create([
                 'cart_id' => $cart->id,
                 'product_id' => $productId,
                 'price' => $productPrice,
                 'quantity' => $quantity,
+                'nett_price' => $productPrice,
+                'discount_price' => $total_discount_amount,
+                'total_amount' => $subtotal,
                 'created_by' => Auth::id(),
-                'updated_by' => Auth::id(),
+                'updated_by' => Auth::id()
             ]);
         }
 

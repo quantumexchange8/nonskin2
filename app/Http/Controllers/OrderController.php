@@ -175,12 +175,23 @@ class OrderController extends Controller
 
             $wallet = new WalletHistory();
             $wallet->user_id =  Auth::id();
-            $wallet->wallet_type = 'purchase_wallet';
-            $wallet->type = 'purchase';
+            $wallet->wallet_type = 'Purchase Wallet';
+            $wallet->type = 'Purchase';
             $wallet->cash_in = null;
             $wallet->cash_out = $totalAmount;
             $wallet->balance = Auth::user()->purchase_wallet;
             $wallet->save();
+
+            if($ProductWallet > 0 ) {
+                $wallet = new WalletHistory();
+                $wallet->user_id =  Auth::id();
+                $wallet->wallet_type = 'Product Wallet';
+                $wallet->type = 'Purchase';
+                $wallet->cash_in = null;
+                $wallet->cash_out = $ProductWallet;
+                $wallet->balance = Auth::user()->product_wallet;
+                $wallet->save();
+            }
 
             foreach(auth()->user()->cart->items as $item) {
                 $orderItem                  = new OrderItem();

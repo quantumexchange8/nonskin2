@@ -16,7 +16,10 @@ class CartItem extends Model
         'quantity',
         'price',
         'created_by',
-        'updated_by'
+        'updated_by',
+        'nett_price',
+        'discount_price',
+        'total_amount'
     ];
 
     public function cart()

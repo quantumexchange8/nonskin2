@@ -51,12 +51,26 @@
                 
             </div>
         </div>
-
+        <br>
         <div id="payment-proof-section" class="card" style="display: none;">
             <div class="form-group">
-                <label for="payment_proof">Payment Proof Image:</label>
+                <h5>Payment Proof Image:</h5>
                 <input type="file" class="form-control" id="payment_proof" name="payment_proof">
             </div>
+            <br>
+            <div class="row">
+                <div class="card">
+                    <div class="col-sm-6">
+                        <div class="text-meted">
+                            <h5 class="font-size-16 mb-3">Company Bank Details:</h5>
+                            <h5 class="font-size-15 mb-2">{{$companyInfo->bank_holder_name}}</h5>
+                            <p class="mb-1">{{$companyInfo->bank_name}}</p>
+                            <p class="mb-1">{{$companyInfo->bank_acc}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+        
     </div>
 </div>

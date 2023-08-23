@@ -50,10 +50,23 @@
                             </div>
                         </div>
 
+                        <div class="mt-3 row">
+                            <h2 class="col-lg-2 col-md-3 col-form-label fw-bold font-size-20 py-0">Bank Name</h2>
+                            <div class="col-lg-8 col-md-9">
+                                <label class="col-lg-2 col-md-3 col-form-label">
+                                </label>
+                            </div>
+                        </div>
+                        <hr>
+
                         <div class="mb-3 row col-md-6">
-                            <label for="bank_name" class="col-md-2 col-form-label">Bank Name</label>
-                            <div class="col-md-10">
-                                <input class="form-control @error('bank_name') is-invalid @enderror" name="bank_name" id="bank_name" placeholder="Enter bank name" rows="4" value="{{ $info->bank_name }}"></input>
+                            <label for="bank_name" class="col-lg-2 col-md-3 col-form-label">Bank Name</label>
+                            <div class="col-lg-8 col-md-9">
+                                <select class="form-select" name="bank_name" required>
+                                    @foreach ($banks as $bank)
+                                        <option class="form-select" value="{{ $bank->name }}">{{ $bank->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="mb-3 row col-md-6">

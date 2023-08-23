@@ -84,13 +84,6 @@
                     <div class="card">
                         @include('member.partials._checkout_payment_info_self')
                     </div>
-
-                    <div id="payment-proof-section2" class="card" style="display: none;">
-                        <div class="form-group">
-                            <label for="payment_proof2">Payment Proof Image:</label>
-                            <input type="file" class="form-control" id="payment_proof2" name="payment_proof2">
-                        </div>
-                    </div> 
                 </div>
 
             </div>
@@ -260,6 +253,7 @@
 
                             const walletInput = document.getElementById('wallet-input');
                             const walletAmount = parseFloat(walletInput.value) || 0;
+                            const totalAmountPrice = parseFloat(document.getElementById('totalAmountValue').value);
 
                             let formData = new FormData();
 
@@ -274,8 +268,8 @@
                             formData.append('delivery_fee', shippingCharge ); // Append delivery fee
                             formData.append('receiver', name);
                             formData.append('contact', contact);
-                            formData.append('price', '{{ $product_price }}');
-                            formData.append('discount_amt', '{{ $discount_percent_amount }}');
+                            formData.append('price', totalAmountPrice);
+                            formData.append('discount_amt', '{{ $total_discounted }}');
                             formData.append('product_wallet', walletAmount);
                             
                             // Get the payment proof file input
@@ -347,6 +341,7 @@
 
                             const totalPrice = Number({{ $subtotal }});
                             const proWallet = Number({{ $user->product_wallet }});
+                            const totalAmountPrice = parseFloat(document.getElementById('totalAmountValue').value);
 
                             $.ajax({
                                 url: '{{ route("get-user-purchase-wallet-balance") }}',
@@ -370,10 +365,10 @@
                                                 value: '{{ $user->email }}'
                                             }, {
                                                 name: 'price',
-                                                value: '{{ $product_price }}'
+                                                value: totalAmountPrice
                                             }, {
                                                 name: 'discount_amt',
-                                                value: '{{ $discount_percent_amount }}'
+                                                value: '{{ $total_discounted }}'
                                             }, {
                                                 name: 'total_amount',
                                                 value: formattedTotal
@@ -467,6 +462,7 @@
 
                             const walletInput = document.getElementById('wallet-input');
                             const walletAmount = parseFloat(walletInput.value) || 0;
+                            const totalAmountPrice = parseFloat(document.getElementById('totalAmountValue').value);
 
                             let formData = $('#checkout-form').serializeArray();
 
@@ -484,7 +480,13 @@
                                 value: formattedTotal
                             }, {
                                 name: 'price',
-                                value: '{{ $product_price }}'
+                                value: totalAmountPrice
+                            }, {
+                                name: 'discount_amt',
+                                value: '{{ $total_discounted }}'
+                            }, {
+                                name: 'product_wallet',
+                                value: walletAmount
                             });
 
                             formData.push({
@@ -556,6 +558,7 @@
 
                             const walletInput = document.getElementById('wallet-input');
                             const walletAmount = parseFloat(walletInput.value) || 0;
+                            const totalAmountPrice = parseFloat(document.getElementById('totalAmountValue').value);
 
                             let formData = new FormData();
 
@@ -570,8 +573,8 @@
                             formData.append('delivery_fee', shippingCharge ); // Append delivery fee
                             formData.append('receiver', name);
                             formData.append('contact', contact);
-                            formData.append('price', '{{ $product_price }}');
-                            formData.append('discount_amt', '{{ $discount_percent_amount }}');
+                            formData.append('price', totalAmountPrice);
+                            formData.append('discount_amt', '{{ $total_discounted }}');
                             formData.append('product_wallet', walletAmount);
 
                             // Get the payment proof file input
@@ -639,7 +642,7 @@
 
                             const walletInput = document.getElementById('wallet-input');
                             const walletAmount = parseFloat(walletInput.value) || 0;
-
+                            const totalAmountPrice = parseFloat(document.getElementById('totalAmountValue').value);
                             const totalPrice = Number({{ $subtotal }});
 
                             $.ajax({
@@ -664,10 +667,10 @@
                                                 value: '{{ $user->email }}'
                                             }, {
                                                 name: 'price',
-                                                value: '{{ $product_price }}'
+                                                value: totalAmountPrice
                                             }, {
                                                 name: 'discount_amt',
-                                                value: '{{ $discount_percent_amount }}'
+                                                value: '{{ $total_discounted }}'
                                             }, {
                                                 name: 'total_amount',
                                                 value: formattedTotal
@@ -760,6 +763,7 @@
 
                             const walletInput = document.getElementById('wallet-input');
                             const walletAmount = parseFloat(walletInput.value) || 0;
+                            const totalAmountPrice = parseFloat(document.getElementById('totalAmountValue').value);
 
                             let formData = $('#checkout-form').serializeArray();
                             
@@ -777,7 +781,13 @@
                                 value: formattedTotal
                             }, {
                                 name: 'price',
-                                value: '{{ $product_price }}'
+                                value: totalAmountPrice
+                            }, {
+                                name: 'product_wallet',
+                                value: walletAmount
+                            }, {
+                                name: 'discount_amt',
+                                value: '{{ $total_discounted }}'
                             }, {
                                 name: 'product_wallet',
                                 value: walletAmount
@@ -896,8 +906,8 @@
                 totalAmount = 0;
                 Swal.fire({
                     icon: 'error',
-                    title: 'Insufficient Purchase Wallet Balance',
-                    text: 'Your purchase wallet balance is not sufficient to complete this transaction.',
+                    title: 'Product Wallet Amount exceeded',
+                    text: 'Your product wallet balance has exceeded the limit.',
                 });
                 walletInput.classList.add('error-input');
                 walletInput.classList.add('disable');
