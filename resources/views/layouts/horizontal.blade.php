@@ -5,19 +5,19 @@
             <div class="navbar-brand-box">
                 <a href="{{ url('/') }}" class="logo logo-dark">
                     <span class="logo-sm">
-                        <img src="{{ URL::asset('assets/images/logo-sm.svg') }}" alt="" height="22">
+                        <img src="{{ URL::asset('assets/images/nonskin/non-logo.jpg') }}" alt="" height="22">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{ URL::asset('assets/images/logo-sm.svg') }}" alt="" height="22"> <span class="logo-txt">@lang('translation.Nonskin')</span>
+                        <img src="{{ URL::asset('assets/images/nonskin/non-logo.jpg') }}" alt="" height="22"> <span class="logo-txt">@lang('translation.Nonskin')</span>
                     </span>
                 </a>
 
                 <a href="{{ url('/') }}" class="logo logo-light">
                     <span class="logo-sm">
-                        <img src="{{ URL::asset('assets/images/logo-sm.svg') }}" alt="" height="22">
+                        <img src="{{ URL::asset('assets/images/nonskin/non-logo.jpg') }}" alt="" height="22">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{ URL::asset('assets/images/logo-sm.svg') }}" alt="" height="22"> <span class="logo-txt">@lang('translation.Nonskin')</span>
+                        <img src="{{ URL::asset('assets/images/nonskin/non-logo.jpg') }}" alt="" height="22"> <span class="logo-txt">@lang('translation.Nonskin')</span>
                     </span>
                 </a>
             </div>

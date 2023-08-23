@@ -55,7 +55,7 @@
                                     <ul class="list-inline text-center">
                                         @if (isset($product->image_1))
                                             <li class="list-inline-item">
-                                                <a href="#" class="thumbnail-selector" data-index="1" data-bs-toggle="tooltip" data-bs-placement="top" title="Image 1">
+                                                <a href="#" class="thumbnail-selector" data-index="1">
                                                     <div class="product-color-item">
                                                         <img src="{{ asset('images/products/' . $product->image_1) }}" alt="" class="avatar-md">
                                                     </div>
@@ -64,7 +64,7 @@
                                         @endif
                                         @if (isset($product->image_2))
                                             <li class="list-inline-item">
-                                                <a href="#" class="thumbnail-selector" data-index="2" data-bs-toggle="tooltip" data-bs-placement="top" title="Image 2">
+                                                <a href="#" class="thumbnail-selector" data-index="2">
                                                     <div class="product-color-item">
                                                         <img src="{{ asset('images/products/' . $product->image_2) }}" alt="" class="avatar-md">
                                                     </div>
@@ -73,7 +73,7 @@
                                         @endif
                                         @if (isset($product->image_3))
                                         <li class="list-inline-item">
-                                            <a href="#" class="thumbnail-selector" data-index="3" data-bs-toggle="tooltip" data-bs-placement="top" title="Image 3">
+                                            <a href="#" class="thumbnail-selector" data-index="3">
                                                 <div class="product-color-item">
                                                     <img src="{{ asset('images/products/' . $product->image_3) }}" alt="" class="avatar-md">
                                                 </div>
@@ -82,7 +82,7 @@
                                         @endif
                                         @if (isset($product->image_4))
                                             <li class="list-inline-item">
-                                                <a href="#" class="thumbnail-selector" data-index="4" data-bs-toggle="tooltip" data-bs-placement="top" title="Image 4">
+                                                <a href="#" class="thumbnail-selector" data-index="4">
                                                     <div class="product-color-item">
                                                         <img src="{{ asset('images/products/' . $product->image_4) }}" alt="" class="avatar-md">
                                                     </div>
@@ -91,7 +91,7 @@
                                         @endif
                                         @if (isset($product->image_5))
                                             <li class="list-inline-item">
-                                                <a href="#" class="thumbnail-selector" data-index="5" data-bs-toggle="tooltip" data-bs-placement="top" title="Image 5">
+                                                <a href="#" class="thumbnail-selector" data-index="5">
                                                     <div class="product-color-item">
                                                         <img src="{{ asset('images/products/' . $product->image_5) }}" alt="" class="avatar-md">
                                                     </div>

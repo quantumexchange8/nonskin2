@@ -21,7 +21,7 @@
                 <p class="mb-4">Tracking Number: <span class="text-primary" id="receiver-name">{{$order->tracking_no}}</span></p>
                 @if($order->payment_method == 'Manual Transfer')
                     <p class="mb-4">
-                        Payment Slip: 
+                        Payment Slip:
                         <span class="text-primary" id="receiver-name">
                             <button class="btn btn-success" data-toggle="modal" data-target="#paymentSlipModal">View</button>
                         </span>
@@ -137,7 +137,7 @@
                     </table>
                     @if($order->payment_method == 'Manual Transfer')
                         <div style="display: flex;justify-content: center;">
-                            <img src="{{ asset('images/payment-proof/' . $order->payment_proof) }}" alt="" >
+                            <img src="{{ asset('images/payment-proof/' . $order->payment_proof) }}" class="object-fit-cover" style="height: 450px" alt="Order Payment Proof" >
                         </div>
                     @endif
                 </div>

@@ -123,13 +123,13 @@
                 </div>
             <form action="{{ route('uploadpayment', $order->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <div>
-                    <label for="payment_proof">Payment Slip</label>
+                <label for="payment_proof">Payment Slip</label>
+                <div class="input-group">
                     <input type="file" class="form-control" id="payment_proof" name="payment_proof">
+                    <button type="submit" class="btn btn-success">Upload</button>
                 </div>
-                <button type="submit" class="btn btn-success">Upload</button>
             </form>
-                
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
