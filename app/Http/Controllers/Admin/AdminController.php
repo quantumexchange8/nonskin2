@@ -421,5 +421,24 @@ class AdminController extends Controller
                     ->exists();
         return response()->json(['unique' => $isUnique]);
     }
+    public function networktree(Request $request)
+    {
+        
 
+        $code = $request->code;
+        $user = User::all();
+        
+        if($code) {
+            $admins = User::where('referrer_id', '=', $code)->get();
+            
+        } else {
+            $admins = User::where('upline_id',  3)->where('role', '!=', 'superadmin')->get();
+        }
+
+       
+
+        return view('admin.network.network-tree', [
+            'admins' => $admins
+        ]);
+    }
 }

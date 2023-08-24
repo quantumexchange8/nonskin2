@@ -213,11 +213,11 @@
                     <ul class="sub-menu" aria-expanded="true">
                         @hasanyrole('user')
                             {{-- <li><a href="{{ route('member.listing') }}">@lang('translation.member-listing')</a></li> --}}
-                            <li><a href="{{ route('member.network-tree') }}">@lang('translation.Network-tree')</a></li>
+                            <li><a href="{{ route('networktree') }}">@lang('translation.Network-tree')</a></li>
                         @endhasanyrole
                         @hasanyrole('superadmin|admin')
                             <li><a href="{{ route('member-list') }}">@lang('translation.Member') @lang('translation.Listing')</a></li>
-                            <li><a href="{{ route('admin.network-tree') }}">@lang('translation.Network-tree')</a></li>
+                            <li><a href="{{ route('admin-networktree') }}">@lang('translation.Network-tree')</a></li>
                         @endhasanyrole
                     </ul>
                 </li>

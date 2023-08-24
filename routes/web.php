@@ -97,6 +97,8 @@ Route::group(['prefix' => 'members',  'middleware' => ['auth', 'role:user',]], f
     Route::get('withdraw', [PaymentController::class, 'purchaseWalletWithdraw'])->name('member.withdraw');
     Route::post('withdraw', [PaymentController::class, 'purchaseWalletWithdrawStore'])->name('member.withdraw.store');
     Route::post('new-payslip/{row}', [PaymentController::class, 'newpayslip'])->name('member.new-payslip');
+
+    Route::get('network_tree', [UserController::class, 'networktree'])->name('networktree');
 });
 
 // Route::get('dependent-dropdown', [DropdownController::class, 'index']);
@@ -163,6 +165,8 @@ Route::group(['prefix' => 'admin',  'middleware' => ['auth', 'role:superadmin|ad
     Route::get('/change-password', [AdminController::class, 'changePassword'])->name('admin.changePassword');
     Route::post('change-password/{user}', [HomeController::class, 'updatePassword'])->name('admin.updatePassword');
     Route::post('/check-current-password', [UserController::class, 'checkCurrentPass'])->name('admin.checkCurrentPass');
+
+    Route::get('network_tree', [AdminController::class, 'networktree'])->name('admin-networktree');
 });
 
 // Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');

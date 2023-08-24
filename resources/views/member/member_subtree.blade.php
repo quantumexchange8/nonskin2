@@ -9,7 +9,7 @@
                         {{ $child->referrer_id . ' | Full Name: ' . $child->full_name . ' | Personal Ranking: ' . $child->personal_ranking_display }}
                     </p>
                 </div>
-                {{-- @include('user.members.subtree', ['children' => $child->children]) --}}
+                {{-- @include('member.member_subtree', ['children' => $child->downline]) --}}
             </li>
         @else
             <li class="dd-item" data-id="{{ $child->id }}">

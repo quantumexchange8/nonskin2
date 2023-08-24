@@ -93,13 +93,20 @@ class User extends Authenticatable
 
     public function downline()
     {
-        return $this->hasMany(User::class, 'upline_id');
+        return $this->hasMany(User::class, 'upline_id', 'id');
     }
     public function upline()
     {
         return $this->belongsTo(User::class, 'upline_id', 'id');
     }
-
+    public function children()
+    {
+        return $this->hasMany(User::class, 'upline_id');
+    }
+    public function parent()
+    {
+        return $this->belongsTo(User::class, 'upline_id');
+    }
     public function rank()
     {
         return $this->hasOne(Rankings::class, 'id', 'rank_id');

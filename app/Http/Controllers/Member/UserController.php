@@ -266,31 +266,52 @@ class UserController extends Controller
     }
     public function memberNetworkTree(Request $request) {
 
-        $user = Auth::user();
-        $role = Auth::user()->role;
-        $member_id = $request->member;
-        $type = $user->type;
+        // $user = Auth::user();
+        $users = User::query();
+        
+        $code = $request->code;
 
-        if ($role == 'superadmin' || $role == 'admin') {
-            if ($member_id) {
-                $members = User::where('id', $member_id)->get();
-                if ($members->isEmpty())
-                    return abort(404);
-            } else {
-                $members = User::where('upline_id',  NULL)->where('superadmin', '0')->get();
-                // dd('here');
+        if($code) {
+            $users = $users->where('hierarchyList', 'like', '%-' . Auth::id() . '-%');
+        //    dd($users);
+            if($code) {
+                $users = $users->where('referral_id', '=', $code);
+                // dd($users);
             }
-        } else {
-            $id = $user->id;
-            if ($member_id) {
-                $members = User::query()->where('id', $member_id)->where('hierarchyList', 'like', '%-' . $id . '-%')->get();
-                if ($members->isEmpty())
-                    return abort(404);
-            } else
-                $members = User::where('id',  $id)->get();
         }
+        else
+        {
+            $users = $users->where('id', Auth::id());
+        }
+        $users = $users->get();
 
-        return view('member.member_network_tree', ['members' => $members]);
+        return view('member.member_network_tree', [
+            'users' => $users,
+        ]);
+    }
+    public function networktree(Request $request)
+    {
+
+        $code = $request->code;
+        // dd($code);
+        $users = User::query();
+        if($code) {
+            $users = $users->where('hierarchyList', 'like', '%-' . Auth::id() . '-%');
+        //    dd($users);
+            if($code) {
+                $users = $users->where('referrer_id', '=', $code);
+                // dd($users);
+            }
+        }
+        else
+        {
+            $users = $users->where('id', Auth::id());
+        }
+        $users = $users->get();
+
+        return view('member.network.network-tree', [
+            'users' => $users,
+        ]);
     }
     public function pendingOrder() {
         $orders = Order::with(['user', 'orderItems', 'orderItems.product'])->where('user_id', Auth::id())->get();

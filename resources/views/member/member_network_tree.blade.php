@@ -85,31 +85,31 @@
                 </div>
             </div>
             <hr>
-            <menu id="nestable-menu">
-                <button type="button" class="btn btn-light" data-action="expand-all"
-                    id="expand-all">@lang('public.expand_all')</button>
-                <button type="button" class="btn btn-light" data-action="collapse-all"
-                    id="collapse-all">@lang('public.collapse_all')</button>
-            </menu>
+
+            <button type="button" class="header btn btn-primary mt-4 mb-2" data-action="expand-all"
+                id="expand-all">@lang('public.expand_all')
+            </button>
+
             <div class="dd mw-100 overflow-auto" id="nestable">
+                
                 <ol class="dd-list">
-                    @foreach ($members as $member)
-                        @if (count($member->downline))
-                            <li class="dd-item dd-collapsed" data-id="{{ $member->id }}">
+                    @foreach ($users as $user)
+                        @if (count($user->downline))
+                            <li class="dd-item dd-collapsed" data-id="{{ $user->id }}">
                                 <div class="dd-content" onclick="test(this)">
                                     <p style='color: darkblue;'>
                                         <i class='bx bx-user'></i>
-                                        {{ $member->referrer_id . ' | Full Name: ' . $member->full_name . ' | Personal Ranking: ' . $member->personal_ranking_display }}
+                                        {{ $user->referrer_id . ' | Full Name: ' . $user->full_name . ' | Personal Ranking: ' . $user->personal_ranking_display }}
                                     </p>
                                 </div>
-                                @include('member.member_subtree', ['downline' => $member->downline])
+                                @include('member.member_subtree', ['downline' => $user->downline])
                             </li>
                         @else
-                            <li class="dd-item" data-id="{{ $member->id }}">
+                            <li class="dd-item" data-id="{{ $user->id }}">
                                 <div class="dd-content" onclick="test(this)">
                                     <p style='color:lightgreen;'>
                                         <i class='bx bx-user'></i>
-                                        {{ $member->referrer_id . ' | Full Name: ' . $member->full_name . ' | Personal Ranking: ' . $member->personal_ranking_display }}
+                                        {{ $user->referrer_id . ' | Full Name: ' . $user->full_name . ' | Personal Ranking: ' . $user->personal_ranking_display }}
                                     </p>
                                 </div>
                             </li>
@@ -146,7 +146,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-treeview/1.2.0/bootstrap-treeview.min.js"></script>
     <script src="{{ url('plugins/jquery-nestable/js/jquery.nestable.min.js') }}"></script>
 
-    <script>
+    {{-- <script>
         $('#nestable').nestable({
             onDragStart: function() {
                 return false
@@ -209,5 +209,5 @@
                 $('#member').val(ui.item.id);
             }
         });
-    </script>
+    </script> --}}
 @endsection
