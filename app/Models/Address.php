@@ -16,6 +16,7 @@ class Address extends Model
         'address_1',
         'address_2',
         'postcode',
+        'is_default',
         'city',
         'state',
         'country',
