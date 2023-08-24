@@ -31,7 +31,7 @@
                                 <td>Status</td>
                                 <td>Popup</td>
                                 <td>Popup Once</td>
-                                <td>Last Updated By</td>
+                                <td>Last Updated At</td>
                                 <td>View Details</td>
                                 <td>Action</td>
                             </tr>
@@ -40,7 +40,11 @@
                             @foreach ($announcements as $k => $v)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td><img class="object-fit-cover" src="{{ asset('images/announcements/' . $v->image) }}" style="height: 80px" alt="{{ Str::words($v->title,1) }}"></td>
+                                <td>
+                                    @if (isset($v->image))
+                                        <img class="object-fit-cover" src="{{ asset('images/announcements/' . $v->image) }}" style="height: 80px" alt="{{ Str::words($v->title,1) }}">
+                                    @endif
+                                </td>
                                 <td>{{ $v->title }}</td>
                                 <td>{{ Str::limit($v->content, 50) }}</td>
                                 <td>
@@ -76,7 +80,7 @@
                                     </span>
                                     @endif
                                 </td>
-                                <td>{{ $v->user->name }} - {{ $v->updated_at->format('d/m/Y, h:m:s') }}</td>
+                                <td>{{ $v->updated_at->format('d/m/Y, h:m:s') }}</td>
                                 <td>
                                     <button type="button" class="btn btn-primary btn-sm btn-rounded view-detail-button" data-bs-toggle="modal" data-bs-target="#announcementModal{{ $v->id }}">
                                         View Details

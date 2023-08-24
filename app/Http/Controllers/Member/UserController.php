@@ -11,6 +11,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\Address;
+use App\Models\PromotionOrdersLog;
 use App\Models\PaymentSetting;
 use App\Models\DeliverySetting;
 use App\Models\CompanyInfo;
@@ -25,6 +26,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Auth;
 Use Alert;
 use Session;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -38,8 +40,25 @@ class UserController extends Controller
 
         $user = Auth::user();
         $user->url = url('') .'/register/' . $user->referrer_id;
-        $next_rank = Ranking::where('id', $user->rank_id+1)->pluck('name')->first();
         $referral = User::where('upline_id', Auth::id())->count();
+
+        $now = Carbon::now();
+
+        $hasValidPromotion = PromotionOrdersLog::where('start_date', '<=', $now)
+            ->where('end_date', '>=', $now)
+            ->exists();
+        // Construct the query based on the existence of valid promotion records
+        $next_rank = Ranking::where('level', $user->rank->level + 1)
+            ->where(function ($query) use ($hasValidPromotion) {
+                if ($hasValidPromotion) {
+                    $query->whereIn('level', [1, 2, 3, 4, 5])
+                        ->where('category', 'promotion');
+                } else {
+                    $query->whereIn('level', [1, 2, 3, 4, 5])
+                        ->where('category', 'normal');
+                }
+            })
+            ->first();
 
         $announcements = [];
         if (Session::has('show_announcement')) {
@@ -95,7 +114,7 @@ class UserController extends Controller
         $subtotal = 0;
 
         $disAmt = $cartItems->sum('discount_price');
-        
+
         return view('member.cart', [
             'cartItems' => $cartItems,
             'subtotal' => $subtotal,
@@ -134,11 +153,11 @@ class UserController extends Controller
         $product_price = 0;
         $discount_percent_amount = 0;
         $total_discounted = 0;
-        
+
         foreach ($cartItems as $item) {
             if ($item->product->discount == 0) {
                 $product_price = $item->product->price;
-        
+
                 if ($user->rank_id == 2) {
                     $member_discount_amount = 10;
                 } elseif ($user->rank_id == 3) {
@@ -150,10 +169,10 @@ class UserController extends Controller
                 } else {
                     $member_discount_amount = 0; // Handle other ranks if needed
                 }
-        
+
                 $discount_percent_amount = $member_discount_amount * ($product_price / 100);
                 $discounted_product_price = $product_price - $discount_percent_amount;
-        
+
                 // Accumulate values for each item
                 $subtotal += $discounted_product_price * $item->quantity;
                 $total_discounted += $discount_percent_amount * $item->quantity;
@@ -173,16 +192,16 @@ class UserController extends Controller
 
                 $discountedPrice = $item->product->price - ($item->product->price * ($item->product->discount / 100));
                 $discount = $item->product->price * ($item->product->discount / 100);
-                
+
                 // Accumulate values for each item
                 $totalDiscount += $discount * $item->quantity;
                 $subtotal += $discountedPrice * $item->quantity;
-        
+
                 $product_price = $item->product->price;
             }
         }
 
-        
+
 
         // Calculate the total price with discount
         // $totalPriceWithDiscount = $subtotal - $totalDiscount;
@@ -482,7 +501,7 @@ class UserController extends Controller
         return $pdf->download('invoice.pdf');
     }
 
-    public function uploadpayment(Request $request,Order $order) 
+    public function uploadpayment(Request $request,Order $order)
     {
         // dd($request->all());
         $request->validate([
@@ -527,12 +546,12 @@ class UserController extends Controller
                 $wallet->save();
 
             Alert::success('Success', 'Redeemed the cash wallet');
-            return redirect()->back();  
+            return redirect()->back();
         } else {
             Alert::error('Fail', 'you have no cash wallet balance');
             return redirect()->back();
         }
-        
+
     }
 
     public function ShippingAddress()

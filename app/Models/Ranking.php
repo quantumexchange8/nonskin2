@@ -15,4 +15,9 @@ class Ranking extends Model
     const general_distributor = 3;
     const exclusive_distributor = 4;
     const chief_distributor = 5;
+
+    public function promotionOrdersLogs()
+    {
+        return $this->hasMany(PromotionOrdersLog::class);
+    }
 }

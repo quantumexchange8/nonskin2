@@ -15,7 +15,9 @@
         @forelse ($announcements as $k => $v)
             <div class="col-lg-3">
                 <div class="card">
-                    <img class="object-fit-cover p-3" src="{{ asset('images/announcements/' . $v->image) }}" style="height: 350px" alt="{{ $v->title }}">
+                    @if (isset($v->image))
+                        <img class="object-fit-cover p-3" src="{{ asset('images/announcements/' . $v->image) }}" style="height: 350px" alt="{{ $v->title }}">
+                    @endif
                     <div class="card-body">
                         <h4 class="card-title">{{ $v->title }}</h4>
                         <p class="card-text">{{ Str::words($v->content,8,'...') }}</p>

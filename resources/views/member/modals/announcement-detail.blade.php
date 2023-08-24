@@ -6,7 +6,9 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <img class="card-img-top img-fluid mb-3 p-1" src="{{ asset('images/announcements/' . $v->image) }}" alt="{{ $v->title }}">
+                @if (isset($v->image))
+                    <img class="card-img-top img-fluid mb-3 p-1" src="{{ asset('images/announcements/' . $v->image) }}" alt="{{ $v->title }}">
+                @endif
                 <h5>{{ $v->title }}</h5>
                 {{ $v->content }}
             </div>

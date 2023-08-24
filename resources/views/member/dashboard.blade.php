@@ -126,7 +126,7 @@
                 </div>
             </div>
         </div>
-        <div class="row row-cols-2">
+        <div class="row">
             <div class="col-xl-3 col-md-6">
                 <div class="card">
                     <div class="card-body">
@@ -146,53 +146,55 @@
                             </div>
                         </div>
 
-                        <div class="mt-3 border-top pt-3">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="d-flex">
-                                    {{-- <i class="mdi mdi-circle font-size-10 mt-1 text-warning"></i> --}}
-                                    <div class="flex-1">
-                                        <p class="mb-0">Personal Sales</p>
-                                        <h5 class="mt-1 mb-0 font-size-14">RM {{ number_format($user->personal_sales,2) }}</h5>
+                        @if ($user->rank->name !== 'Client')
+                            <div class="mt-3 border-top pt-3">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex">
+                                        {{-- <i class="mdi mdi-circle font-size-10 mt-1 text-warning"></i> --}}
+                                        <div class="flex-1">
+                                            <p class="mb-0">Personal Sales</p>
+                                            <h5 class="mt-1 mb-0 font-size-14">RM {{ number_format($user->personal_sales,2) }}</h5>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="flex-1 text-end">
+                                            @if(($user->personal_sales/$user->rank->personal_sales)*100 >= 100)
+                                                <span class="badge badge-soft-success">RANKING MAINTAINED</span>
+                                            @else
+                                                <span class="badge badge-soft-danger">UNQUALIFIED</span>
+                                            @endif
+                                                <h5 class="mt-1 mb-0 font-size-14 text-wrap">RM {{ number_format($user->rank->personal_sales,2) }}</h5>
+                                            {{-- @switch($user->rank->name)
+                                                @case($user->rank->name == 'Member')
+                                                    <h5 class="mt-1 mb-0 font-size-14 text-wrap">{{ $user->rank->personal_sales }}</h5>
+                                                    @break
+                                                @case($user->rank->name == 'General Distributor')
+                                                    <h5 class="mt-1 mb-0 font-size-14 text-wrap">{{ $user->rank->personal_sales }}</h5>
+                                                    @break
+                                                @case($user->rank->name == 'Exclusive Distributor')
+                                                    <h5 class="mt-1 mb-0 font-size-14 text-wrap">{{ $user->rank->personal_sales }}</h5>
+                                                    @break
+                                                @case($user->rank->name == 'Chief Distributor')
+                                                    <h5 class="mt-1 mb-0 font-size-14 text-wrap">{{ $user->rank->personal_sales }}</h5>
+                                                    @break
+                                                @default
+                                                    <h5 class="mt-1 mb-0 font-size-14 text-wrap">{{ $user->rank->personal_sales }}</h5>
+                                            @endswitch --}}
+                                        </div>
+                                        {{-- <span class="badge badge-soft-success">RM {{ number_format($user->personal_sales,2) }}</span> --}}
                                     </div>
                                 </div>
-                                <div>
-                                    <div class="flex-1 text-end">
-                                        @if(($user->personal_sales == 0 ? 0 : $user->personal_sales/$user->rank->personal_sales)*100 >= 100)
-                                            <span class="badge badge-soft-success">RANKING MAINTAINED</span>
-                                        @else
-                                            <span class="badge badge-soft-danger">UNQUALIFIED</span>
-                                        @endif
-                                            <h5 class="mt-1 mb-0 font-size-14 text-wrap">RM {{ number_format($user->rank->personal_sales,2) }}</h5>
-                                        {{-- @switch($user->rank->name)
-                                            @case($user->rank->name == 'Member')
-                                                <h5 class="mt-1 mb-0 font-size-14 text-wrap">{{ $user->rank->personal_sales }}</h5>
-                                                @break
-                                            @case($user->rank->name == 'General Distributor')
-                                                <h5 class="mt-1 mb-0 font-size-14 text-wrap">{{ $user->rank->personal_sales }}</h5>
-                                                @break
-                                            @case($user->rank->name == 'Exclusive Distributor')
-                                                <h5 class="mt-1 mb-0 font-size-14 text-wrap">{{ $user->rank->personal_sales }}</h5>
-                                                @break
-                                            @case($user->rank->name == 'Chief Distributor')
-                                                <h5 class="mt-1 mb-0 font-size-14 text-wrap">{{ $user->rank->personal_sales }}</h5>
-                                                @break
-                                            @default
-                                                <h5 class="mt-1 mb-0 font-size-14 text-wrap">{{ $user->rank->personal_sales }}</h5>
-                                        @endswitch --}}
+                                <div class="progress mt-2">
+                                    <div class="progress-bar" role="progressbar"
+                                        style="width: {{ $user->personal_sales == 0 ? 0 : ($user->personal_sales/$user->rank->personal_sales)*100 }}%;"
+                                        aria-valuenow="{{ $user->personal_sales }}"
+                                        aria-valuemin="0"
+                                        aria-valuemax="{{ $user->rank->personal_sales }}">
+                                        {{ $user->personal_sales == 0 ? 0 : number_format(($user->personal_sales/$user->rank->personal_sales)*100,2) }}%
                                     </div>
-                                    {{-- <span class="badge badge-soft-success">RM {{ number_format($user->personal_sales,2) }}</span> --}}
                                 </div>
                             </div>
-                            <div class="progress mt-2">
-                                <div class="progress-bar" role="progressbar"
-                                    style="width: {{ $user->personal_sales > 0 ? ($user->personal_sales/$user->rank->personal_sales)*100 : 0 }}%;"
-                                    aria-valuenow="{{ $user->personal_sales }}"
-                                    aria-valuemin="0"
-                                    aria-valuemax="{{ $user->rank->personal_sales }}">
-                                    {{ $user->personal_sales > 0 ? number_format(($user->personal_sales/$user->rank->personal_sales)*100,2) : 0 }}%
-                                </div>
-                            </div>
-                        </div>
+                        @endif
 
                         <div class="mt-3 border-top pt-3">
                             <div class="d-flex justify-content-between align-items-center">
@@ -204,14 +206,14 @@
                                 <div>
                                     <div class="flex-1 text-end">
                                         @if ($user->rank->name !== 'Chief Distributor')
-                                            <h5 class="mt-1 mb-0 font-size-14 text-wrap">{{ $next_rank }}</h5>
+                                            <h5 class="mt-1 mb-0 font-size-14 text-wrap">{{ $next_rank->name }}</h5>
                                         @endif
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        @if ($user->rank->name !== 'Chief Distributor')
+                        @if ($user->rank->name !== 'Chief Distributor' && $user->rank->name !== 'Exclusive Distributor')
                             <div class="mt-3 border-top pt-3">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="d-flex">
@@ -222,27 +224,27 @@
                                         </div>
                                     </div>
                                     <div class="flex-1 text-end">
-                                        @if(($user->personal_sales == 0 ? 0 : $user->personal_sales/$user->rank->package_requirement)*100 >= 100)
+                                        @if(($user->personal_sales == 0 ? 0 : $user->personal_sales/$next_rank->package_requirement)*100 >= 100)
                                             <span class="badge badge-soft-success">QUALIFIED</span>
                                         @else
                                             <span class="badge badge-soft-danger">NOT YET QUALIFIED</span>
                                         @endif
-                                        <h5 class="mt-1 mb-0 font-size-14">RM {{ number_format($user->rank->package_requirement,2) }}</h5>
+                                        <h5 class="mt-1 mb-0 font-size-14">RM {{ number_format($next_rank->package_requirement,2) }}</h5>
                                     </div>
                                 </div>
                                 <div class="progress mt-2">
                                     <div class="progress-bar" role="progressbar"
-                                        style="width: {{ $user->personal_sales > 0 ? ($user->personal_sales/$user->rank->package_requirement)*100 : 0 }}%;"
+                                        style="width: {{ $user->personal_sales > 0 ? ($user->personal_sales/$next_rank->package_requirement)*100 : 0 }}%;"
                                         aria-valuenow="{{ $user->personal_sales }}"
                                         aria-valuemin="0"
-                                        aria-valuemax="{{ $user->rank->package_requirement }}">
-                                        {{ $user->personal_sales > 0 ? number_format(($user->personal_sales/$user->rank->package_requirement)*100,2) : 0 }}%
+                                        aria-valuemax="{{ $next_rank->package_requirement }}">
+                                        {{ $user->personal_sales == 0 ? 0 : number_format(($user->personal_sales/$next_rank->package_requirement)*100,2) }}%
                                     </div>
                                 </div>
                             </div>
                         @endif
 
-                        @if ($user->rank->name !== 'Client')
+                        @if ($user->rank->name !== 'Client' && $user->rank->name !== 'Chief Distributor')
                             <div class="mt-3 border-top pt-3">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="d-flex">
@@ -253,21 +255,21 @@
                                         </div>
                                     </div>
                                     <div class="flex-1 text-end">
-                                        @if(($user->group_sales == 0 ? 0 : $user->group_sales/$user->rank->group_sale_requirement)*100 >= 100)
+                                        @if(($user->group_sales == 0 ? 0 : $user->group_sales/$next_rank->group_sale_requirement)*100 >= 100)
                                             <span class="badge badge-soft-success">QUALIFIED</span>
                                         @else
                                             <span class="badge badge-soft-danger">NOT YET QUALIFIED</span>
                                         @endif
-                                        <h5 class="mt-1 mb-0 font-size-14">RM {{ number_format($user->rank->group_sale_requirement,2) }}</h5>
+                                        <h5 class="mt-1 mb-0 font-size-14">RM {{ number_format($next_rank->group_sale_requirement,2) }}</h5>
                                     </div>
                                 </div>
                                 <div class="progress mt-2">
-                                    <div class="progress-bar" role="progressbar" style="width: {{ ($user->group_sales == 0 ? 0 : $user->group_sales/$user->rank->group_sale_requirement)*100 }}%;"
-                                        aria-valuenow="{{ ($user->group_sales == 0 ? 0 : $user->group_sales/$user->rank->group_sale_requirement)*100 }}"
+                                    <div class="progress-bar" role="progressbar" style="width: {{ ($user->group_sales == 0 ? 0 : $user->group_sales/$next_rank->group_sale_requirement)*100 }}%;"
+                                        aria-valuenow="{{ ($user->group_sales == 0 ? 0 : $user->group_sales/$next_rank->group_sale_requirement)*100 }}"
                                         aria-valuemin="0"
                                         aria-valuemax="100">
                                         @if (isset($user->group->sales))
-                                            {{ ($user->group_sales > 0 ? 0 : $user->group_sales/$user->rank->group_sale_requirement)*100 }}%
+                                            {{ ($user->group_sales > 0 ? 0 : $user->group_sales/$next_rank->group_sale_requirement)*100 }}%
                                         @endif
                                     </div>
                                 </div>
@@ -283,32 +285,20 @@
                                         <h5 class="mt-1 mb-0 font-size-14">{{ $user->rank->level_discount }} %</h5>
                                     </div>
                                 </div>
-                                <div class="flex-1 text-end">
-                                    {{-- @if(($user->personal_sales == 0 ? 0 : $user->personal_sales/$user->rank->personal_sales)*100 >= 100)
-                                        <span class="badge badge-soft-success">QUALIFIED</span>
-                                    @else --}}
-                                        <span class="badge badge-soft-danger">NOT YET QUALIFIED</span>
-                                    {{-- @endif --}}
-                                    @switch($user->rank->name)
-                                        @case($user->rank->name == 'Member')
-                                            <h5 class="mt-1 mb-0 font-size-14 text-wrap">35 %</h5>
-                                            @break
-                                        @case($user->rank->name == 'General Distributor')
-                                            <h5 class="mt-1 mb-0 font-size-14 text-wrap">45 %</h5>
-                                            @break
-                                        @case($user->rank->name == 'Exclusive Distributor')
-                                            <h5 class="mt-1 mb-0 font-size-14 text-wrap">50 %</h5>
-                                            @break
-                                        @case($user->rank->name == 'Chief Distributor')
-                                            @break
-                                        @default
-                                            <h5 class="mt-1 mb-0 font-size-14 text-wrap">10 %</h5>
-                                    @endswitch
-                                </div>
+                                @if ($user->rank->level !== 5)
+                                    <div class="flex-1 text-end">
+                                        {{-- @if(($user->personal_sales/$user->rank->personal_sales)*100 >= 100) --}}
+                                            {{-- <span class="badge badge-soft-success">QUALIFIED</span> --}}
+                                        {{-- @else --}}
+                                            <span class="badge badge-soft-danger">NOT YET QUALIFIED</span>
+                                        {{-- @endif --}}
+                                            <h5 class="mt-1 mb-0 font-size-14 text-wrap">{{ $next_rank->level_discount }} %</h5>
+                                    </div>
+                                @endif
                             </div>
-                            <div class="progress mt-2">
+                            {{-- <div class="progress mt-2">
                                 <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
+                            </div> --}}
                         </div>
 
                     </div>
@@ -445,7 +435,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6">
+            {{-- <div class="col-lg-3 col-md-6">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-4">
@@ -477,10 +467,10 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
             <!-- Monthly -->
-            <div class="col-lg-3 col-md-6">
+            {{-- <div class="col-lg-3 col-md-6">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-4">
@@ -497,9 +487,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
             <!-- Quarterly -->
-            <div class="col-lg-3 col-md-6">
+            {{-- <div class="col-lg-3 col-md-6">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-4">
@@ -516,9 +506,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
             <!-- Anual -->
-            <div class="col-lg-3 col-md-6">
+            {{-- <div class="col-lg-3 col-md-6">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-4">
@@ -535,7 +525,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 

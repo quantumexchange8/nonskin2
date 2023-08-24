@@ -209,8 +209,9 @@ class RegisterController extends Controller
             if($user->wasRecentlyCreated){
                 Address::create([
                     'user_id'       => $user->id,
-                    'name'          => $request->name,
+                    'name'          => $request->full_name,
                     'contact'       => $request->contact,
+                    'is_default'    => 1,
                     'address_1'     => $request->address_1,
                     'address_2'     => $request->address_2,
                     'city'          => $request->city,

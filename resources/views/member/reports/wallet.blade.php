@@ -13,6 +13,20 @@
             <div class="card">
                 <div class="card-body">
                     <table id="reportWallet" class="stripe nowrap" style="width:100%">
+                        <div class="d-flex justify-content-end">
+                            {{-- <div class="col-lg-2">
+                                <a href="" target="_blank">
+                                    <button class="btn btn-primary">
+                                        Export to PDF
+                                    </button>
+                                </a>
+                                <a href="" target="_blank">
+                                    <button class="btn btn-success">
+                                        Export to Excel
+                                    </button>
+                                </a>
+                            </div> --}}
+                        </div>
                         <div class="row justify-content-end">
                             <div class="col-lg-4">
                                 <label class="form-label">From Date</label>
@@ -31,6 +45,7 @@
                                 <button class="btn btn-primary w-100">Search</button>
                             </div> --}}
                         </div>
+
                         <thead>
                             <tr>
                                 <th>#</th>

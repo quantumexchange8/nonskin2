@@ -18,7 +18,7 @@
                             <div class="d-flex flex-wrap align-items-center mb-3">
                                 <h5 class="card-title mb-0">Orders Statistics</h5>
                                 <div class="ms-auto">
-                                    <div class="dropdown">
+                                    {{-- <div class="dropdown">
                                         <a class="dropdown-toggle text-reset" href="#" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <span class="text-muted font-size-12">Sort By:</span> <span class="fw-medium">Monthly<i class="mdi mdi-chevron-down ms-1"></i></span>
                                         </a>
@@ -27,7 +27,7 @@
                                             <a class="dropdown-item" href="#">Monthly</a>
                                             <a class="dropdown-item" href="#">Yearly</a>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
 
@@ -42,7 +42,7 @@
                                             </div>
                                         </div>
                                         <div>
-                                            <span class="badge badge-soft-danger">25.4%<i class="mdi mdi-arrow-down ms-2"></i></span>
+                                            {{-- <span class="badge badge-soft-danger">25.4%<i class="mdi mdi-arrow-down ms-2"></i></span> --}}
                                         </div>
                                     </div>
                                 </div>
@@ -58,7 +58,7 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <span class="badge badge-soft-danger">17.4%<i class="mdi mdi-arrow-down ms-2"></i></span>
+                                        {{-- <span class="badge badge-soft-danger">17.4%<i class="mdi mdi-arrow-down ms-2"></i></span> --}}
                                     </div>
                                 </div>
                             </div>
@@ -73,7 +73,7 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <span class="badge badge-soft-success">16.3%<i class="mdi mdi-arrow-up ms-1"></i></span>
+                                        {{-- <span class="badge badge-soft-success">16.3%<i class="mdi mdi-arrow-up ms-1"></i></span> --}}
                                     </div>
                                 </div>
                             </div>
@@ -88,7 +88,7 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <span class="badge badge-soft-success">65.7%<i class="mdi mdi-arrow-up ms-1"></i></span>
+                                        {{-- <span class="badge badge-soft-success">65.7%<i class="mdi mdi-arrow-up ms-1"></i></span> --}}
                                     </div>
                                 </div>
                             </div>
@@ -103,7 +103,7 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <span class="badge badge-soft-success">65.7%<i class="mdi mdi-arrow-up ms-1"></i></span>
+                                        {{-- <span class="badge badge-soft-success">65.7%<i class="mdi mdi-arrow-up ms-1"></i></span> --}}
                                     </div>
                                 </div>
                             </div>
@@ -118,7 +118,7 @@
                             <div class="d-flex flex-wrap align-items-center mb-3">
                                 <h5 class="card-title mb-0">Members Statistics</h5>
                                 <div class="ms-auto">
-                                    <div class="dropdown">
+                                    {{-- <div class="dropdown">
                                         <a class="dropdown-toggle text-reset" href="#" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <span class="text-muted font-size-12">Sort By:</span> <span class="fw-medium">Monthly<i class="mdi mdi-chevron-down ms-1"></i></span>
                                         </a>
@@ -127,7 +127,7 @@
                                             <a class="dropdown-item" href="#">Monthly</a>
                                             <a class="dropdown-item" href="#">Yearly</a>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
 
