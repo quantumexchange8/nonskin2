@@ -153,7 +153,7 @@
 
         var table = new DataTable('#allOrder', {
             responsive: true,
-            searching: true,
+            searching: false,
             pagingType: 'simple_numbers',
             lengthChange: false,
             order: [[0, 'desc']], // Default sorting order

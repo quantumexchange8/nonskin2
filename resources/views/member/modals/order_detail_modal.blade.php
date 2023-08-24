@@ -69,7 +69,7 @@
                                     <h6 class="m-0 text-right">Total:</h6>
                                 </td>
                                 <td>
-                                    RM {{ number_format($order->total_amount, 2)}}
+                                    RM {{ number_format($order->price, 2)}}
                                 </td>
                             </tr>
                             <tr>
@@ -77,7 +77,7 @@
                                     <h6 class="m-0 text-right">Total Discount:</h6>
                                 </td>
                                 <td>
-                                    RM {{ number_format($order->discount_amt, 2)}}
+                                   - RM {{ number_format($order->discount_amt, 2)}}
                                 </td>
                             </tr>
                             <tr>
@@ -90,7 +90,7 @@
                             </tr>
                             <tr>
                                 <td align="right" colspan="2">
-                                    <h6 class="m-0 text-right">Total:</h6>
+                                    <h6 class="m-0 text-right">Total Payment:</h6>
                                 </td>
                                 <td>
                                     RM {{ number_format($order->total_amount, 2)}}

@@ -110,7 +110,6 @@ class OrderController extends Controller
                 $order->status              = 1;//processing
                 $order->remarks             = null;
                 $order->created_by          = Auth::id();
-                $order->updated_at          = null;
                 if ($imageName1 !== null) {
                     $order->payment_proof = $imageName1;
                     $order->status = 1; // Processing
@@ -138,7 +137,6 @@ class OrderController extends Controller
                 $order->status              = 1;//processing
                 $order->remarks             = null;
                 $order->created_by          = Auth::id();
-                $order->updated_at          = null;
 
                 $order->save();
             }
@@ -174,7 +172,7 @@ class OrderController extends Controller
             
 
             $wallet = new WalletHistory();
-            $wallet->user_id =  Auth::id();
+            $wallet->user =  Auth::id();
             $wallet->wallet_type = 'Purchase Wallet';
             $wallet->type = 'Purchase';
             $wallet->cash_in = null;
@@ -184,7 +182,7 @@ class OrderController extends Controller
 
             if($ProductWallet > 0 ) {
                 $wallet = new WalletHistory();
-                $wallet->user_id =  Auth::id();
+                $wallet->user =  Auth::id();
                 $wallet->wallet_type = 'Product Wallet';
                 $wallet->type = 'Purchase';
                 $wallet->cash_in = null;
