@@ -13,19 +13,14 @@
             <div class="card">
                 <div class="card-body">
                     <table id="reportWallet" class="stripe nowrap" style="width:100%">
-                        <div class="d-flex justify-content-end">
-                            {{-- <div class="col-lg-2">
-                                <a href="" target="_blank">
-                                    <button class="btn btn-primary">
-                                        Export to PDF
-                                    </button>
-                                </a>
+                        <div class="d-flex justify-content-end text-end">
+                            <div class="col-lg-2">
                                 <a href="" target="_blank">
                                     <button class="btn btn-success">
                                         Export to Excel
                                     </button>
                                 </a>
-                            </div> --}}
+                            </div>
                         </div>
                         <div class="row justify-content-end">
                             <div class="col-lg-4">
@@ -59,18 +54,37 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- @foreach ($orders as $order) --}}
+                            @foreach ($rows as $row)
                                 <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>RM </td>
-                                    <td>RM </td>
-                                    <td>RM </td>
-                                    <td></td>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $row->wallet_type }}</td>
+                                    <td>{{ $row->type }}</td>
+                                    <td>{{ $row->remarks }}</td>
+                                    @if ($row->cash_in == 0)
+                                        <td>
+                                            -
+                                        </td>
+                                    @else
+                                        <td class="text-success fw-bold">
+                                            RM {{ number_format($row->cash_in,2) }}
+                                        </td>
+                                    @endif
+
+                                    @if ($row->cash_out == 0)
+                                        <td>
+                                            -
+                                        </td>
+                                    @else
+                                        <td class="text-danger fw-bold">
+                                            RM {{ number_format($row->cash_out,2) }}
+                                        </td>
+                                    @endif
+                                    <td>
+                                        RM {{ number_format($row->balance,2) }}
+                                    </td>
+                                    <td>{{ $row->updated_at->format('d/m/Y') }}</td>
                                 </tr>
-                            {{-- @endforeach --}}
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

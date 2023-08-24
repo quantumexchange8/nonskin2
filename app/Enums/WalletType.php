@@ -6,7 +6,7 @@ use BenSampo\Enum\Enum;
 
 enum WalletType: string
 {
-    case PURCHASE_WALLET = 'purchase_wallet';
-    case CASH_WALLET = 'cash_wallet';
-    case PRODUCT_WALLET = 'product_wallet';
+    case PURCHASE_WALLET = 'Purchase Wallet';
+    case CASH_WALLET = 'Cash Wallet';
+    case PRODUCT_WALLET = 'Product Wallet';
 }

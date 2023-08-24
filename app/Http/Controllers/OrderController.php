@@ -46,13 +46,13 @@ class OrderController extends Controller
         // if (!$prefixRow) {
         //     // If the prefix doesn't exist, handle it as needed (e.g., show an error)
         // }
-        
+
         if($request->hasFile('payment_proof') != null) {
             $request->validate([
                 'payment_proof' => 'nullable|image|max:2048', // Adjust the allowed mime types and file size as needed
             ]);
         }
-        
+
 
         try {
             $imageName1 = null; // Initialize the variable
@@ -66,13 +66,13 @@ class OrderController extends Controller
 
 
             if($paymentMethod == 'Purchase Wallet'){
-    
+
                 //  Calculate purchase Wallet Deduct product amount
                 $balance = $user->purchase_wallet;
-                
+
                 if($balance >= $totalAmount) {
                     $balance_remain = $balance - $totalAmount;
-                    
+
                     $user->product_wallet -= $ProductWallet;
                     $user->purchase_wallet = $balance_remain;
                     $user->save();
@@ -140,7 +140,7 @@ class OrderController extends Controller
 
                 $order->save();
             }
-            
+
 
             if($paymentMethod == 'Online Banking') {
                 $newTransactionNumber = $prefixRow2->counter + 1;
@@ -162,17 +162,17 @@ class OrderController extends Controller
                 $payment->updated_at    = null;
                 $payment->created_by    = Auth::id();
                 $payment->save();
-    
+
                 $order->update([
                     'payment_id' => $payment->id,
                     'created_at' => $order->created_at,
                     'updated_by' => Auth::id()
                 ]);
             }
-            
+
 
             $wallet = new WalletHistory();
-            $wallet->user =  Auth::id();
+            $wallet->user_id =  Auth::id();
             $wallet->wallet_type = 'Purchase Wallet';
             $wallet->type = 'Purchase';
             $wallet->cash_in = null;

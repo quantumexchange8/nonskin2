@@ -58,13 +58,13 @@ class PaymentController extends Controller
                 ]);
             }
 
-            
+
 
             if ($request->hasFile('receipt')){
                 $imageName1 = null; // Initialize the variable
                 $imageName1 = time().'.'.$request->receipt->extension();
                 $request->receipt->move(public_path('images/payment-proof'), $imageName1);
-            
+
                 $payment                = new Payment();
                 $payment->payment_num   = $transactionPrefix . str_pad($newTransactionNumber, $prefixRow2->padding, '0', STR_PAD_LEFT);
                 $payment->type          = 'Deposit';
@@ -108,7 +108,7 @@ class PaymentController extends Controller
         $user = Auth::user();
 
         $deposits = Payment::where('type', 'Deposit')->get();
-        
+
         return view('admin.purchase-wallet.pending_deposit', [
             'deposits' => $deposits,
         ]);
@@ -116,7 +116,7 @@ class PaymentController extends Controller
 
     public function approveDeposit(Request $request, Payment $deposit)
     {
-        
+
         $deposit->update([
             'status' => 'Approved',
             'remarks' => null
@@ -141,10 +141,10 @@ class PaymentController extends Controller
             ]
         );
 
-        $wallet = new WalletHistory();    
-        $wallet->user =  $user_wallet->id;
-        $wallet->wallet_type = 'purchase_wallet';
-        $wallet->type = 'deposit';
+        $wallet = new WalletHistory();
+        $wallet->user_id =  $user_wallet->id;
+        $wallet->wallet_type = WalletType::PURCHASE_WALLET  ;
+        $wallet->type = PaymentType::DEPOSIT;
         $wallet->cash_in = $deposit->amount;
         $wallet->cash_out = null;
         $wallet->balance = $user_wallet->purchase_wallet;
@@ -181,7 +181,7 @@ class PaymentController extends Controller
             Alert::error('Failed', 'no image founded');
             return redirect()->back();
         }
-        
+
     }
 
     public function rejectDeposit(Request $request, Payment $deposit)
@@ -191,7 +191,7 @@ class PaymentController extends Controller
             'status' => 'Failed',
             'remarks' => $request->remark
         ]);
-        
+
         Alert::success('Updated', 'the deposit status');
         return redirect()->back();
     }
