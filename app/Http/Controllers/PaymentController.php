@@ -130,13 +130,26 @@ class PaymentController extends Controller
                 $user_wallet->save();
             }
 
+        $transactionPrefix = 'NONT';
+        $prefixRow2 = Prefix::where('prefix', $transactionPrefix)->first();
+
+        $newTransactionNumber = $prefixRow2->counter + 1;
+        $prefixRow2->update(
+            [
+                'counter' => $newTransactionNumber,
+                'updated_by' => Auth::id()
+            ]
+        );
+
         $wallet = new WalletHistory();    
-        $wallet->user_id =  $user_wallet->id;
+        $wallet->user =  $user_wallet->id;
         $wallet->wallet_type = 'purchase_wallet';
         $wallet->type = 'deposit';
         $wallet->cash_in = $deposit->amount;
         $wallet->cash_out = null;
         $wallet->balance = $user_wallet->purchase_wallet;
+        $wallet->updated_at = now();
+        $wallet->remarks = $transactionPrefix . str_pad($newTransactionNumber, $prefixRow2->padding, '0', STR_PAD_LEFT);
         $wallet->save();
 
         Alert::success('Updated', 'the deposit approved');

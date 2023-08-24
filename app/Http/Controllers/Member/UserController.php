@@ -246,7 +246,7 @@ class UserController extends Controller
 
         $user = Auth::user();
 
-        $cashWallets = WalletHistory::where('wallet_type', 'Cash Wallet')->where('user_id', $user->id)->get();
+        $cashWallets = WalletHistory::where('wallet_type', 'Cash Wallet')->where('user', $user->id)->get();
         // dd($cashWallets);
         return view('member.cash_wallet', [
             'cashWallets' => $cashWallets
@@ -509,7 +509,7 @@ class UserController extends Controller
     public function redeemCommission(Request $request)
     {
         $user = Auth::user();
-
+        
         if($user->cash_wallet > 0 ) {
             $cashwallet_amount = $user->cash_wallet;
 
@@ -518,13 +518,15 @@ class UserController extends Controller
             $user->save();
 
             $wallet = new WalletHistory();
-                $wallet->user_id =  $user->id;
-                $wallet->wallet_type = 'Cash Wallet';
-                $wallet->type = 'Redeem';
-                $wallet->cash_in = null;
-                $wallet->cash_out = $cashwallet_amount;
-                $wallet->balance = $user->cash_wallet;
-                $wallet->save();
+            $wallet->user =  $user->id;
+            $wallet->wallet_type = 'Cash Wallet';
+            $wallet->type = 'Redeem';
+            $wallet->cash_in = null;
+            $wallet->cash_out = $cashwallet_amount;
+            $wallet->balance = $user->cash_wallet;
+            $wallet->remarks = 'redeem';
+            // dd($wallet);
+            $wallet->save();
 
             Alert::success('Success', 'Redeemed the cash wallet');
             return redirect()->back();  

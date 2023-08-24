@@ -15,7 +15,7 @@ class CreateWalletHistoriesTable extends Migration
     {
         Schema::create('wallet_histories', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id')->nullable();
+            $table->bigInteger('user')->nullable();
             $table->string('wallet_type')->nullable()->default('text');
             $table->string('type')->nullable()->default('text');
             $table->double('cash_in')->nullable();
