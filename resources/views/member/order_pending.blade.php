@@ -23,7 +23,7 @@
                 <div class="card-body">
                     <table id="allOrder" class="stripe nowrap" style="width:100%">
                         <div class="row justify-content-end">
-                            <div class="col-lg-4">
+                            <div class="col-lg-3">
                                 <label class="form-label">Status</label>
                                 <select class="mb-3 form-select" id="statusFilter">
                                     <option value="">All Status</option>
@@ -42,6 +42,12 @@
                             <div class="col-lg-4">
                                 <label class="form-label">Search</label>
                                 <input type="text" id="search-input" class="form-control" placeholder="Enter keywords here...">
+                            </div>
+                            <div class="col-lg-1" style="display: flex;align-items: center;margin-top: 14px; ">
+                                <form id="myForm">
+                                    <button type="submit" value="reset" class="btn btn-primary">Clear</button>
+                                </form>
+                                
                             </div>
                             {{-- <div class="col-lg-3">
                                 <label class="form-label">&nbsp;</label>
