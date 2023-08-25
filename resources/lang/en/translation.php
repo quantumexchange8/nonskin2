@@ -43,6 +43,11 @@
         "Purchase Wallet" => "Purchase Wallet",
         "Cash Wallet" => "Cash Wallet",
         "Product Wallet" => "Product Wallet",
+        "Monthly Commission" => "Monthly Commission",
+        "Quarterly Commission" => "Quarterly Commission",
+        "Annually Commission" => "Annually Commission",
+        "Performance Bonus" => "Performance Bonus",
+
 
         // Custom
         "search" => "Search",

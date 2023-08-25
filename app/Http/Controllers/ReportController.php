@@ -45,10 +45,51 @@ class ReportController extends Controller
             return view('member.reports.wallet', compact('rows'));
         }else if ($role == 'admin' || $role == 'superadmin'){
             $rows = WalletHistory::latest()->with(['user'])->get();
-            
+
             return view('admin.reports.wallet', [
                 'rows' => $rows,
             ]);
+        }else{
+            return abort (404);
+        }
+    }
+
+    public function monthlyCommissionReport() {
+        $role = Auth::user()->role;
+        if($role == 'user'){
+            return view('member.reports.monthly_commission');
+        }else if ($role == 'admin' || $role == 'superadmin'){
+            return view('admin.reports.monthly_commission');
+        }else{
+            return abort (404);
+        }
+    }
+    public function quarterlyCommissionReport() {
+        $role = Auth::user()->role;
+        if($role == 'user'){
+            return view('member.reports.quarterly_commission');
+        }else if ($role == 'admin' || $role == 'superadmin'){
+            return view('admin.reports.quarterly_commission');
+        }else{
+            return abort (404);
+        }
+    }
+    public function annuallyCommissionReport() {
+        $role = Auth::user()->role;
+        if($role == 'user'){
+            return view('member.reports.annually_commission');
+        }else if ($role == 'admin' || $role == 'superadmin'){
+            return view('admin.reports.annually_commission');
+        }else{
+            return abort (404);
+        }
+    }
+    public function performanceBonusReport() {
+        $role = Auth::user()->role;
+        if($role == 'user'){
+            return view('member.reports.performance_bonus');
+        }else if ($role == 'admin' || $role == 'superadmin'){
+            return view('admin.reports.performance_bonus');
         }else{
             return abort (404);
         }

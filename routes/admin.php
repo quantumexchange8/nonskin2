@@ -30,5 +30,9 @@ Route::group(['prefix' => 'admin/', 'as' => 'admin.',  'middleware' => ['auth', 
     // Route::get('report-levelling', [ReportController::class, 'reportLevelling'])->name('report-levelling');
     Route::get('sales-report', [ReportController::class, 'reportSales'])->name('report-sales');
     Route::get('wallet-report', [ReportController::class, 'reportWallet'])->name('report-wallet');
+    Route::get('monthly-commission-report', [ReportController::class, 'monthlyCommissionReport'])->name('monthly-commission-report');
+    Route::get('quarterly-commission-report', [ReportController::class, 'quarterlyCommissionReport'])->name('quarterly-commission-report');
+    Route::get('annually-commission-report', [ReportController::class, 'annuallyCommissionReport'])->name('annually-commission-report');
+    Route::get('performance-bonus-report', [ReportController::class, 'performanceBonusReport'])->name('performance-bonus-report');
 });
 

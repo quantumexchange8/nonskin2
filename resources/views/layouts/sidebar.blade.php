@@ -229,15 +229,23 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
                         @hasanyrole('user')
+                        <li><a href="{{ route('member.report-sales') }}" >@lang('translation.Sales')</a></li>
                             <li><a href="{{ route('member.report-downline-sales') }}">@lang('translation.Downline Sales')</a></li>
-                            <li><a href="{{ route('member.report-sales') }}" >@lang('translation.Sales')</a></li>
-                            <li><a href="{{ route('member.report-leadership') }}">@lang('translation.Leadership')</a></li>
-                            <li><a href="{{ route('member.report-levelling') }}">@lang('translation.Levelling')</a></li>
                             <li><a href="{{ route('member.report-wallet') }}">@lang('translation.Wallet')</a></li>
+                            <li><a href="{{ route('member.monthly-commission-report') }}">@lang('translation.Monthly Commission')</a></li>
+                            <li><a href="{{ route('member.quarterly-commission-report') }}">@lang('translation.Quarterly Commission')</a></li>
+                            <li><a href="{{ route('member.annually-commission-report') }}">@lang('translation.Annually Commission')</a></li>
+                            <li><a href="{{ route('member.performance-bonus-report') }}">@lang('translation.Performance Bonus')</a></li>
+                            {{-- <li><a href="{{ route('member.report-leadership') }}">@lang('translation.Leadership')</a></li> --}}
+                            {{-- <li><a href="{{ route('member.report-levelling') }}">@lang('translation.Levelling')</a></li> --}}
                         @endhasanyrole
                         @hasanyrole('superadmin|admin')
                             <li><a href="{{ route('admin.report-sales') }}">@lang('translation.Sales')</a></li>
                             <li><a href="{{ route('admin.report-wallet') }}">@lang('translation.Wallet')</a></li>
+                            <li><a href="{{ route('admin.monthly-commission-report') }}">@lang('translation.Monthly Commission')</a></li>
+                            <li><a href="{{ route('admin.quarterly-commission-report') }}">@lang('translation.Quarterly Commission')</a></li>
+                            <li><a href="{{ route('admin.annually-commission-report') }}">@lang('translation.Annually Commission')</a></li>
+                            <li><a href="{{ route('admin.performance-bonus-report') }}">@lang('translation.Performance Bonus')</a></li>
                         @endhasanyrole
                     </ul>
                 </li>
