@@ -15,6 +15,7 @@ use App\Http\Controllers\DropdownController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ExportController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -43,7 +44,7 @@ Auth::routes();
 Route::resource('cart', CartController::class);
 // Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
 
-Route::get('/register', [RegisterController::class, 'register'])->name('register');
+// Route::get('/register', [RegisterController::class, 'register'])->name('register');
 Route::get('/register/{referral?}', [RegisterController::class, 'register'])->name('register');
 Route::post('/add-member', [RegisterController::class, 'store'])->name('add.member');
 Route::post('/check-existing-referral', [RegisterController::class, 'checkExistingReferral'])->name('registerExistingReferral');
@@ -99,6 +100,7 @@ Route::group(['prefix' => 'members',  'middleware' => ['auth', 'role:user',]], f
     Route::post('new-payslip/{row}', [PaymentController::class, 'newpayslip'])->name('member.new-payslip');
 
     Route::get('network_tree', [UserController::class, 'networktree'])->name('networktree');
+    // Route::get('/export-csv', [ExportController::class, 'exportCSV'])->name('exportcsv');
 });
 
 // Route::get('dependent-dropdown', [DropdownController::class, 'index']);

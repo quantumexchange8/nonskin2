@@ -84,7 +84,7 @@ use App\Models\{State, BankSetting};
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
                                                             <label for="basicpill-firstname-input" class="form-label">Referral <small class="text-muted">(Optional)</small></label>
-                                                            @if($referral != null)
+                                                            @if(isset($referral))
                                                                 <input type="text" class="form-control" placeholder="e.g. NON000000003" name="referral" id="referral" value="{{ $referral ?: null}}">
                                                                 <div class="invalid-feedback" id="referral-error">
                                                                     <!-- Error message will be displayed here -->

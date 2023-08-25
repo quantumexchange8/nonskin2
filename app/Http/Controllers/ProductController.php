@@ -249,7 +249,7 @@ class ProductController extends Controller
                 'name' => $request->name,
                 'description' => $request->description,
                 'price' => $request->price,
-                'discount' => $request->discount,
+                'discount' => 0,
                 'category_id' => $request->category_id,
                 'shipping_quantity' => $request->shipping_quantity,
                 'status' => $request->status,

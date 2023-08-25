@@ -265,7 +265,7 @@ class UserController extends Controller
 
         $user = Auth::user();
 
-        $cashWallets = WalletHistory::where('wallet_type', 'Cash Wallet')->where('user', $user->id)->get();
+        $cashWallets = WalletHistory::where('wallet_type', 'Cash Wallet')->where('user_id', $user->id)->get();
         // dd($cashWallets);
         return view('member.cash_wallet', [
             'cashWallets' => $cashWallets
@@ -537,7 +537,7 @@ class UserController extends Controller
             $user->save();
 
             $wallet = new WalletHistory();
-            $wallet->user =  $user->id;
+            $wallet->user_id =  $user->id;
             $wallet->wallet_type = 'Cash Wallet';
             $wallet->type = 'Redeem';
             $wallet->cash_in = null;

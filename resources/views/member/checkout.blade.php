@@ -862,10 +862,11 @@
             const deliveryMethod = $('input[name="delivery_method"]:checked').val();
             const shippingElement = document.getElementById('shipping');
             const selectedAddress = $('input[name="address"]:checked');
-
+            const shippingQty = document.getElementById('shipqty').value;
+            
             if (deliveryMethod === 'Delivery' && selectedAddress.length > 0) {
                  // Check if any address is selected
-                 shippingCharge = parseFloat(selectedAddress.data('shipping-charge'));
+                 shippingCharge = parseFloat(selectedAddress.data('shipping-charge')) * shippingQty;
             } else {
                 shippingCharge = 0;
             }

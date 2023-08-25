@@ -182,7 +182,7 @@ class OrderController extends Controller
 
             if($ProductWallet > 0 ) {
                 $wallet = new WalletHistory();
-                $wallet->user =  Auth::id();
+                $wallet->user_id =  Auth::id();
                 $wallet->wallet_type = 'Product Wallet';
                 $wallet->type = 'Purchase';
                 $wallet->cash_in = null;
