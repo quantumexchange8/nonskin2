@@ -43,7 +43,7 @@
                                     <tr>
                                         <th scope="row">{{ $loop->iteration }}</th>
                                         <td>{{ $v->name }}</td>
-                                        <td>{{ $v->updated_at->format('d/m/Y, h:i:s') }}</td>
+                                        <td>{{ $v->updated_at ? $v->updated_at->format('d/m/Y, h:i:s') : '-' }}</td>
                                         <td>
                                             <div class="d-flex gap-2">
                                                 <a href="" data-bs-toggle="modal" data-bs-target="#updateBank{{ $v->id }}" class="btn btn-sm btn-soft-primary waves-effect waves-light bx bx-edit font-size-14 align-middle"></a>

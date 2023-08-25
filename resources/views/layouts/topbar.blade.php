@@ -144,7 +144,7 @@
                         @endphp
                         @foreach($userItem as $row)
                             <div>
-                                <a href="" class="text-reset notification-item">
+                                <a href="{{ route('showdetails', $row->product->id) }}" class="text-reset notification-item">
                                     <div class="d-flex border-bottom align-items-start">
                                         <div class="flex-shrink-0">
                                             <img src="{{ $row->product->image_1 !== null ? asset('images/products/' . $row->product->image_1) : asset('assets/images/nonskin/non-logo.jpg') }}"

@@ -69,7 +69,7 @@ class AdminController extends Controller
     public function memberEdit(User $user){
         $states = State::select('id', 'name')->get();
         $banks = BankSetting::select('id', 'name')->orderBy('name')->get();
-        $rankings = Rankings::whereIn('level', [4, 5])->where('category', 'promotion')->get();
+        $rankings = Rankings::whereIn('level', [1, 2, 3, 4, 5])->where('category', 'promotion')->get();
         // $rankLogs = RankingUpdateLog::get();
         // dd($rankLogs->type);
 
@@ -96,7 +96,7 @@ class AdminController extends Controller
         // ]);
 
         $user = User::find($request->input('id'));
-        
+
         try {
             if($user->rank_id == $request->rank_name) {
                 // dd($request->all());
@@ -154,7 +154,7 @@ class AdminController extends Controller
                 $rankLog->remarks = 'Manual upgrade by admin';
                 $rankLog->save();
             }
-            
+
 
             foreach ($request->input('addresses', []) as $addressId => $addressData) {
                 $address = Address::find($addressId);
@@ -469,19 +469,19 @@ class AdminController extends Controller
     }
     public function networktree(Request $request)
     {
-        
+
 
         $code = $request->code;
         $user = User::all();
-        
+
         if($code) {
             $admins = User::where('referrer_id', '=', $code)->get();
-            
+
         } else {
             $admins = User::where('upline_id',  3)->where('role', '!=', 'superadmin')->get();
         }
 
-       
+
 
         return view('admin.network.network-tree', [
             'admins' => $admins

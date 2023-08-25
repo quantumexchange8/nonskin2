@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\CartItem;
+use App\Models\Ranking;
+use App\Models\PromotionOrdersLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 Use Alert;
+use Carbon\Carbon;
 
 class CartController extends Controller
 {
@@ -65,36 +68,58 @@ class CartController extends Controller
 
         if ($cart) {
             $cartItems = $cart->items;
-            $totalDiscount = 0; // Initialize totalDiscount variable outside the loop
+            $totalDiscount = 0;
 
-            // Calculate the total price and discount for each cart item
+            $user = Auth::user();
+            $now = Carbon::now();
+
+            $hasValidPromotion = PromotionOrdersLog::where('start_date', '<=', $now)
+                ->where('end_date', '>=', $now)
+                ->exists();
+
+            $rank = Ranking::where('level', $user->rank->level)
+            ->where(function ($query) use ($hasValidPromotion) {
+                if ($hasValidPromotion) {
+                    $query->whereIn('level', [1, 2, 3, 4, 5])
+                        ->where('category', 'promotion');
+                } else {
+                    $query->whereIn('level', [1, 2, 3, 4, 5])
+                        ->where('category', 'normal');
+                }
+            })
+            ->first();
+
+            // if ($user->rank_id == 2) {
+            //     $memberDiscountAmount = 10;
+            // } elseif ($user->rank_id == 3) {
+            //     $memberDiscountAmount = 35;
+            // } elseif ($user->rank_id == 4) {
+            //     $memberDiscountAmount = 45;
+            // } elseif ($user->rank_id == 5) {
+            //     $memberDiscountAmount = 50;
+            // } else {
+            //     $memberDiscountAmount = 0;
+            // }
+
+
+
             foreach ($cartItems as $item) {
-                // Product price
                 $item->product_price = $item->product->price;
 
-                if ($item->product->discount == 0) {
-                    // Discount price for each product (when no discount is applied)
-                    $item->discount_price = 0;
-                    $item->discounted_price = $item->product->price;
-                    $item->total_price = $item->product->price * $item->quantity;
-                } else {
-                    // Discount price for each product (when discount is applied)
-                    $discountedPrice = $item->product->price - ($item->product->price * ($item->product->discount / 100));
-                    $discount = $item->product->price - $discountedPrice;
-                    $totalDiscount += $discount * $item->quantity; // Accumulate the discount for each product
+                // Calculate the discount based on member's rank
+                $discountedPrice = $item->product->price - ($item->product->price * ($rank->level_discount / 100));
+                $discount = $item->product->price - $discountedPrice;
+                $totalDiscount += $discount * $item->quantity;
 
-                    $item->discount_price = $discount;
-                    $item->discounted_price = $discountedPrice;
-                    $item->total_price = $discountedPrice * $item->quantity;
-                }
+                $item->discount_price = $discount;
+                $item->discounted_price = $discountedPrice;
+                $item->total_price = $discountedPrice * $item->quantity;
             }
 
-            // Calculate the total price of all items in the cart without discount
             $totalPriceWithoutDiscount = $cartItems->sum(function ($item) {
                 return $item->product_price * $item->quantity;
             });
 
-            // Calculate the total price of all items in the cart with discount
             $totalPriceWithDiscount = $cartItems->sum('total_price');
 
             return response()->json([
@@ -102,12 +127,13 @@ class CartController extends Controller
                 'cartItems' => $cartItems,
                 'total_price_without_discount' => $totalPriceWithoutDiscount,
                 'total_price_with_discount' => $totalPriceWithDiscount,
-                'total_discount' => $totalDiscount // Now it will contain the sum of discounts for all products
+                'total_discount' => $totalDiscount
             ]);
         }
 
         return response()->json(['message' => 'Cart not found'], 404);
     }
+
 
     public function update(Request $request, Cart $cart)
     {
@@ -221,12 +247,12 @@ class CartController extends Controller
 
             // calculate product total amount before discount
             $total_price = $productPrice * $quantity;
-            // calculate after discount amount 
+            // calculate after discount amount
             $discount_percent_amount = $member_discount_amount * ($productPrice / 100);
             $total_discount_amount = $discount_percent_amount * $quantity;
 
 
-            $subtotal = $total_price - $total_discount_amount; 
+            $subtotal = $total_price - $total_discount_amount;
 
             // Create a new cart item for the product with the input quantity
             $userCartItem = CartItem::create([
@@ -271,7 +297,7 @@ class CartController extends Controller
 
     public function addToCartDetails(Request $request)
     {
-        
+
         $productId = $request->input('product_id');
         $productPrice = $request->input('price');
         $quantity = $request->input('quantity');
