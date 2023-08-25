@@ -120,7 +120,7 @@ use App\Models\{State, BankSetting};
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
                                                             <label for="id_no" class="form-label required">Identification No. / Passport No.</label>
-                                                            <input type="number" class="form-control" placeholder="e.g. 900101023434" name="id_no" id="id_no" required>
+                                                            <input type="text" class="form-control" placeholder="e.g. 900101023434" name="id_no" id="id_no" required>
                                                             <div class="invalid-feedback" id="id-no-error">
                                                                 <!-- Error message will be displayed here -->
                                                             </div>
@@ -131,7 +131,7 @@ use App\Models\{State, BankSetting};
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
                                                             <label for="contact" class="form-label required">Contact</label>
-                                                            <input type="number" class="form-control" placeholder="e.g. 01178781515" name="contact" id="contact" required>
+                                                            <input type="text" class="form-control" placeholder="e.g. 01178781515" name="contact" id="contact" required>
                                                             <div class="invalid-feedback" id="contact-error">
                                                                 <!-- Error message will be displayed here -->
                                                             </div>
@@ -359,6 +359,7 @@ use App\Models\{State, BankSetting};
 
 @section('script')
     {{-- <script src="{{ URL::asset('assets/js/app.js') }}"></script> --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
     <script>
         let currentTab = 0;
         showTab(currentTab);
@@ -539,6 +540,12 @@ use App\Models\{State, BankSetting};
                 }
             });
         });
+        $('#contact').inputmask({
+            mask: '9999999999[9999]', // Allow 10 to 12 digits
+            placeholder: '',
+            showMaskOnHover: false // Hide the mask on hover
+        });
+
         $('#contact').on('keyup', function() {
             let contact = $(this).val().trim();
 
@@ -560,9 +567,6 @@ use App\Models\{State, BankSetting};
                     if (response.unique === false) {
                         $('#contact').addClass('is-invalid');
                         $('#contact-error').text('Contact is already taken.');
-                    } else if (!/^\d{10,12}$/.test(contact)) {
-                        $('#contact').addClass('is-invalid');
-                        $('#contact-error').text('Contact must be a number with 10 to 11 digits.');
                     } else {
                         $('#contact').removeClass('is-invalid');
                         $('#contact').addClass('is-valid');
@@ -572,6 +576,16 @@ use App\Models\{State, BankSetting};
             });
         });
 
+        $('#id_no').inputmask({
+            mask: '**************', // Placeholder for A to Z and 0 to 9 characters
+            definitions: {
+                '*': {
+                    validator: '[A-Za-z0-9]',
+                },
+            },
+            placeholder: '',
+            showMaskOnHover: false, // Hide the mask on hover
+        });
         $('#id_no').on('keyup', function() {
             let id_no = $(this).val().trim();
 
@@ -579,9 +593,6 @@ use App\Models\{State, BankSetting};
             if (id_no === '') {
                 $('#id_no').addClass('is-invalid');
                 $('#id-no-error').text('Idenfication / Passport No. is required.');
-            } else if (!/^\d{8,12}$/.test(id_no)) {
-                $('#id_no').addClass('is-invalid');
-                $('#id-no-error').text('Idenfication / Passport No. must be a number with 8 to 12 digits.');
             }
             $.ajax({
                 url: '{{ route('registerUniqueID') }}',
@@ -594,9 +605,6 @@ use App\Models\{State, BankSetting};
                     if (response.unique === false) {
                         $('#id_no').addClass('is-invalid');
                         $('#id-no-error').text('Idenfication No. is already taken.');
-                    } else if (!/^\d{8,12}$/.test(id_no)) {
-                        $('#id_no').addClass('is-invalid');
-                        $('#id-no-error').text('Idenfication / Passport No. must be a number with 8 to 12 digits.');
                     } else {
                         $('#id_no').removeClass('is-invalid');
                         $('#id_no').addClass('is-valid');
