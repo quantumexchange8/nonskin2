@@ -14,6 +14,8 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Payment;
 use App\Models\Product;
+use App\Models\Rankings;
+use App\Models\RankingUpdateLog;
 use Validator;
 use Response;
 use Redirect;
@@ -67,7 +69,11 @@ class AdminController extends Controller
     public function memberEdit(User $user){
         $states = State::select('id', 'name')->get();
         $banks = BankSetting::select('id', 'name')->orderBy('name')->get();
-        return view('admin.members.edit', compact('user', 'states', 'banks'));
+        $rankings = Rankings::whereIn('level', [4, 5])->where('category', 'promotion')->get();
+        // $rankLogs = RankingUpdateLog::get();
+        // dd($rankLogs->type);
+
+        return view('admin.members.edit', compact('user', 'states', 'banks', 'rankings'));
     }
 
     public function memberUpdate(Request $request, User $user){
@@ -90,25 +96,65 @@ class AdminController extends Controller
         // ]);
 
         $user = User::find($request->input('id'));
-        // dd($request);
+        
         try {
-            $user->update([
-                'username'          => $request->input('username'),
-                'email'             => $request->input('email'),
-                'full_name'         => $request->input('full_name'),
-                'id_no'             => $request->input('id_no'),
-                'contact'           => $request->input('contact'),
-                'bank_name'         => $request->input('bank_name'),
-                'bank_holder_name'  => $request->input('bank_holder_name'),
-                'bank_acc_no'       => $request->input('bank_acc_no'),
-                'bank_ic'           => $request->input('bank_ic'),
-                'address_1'         => $request->input('address_1'),
-                'address_2'         => $request->input('address_2'),
-                'postcode'          => $request->input('postcode'),
-                'city'              => $request->input('city'),
-                'state'             => $request->input('state'),
-                'country'           => $request->input('country'),
-            ]);
+            if($user->rank_id == $request->rank_name) {
+                // dd($request->all());
+                $user->update([
+                    'username'          => $request->input('username'),
+                    'email'             => $request->input('email'),
+                    'full_name'         => $request->input('full_name'),
+                    'id_no'             => $request->input('id_no'),
+                    'contact'           => $request->input('contact'),
+                    'bank_name'         => $request->input('bank_name'),
+                    'bank_holder_name'  => $request->input('bank_holder_name'),
+                    'bank_acc_no'       => $request->input('bank_acc_no'),
+                    'bank_ic'           => $request->input('bank_ic'),
+                    'address_1'         => $request->input('address_1'),
+                    'address_2'         => $request->input('address_2'),
+                    'postcode'          => $request->input('postcode'),
+                    'city'              => $request->input('city'),
+                    'state'             => $request->input('state'),
+                    'country'           => $request->input('country'),
+                ]);
+            } else {
+                // dd($request->rank_name);
+                $user->update([
+                    'username'          => $request->input('username'),
+                    'email'             => $request->input('email'),
+                    'full_name'         => $request->input('full_name'),
+                    'id_no'             => $request->input('id_no'),
+                    'contact'           => $request->input('contact'),
+                    'bank_name'         => $request->input('bank_name'),
+                    'bank_holder_name'  => $request->input('bank_holder_name'),
+                    'bank_acc_no'       => $request->input('bank_acc_no'),
+                    'bank_ic'           => $request->input('bank_ic'),
+                    'address_1'         => $request->input('address_1'),
+                    'address_2'         => $request->input('address_2'),
+                    'postcode'          => $request->input('postcode'),
+                    'city'              => $request->input('city'),
+                    'state'             => $request->input('state'),
+                    'country'           => $request->input('country'),
+                    'rank_id'           => $request->input('rank_name'),
+                ]);
+
+                $rankLog = new RankingUpdateLog();
+                $rankLog->user_id = $user->id;
+                $rankLog->old_rank = $user->rank_id;
+                $rankLog->new_rank = $request->rank_name;
+                $rankLog->user_package_amount = 0;
+                $rankLog->target_package_amount = 0;
+                $rankLog->user_group_sales = 0;
+                $rankLog->target_group_sales = 0;
+                $rankLog->user_group_package = 0;
+                $rankLog->target_group_package = 0;
+                $rankLog->user_personal_sales = 0;
+                $rankLog->target_personal_sales = 0;
+                $rankLog->type = 'upgrade';
+                $rankLog->remarks = 'Manual upgrade by admin';
+                $rankLog->save();
+            }
+            
 
             foreach ($request->input('addresses', []) as $addressId => $addressData) {
                 $address = Address::find($addressId);

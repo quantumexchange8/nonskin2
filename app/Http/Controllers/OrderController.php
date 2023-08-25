@@ -159,7 +159,6 @@ class OrderController extends Controller
                 $payment->status        = 'Pending';
                 $payment->remarks       = null;
                 $payment->receipt       = null;
-                $payment->updated_at    = null;
                 $payment->created_by    = Auth::id();
                 $payment->save();
 
@@ -198,7 +197,6 @@ class OrderController extends Controller
                 $orderItem->price           = $item->price;             // because price in cart is the discounted/selling/price that user needs to pay per qty
                 $orderItem->discount        = $item->product->discount; // gets discount information for reference
                 $orderItem->quantity        = $item->quantity;
-                $orderItem->updated_at      = null;
                 $orderItem->created_by      = Auth::id();
                 $orderItem->save();
             }

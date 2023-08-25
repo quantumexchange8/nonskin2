@@ -76,6 +76,26 @@
                         </div>
 
                         <div class="mt-3 row">
+                            <h2 class="col-lg-2 col-md-3 col-form-label fw-bold font-size-20 py-0">Rank Details</h2>
+                            <div class="col-lg-8 col-md-9">
+                                <label class="col-lg-2 col-md-3 col-form-label">
+                                </label>
+                            </div>
+                        </div>
+                        <hr>
+
+                        <div class="mb-3 row">
+                            <label for="bank_holder_name" class="col-lg-2 col-md-3 col-form-label">Rankings</label>
+                            <div class="col-lg-8 col-md-9">
+                                <select class="form-select" name="rank_name">
+                                    @foreach ($rankings as $ranking)
+                                        <option class="form-select" {{ $user->rank_id == $ranking->level ? 'selected' : '' }} value="{{ $ranking->level }}" >{{ $ranking->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mt-3 row">
                             <h2 class="col-lg-2 col-md-3 col-form-label fw-bold font-size-20 py-0">Bank Name</h2>
                             <div class="col-lg-8 col-md-9">
                                 <label class="col-lg-2 col-md-3 col-form-label">

@@ -53,7 +53,7 @@
                                             <span class="badge badge-soft-danger font-size-12">@lang('translation.inactive')</span>
                                             @endif
                                         </td>
-                                        <td>{{ $v->updated_at->format('d/m/Y, h:i:s') }}</td>
+                                        <td>{{ $v->updated_at ? $v->updated_at->format('d/m/Y, h:i:s') : 'N/A' }}</td>
                                         <td>
                                             <div class="d-flex gap-2">
                                                 <a href="" data-bs-toggle="modal" data-bs-target="#updateCategory{{ $v->id }}" class="btn btn-sm btn-soft-primary waves-effect waves-light"><i class="bx bx-edit font-size-14 align-middle"></i></a>

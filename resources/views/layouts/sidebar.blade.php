@@ -246,6 +246,7 @@
                             <li><a href="{{ route('admin.quarterly-commission-report') }}">@lang('translation.Quarterly Commission')</a></li>
                             <li><a href="{{ route('admin.annually-commission-report') }}">@lang('translation.Annually Commission')</a></li>
                             <li><a href="{{ route('admin.performance-bonus-report') }}">@lang('translation.Performance Bonus')</a></li>
+                            <li><a href="{{ route('admin.report-ranking') }}">@lang('translation.Ranking History')</a></li>
                         @endhasanyrole
                     </ul>
                 </li>

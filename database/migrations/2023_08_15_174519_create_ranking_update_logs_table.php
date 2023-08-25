@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRankingUpdateLogTable extends Migration
+class CreateRankingUpdateLogsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateRankingUpdateLogTable extends Migration
      */
     public function up()
     {
-        Schema::create('ranking_update_log', function (Blueprint $table) {
+        Schema::create('ranking_update_logs', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->integer('old_rank');
@@ -28,10 +28,10 @@ class CreateRankingUpdateLogTable extends Migration
             $table->double('target_personal_sales');
             $table->string('type', 10)->charset('utf8mb4')->collation('utf8mb4_unicode_ci');
             $table->timestamps();
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onUpdate('cascade');
+            // $table->foreign('user_id')
+            //     ->references('id')
+            //     ->on('users')
+            //     ->onUpdate('cascade');
         });
     }
 
@@ -42,6 +42,6 @@ class CreateRankingUpdateLogTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ranking_update_log');
+        Schema::dropIfExists('ranking_update_logs');
     }
 }

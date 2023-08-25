@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\User;
 use App\Models\WalletHistory;
+use App\Models\RankingUpdateLog;
 use Auth;
 
 class ReportController extends Controller
@@ -93,5 +94,16 @@ class ReportController extends Controller
         }else{
             return abort (404);
         }
+    }
+
+    public function reportRanking()
+    {
+
+        $rankingLog = RankingUpdateLog::get();
+        // dd($rankingLog);
+
+        return view('admin.reports.ranking', [
+            'rankings' => $rankingLog,
+        ]);
     }
 }
