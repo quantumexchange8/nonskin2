@@ -85,6 +85,25 @@
         "last updated at" => "Last Updated At",
         "View All Announcement" => "View All Announcement",
 
+        // Dashboard
+        "Copy" => "Copy",
+        "Deposit Fund" => "Deposit Fund",
+        "Withdraw Fund" => "Withdraw Fund",
+        "Available Balance" => "Available Balance",
+        "Cash Wallet" => "Cash Wallet",
+        "Product Wallet" => "Product Wallet",
+        "Performance Statistics" => "Performance Statistics",
+        "Personal Sales" => "Personal Sales",
+        "RANKING MAINTAINED" => "RANKING MAINTAINED",
+        "UNQUALIFIED" => "UNQUALIFIED",
+
+        // Ranking
+        "Client" => "Client",
+        "Member" => "Member",
+        "General Distributor" => "General Distributor",
+        "Exclusive Distributor" => "Exclusive Distributor",
+        "Chief Distributor" => "Chief Distributor",
+
         //buttons
         'save changes' => 'Save changes',
 

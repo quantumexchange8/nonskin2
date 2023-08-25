@@ -19,8 +19,8 @@
 
     <div class="container-fluid container-row">
         <div class="row">
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card bg-primary h-100">
+            <div class="col-xl-4 col-md-6 col-sm-12 mb-4 d-flex align-items-stretch">
+                <div class="card bg-primary w-100">
                     <div class="card-body">
                         <div class="text-center py-3">
                             <ul class="bg-bubbles ps-0">
@@ -37,7 +37,7 @@
                             </ul>
                             <div class="main-wid position-relative">
 
-                                <div class="d-flex justify-content-between">
+                                <div class="d-flex justify-content-between text-end">
                                     <div>
                                         {{QrCode::size(110)->generate($user->url)}}
                                     </div>
@@ -48,7 +48,7 @@
                                     </div>
                                 </div>
 
-                                <div class="mt-4 pt-2 mb-2">
+                                <div class="mt-4">
                                     <!-- QR Code -->
                                     {{-- <button id="copyLink" class="btn border border-dark text-white" type="button">
                                         Referral Code
@@ -58,7 +58,7 @@
 
                                     <div class="input-group">
                                         <input class="form-control" type="text" id="refLink" value="{{ $user->url }}" aria-describedby="basic-addon1" disabled>
-                                        <button class="btn btn-dark" type="button" id="copyLink">Copy</button>
+                                        <button class="btn btn-dark" type="button" id="copyLink">@lang('translation.Copy')</button>
                                     </div>
                                 </div>
                             </div>
@@ -66,51 +66,45 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card h-100">
+
+            <div class="col-xl-4 col-md-6 col-sm-12 mb-4 d-flex align-items-stretch">
+                <div class="card w-100">
                     <div class="card-body d-flex flex-column">
-                        <h5 class="card-title text-end font-size-18">PURCHASE WALLET</h5>
-                        <p class="text-end mb-0">Available Balance</p>
+                        <h5 class="card-title text-end font-size-18">@lang('translation.Purchase Wallet')</h5>
+                        <p class="text-end mb-0">@lang('translation.Available Balance')</p>
                         <div class="row mt-auto">
                             <div>
                                 <h2>RM {{ number_format($user->purchase_wallet,2) }}</h2>
                             </div>
                             <div class="d-flex justify-content-between gap-3 mt-4">
-                                <a href="{{ route('member.deposit') }}" class="btn btn-primary w-100">Deposit Fund</a>
-                                <a href="{{ route('member.withdraw') }}" class="btn btn-primary w-100">Withdraw Fund</a>
+                                <a href="{{ route('member.deposit') }}" class="btn btn-primary w-100">@lang('translation.Deposit Fund')</a>
+                                <a href="{{ route('member.withdraw') }}" class="btn btn-primary w-100">@lang('translation.Withdraw Fund')</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6 mb-4">
-                <div class="card h-100">
+
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-4 d-flex align-items-stretch">
+                <div class="card w-100">
                     <div class="card-body">
-                        <div class="d-flex justify-content-between mb-4">
-                            <div class="avatar">
-                                <span class="avatar-title bg-soft-primary rounded">
-                                    <i class="bx bxs-coin-stack text-primary font-size-24"></i>
-                                </span>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h5 class="card-title mb-2 font-size-18">COMMISSIONS AND VOUCHERS</h5>
+                                <p class="mt-5 card-text">@lang('translation.Cash Wallet')</p>
+                                <p class="mt-5 card-text">@lang('translation.Product Wallet')</p>
                             </div>
-                            <p class="mt-2">Cash Wallet</p>
+                            <div>
+                                <h2 class="mt-5 mb-0">RM {{ number_format($user->cash_wallet, 2) }}</h2>
+                                <h2 class="mt-5 mb-0">RM {{ number_format($user->product_wallet, 2) }}</h2>
+                            </div>
                         </div>
-                        <div>
-                            <h2 class="mb-0 mt-5">RM {{ number_format($user->cash_wallet,2) }}</h2>
-                        </div>
-                        <div class="d-flex justify-content-between gap-3 mt-4">
-                            <form action="{{ route('redeem-commission') }}" method="POST" id="redeem-form">
-                                @csrf
-                                <button class="btn btn-primary 2-100 btn-redeem" type="submit" id="redeem-button">
-                                    Redeem
-                                </button>
-                            </form>
-
-                        </div>
-
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6 mb-4">
+
+
+            {{-- <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
                 <div class="card h-100">
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-4">
@@ -124,14 +118,14 @@
                         <h2 class="mb-0 mt-5">RM {{ number_format($user->product_wallet,2) }}</h2>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
         <div class="row">
-            <div class="col-xl-3 col-md-6">
+            <div class="col-xl-3 col-md-6 col-sm-12">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex flex-wrap align-items-center mb-3">
-                            <h5 class="card-title mb-0">Performance Statistics</h5>
+                            <h5 class="card-title mb-0">@lang('translation.Performance Statistics')</h5>
                             <div class="ms-auto">
                                 <div class="dropdown">
                                     {{-- <a class="dropdown-toggle text-reset" href="#" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -146,22 +140,23 @@
                             </div>
                         </div>
 
+                        <!-- Personal Sales to Maintain Rank -->
                         @if ($user->rank->name !== 'Client')
                             <div class="mt-3 border-top pt-3">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="d-flex">
                                         {{-- <i class="mdi mdi-circle font-size-10 mt-1 text-warning"></i> --}}
                                         <div class="flex-1">
-                                            <p class="mb-0">Personal Sales</p>
+                                            <p class="mb-0">@lang('translation.Personal Sales')</p>
                                             <h5 class="mt-1 mb-0 font-size-14">RM {{ number_format($user->personal_sales,2) }}</h5>
                                         </div>
                                     </div>
                                     <div>
                                         <div class="flex-1 text-end">
                                             @if(($user->personal_sales/$user->rank->personal_sales)*100 >= 100)
-                                                <span class="badge badge-soft-success">RANKING MAINTAINED</span>
+                                                <span class="badge badge-soft-success">@lang('translation.RANKING MAINTAINED')</span>
                                             @else
-                                                <span class="badge badge-soft-danger">UNQUALIFIED</span>
+                                                <span class="badge badge-soft-danger">@lang('translation.UNQUALIFIED')</span>
                                             @endif
                                                 <h5 class="mt-1 mb-0 font-size-14 text-wrap">RM {{ number_format($user->rank->personal_sales,2) }}</h5>
                                             {{-- @switch($user->rank->name)
@@ -196,6 +191,7 @@
                             </div>
                         @endif
 
+                        <!-- Current Rank vs Next Rank Target -->
                         <div class="mt-3 border-top pt-3">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="d-flex">
@@ -213,6 +209,7 @@
                             </div>
                         </div>
 
+                        <!-- Package Requirement -->
                         @if ($user->rank->name !== 'Chief Distributor' && $user->rank->name !== 'Exclusive Distributor')
                             <div class="mt-3 border-top pt-3">
                                 <div class="d-flex justify-content-between align-items-center">
@@ -244,6 +241,7 @@
                             </div>
                         @endif
 
+                        <!-- Group Sales Requirement -->
                         @if ($user->rank->name !== 'Client' && $user->rank->name !== 'Chief Distributor')
                             <div class="mt-3 border-top pt-3">
                                 <div class="d-flex justify-content-between align-items-center">
@@ -276,12 +274,13 @@
                             </div>
                         @endif
 
+                        <!-- Product Discount Entitlement -->
                         <div class="mt-3 border-top pt-3">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="d-flex">
                                     {{-- <i class="mdi mdi-circle font-size-10 mt-1 text-danger"></i> --}}
                                     <div class="flex-1 ">
-                                        <p class="mb-0">Discount Entitlement</p>
+                                        <p class="mb-0">Product Discount Entitlement</p>
                                         <h5 class="mt-1 mb-0 font-size-14">{{ $user->rank->level_discount }} %</h5>
                                     </div>
                                 </div>
@@ -304,93 +303,7 @@
                     </div>
                 </div>
             </div>
-            {{-- <div class="col-lg-3 col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between mb-4">
-                            <div class="avatar">
-                                @switch($user->rank->name)
-                                    @case($user->rank->name == 'Member')
-                                        <span class="avatar-title bg-soft-success rounded">
-                                            <i class="mdi mdi-star-three-points text-success font-size-24"></i>
-                                        </span>
-                                        @break
-                                    @case($user->rank->name == 'General Distributor')
-                                        <span class="avatar-title bg-soft-warning rounded">
-                                            <i class="mdi mdi-star-four-points text-warning font-size-24"></i>
-                                        </span>
-                                        @break
-                                    @case($user->rank->name == 'Exclusive Distributor')
-                                        <div class="avatar">
-                                            <span class="avatar-title bg-soft-danger rounded">
-                                                <i class='mdi mdi-star text-danger font-size-24'></i>
-                                            </span>
-                                        </div>
-                                        @break
-                                    @case($user->rank->name == 'Chief Distributor')
-                                        <div class="avatar">
-                                            <span class="avatar-title bg-soft-purple rounded">
-                                                <i class="mdi mdi-hexagram text-purple font-size-24"></i>
-                                            </span>
-                                        </div>
-                                        @break
-                                    @default
-                                        <span class="avatar-title bg-soft-primary rounded">
-                                            <i class="mdi mdi-account text-primary font-size-24"></i>
-                                        </span>
-                                @endswitch
-                            </div>
-                            <p class="mt-2">Personal Ranking</p>
-                        </div>
-                        <h4 class="mb-0">{{ $user->rank->name }}</h4>
-                    </div>
-                </div>
-            </div>
-            @if ($next_rank !== 'Client')
-                <div class="col-lg-3 col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between mb-4">
-                                <div class="avatar">
-                                    @switch($next_rank)
-                                        @case($next_rank == 'Member')
-                                            <span class="avatar-title bg-soft-success rounded">
-                                                <i class="mdi mdi-star-three-points text-success font-size-24"></i>
-                                            </span>
-                                            @break
-                                        @case($next_rank == 'General Distributor')
-                                            <span class="avatar-title bg-soft-warning rounded">
-                                                <i class="mdi mdi-star-four-points text-warning font-size-24"></i>
-                                            </span>
-                                            @break
-                                        @case($next_rank == 'Exclusive Distributor')
-                                            <div class="avatar">
-                                                <span class="avatar-title bg-soft-danger rounded">
-                                                    <i class='mdi mdi-star text-danger font-size-24'></i>
-                                                </span>
-                                            </div>
-                                            @break
-                                        @case($next_rank == 'Chief Distributor')
-                                            <div class="avatar">
-                                                <span class="avatar-title bg-soft-purple rounded">
-                                                    <i class="mdi mdi-hexagram text-purple font-size-24"></i>
-                                                </span>
-                                            </div>
-                                            @break
-                                        @default
-                                            <span class="avatar-title bg-soft-primary rounded">
-                                                <i class="mdi mdi-account text-primary font-size-24"></i>
-                                            </span>
-                                    @endswitch
-                                </div>
-                                <p class="mt-2">Next Rank</p>
-                            </div>
-                            <h4 class="mb-0">{{ $next_rank }}</h4>
-                        </div>
-                    </div>
-                </div>
-            @endif
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-3 col-md-6 col-sm-12">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-4">
@@ -405,7 +318,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-3 col-md-6 col-sm-12">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-4">
@@ -419,8 +332,8 @@
                         <h4 class="mb-0">RM 500</h4>
                     </div>
                 </div>
-            </div> --}}
-            <div class="col-lg-3 col-md-6">
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-4">
@@ -435,7 +348,7 @@
                     </div>
                 </div>
             </div>
-            {{-- <div class="col-lg-3 col-md-6">
+            {{-- <div class="col-lg-3 col-md-6 col-sm-12">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-4">
@@ -450,7 +363,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-3 col-md-6 col-sm-12">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-4">
@@ -470,7 +383,7 @@
             </div> --}}
 
             <!-- Monthly -->
-            {{-- <div class="col-lg-3 col-md-6">
+            {{-- <div class="col-lg-3 col-md-6 col-sm-12">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-4">
@@ -489,7 +402,7 @@
                 </div>
             </div> --}}
             <!-- Quarterly -->
-            {{-- <div class="col-lg-3 col-md-6">
+            {{-- <div class="col-lg-3 col-md-6 col-sm-12">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-4">
@@ -508,7 +421,7 @@
                 </div>
             </div> --}}
             <!-- Anual -->
-            {{-- <div class="col-lg-3 col-md-6">
+            {{-- <div class="col-lg-3 col-md-6 col-sm-12">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-4">
@@ -585,7 +498,7 @@
             });
         });
     </script>
-    <script>
+    {{-- <script>
         document.addEventListener('DOMContentLoaded', function () {
             const redeemForm = document.getElementById('redeem-form');
             const redeemButton = document.getElementById('redeem-button');
@@ -619,6 +532,6 @@
                 }
             });
         });
-    </script>
+    </script> --}}
 
 @endsection

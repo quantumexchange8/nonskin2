@@ -3,7 +3,12 @@
     {{-- <body data-layout="horizontal" data-sidebar="dark"> --}}
     <!-- LOGO -->
     <div class="navbar-brand-box">
-        <a href="{{ url('/') }}" class="logo logo-dark">
+        @hasanyrole('user')
+            <a href="{{ route('user-dashboard') }}" class="logo logo-dark">
+        @endhasanyrole
+        @hasanyrole('admin|superadmin')
+            <a href="{{ route('admin-dashboard') }}" class="logo logo-dark">
+        @endhasanyrole
             <span class="logo-sm">
                 <img src="{{ URL::asset('assets/images/nonskin/non-logo.jpg') }}" alt="" height="22">
             </span>

@@ -26,7 +26,7 @@
                                     </div> --}}
                                     <div class="flex-grow-1 overflow-hidden">
                                         <h5 class="font-size-16 mb-1">Manual Transfer</h5>
-                                        <p class="text-muted text-truncate mb-0">Fill in the amount that you want to deposit</p>
+                                        <p class="text-muted mb-0">Fill in the amount that you want to deposit</p>
                                     </div>
 
                                 </div>
@@ -34,53 +34,58 @@
                         </a>
                         <div id="deposit-collapse" class="collapse show" data-bs-parent="#deposit-accordion">
                             <div class="p-4 border-top">
+
                                 <div class="row">
-                                    <div class="mb-3">
-                                        <label class="form-label required" for="amount">Amount</label>
-                                        <input class="form-control @error('amount') is-invalid @enderror" id="amount" name="amount" placeholder="e.g 1000.00" type="number" step="0.01" value="{{ old('amount') }}" required>
-                                        @error('amount')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
+                                    <div class="col-lg-6 col-md-12">
+                                        <div class="mb-3">
+                                            <label class="form-label required" for="amount">Amount</label>
+                                            <input class="form-control @error('amount') is-invalid @enderror" id="amount" name="amount" placeholder="e.g 1000.00" type="number" step="0.01" value="{{ old('amount') }}" required>
+                                            @error('amount')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label required" for="receipt">Upload Receipt</label>
+                                            <input class="form-control" type="file" name="receipt" id="receipt">
+                                            @error('amount')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label required" for="remarks">Remarks</label>
+                                            <input class="form-control @error('remarks') is-invalid @enderror" id="remarks" name="remarks" placeholder="e.g Topup" type="text" value="{{ old('remarks') }}">
+                                            @error('remarks')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+
+                                        <div class="mt-4">
+                                            <div class="">
+                                                <button type="submit" class="btn btn-primary"> Submit </button>
+                                            </div> <!-- end col -->
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="mb-3">
-                                        <label class="form-label required" for="receipt">Upload Receipt</label>
-                                        <input class="form-control" type="file" name="receipt" id="receipt">
-                                        @error('amount')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="mb-3">
-                                        <label class="form-label required" for="remarks">Remarks</label>
-                                        <input class="form-control @error('remarks') is-invalid @enderror" id="remarks" name="remarks" placeholder="e.g Topup" type="text" value="{{ old('remarks') }}">
-                                        @error('remarks')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="row mb-4">
-                                    <div class="">
-                                        <button type="submit" class="btn btn-primary"> Submit </button>
-                                    </div> <!-- end col -->
-                                </div>
-                                <br>
-                                <div class="row">
-                                    <div class="card">
-                                        <div class="col-sm-6">
-                                            <div class="text-meted">
-                                                <h5 class="font-size-16 mb-3">Company Bank Details:</h5>
-                                                <h5 class="font-size-15 mb-2">{{$companyInfo->bank_holder_name}}</h5>
-                                                <p class="mb-1">{{$companyInfo->bank_name}}</p>
-                                                <p class="mb-1">{{$companyInfo->bank_acc}}</p>
+                                    <div class="col-lg-6 col-md-12">
+                                        <br>
+                                        <div class="card">
+                                            <div class="text-muted">
+                                                <div class="card-header">
+                                                    <h5 class="font-size-16">Company Bank Details:</h5>
+                                                    <div class="text-muted font-size-12">You may transfer into this company's bank account</div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <h5 class="font-size-15 mb-2">{{$companyInfo->bank_holder_name}}</h5>
+                                                    <p class="mb-1">{{$companyInfo->bank_name}}</p>
+                                                    <p class="mb-1">{{$companyInfo->bank_acc}}</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
