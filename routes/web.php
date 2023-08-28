@@ -41,7 +41,6 @@ Auth::routes();
 // Route::get('/login', [LoginController::class, 'login'])->name('login');
 // Route::post('/customlogin', [LoginController::class, 'customlogin'])->name('customlogin');
 
-Route::resource('cart', CartController::class);
 // Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
 
 Route::get('/register', [RegisterController::class, 'register'])->name('user-register');
@@ -62,10 +61,12 @@ Route::post('/toggle-default-address', [App\Http\Controllers\HomeController::cla
 Route::post('/update-bank', [App\Http\Controllers\HomeController::class, 'updateBank'])->name('updateBank');
 Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('updatePassword');
 
+Route::resource('cart', CartController::class);
 /**
  * MEMBERS
  */
-Route::group(['prefix' => 'members',  'middleware' => ['auth', 'role:user',]], function () {
+Route::group(['prefix' => 'member',  'middleware' => ['auth', 'role:user', ]], function () {
+
     Route::get('/dashboard', [UserController::class, 'dashboard'])->name('user-dashboard');
     Route::post('/redeem-cashwallet', [UserController::class, 'redeemCommission'])->name('redeem-commission');
     Route::post('pending-orders/{order}', [UserController::class, 'cancelorder'])->name('cancelorder');
@@ -108,7 +109,7 @@ Route::group(['prefix' => 'members',  'middleware' => ['auth', 'role:user',]], f
 // Route::post('api/fetch-cities', [DropdownController::class, 'fetchCity']);
 
 // ADMIN
-Route::group(['prefix' => 'admin',  'middleware' => ['auth', 'role:superadmin|admin',]], function () {
+Route::group(['prefix' => 'admin',  'middleware' => ['auth', 'role:superadmin|admin', ]], function () {
     // dashboard
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin-dashboard');
 

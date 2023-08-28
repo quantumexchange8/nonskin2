@@ -244,7 +244,9 @@ use App\Models\{State, BankSetting};
                                                                 <label for="country" class="form-label required">Country</label>
                                                                 <select class="form-select @error('country') is-invalid @enderror" name="country" id="country" required>
                                                                     <option value="">Select Country</option>
-                                                                    <option selected value="Malaysia">Malaysia</option>
+                                                                    @foreach ($countries as $country)
+                                                                        <option value="{{ $country->code }}">{{ $country->name }}</option>
+                                                                    @endforeach
                                                                 </select>
                                                                 @error('country')
                                                                 <span class="invalid-feedback" role="alert">

@@ -10,7 +10,7 @@ class PrefixSeeder extends Seeder
     public $prefixes =[
         [
             'prefix' => 'NON',
-            'padding' => 9,
+            'padding' => 7,
             'counter' => 6,
             'description' => 'Member ID or Referrer ID. Each member has unique Referrer ID for referral purpose',
             'updated_at' => null,
@@ -36,7 +36,15 @@ class PrefixSeeder extends Seeder
             'description' => 'Internal Transfer No',
             'updated_at' => null,
             'created_by' => 1
-        ]
+        ],
+        [
+            'prefix' => 'USER',
+            'padding' => 5,
+            'counter' => 1043,
+            'description' => 'New Member ID or Referrer ID format.',
+            'updated_at' => null,
+            'created_by' => 1
+        ],
     ];
 
     public function run()

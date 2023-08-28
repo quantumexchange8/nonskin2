@@ -16,8 +16,8 @@ class CreateCountryStateCityTables extends Migration
         Schema::create('countries', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('sortname')->nullable();
-            $table->string('phonecode')->nullable();
+            $table->string('code')->nullable();
+            $table->string('phone')->nullable();
             $table->timestamps();
             $table->integer('created_by')->unsigned()->nullable()->comment('Refers to user id');
             $table->integer('updated_by')->unsigned()->nullable()->comment('Refers to user id');

@@ -9,9 +9,9 @@
                         </button>
                     @endif
                     <i class='bx bx-user'></i>
-                    {{ $child->referrer_id . ' | ' . __('public.Full Name') . ': ' . $child->full_name . ' | Personal Ranking: ' . $child->rank_id }}
+                    {{ $child->referrer_id . ' | ' . __('translation.Full Name') . ': ' . $child->full_name . ' | Personal Ranking: ' . $child->rank_id }}
                 </p>
-                
+
             </div>
             <div id="downline-{{ $child->id }}" class="downline" style="display: none;">
                 @if (count($child->downline))

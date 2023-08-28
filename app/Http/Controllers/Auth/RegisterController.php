@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Address;
 use App\Models\Cart;
 use App\Models\BankSetting;
+use App\Models\Country;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
@@ -126,10 +127,12 @@ class RegisterController extends Controller
     public function register(Request $request, $referral = null) {
 
         $banks = BankSetting::pluck('name', 'id');
+        $countries = Country::select('id', 'name', 'code')->get();
         // dd($referral);
         return view('auth.register', [
             'banks' => $banks,
             'referral' => $referral,
+            'countries' => $countries,
         ]);
     }
 
@@ -158,9 +161,15 @@ class RegisterController extends Controller
             $hierarchyList = "-" . 3 . "-";
         }
 
-        $memberPrefix = 'NON';
+        $memberPrefix = 'USER';
         // Find the corresponding row in the 'prefixes' table based on the prefix
         $prefixRow = Prefix::where('prefix', $memberPrefix)->first();
+
+        $countryCode = $request->country;
+
+        // Generate random and incrementing digits for referrer_id
+        $randomDigits = mt_rand(1000, 9999); // Generate 4 random digits
+        // $prefixRow = Prefix::where('prefix', $countryCode)->first();
 
         try {
             DB::beginTransaction();
@@ -173,7 +182,7 @@ class RegisterController extends Controller
             );
             $user = User::create([
                 'upline_id'     => $upline_user_id,
-                'referrer_id'   => $memberPrefix . str_pad($newMemberNumber, $prefixRow->padding, '0', STR_PAD_LEFT),
+                'referrer_id'   => $countryCode . $randomDigits . str_pad($newMemberNumber, $prefixRow->padding, '0', STR_PAD_LEFT),
                 'hierarchyList' => $hierarchyList,
                 'email'         => $request->email,
                 'password'      => Hash::make($request->password),
@@ -232,7 +241,7 @@ class RegisterController extends Controller
         } catch (\Throwable $th) {
             DB::rollBack();
             // dd($th);
-            return redirect()->back()->with("error", "Please try register again");
+            return redirect()->back()->with("error", $th->getMessage());
         }
     }
 

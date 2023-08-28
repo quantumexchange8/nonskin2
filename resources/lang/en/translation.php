@@ -50,6 +50,7 @@
 
 
         // Custom
+        "Full Name" => "Full Name",
         "search" => "Search",
         "from date" => "From Date",
         "to date" => "To Date",

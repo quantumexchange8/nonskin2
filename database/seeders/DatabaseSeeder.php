@@ -27,7 +27,8 @@ class DatabaseSeeder extends Seeder
             ShippingSettingSeeder::class,
             PaymentStatusSeeder::class,
             CompanyInfoSeeder::class,
-            AdminSeeder::class,
+            UsersSeeder::class,
+            // AdminSeeder::class,
         ]);
 
     }

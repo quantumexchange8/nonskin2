@@ -9,7 +9,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\HomeController;
 
 // Settings
-Route::group(['prefix' => 'admin/settings', 'as' => 'admin.settings.',  'middleware' => ['auth', 'role:superadmin|admin',]], function () {
+Route::group(['prefix' => 'admin/settings', 'as' => 'admin.settings.',  'middleware' => ['auth', 'role:superadmin|admin', ]], function () {
     Route::get('/product-categories', [AdminController::class, 'categorySettings'])->name('categories');
     Route::post('/product-category/update', [AdminController::class, 'categoryStore'])->name('category-store');
     Route::delete('/product-category/destroy/{category}', [AdminController::class, 'categoryDestroy'])->name('category-destroy');
@@ -24,7 +24,7 @@ Route::group(['prefix' => 'admin/settings', 'as' => 'admin.settings.',  'middlew
 });
 
 // Reports
-Route::group(['prefix' => 'admin/', 'as' => 'admin.',  'middleware' => ['auth', 'role:superadmin|admin',]], function () {
+Route::group(['prefix' => 'admin/', 'as' => 'admin.',  'middleware' => ['auth', 'role:superadmin|admin', ]], function () {
     // Route::get('report-downline-sales', [ReportController::class, 'reportDownlineSales'])->name('report-downline-sales');
     // Route::get('report-leadership', [ReportController::class, 'reportLeadership'])->name('report-leadership');
     // Route::get('report-levelling', [ReportController::class, 'reportLevelling'])->name('report-levelling');
