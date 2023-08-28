@@ -5,12 +5,9 @@
 
 @section('content')
     @component('components.breadcrumb')
-        @slot('li_1')
-            Contacts
-        @endslot
-        @slot('title')
-            Shipping Address
-        @endslot
+        @slot('li_1') @lang('translation.Dashboard') @endslot
+        @slot('url') {{ route('user-dashboard') }} @endslot
+        @slot('title') Shipping Address @endslot
     @endcomponent
 
     @include('includes.alerts')
@@ -32,11 +29,11 @@
     <div class="row">
         <div class="col-xl-12">
             <!-- Left sidebar -->
-            
+
             <!-- End Left sidebar -->
 
             <!-- Right Sidebar -->
-            
+
                 <div class="card">
                     <div class="card-body">
                         <div class="text-muted mt-4 mt-md-0" id="v-pills-tabContent">
@@ -44,7 +41,7 @@
                         </div>
                     </div>
                 </div>
-            
+
         </div>
     </div>
 
@@ -54,7 +51,7 @@
     <script src="{{ URL::asset('assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
     <script src="{{ URL::asset('assets/js/pages/form-validation.init.js') }}"></script>
     <script>
-        
+
 
         $(document).ready(function() {
 
@@ -123,7 +120,7 @@
 
             $('#full_name').on('blur', function() {
                 var full_name = $(this).val().trim();
-                
+
                 // Show error if field is blank
                 if (full_name === '') {
                     $('#full_name').addClass('is-invalid');
@@ -153,7 +150,7 @@
 
             $('#email').on('blur', function() {
                 var email = $(this).val().trim();
-                
+
                 // Show error if field is blank
                 if (email === '') {
                     $('#email').addClass('is-invalid');
@@ -183,7 +180,7 @@
 
             $('#username').on('blur', function() {
                 var username = $(this).val().trim();
-                
+
                 // Show error if field is blank
                 if (username === '') {
                     $('#username').addClass('is-invalid');
@@ -197,7 +194,7 @@
 
             $('#contact').on('blur', function() {
                 var contact = $(this).val().trim();
-                
+
                 // Show error if field is blank
                 if (contact === '') {
                     $('#contact').addClass('is-invalid');
@@ -214,7 +211,7 @@
 
             $('#id_no').on('blur', function() {
                 var id_no = $(this).val().trim();
-                
+
                 // Show error if field is blank
                 if (id_no === '') {
                     $('#id_no').addClass('is-invalid');

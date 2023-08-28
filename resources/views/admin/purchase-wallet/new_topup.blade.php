@@ -50,6 +50,18 @@
                                         </div>
 
                                         <div class="mb-3">
+                                            <label for="choices-single-default" class="form-label required">Default</label>
+                                            <select class="form-control form-select" data-trigger name="choices-single-default"
+                                                id="choices-single-default"
+                                                placeholder="Search Member">
+                                                <option value="" disabled>Search for Member</option>
+                                                @foreach ($members as $member)
+                                                    <option value="{{ $member->id }}">{{ $member->referrer_id }} | {{ $member->full_name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                        <div class="mb-3">
                                             <label class="form-label required" for="receipt">Upload Receipt</label>
                                             <input class="form-control" type="file" name="receipt" id="receipt">
                                             @error('amount')
@@ -103,5 +115,6 @@
 
 @endsection
 @section('script')
+    <script src="{{ URL::asset('assets/libs/choices.js/choices.js.min.js') }}"></script>
     <script src="{{ URL::asset('assets/js/app.js') }}"></script>
 @endsection

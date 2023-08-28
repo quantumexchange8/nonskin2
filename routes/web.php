@@ -44,7 +44,7 @@ Auth::routes();
 Route::resource('cart', CartController::class);
 // Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
 
-// Route::get('/register', [RegisterController::class, 'register'])->name('register');
+Route::get('/register', [RegisterController::class, 'register'])->name('user-register');
 Route::get('/register/{referral?}', [RegisterController::class, 'register'])->name('register');
 Route::post('/add-member', [RegisterController::class, 'store'])->name('add.member');
 Route::post('/check-existing-referral', [RegisterController::class, 'checkExistingReferral'])->name('registerExistingReferral');
@@ -93,7 +93,7 @@ Route::group(['prefix' => 'members',  'middleware' => ['auth', 'role:user',]], f
 
     // Wallets
     Route::get('deposit', [PaymentController::class, 'purchaseWalletDeposit'])->name('member.deposit');
-    Route::get('topup', [PaymentController::class, 'purchaseWalletTopup'])->name('member.topup');
+    Route::get('deposit/topup', [PaymentController::class, 'purchaseWalletTopup'])->name('member.topup');
     Route::post('topup', [PaymentController::class, 'purchaseWalletTopupStore'])->name('member.topup.store');
     Route::get('withdraw', [PaymentController::class, 'purchaseWalletWithdraw'])->name('member.withdraw');
     Route::post('withdraw', [PaymentController::class, 'purchaseWalletWithdrawStore'])->name('member.withdraw.store');
@@ -148,6 +148,7 @@ Route::group(['prefix' => 'admin',  'middleware' => ['auth', 'role:superadmin|ad
 
 
     // Wallets
+    Route::get('/new-topup', [PaymentController::class, 'purchaseWalletTopup'])->name('admin.new-topup');
     Route::get('/pending-deposit', [PaymentController::class, 'pendingDeposit'])->name('admin.pending-deposit');
     Route::post('/pending-approve/{deposit}', [PaymentController::class, 'approveDeposit'])->name('admin.approve-deposit');
     Route::post('/pending-reject/{deposit}', [PaymentController::class, 'rejectDeposit'])->name('admin.reject-deposit');

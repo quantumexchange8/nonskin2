@@ -3,9 +3,9 @@
 
 @section('content')
     @component('components.breadcrumb')
-    @slot('url') {{ url('/') }} @endslot
-    @slot('li_1') @lang('translation.Home') @endslot
-    @slot('title') Announcement @endslot
+        @slot('li_1') @lang('translation.Dashboard') @endslot
+        @slot('url') {{ route('user-dashboard') }} @endslot
+        @slot('title') Announcement @endslot
     @endcomponent
 
     @foreach ($announcements as $k => $v)

@@ -5,15 +5,9 @@
 
 @section('content')
     @component('components.breadcrumb')
-        @slot('url')
-            {{ url('/') }}
-        @endslot
-        @slot('li_1')
-            Home
-        @endslot
-        @slot('title')
-            Member Network Tree
-        @endslot
+        @slot('url') {{ url('/members/dashboard') }} @endslot
+        @slot('li_1') @lang('translation.Dashboard') @endslot
+        @slot('title') Member Network Tree @endslot
     @endcomponent
     <style>
         .icon-lg {
@@ -70,7 +64,7 @@
                                     ])
                                 </div>
 
-                                
+
                             </li>
                         @else
                             <li class="dd-item" data-id="{{ $user->id }}">
@@ -85,7 +79,7 @@
                       @endforeach
                     </ol>
                   </div>
-  
+
                 </div>
               @else
                 <label>No user found</label>
@@ -109,13 +103,13 @@
             $(".toggle-downline").click(function() {
                 // Find the target downline container using the data-target attribute
                 var target = $(this).data("target");
-                
+
                 // Toggle the visibility of the downline container
                 $(target).slideToggle();
-                
+
                 // Check the current state of the icon
                 var currentState = $(this).data("state");
-                
+
                 // Change the button's HTML to use MDI icons and update the state
                 if (currentState === "visible") {
                     $(this).html('<i class="mdi mdi-account-plus icon-lg"></i>'); // Change to plus icon
@@ -128,5 +122,5 @@
         });
 
     </script>
-    
+
 @endsection

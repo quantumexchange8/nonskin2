@@ -3,7 +3,7 @@
 
 @section('content')
     @component('components.breadcrumb')
-    @slot('url') {{ url('/') }} @endslot
+    @slot('url') {{ url('/members/dashboard') }} @endslot
     @slot('li_1') Nonskin @endslot
     @slot('title') Dashboard @endslot
     @endcomponent

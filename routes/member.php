@@ -33,9 +33,9 @@ Route::group(['prefix' => 'member/', 'as' => 'member.',  'middleware' => ['auth'
 
 
 
-    Route::get('report-sales', [ReportController::class, 'reportSales'])->name('report-sales');
-    Route::get('report-downline-sales', [ReportController::class, 'reportDownlineSales'])->name('report-downline-sales');
-    Route::get('report-wallet', [ReportController::class, 'reportWallet'])->name('report-wallet');
+    Route::get('sales-report', [ReportController::class, 'reportSales'])->name('report-sales');
+    Route::get('downline-sales-report', [ReportController::class, 'reportDownlineSales'])->name('report-downline-sales');
+    Route::get('wallets-report', [ReportController::class, 'reportWallet'])->name('report-wallet');
     Route::get('monthly-commission-report', [ReportController::class, 'monthlyCommissionReport'])->name('monthly-commission-report');
     Route::get('quarterly-commission-report', [ReportController::class, 'quarterlyCommissionReport'])->name('quarterly-commission-report');
     Route::get('annually-commission-report', [ReportController::class, 'annuallyCommissionReport'])->name('annually-commission-report');

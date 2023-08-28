@@ -5,12 +5,9 @@
 
 @section('content')
     @component('components.breadcrumb')
-        @slot('li_1')
-            Contacts
-        @endslot
-        @slot('title')
-            Change Password
-        @endslot
+        @slot('li_1') @lang('translation.Dashboard') @endslot
+        @slot('url') {{ route('user-dashboard') }} @endslot
+        @slot('title') Change Password @endslot
     @endcomponent
 
     @include('includes.alerts')
@@ -46,7 +43,7 @@
     <script src="{{ URL::asset('assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
     <script src="{{ URL::asset('assets/js/pages/form-validation.init.js') }}"></script>
     <script>
-        
+
 
         $(document).ready(function() {
 
@@ -89,7 +86,7 @@
 
             $('#full_name').on('blur', function() {
                 var full_name = $(this).val().trim();
-                
+
                 // Show error if field is blank
                 if (full_name === '') {
                     $('#full_name').addClass('is-invalid');
@@ -119,7 +116,7 @@
 
             $('#email').on('blur', function() {
                 var email = $(this).val().trim();
-                
+
                 // Show error if field is blank
                 if (email === '') {
                     $('#email').addClass('is-invalid');
@@ -149,7 +146,7 @@
 
             $('#username').on('blur', function() {
                 var username = $(this).val().trim();
-                
+
                 // Show error if field is blank
                 if (username === '') {
                     $('#username').addClass('is-invalid');
@@ -163,7 +160,7 @@
 
             $('#contact').on('blur', function() {
                 var contact = $(this).val().trim();
-                
+
                 // Show error if field is blank
                 if (contact === '') {
                     $('#contact').addClass('is-invalid');
@@ -180,7 +177,7 @@
 
             $('#current_password').on('blur', function() {
                 var current_password = $(this).val().trim();
-                
+
                 // Show error if field is blank
                 if (current_password === '') {
                     $('#current_password').addClass('is-invalid');
@@ -195,7 +192,7 @@
             function validatePasswordFields() {
                 var password = $('#password').val().trim();
                 var passwordConfirmation = $('#password_confirmation').val().trim();
-                
+
                 if (password.length !== passwordConfirmation.length) {
                     $('#password').addClass('is-invalid');
                     $('#password_confirmation').addClass('is-invalid');

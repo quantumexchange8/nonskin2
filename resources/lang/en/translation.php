@@ -84,6 +84,8 @@
         "close" => "Close",
         "last updated at" => "Last Updated At",
         "View All Announcement" => "View All Announcement",
+        "Purchase Wallet Deposit" => "Purchase Wallet Deposit",
+        "Purchase Wallet Topup" => "Purchase Wallet Topup",
 
         // Dashboard
         "Copy" => "Copy",

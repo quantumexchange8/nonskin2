@@ -1,11 +1,11 @@
 @extends('layouts.master')
-@section('title') Product Wallet @endsection
+@section('title') @lang('translation.Product Wallet') @endsection
 
 @section('content')
     @component('components.breadcrumb')
-    @slot('url') {{ url('/') }} @endslot
-    @slot('li_1') Home @endslot
-    @slot('title') Product Wallet @endslot
+    @slot('url') {{ url('/members/dashboard') }} @endslot
+    @slot('li_1') @lang('translation.Dashboard') @endslot
+    @slot('title') @lang('translation.Product Wallet') @endslot
     @endcomponent
 
     <div class="row">

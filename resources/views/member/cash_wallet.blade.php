@@ -1,11 +1,11 @@
 @extends('layouts.master')
-@section('title') Cash Wallet @endsection
+@section('title') @lang('translation.Cash Wallet') @endsection
 
 @section('content')
     @component('components.breadcrumb')
-    @slot('url') {{ url('/') }} @endslot
-    @slot('li_1') Home @endslot
-    @slot('title') Cash Wallet @endslot
+    @slot('url') {{ url('/members/dashboard') }} @endslot
+    @slot('li_1') @lang('translation.Dashboard') @endslot
+    @slot('title') @lang('translation.Cash Wallet') @endslot
     @endcomponent
 
     <div class="row">

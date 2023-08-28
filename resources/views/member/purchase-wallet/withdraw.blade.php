@@ -3,9 +3,9 @@
 
 @section('content')
     @component('components.breadcrumb')
-    @slot('url') {{ url('/') }} @endslot
-    @slot('li_1') Home @endslot
-    @slot('title') Purchase Wallet Withdraw @endslot
+        @slot('li_1') @lang('translation.Dashboard') @endslot
+        @slot('url') {{ route('user-dashboard') }} @endslot
+        @slot('title') Purchase Wallet Withdraw @endslot
     @endcomponent
 
     <div class="row">

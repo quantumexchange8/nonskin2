@@ -5,7 +5,7 @@
             <h4 class="mb-sm-0 font-size-18">{{ $title }}</h4>
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
-                    <li class="breadcrumb-item"><a href="{{ isset($url) }}">{{ $li_1 }}</a></li>
+                    <li class="breadcrumb-item"><a href="{{ $url }}">{{ $li_1 }}</a></li>
                     @if(isset($li_2) && isset($url2))
                         <li class="breadcrumb-item"><a href="{{ $url2 }}">{{ $li_2 }}</a></li>
                         <li class="breadcrumb-item active">{{ $title }}</li>

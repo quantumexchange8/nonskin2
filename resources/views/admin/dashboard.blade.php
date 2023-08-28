@@ -3,7 +3,7 @@
 
 @section('content')
     @component('components.breadcrumb')
-    @slot('url') {{ url('/') }} @endslot
+    @slot('url') {{ url('/admin/dashboard') }} @endslot
     @slot('li_1') Nonskin @endslot
     @slot('title') Dashboard @endslot
     @endcomponent
@@ -410,7 +410,7 @@
                                 </div>
                                 <p class="mt-2">Total Sales</p>
                             </div>
-                            <h4 class="mb-0">RM {{ number_format($res->total_sales,2) }} <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
+                            <h4 class="mb-0">RM {{ number_format($res->total_sales,2 ?? 'N/A') }} <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
                             <div>
                                 {{-- <div class="py-3 my-1">
                                     <div id="mini-1" data-colors='["#3980c0"]'></div>

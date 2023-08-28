@@ -3,9 +3,9 @@
 
 @section('content')
     @component('components.breadcrumb')
-    @slot('url') {{ url('/') }} @endslot
-    @slot('li_1') Home @endslot
-    @slot('title') Purchase Wallet Deposit @endslot
+        @slot('li_1') @lang('translation.Dashboard') @endslot
+        @slot('url') {{ route('user-dashboard') }} @endslot
+        @slot('title') Purchase Wallet Deposit @endslot
     @endcomponent
 
     <div class="row">
@@ -119,7 +119,7 @@
                                                     Failed
                                                 </span>
                                             @endif
-                                            
+
                                         </td>
                                         <td>{{ $row->remarks }}</td>
                                         @if($row->status == 'Failed')
@@ -131,7 +131,7 @@
                                                 </button>
                                                 @include('member.modals.edit-receipt')
                                             </form>
-                                            
+
                                         </td>
                                         @else
                                         <td></td>

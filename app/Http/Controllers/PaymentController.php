@@ -20,13 +20,12 @@ class PaymentController extends Controller
 
         $user = Auth::user();
 
-        $deposits = Payment::where('type', 'Deposit')
+            $deposits = Payment::where('type', 'Deposit')
                             ->where('user_id', $user->id)
                             ->get();
-
-        return view('member.purchase-wallet.deposit', [
-            'deposits' => $deposits,
-        ]);
+            return view('member.purchase-wallet.deposit', [
+                'deposits' => $deposits,
+            ]);
     }
 
 
@@ -34,9 +33,16 @@ class PaymentController extends Controller
 
         $companyInfo = CompanyInfo::first();
 
-        return view('member.purchase-wallet.topup', [
-            'companyInfo' => $companyInfo,
-        ]);
+        if(Auth::user()->role == 'user'){
+            return view('member.purchase-wallet.topup', [
+                'companyInfo' => $companyInfo,
+            ]);
+        }else if(Auth::user()->role == 'admin' || Auth::user()->role == 'superadmin'){
+            $members = User::where('role', 'user')->where('is_active', 1)->select('id', 'full_name', 'referrer_id')->get();
+            return view('admin.purchase-wallet.new_topup', compact('companyInfo', 'members'));
+        }else{
+            return abort (404);
+        }
     }
     public function purchaseWalletTopupStore(Request $request){
         if(Auth::user()->role == 'user'){
