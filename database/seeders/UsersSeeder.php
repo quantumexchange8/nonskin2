@@ -39,9 +39,9 @@ class UsersSeeder extends Seeder
                 'username'          => $user['username'],
                 'email'             => $user['email'],
                 'full_name'         => $user['full_name'],
-                'id_no'             => null,
-                'contact'           => null,
-                'password'          => Hash::make('123456789'),
+                'id_no'             => $user['id_no'],
+                'contact'           => $user['contact'],
+                'password'          => Hash::make('Nonskin123456789'),
                 'role'              => $user['type'],
                 'superadmin'        => $user['superadmin'],
                 'member_type'       => $user['member_type'],
@@ -62,7 +62,7 @@ class UsersSeeder extends Seeder
                 'address_2'     => $user['address_2'],
                 'city'          => $user['city'],
                 'postcode'      => $user['postcode'],
-                'state'         => $user['state'],
+                'state'         => 'Johor',
                 'country'       => 'Malaysia',
 
                 'bank_name' => null,
@@ -74,7 +74,7 @@ class UsersSeeder extends Seeder
                 'delivery_address_2'    => $user['address_2'],
                 'delivery_city'         => $user['city'],
                 'delivery_postcode'     => $user['postcode'],
-                'delivery_state'        => $user['state'],
+                'delivery_state'        => 'Johor',
                 'delivery_country'      => 'Malaysia',
 
                 'status'        => $user['status'],
@@ -95,7 +95,7 @@ class UsersSeeder extends Seeder
                 'address_2'     => $user['address_2'],
                 'city'          => $user['city'],
                 'postcode'      => $user['postcode'],
-                'state'         => $user['state'],
+                'state'         => 'Johor',
                 'country'       => 'Malaysia',
                 'created_by'    => $new_user->id,
                 'updated_by'    => $new_user->id,
@@ -104,6 +104,8 @@ class UsersSeeder extends Seeder
             // check the user role and assign role
             switch ($user['type']) {
                 case 'admin':
+                    $new_user->rank_id = null;
+                    $new_user->save();
                     $new_user->assignRole('admin');
                     break;
                 case 'user':

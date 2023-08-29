@@ -38,7 +38,7 @@
                 {{-- <li class="menu-title" data-key="t-menu">{{ auth::user()->ranking_name }}</li> --}}
                 @hasanyrole('superadmin|admin')
                 <li>
-                    <a href="{{ url('/admin/dashboard') }}">
+                    <a href="{{ route('admin-dashboard') }}">
                         <i class="bx bx-tachometer icon nav-icon"></i>
                         <span class="menu-item" data-key="t-dashboards">@lang('translation.Dashboard')</span>
                     </a>
@@ -47,7 +47,7 @@
 
                 @hasanyrole('user')
                 <li>
-                    <a href="{{ url('/members/dashboard') }}">
+                    <a href="{{ route('user-dashboard') }}">
                         <i class="bx bx-tachometer icon nav-icon"></i>
                         <span class="menu-item" data-key="t-dashboards">@lang('translation.Dashboard')</span>
                     </a>

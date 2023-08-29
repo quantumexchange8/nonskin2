@@ -4,9 +4,10 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use App\Providers\RouteServiceProvider;
 use Auth;
 
-class IsAdmin
+class AdminMiddleware
 {
     /**
      * Handle an incoming request.
@@ -17,10 +18,18 @@ class IsAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user()->type == 'admin') {
-            return $next($request);
+        if(Auth::check()) {
+            // admin role == 'admin'
+            // user role == 'user'
+
+            if(Auth::user()->role == 'admin'){
+                return $next($request);
+            } else {
+                return redirect(RouteServiceProvider::HOME);
+            }
         } else {
-            return redirect()->route('admin-dashboard');
+            return redirect()->route('login')->with('message', 'Login to access the website');
         }
+        return $next($request);
     }
 }

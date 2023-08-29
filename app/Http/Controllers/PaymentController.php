@@ -12,7 +12,9 @@ use App\Models\Payment;
 use App\Models\User;
 use App\Models\CompanyInfo;
 use Illuminate\Support\Facades\Auth;
+use App\Providers\RouteServiceProvider;
 Use Alert;
+use Illuminate\Support\Facades\DB;
 
 class PaymentController extends Controller
 {
@@ -38,59 +40,132 @@ class PaymentController extends Controller
                 'companyInfo' => $companyInfo,
             ]);
         }else if(Auth::user()->role == 'admin' || Auth::user()->role == 'superadmin'){
-            $members = User::where('role', 'user')->where('is_active', 1)->select('id', 'full_name', 'referrer_id')->get();
+            $members = User::where('role', 'user')->where('status', 'Active')->select('id', 'full_name', 'referrer_id')->orderBy('referrer_id', 'ASC')->get();
             return view('admin.purchase-wallet.new_topup', compact('companyInfo', 'members'));
         }else{
             return abort (404);
         }
     }
-    public function purchaseWalletTopupStore(Request $request){
-        if(Auth::user()->role == 'user'){
+
+    public function purchaseWalletTopupAdmin(Request $request){
+        // dd($request->all());
+        $user = User::where('id', $request->user_id)->first();
+        // dd($user);
+        $request->validate([
+            'amount' => 'required|numeric|min:1'
+        ]);
+
+        if(Auth::user()->role == 'admin'){
             // dd($request->all());
             $transactionPrefix = 'NONT';
             $prefixRow2 = Prefix::where('prefix', $transactionPrefix)->first();
 
-            $newTransactionNumber = $prefixRow2->counter + 1;
-            $prefixRow2->update(
-                [
-                    'counter' => $newTransactionNumber,
-                    'updated_by' => Auth::id()
-                ]
-            );
+            try {
+                $newTransactionNumber = $prefixRow2->counter + 1;
+                $prefixRow2->update(
+                    [
+                        'counter' => $newTransactionNumber,
+                        'updated_by' => Auth::id()
+                    ]
+                );
 
-            if($request->hasFile('receipt') != null) {
-                $request->validate([
-                    'receipt' => 'image|max:2048', // Adjust the allowed mime types and file size as needed
+                $payment = Payment::create([
+                    'payment_num' => $transactionPrefix . str_pad($newTransactionNumber, $prefixRow2->padding, '0', STR_PAD_LEFT),
+                    'type' => PaymentType::DEPOSIT,
+                    'payment_method' => 'none',
+                    'user_id' => $user->id,
+                    'amount' => $request->amount,
+                    'gateway' => null,
+                    'status' => 'Approved',
+                    'remarks' => 'Topup through Admin',
+                    'receipt' => null,
+                    'bank_name' => $user->bank_name,
+                    'bank_holder_name' => $user->bank_holder_name,
+                    'bank_acc_no' => $user->bank_acc_no,
+                    'bank_ic' => $user->bank_ic,
+                    'created_by' => $user->id,
+                    'updated_by' => $user->id
                 ]);
+
+                if($payment->wasRecentlyCreated){
+                    $user->purchase_wallet += $request->amount;
+                    $user->save();
+
+                    WalletHistory::create([
+                        'user_id' => $user->id,
+                        'wallet_type' => WalletType::PURCHASE_WALLET,
+                        'type' => PaymentType::DEPOSIT,
+                        'cash_in'  => $request->amount,
+                        'balance' => $user->purchase_wallet,
+                        'remarks' => $request->remarks,
+                    ]);
+                }
+
+                Alert::success('Topup Successful', 'Purchase Wallet for '. $user->referrer_id . ' | ' . $user->full_name . ' has been topped up RM ' . number_format($request->amount,2));
+                return redirect()->back();
+            } catch (\Throwable $th) {
+                Alert::error('Topup Failed', 'Please try topup later');
+                return redirect()->back();
             }
 
+        }else{
+            redirect(RouteServiceProvider::HOME);
+        }
+    }
 
+    public function purchaseWalletTopupStore(Request $request){
+        if(Auth::user()->role == 'user'){
+            try {
+                // dd($request->all());
+                DB::beginTransaction();
+                $transactionPrefix = 'NONT';
+                $prefixRow2 = Prefix::where('prefix', $transactionPrefix)->first();
 
-            if ($request->hasFile('receipt')){
-                $imageName1 = null; // Initialize the variable
-                $imageName1 = time().'.'.$request->receipt->extension();
-                $request->receipt->move(public_path('images/payment-proof'), $imageName1);
+                $newTransactionNumber = $prefixRow2->counter + 1;
+                $prefixRow2->update(
+                    [
+                        'counter' => $newTransactionNumber,
+                        'updated_by' => Auth::id()
+                    ]
+                );
 
-                $payment                = new Payment();
-                $payment->payment_num   = $transactionPrefix . str_pad($newTransactionNumber, $prefixRow2->padding, '0', STR_PAD_LEFT);
-                $payment->type          = 'Deposit';
-                $payment->payment_method = 'Manual Transfer';
-                $payment->user_id       = Auth::id();
-                $payment->amount        = $request->amount;
-                $payment->gateway       = null;
-                $payment->status        = 'Pending';
-                $payment->remarks       = $request->remark ?: null;
-                $payment->receipt       = $imageName1;
-                $payment->save();
+                if($request->hasFile('receipt') != null) {
+                    $request->validate([
+                        'receipt' => 'image|max:2048', // Adjust the allowed mime types and file size as needed
+                    ]);
+                }
 
-                Alert::success('Successfully', 'Submitted Deposit');
-                return redirect()->back();
-            } else {
-                Alert::error('Error', 'No Image Uploaded');
+                if ($request->hasFile('receipt')){
+                    $imageName1 = null; // Initialize the variable
+                    $imageName1 = time().'.'.$request->receipt->extension();
+                    $request->receipt->move(public_path('images/payment-proof'), $imageName1);
+
+                    $payment                = new Payment();
+                    $payment->payment_num   = $transactionPrefix . str_pad($newTransactionNumber, $prefixRow2->padding, '0', STR_PAD_LEFT);
+                    $payment->type          = 'Deposit';
+                    $payment->payment_method = 'Manual Transfer';
+                    $payment->user_id       = Auth::id();
+                    $payment->amount        = $request->amount;
+                    $payment->gateway       = null;
+                    $payment->status        = 'Pending';
+                    $payment->remarks       = $request->remark ?: null;
+                    $payment->receipt       = $imageName1;
+                    $payment->save();
+                    DB::commit();
+
+                    Alert::success('Successfully', 'Submitted Deposit');
+                    return redirect()->back();
+                } else {
+                    Alert::error('Error', 'No Image Uploaded');
+                    return redirect()->back();
+                }
+            } catch (\Throwable $th) {
+                DB::rollback();
+                Alert::error('Error', 'Please try deposit again');
                 return redirect()->back();
             }
         }else{
-            dd('admin');
+            redirect(RouteServiceProvider::HOME);
         }
         return redirect()->back()->with('success', 'Topup Request Successful');
     }
@@ -99,7 +174,76 @@ class PaymentController extends Controller
 
     public function purchaseWalletWithdraw(){
         $user = Auth::user();
-        return view('member.purchase-wallet.withdraw', compact('user'));
+        $withdrawals = Payment::where('type', PaymentType::WITHDRAW)
+                            ->where('user_id', $user->id)
+                            ->get();
+        return view('member.purchase-wallet.withdraw', compact('user', 'withdrawals'));
+    }
+
+    public function purchaseWalletWithdrawStore(Request $request, Payment $withdraw){
+        // dd(floatval($request->amount));
+        $user = Auth::user();
+
+        $request->validate([
+            'amount' => 'required|numeric|min:1'
+        ]);
+
+        if(Auth::user()->role == 'user'){
+            // dd($request->all());
+            $transactionPrefix = 'NONT';
+            $prefixRow2 = Prefix::where('prefix', $transactionPrefix)->first();
+
+            try {
+                $newTransactionNumber = $prefixRow2->counter + 1;
+            $prefixRow2->update(
+                [
+                    'counter' => $newTransactionNumber,
+                    'updated_by' => Auth::id()
+                ]
+            );
+
+            $payment = Payment::create([
+                'payment_num' => $transactionPrefix . str_pad($newTransactionNumber, $prefixRow2->padding, '0', STR_PAD_LEFT),
+                'type' => PaymentType::WITHDRAW,
+                'payment_method' => 'none',
+                'user_id' => $user->id,
+                'amount' => $request->amount,
+                'gateway' => null,
+                'status' => 'Pending',
+                'remarks' => null,
+                'receipt' => null,
+                'bank_name' => $user->bank_name,
+                'bank_holder_name' => $user->bank_holder_name,
+                'bank_acc_no' => $user->bank_acc_no,
+                'bank_ic' => $user->bank_ic,
+                'created_by' => $user->id,
+                'updated_by' => $user->id
+            ]);
+
+            if($payment->wasRecentlyCreated){
+                $user->purchase_wallet -= $request->amount;
+                $user->save();
+
+                WalletHistory::create([
+                    'user_id' => $user->id,
+                    'wallet_type' => WalletType::PURCHASE_WALLET,
+                    'type' => PaymentType::WITHDRAW,
+                    'cash_out'  => $request->amount,
+                    'balance' => $user->purchase_wallet,
+                    'remarks' => $payment->payment_num,
+                ]);
+            }
+
+            Alert::success('Successfully', 'Submitted Withdrawal');
+            return redirect()->back();
+            } catch (\Throwable $th) {
+                return redirect()->back()->with('failed', 'Please try withdrawing later');
+            }
+
+        }else{
+            redirect(RouteServiceProvider::HOME);
+        }
+        return back()->with('success', 'Topup Request Successful');
     }
 
     public function cashWallet(){
@@ -113,7 +257,7 @@ class PaymentController extends Controller
 
         $user = Auth::user();
 
-        $deposits = Payment::where('type', 'Deposit')->get();
+        $deposits = Payment::where('type', 'Deposit')->latest()->get();
 
         return view('admin.purchase-wallet.pending_deposit', [
             'deposits' => $deposits,
@@ -130,22 +274,11 @@ class PaymentController extends Controller
 
         $user_wallet = User::find($deposit->user_id);
 
-            if ($user_wallet) {
-                // Update the user's personal_sales with the order's total_amount
-                $user_wallet->purchase_wallet += $deposit->amount;
-                $user_wallet->save();
-            }
-
-        $transactionPrefix = 'NONT';
-        $prefixRow2 = Prefix::where('prefix', $transactionPrefix)->first();
-
-        $newTransactionNumber = $prefixRow2->counter + 1;
-        $prefixRow2->update(
-            [
-                'counter' => $newTransactionNumber,
-                'updated_by' => Auth::id()
-            ]
-        );
+        if ($user_wallet) {
+            // Update the user's personal_sales with the order's total_amount
+            $user_wallet->purchase_wallet += $deposit->amount;
+            $user_wallet->save();
+        }
 
         $wallet = new WalletHistory();
         $wallet->user_id =  $user_wallet->id;
@@ -155,7 +288,7 @@ class PaymentController extends Controller
         $wallet->cash_out = null;
         $wallet->balance = $user_wallet->purchase_wallet;
         $wallet->updated_at = now();
-        $wallet->remarks = $transactionPrefix . str_pad($newTransactionNumber, $prefixRow2->padding, '0', STR_PAD_LEFT);
+        $wallet->remarks = $deposit->payment_num;
         $wallet->save();
 
         Alert::success('Updated', 'the deposit approved');
@@ -201,7 +334,50 @@ class PaymentController extends Controller
         Alert::success('Updated', 'the deposit status');
         return redirect()->back();
     }
+
     public function pendingWithdrawal(){
-        return view('admin.purchase-wallet.pending_withdrawal');
+        $withdrawals = Payment::where('type', PaymentType::WITHDRAW)->get();
+        return view('admin.purchase-wallet.pending_withdrawal', compact('withdrawals'));
+    }
+    public function approveWithdrawal(Request $request)
+    {
+        dd('here');
+        $payment->update([
+            'status' => 'Approved',
+            'remarks' => null
+        ]);
+
+        $user_wallet = User::find($payment->user_id);
+
+            if ($user_wallet) {
+                // Update the user's personal_sales with the order's total_amount
+                $user_wallet->purchase_wallet -= $payment->amount;
+                $user_wallet->save();
+            }
+
+        $transactionPrefix = 'NONT';
+        $prefixRow2 = Prefix::where('prefix', $transactionPrefix)->first();
+
+        $newTransactionNumber = $prefixRow2->counter + 1;
+        $prefixRow2->update(
+            [
+                'counter' => $newTransactionNumber,
+                'updated_by' => Auth::id()
+            ]
+        );
+
+        $wallet = new WalletHistory();
+        $wallet->user_id =  $user_wallet->id;
+        $wallet->wallet_type = WalletType::PURCHASE_WALLET  ;
+        $wallet->type = PaymentType::DEPOSIT;
+        $wallet->cash_in = $deposit->amount;
+        $wallet->cash_out = null;
+        $wallet->balance = $user_wallet->purchase_wallet;
+        $wallet->updated_at = now();
+        $wallet->remarks = $transactionPrefix . str_pad($newTransactionNumber, $prefixRow2->padding, '0', STR_PAD_LEFT);
+        $wallet->save();
+
+        Alert::success('Updated', 'the deposit approved');
+        return redirect()->back();
     }
 }

@@ -18,7 +18,7 @@
 <div id="checkout-paymentinfo-collapse" class="collapse show">
     <div class="p-4 border-top">
         <div>
-            <h5 class="font-size-14 mb-3 required">Select payment method :</h5>
+            <h5 class="font-size-14 mb-3 required">Select payment method:</h5>
             <div class="row">
                 @foreach ($payment_methods as $res)
                     <div class="col-lg-3 col-sm-6">
@@ -38,39 +38,33 @@
             </div>
         </div>
 
-        <div id="purchase-wallet-balance-section" class="card" style="display: none">
-            <div>
-                <span>Purchase Wallet Balance</span><br>
-                <h3>RM {{ number_format($user->purchase_wallet, 2) }}</h3>
-            </div>
-
+        <div id="purchase-wallet-balance-section" class="mt-3" style="display: none">
+            <h5 class="font-size-14 mb-3">Purchase Wallet Balance:</h5>
+            <h4>RM {{ number_format($user->purchase_wallet, 2) }}</h4>
             <div>
                 <a href="{{ route('member.deposit') }}">
                     <button class="btn btn-primary" type="button">Top Up</button>
                 </a>
-                
             </div>
         </div>
-        <br>
-        <div id="payment-proof-section" class="card" style="display: none;">
-            <div class="form-group">
-                <h5>Payment Proof Image:</h5>
-                <input type="file" class="form-control" id="payment_proof" name="payment_proof">
-            </div>
-            <br>
+
+        <div id="payment-proof-section" class="mt-3" style="display: none">
             <div class="row">
-                <div class="card">
-                    <div class="col-sm-6">
-                        <div class="text-meted">
-                            <h5 class="font-size-16 mb-3">Company Bank Details:</h5>
-                            <h5 class="font-size-15 mb-2">{{$companyInfo->bank_holder_name}}</h5>
-                            <p class="mb-1">{{$companyInfo->bank_name}}</p>
-                            <p class="mb-1">{{$companyInfo->bank_acc}}</p>
-                        </div>
+                <h5 class="font-size-14 mb-3">Company Bank Details:</h5>
+                <div class="col-md-6">
+                    <div class="text-muted">
+                        <h5 class="font-size-14 mb-2">{{$companyInfo->bank_holder_name}}</h5>
+                        <p class="mb-1">{{$companyInfo->bank_name}}</p>
+                        <p class="mb-1">{{$companyInfo->bank_acc}}</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <h5 class="font-size-14 mb-3">Payment Proof Image:</h5>
+                        <input type="file" class="form-control" id="payment_proof" name="payment_proof">
                     </div>
                 </div>
             </div>
         </div>
-        
     </div>
 </div>

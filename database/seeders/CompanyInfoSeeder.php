@@ -13,6 +13,9 @@ class CompanyInfoSeeder extends Seeder
             'address' => 'A-GF-07 Sky Park @ One City, Jalan USJ25/1, 47650 Subang Jaya, Selangor.',
             'contact' => '(+60) 10 563 5811',
             'register_no' => '1298076-T',
+            'bank_name' => 'Maybank',
+            'bank_acc' => '123456789',
+            'bank_holder_name' => 'Nonskin Sdn Bhd',
         ]
     ];
     public function run()

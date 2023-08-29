@@ -97,8 +97,8 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $row->payment_num }}</td>
-                                        <td>{{ $row->updated_at }}</td>
-                                        <td>{{ $row->amount }}</td>
+                                        <td>{{ $row->updated_at->format('d/m/Y, h:i:s') }}</td>
+                                        <td>{{ number_format($row->amount,2) }}</td>
                                         <td>
                                             <button type="button" class="btn btn-primary btn-sm btn-rounded btn-view-receipt" data-bs-toggle="modal" data-bs-target="#paymentSlipModal_{{ $row->id }}" id="{{ $row->id }}">
                                                 View payment slip
@@ -157,5 +157,9 @@
             lengthChange: false,
             pagingType: 'simple_numbers'
         });
+
+        $('#search-input').on('keyup', function () {
+            table.search( this.value ).draw();
+        } );
     </script>
 @endsection

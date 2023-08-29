@@ -47,6 +47,7 @@
         "Quarterly Commission" => "Quarterly Commission",
         "Annually Commission" => "Annually Commission",
         "Performance Bonus" => "Performance Bonus",
+        "New Topup" => "New Topup",
 
 
         // Custom

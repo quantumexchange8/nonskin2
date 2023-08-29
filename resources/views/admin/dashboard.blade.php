@@ -423,42 +423,46 @@
             <div class="row">
                 <div class="col-xl-3 col-md-6">
                     <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between mb-4">
-                                <div class="avatar">
-                                    <span class="avatar-title bg-soft-primary rounded">
-                                        <i class="bx bxs-coin-stack text-primary font-size-24"></i>
-                                    </span>
+                        <a href="{{ route('admin.pending-deposit') }}">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between mb-4">
+                                    <div class="avatar">
+                                        <span class="avatar-title bg-soft-primary rounded">
+                                            <i class="bx bxs-coin-stack text-primary font-size-24"></i>
+                                        </span>
+                                    </div>
+                                    <p class="mt-2 text-black">Pending Deposit</p>
                                 </div>
-                                <p class="mt-2">Pending Deposit</p>
+                                <h4 class="mb-0">{{ $res->pending_deposit }} <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
+                                <div>
+                                    {{-- <div class="py-3 my-1">
+                                        <div id="mini-1" data-colors='["#3980c0"]'></div>
+                                    </div> --}}
+                                </div>
                             </div>
-                            <h4 class="mb-0">{{ $res->pending_deposit }} <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
-                            <div>
-                                {{-- <div class="py-3 my-1">
-                                    <div id="mini-1" data-colors='["#3980c0"]'></div>
-                                </div> --}}
-                            </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
                 <div class="col-xl-3 col-md-6">
                     <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between mb-4">
-                                <div class="avatar">
-                                    <span class="avatar-title bg-soft-primary rounded">
-                                        <i class="bx bxs-coin-stack text-primary font-size-24"></i>
-                                    </span>
+                        <a href="{{ route('admin.pending-withdrawal') }}">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between mb-4">
+                                    <div class="avatar">
+                                        <span class="avatar-title bg-soft-primary rounded">
+                                            <i class="bx bxs-coin-stack text-primary font-size-24"></i>
+                                        </span>
+                                    </div>
+                                    <p class="mt-2 text-black">Pending Withdrawal</p>
                                 </div>
-                                <p class="mt-2">Pending Withdrawal</p>
+                                <h4 class="mb-0">{{ $res->pending_withdrawal }} <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
+                                <div>
+                                    {{-- <div class="py-3 my-1">
+                                        <div id="mini-1" data-colors='["#3980c0"]'></div>
+                                    </div> --}}
+                                </div>
                             </div>
-                            <h4 class="mb-0">{{ $res->pending_withdrawal }} <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
-                            <div>
-                                {{-- <div class="py-3 my-1">
-                                    <div id="mini-1" data-colors='["#3980c0"]'></div>
-                                </div> --}}
-                            </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </div>

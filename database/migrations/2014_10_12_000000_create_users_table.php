@@ -23,8 +23,8 @@ class CreateUsersTable extends Migration
             $table->string('username')->unique();
             $table->string('email')->unique();
             $table->string('full_name');
-            $table->string('id_no')->unique()->nullable();
-            $table->string('contact')->unique()->nullable();
+            $table->string('id_no')->nullable();
+            $table->string('contact')->nullable();
             $table->string('password');
             $table->string('role')->default('user');
             $table->string('superadmin')->default(0);

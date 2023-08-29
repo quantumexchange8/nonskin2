@@ -54,9 +54,9 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $deposit->payment_num }}</td>
-                                    <td>{{ $deposit->user_id }}</td>
-                                    <td>{{ $deposit->updated_at }}</td>
-                                    <td>{{ $deposit->amount }}</td>
+                                    <td>{{ $deposit->user->referrer_id }}</td>
+                                    <td>{{ $deposit->updated_at->format('d/m/Y, h:i:s') }}</td>
+                                    <td>{{ number_format($deposit->amount,2) }}</td>
                                     <td>
                                         <button type="button" class="btn btn-primary btn-sm btn-rounded btn-view-receipt" data-bs-toggle="modal" data-bs-target="#paymentSlipModal_{{ $deposit->id }}" id="{{ $deposit->id }}">
                                             View payment slip
@@ -70,14 +70,14 @@
                                             </span>
                                         @elseif($deposit->status == 'Approved')
                                             <span class="badge badge-pill badge-soft-success font-size-12">
-                                                Approve
+                                                Approved
                                             </span>
                                         @else
                                             <span class="badge badge-pill badge-soft-danger font-size-12">
                                                 Failed
                                             </span>
                                         @endif
-                                        
+
                                     </td>
                                     <td>{{ $deposit->remarks }}</td>
                                     <td>
@@ -85,10 +85,10 @@
                                             <form action="{{ route('admin.approve-deposit', $deposit->id) }}" method="POST" id="approve-form-{{ $deposit->id }}">
                                                 @csrf
                                                 <button type="button" class="btn btn-link approve-btn" data-deposit-id="{{ $deposit->id }}" data-deposit-status="{{ $deposit->status }}">
-                                                    <i class="mdi mdi-pencil font-size-18"></i>
+                                                    <i class="mdi mdi-check font-size-18"></i>
                                                 </button>
-                                            </form>                                            
-                                            
+                                            </form>
+
                                             <form action="{{ route('admin.reject-deposit', $deposit->id) }}" method="POST" id="reject-form-{{ $deposit->id }}">
                                                 @csrf
                                                 <input type="hidden" name="remark" id="remark-{{ $deposit->id }}">
@@ -96,7 +96,7 @@
                                                     <i class="mdi mdi-delete font-size-18"></i>
                                                 </button>
                                             </form>
-                                            
+
                                         </div>
                                     </td>
                                 </tr>

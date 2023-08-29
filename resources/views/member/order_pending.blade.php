@@ -128,7 +128,7 @@
                                             <button type="button" class="btn btn-link btn-sm btn-rounded view-detail-button" data-bs-toggle="modal" data-bs-target="#orderdetailsModal_{{ $order->id }}" id="{{$order->id}}">
                                                 <i class="mdi mdi-printer-settings"></i>
                                             </button>
-                                            <form action="{{ route('cancelorder', $order->id) }}" method="POST" id="delete-form-{{ $order->id }}">
+                                            <form action="{{ route('member.cancelorder', $order->id) }}" method="POST" id="delete-form-{{ $order->id }}">
                                                 @csrf
                                                 <input type="hidden" name="remark" id="remark-{{ $order->id }}">
                                                 <button type="button" class="btn btn-link text-danger delete-button" data-order-id="{{ $order->id }}" data-order-status="{{ $order->status }}">

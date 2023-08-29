@@ -43,7 +43,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="mb-3">
-                                        <label class="form-label required" for="amount">Amount</label>
+                                        <label class="form-label required" for="amount">Amount (RM)</label>
                                         <input class="form-control @error('amount') is-invalid @enderror" id="amount" name="amount" placeholder="e.g 1000.00" type="number" step="0.01" value="{{ old('amount') }}">
                                         @error('amount')
                                             <span class="invalid-feedback" role="alert">
@@ -114,23 +114,39 @@
                                     <th>Payment ID</th>
                                     <th>Date</th>
                                     <th>Amount (RM)</th>
-                                    <th>Receipt</th>
                                     <th>Status</th>
                                     <th>Remarks</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @foreach ($orders as $order) --}}
+                                @foreach ($withdrawals as $row)
                                     <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $row->payment_num }}</td>
+                                        <td>{{ $row->updated_at->format('d/m/Y, h:i:s') }}</td>
+                                        <td>{{ number_format($row->amount,2) }}</td>
+                                        <td>
+                                            @switch($row->status)
+                                                @case('Pending')
+                                                    <span class="badge badge-pill badge-soft-secondary font-size-12">
+                                                        Pending
+                                                    </span>
+                                                    @break
+                                                @case('Approved')
+                                                    <span class="badge badge-pill badge-soft-success font-size-12">
+                                                        Approved
+                                                    </span>
+                                                    @break
+                                                @case('Failed')
+                                                    <span class="badge badge-pill badge-soft-danger font-size-12">
+                                                        Failed
+                                                    </span>
+                                                    @break
+                                            @endswitch
+                                        </td>
+                                        <td>{{ $row->remarks }}</td>
                                     </tr>
-                                {{-- @endforeach --}}
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -149,5 +165,9 @@
             lengthChange: false,
             pagingType: 'simple_numbers'
         });
+
+        $('#search-input').on('keyup', function () {
+            table.search( this.value ).draw();
+        } );
     </script>
 @endsection

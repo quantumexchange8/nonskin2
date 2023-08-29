@@ -61,15 +61,14 @@ Route::post('/toggle-default-address', [App\Http\Controllers\HomeController::cla
 Route::post('/update-bank', [App\Http\Controllers\HomeController::class, 'updateBank'])->name('updateBank');
 Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('updatePassword');
 
-Route::resource('cart', CartController::class);
 /**
  * MEMBERS
  */
-Route::group(['prefix' => 'member',  'middleware' => ['auth', 'role:user', ]], function () {
+Route::group(['prefix' => 'member',  'middleware' => ['auth', 'IsUser' ]], function () {
 
     Route::get('/dashboard', [UserController::class, 'dashboard'])->name('user-dashboard');
     Route::post('/redeem-cashwallet', [UserController::class, 'redeemCommission'])->name('redeem-commission');
-    Route::post('pending-orders/{order}', [UserController::class, 'cancelorder'])->name('cancelorder');
+    // Route::post('pending-orders/{order}', [UserController::class, 'cancelorder'])->name('cancelorder');
     Route::get('/products_list', [ProductController::class, 'productlist'])->name('product-list');
     Route::get('/products_details/{product}', [ProductController::class, 'showdetails'])->name('showdetails');
     Route::post('/products_details/cart/{product}', [CartController::class, 'addToCartDetails'])->name('cart_add');
@@ -109,7 +108,7 @@ Route::group(['prefix' => 'member',  'middleware' => ['auth', 'role:user', ]], f
 // Route::post('api/fetch-cities', [DropdownController::class, 'fetchCity']);
 
 // ADMIN
-Route::group(['prefix' => 'admin',  'middleware' => ['auth', 'role:superadmin|admin', ]], function () {
+Route::group(['prefix' => 'admin',  'middleware' => ['auth', 'IsAdmin' ]], function () {
     // dashboard
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin-dashboard');
 
@@ -150,10 +149,13 @@ Route::group(['prefix' => 'admin',  'middleware' => ['auth', 'role:superadmin|ad
 
     // Wallets
     Route::get('/new-topup', [PaymentController::class, 'purchaseWalletTopup'])->name('admin.new-topup');
+    Route::post('/new-topup', [PaymentController::class, 'purchaseWalletTopupAdmin'])->name('admin.new-topup-store');
     Route::get('/pending-deposit', [PaymentController::class, 'pendingDeposit'])->name('admin.pending-deposit');
     Route::post('/pending-approve/{deposit}', [PaymentController::class, 'approveDeposit'])->name('admin.approve-deposit');
     Route::post('/pending-reject/{deposit}', [PaymentController::class, 'rejectDeposit'])->name('admin.reject-deposit');
     Route::get('/pending-withdrawal', [PaymentController::class, 'pendingWithdrawal'])->name('admin.pending-withdrawal');
+    Route::post('/approve-withdrawal', [PaymentController::class, 'approveWithdrawal'])->name('admin.approve-withdrawal');
+    Route::post('/reject-withdrawal', [PaymentController::class, 'rejectWithdrawal'])->name('admin.reject-withdrawal');
 
     Route::get('cash-wallet', [AdminController::class, 'cashWallet'])->name('admin.cash-wallet');
     Route::get('product-wallet', [AdminController::class, 'productWallet'])->name('admin.product-wallet');
@@ -172,5 +174,7 @@ Route::group(['prefix' => 'admin',  'middleware' => ['auth', 'role:superadmin|ad
 
     Route::get('network_tree', [AdminController::class, 'networktree'])->name('admin-networktree');
 });
+
+Route::resource('cart', CartController::class);
 
 // Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');

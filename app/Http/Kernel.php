@@ -68,7 +68,7 @@ class Kernel extends HttpKernel
         'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
         'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
         'check.cart.item' => \App\Http\Middleware\CheckCartItem::class,
-        'IsAdmin' => \App\Http\Middleware\IsAdmin::class,
-        'IsUser' => \App\Http\Middleware\IsUser::class,
+        'IsAdmin' => \App\Http\Middleware\AdminMiddleware::class,
+        'IsUser' => \App\Http\Middleware\UserMiddleware::class,
     ];
 }

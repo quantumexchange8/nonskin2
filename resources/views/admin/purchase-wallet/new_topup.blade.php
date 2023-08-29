@@ -14,7 +14,7 @@
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('member.topup.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('admin.new-topup-store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <a class="text-dark">
                             <div class="p-4">
@@ -50,9 +50,9 @@
                                         </div>
 
                                         <div class="mb-3">
-                                            <label for="choices-single-default" class="form-label required">Default</label>
-                                            <select class="form-control form-select" data-trigger name="choices-single-default"
-                                                id="choices-single-default"
+                                            <label for="user_id" class="form-label required">Select Member</label>
+                                            <select class="form-control form-select" data-trigger name="user_id"
+                                                id="user_id"
                                                 placeholder="Search Member">
                                                 <option value="" disabled>Search for Member</option>
                                                 @foreach ($members as $member)
@@ -62,7 +62,7 @@
                                         </div>
 
                                         <div class="mb-3">
-                                            <label class="form-label required" for="receipt">Upload Receipt</label>
+                                            <label class="form-label" for="receipt">Upload Receipt <small class="text-muted">(Optional)</small></label>
                                             <input class="form-control" type="file" name="receipt" id="receipt">
                                             @error('amount')
                                                 <span class="invalid-feedback" role="alert">

@@ -32,4 +32,9 @@ class Payment extends Model
     {
         return $this->hasOne(Order::class, 'payment_id', 'id');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

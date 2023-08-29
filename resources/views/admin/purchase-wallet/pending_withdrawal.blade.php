@@ -38,7 +38,6 @@
                         </div>
                         <thead>
                             <tr>
-                                <th>#</th>
                                 <th>Payment ID</th>
                                 <th>User</th>
                                 <th>Date</th>
@@ -49,24 +48,60 @@
                                 <th>Amount</th>
                                 <th>Status</th>
                                 <th>Remarks</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- @foreach ($orders as $order) --}}
+                            @foreach ($withdrawals as $row)
                                 <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>{{ $row->payment_num }}</td>
+                                    <td>{{ $row->user->referrer_id }}</td>
+                                    <td>{{ $row->updated_at->format('d/m/Y') }}</td>
+                                    <td>{{ $row->bank_name ?? '-' }}</td>
+                                    <td>{{ $row->bank_holder_name ?? '-' }}</td>
+                                    <td>{{ $row->bank_acc_no ?? '-' }}</td>
+                                    <td>{{ $row->bank_ic ?? '-' }}</td>
+                                    <td>{{ number_format($row->amount,2) }}</td>
+                                    <td>
+                                        @switch($row->status)
+                                            @case('Pending')
+                                                <span class="badge badge-pill badge-soft-secondary font-size-12">
+                                                    Pending
+                                                </span>
+                                                @break
+                                            @case('Approved')
+                                                <span class="badge badge-pill badge-soft-success font-size-12">
+                                                    Approved
+                                                </span>
+                                                @break
+                                            @default
+                                                <span class="badge badge-pill badge-soft-danger font-size-12">
+                                                    Failed
+                                                </span>
+                                        @endswitch
+                                    </td>
+                                    <td>{{ $row->remarks }}</td>
+                                    <td>
+                                        <div class="d-flex gap-3">
+                                            <form action="{{ route('admin.approve-withdrawal', $row->id) }}" method="POST" id="approve-form-{{ $row->id }}">
+                                                @csrf
+                                                <button type="button" class="btn btn-link approve-btn">
+                                                    <i class="mdi mdi-check font-size-18"></i>
+                                                </button>
+                                            </form>
+
+                                            <form action="{{ route('admin.reject-withdrawal', $row->id) }}" method="POST" id="reject-form-{{ $row->id }}">
+                                                @csrf
+                                                <input type="hidden" name="remark" id="remark-{{ $row->id }}">
+                                                <button type="button" class="btn btn-link text-danger reject-button">
+                                                    <i class="mdi mdi-delete font-size-18"></i>
+                                                </button>
+                                            </form>
+
+                                        </div>
+                                    </td>
                                 </tr>
-                            {{-- @endforeach --}}
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
