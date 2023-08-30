@@ -13,7 +13,7 @@
 
                             <div class="text-center mb-4">
                                 <a href="index">
-                                    <img src="{{ URL::asset('assets/images/logo-sm.svg') }}" alt="" height="22"> <span class="logo-txt">Symox</span>
+                                    <img src="{{ URL::asset('assets/images/nonskin/non-logo.jpg') }}" alt="" height="22"> <span class="logo-txt"></span>
                                 </a>
                             </div>
 

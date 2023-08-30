@@ -30,7 +30,7 @@ use App\Http\Controllers\ExportController;
 // Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
 
 //Language Translation
-Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
+Route::get('index/{locale}', [HomeController::class, 'lang']);
 
 Route::get('/', function () {
     return view('auth/login');
@@ -41,7 +41,7 @@ Auth::routes();
 // Route::get('/login', [LoginController::class, 'login'])->name('login');
 // Route::post('/customlogin', [LoginController::class, 'customlogin'])->name('customlogin');
 
-// Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
+// Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
 
 Route::get('/register', [RegisterController::class, 'register'])->name('user-register');
 Route::get('/register/{referral?}', [RegisterController::class, 'register'])->name('register');
@@ -54,12 +54,12 @@ Route::post('/check-unique-contact', [RegisterController::class, 'checkUniqueCon
 
 
 //Update User Profile
-Route::get('/my-profile',[App\Http\Controllers\HomeController::class, 'myProfile'])->name('myProfile');
-Route::post('/update-profile', [App\Http\Controllers\HomeController::class, 'updateProfile'])->name('updateProfile');
-Route::post('/update-address', [App\Http\Controllers\HomeController::class, 'updateAddress'])->name('updateAddress');
-Route::post('/toggle-default-address', [App\Http\Controllers\HomeController::class, 'toggleDefaultAddress'])->name('toggleDefaultAddress');
-Route::post('/update-bank', [App\Http\Controllers\HomeController::class, 'updateBank'])->name('updateBank');
-Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('updatePassword');
+Route::get('/my-profile',[HomeController::class, 'myProfile'])->name('myProfile');
+Route::post('/update-profile', [HomeController::class, 'updateProfile'])->name('updateProfile');
+Route::post('/update-address', [HomeController::class, 'updateAddress'])->name('updateAddress');
+Route::post('/toggle-default-address', [HomeController::class, 'toggleDefaultAddress'])->name('toggleDefaultAddress');
+Route::post('/update-bank', [HomeController::class, 'updateBank'])->name('updateBank');
+Route::post('/update-password/{id}', [HomeController::class, 'updatePassword'])->name('updatePassword');
 
 /**
  * MEMBERS
@@ -177,4 +177,4 @@ Route::group(['prefix' => 'admin',  'middleware' => ['auth', 'IsAdmin' ]], funct
 
 Route::resource('cart', CartController::class);
 
-// Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
+// Route::get('{any}', [HomeController::class, 'index'])->name('index');
