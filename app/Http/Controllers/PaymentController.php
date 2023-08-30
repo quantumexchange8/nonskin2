@@ -77,7 +77,7 @@ class PaymentController extends Controller
                     'amount' => $request->amount,
                     'gateway' => null,
                     'status' => 'Approved',
-                    'remarks' => 'Topup through Admin',
+                    'remarks' => 'Topped up by Admin',
                     'receipt' => null,
                     'bank_name' => $user->bank_name,
                     'bank_holder_name' => $user->bank_holder_name,
@@ -97,7 +97,7 @@ class PaymentController extends Controller
                         'type' => PaymentType::DEPOSIT,
                         'cash_in'  => $request->amount,
                         'balance' => $user->purchase_wallet,
-                        'remarks' => $request->remarks,
+                        'remarks' => $request->remarks !== null ? $request->remarks : 'Topped up by Admin',
                     ]);
                 }
 
@@ -339,46 +339,31 @@ class PaymentController extends Controller
         $withdrawals = Payment::where('type', PaymentType::WITHDRAW)->get();
         return view('admin.purchase-wallet.pending_withdrawal', compact('withdrawals'));
     }
-    public function approveWithdrawal(Request $request){
-        dd('here');
-        $payment->update([
-            'status' => 'Approved',
-            'remarks' => null
-        ]);
+    public function approveWithdrawal(Request $request, Payment $withdraw) {
+        // dd($withdraw);
+        if ($withdraw->status !== 'Failed') {
+            try {
+                DB::beginTransaction();
+                $withdraw->update([
+                    'status' => 'Approved',
+                    'remarks' => 'Withdrawal has been approved'
+                ]);
 
-        $user_wallet = User::find($payment->user_id);
+                DB::commit();
 
-            if ($user_wallet) {
-                // Update the user's personal_sales with the order's total_amount
-                $user_wallet->purchase_wallet -= $payment->amount;
-                $user_wallet->save();
+                Alert::success('Approved', 'The withdrawal request has been approved successfully.');
+                return redirect()->back();
+            } catch (\Throwable $th) {
+                DB::rollback();
+                Alert::error('Failed', 'An error occurred while approving the withdrawal request.');
+                return redirect()->back();
             }
-
-        $transactionPrefix = 'NONT';
-        $prefixRow2 = Prefix::where('prefix', $transactionPrefix)->first();
-
-        $newTransactionNumber = $prefixRow2->counter + 1;
-        $prefixRow2->update(
-            [
-                'counter' => $newTransactionNumber,
-                'updated_by' => Auth::id()
-            ]
-        );
-
-        $wallet = new WalletHistory();
-        $wallet->user_id =  $user_wallet->id;
-        $wallet->wallet_type = WalletType::PURCHASE_WALLET  ;
-        $wallet->type = PaymentType::DEPOSIT;
-        $wallet->cash_in = $deposit->amount;
-        $wallet->cash_out = null;
-        $wallet->balance = $user_wallet->purchase_wallet;
-        $wallet->updated_at = now();
-        $wallet->remarks = $transactionPrefix . str_pad($newTransactionNumber, $prefixRow2->padding, '0', STR_PAD_LEFT);
-        $wallet->save();
-
-        Alert::success('Updated', 'the deposit approved');
-        return redirect()->back();
+        } else {
+            Alert::error('Failed to Approve', 'The withdrawal request has already been rejected.');
+            return redirect()->back();
+        }
     }
+
     public function rejectWithdrawal(Request $request, Payment $withdraw){
         //rejects user's withdrawal request and add the amount back to the user's purchase_wallet
         $user = User::where('id', $request->user_id)->first();

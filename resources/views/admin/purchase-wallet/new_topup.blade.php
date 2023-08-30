@@ -72,7 +72,7 @@
                                         </div>
 
                                         <div class="mb-3">
-                                            <label class="form-label required" for="remarks">Remarks</label>
+                                            <label class="form-label" for="remarks">Remarks <small class="text-muted">(Optional)</small></label>
                                             <input class="form-control @error('remarks') is-invalid @enderror" id="remarks" name="remarks" placeholder="e.g Topup" type="text" value="{{ old('remarks') }}">
                                             @error('remarks')
                                                 <span class="invalid-feedback" role="alert">

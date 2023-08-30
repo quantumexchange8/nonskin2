@@ -139,7 +139,17 @@
                             icon: 'error',
                             confirmButtonText: 'Ok'
                         });
-                        return; // Prevent further execution
+                        return;
+                    }
+
+                    if (row_status === 'Failed') {
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'This withdrawal request has already been rejected.',
+                            icon: 'error',
+                            confirmButtonText: 'Ok'
+                        });
+                        return;
                     }
 
                     Swal.fire({
@@ -199,7 +209,16 @@
                             icon: 'error',
                             confirmButtonText: 'Ok'
                         });
-                        return; // Prevent further execution
+                        return;
+                    }
+                    if (row_status === 'Failed') {
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'This withdrawal request has already been rejected and cannot be approved.',
+                            icon: 'error',
+                            confirmButtonText: 'Ok'
+                        });
+                        return;
                     }
 
                     Swal.fire({
