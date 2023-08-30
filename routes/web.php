@@ -154,8 +154,8 @@ Route::group(['prefix' => 'admin',  'middleware' => ['auth', 'IsAdmin' ]], funct
     Route::post('/pending-approve/{deposit}', [PaymentController::class, 'approveDeposit'])->name('admin.approve-deposit');
     Route::post('/pending-reject/{deposit}', [PaymentController::class, 'rejectDeposit'])->name('admin.reject-deposit');
     Route::get('/pending-withdrawal', [PaymentController::class, 'pendingWithdrawal'])->name('admin.pending-withdrawal');
-    Route::post('/approve-withdrawal', [PaymentController::class, 'approveWithdrawal'])->name('admin.approve-withdrawal');
-    Route::post('/reject-withdrawal', [PaymentController::class, 'rejectWithdrawal'])->name('admin.reject-withdrawal');
+    Route::post('/approve-withdrawal/{withdraw}', [PaymentController::class, 'approveWithdrawal'])->name('admin.approve-withdrawal');
+    Route::post('/reject-withdrawal/{withdraw}', [PaymentController::class, 'rejectWithdrawal'])->name('admin.reject-withdrawal');
 
     Route::get('cash-wallet', [AdminController::class, 'cashWallet'])->name('admin.cash-wallet');
     Route::get('product-wallet', [AdminController::class, 'productWallet'])->name('admin.product-wallet');

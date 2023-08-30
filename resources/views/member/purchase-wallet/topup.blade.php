@@ -50,6 +50,8 @@
                                         </div>
 
                                         <div class="mb-3">
+                                            <img class="img-thumbnail object-fit-cover mb-3" id="receiptPreview" style="height: 280px" src="{{ asset('/images/products/no_image.jpg') }}" alt="">
+                                            <br>
                                             <label class="form-label required" for="receipt">Upload Receipt</label>
                                             <input class="form-control" type="file" name="receipt" id="receipt">
                                             @error('amount')
@@ -60,7 +62,7 @@
                                         </div>
 
                                         <div class="mb-3">
-                                            <label class="form-label required" for="remarks">Remarks</label>
+                                            <label class="form-label" for="remarks">Remarks <small class="text-muted">(Optional)</small></label>
                                             <input class="form-control @error('remarks') is-invalid @enderror" id="remarks" name="remarks" placeholder="e.g Topup" type="text" value="{{ old('remarks') }}">
                                             @error('remarks')
                                                 <span class="invalid-feedback" role="alert">
@@ -104,4 +106,20 @@
 @endsection
 @section('script')
     <script src="{{ URL::asset('assets/js/app.js') }}"></script>
+    <script>
+        const receiptInput = document.getElementById('receipt');
+        const receiptPreview = document.getElementById('receiptPreview');
+
+        receiptInput.addEventListener('change', function() {
+            if (this.files && this.files[0]) {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    receiptPreview.src = e.target.result;
+                };
+
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+    </script>
 @endsection

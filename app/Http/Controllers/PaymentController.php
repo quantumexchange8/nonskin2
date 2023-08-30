@@ -339,8 +339,7 @@ class PaymentController extends Controller
         $withdrawals = Payment::where('type', PaymentType::WITHDRAW)->get();
         return view('admin.purchase-wallet.pending_withdrawal', compact('withdrawals'));
     }
-    public function approveWithdrawal(Request $request)
-    {
+    public function approveWithdrawal(Request $request){
         dd('here');
         $payment->update([
             'status' => 'Approved',
@@ -380,4 +379,45 @@ class PaymentController extends Controller
         Alert::success('Updated', 'the deposit approved');
         return redirect()->back();
     }
+    public function rejectWithdrawal(Request $request, Payment $withdraw){
+        //rejects user's withdrawal request and add the amount back to the user's purchase_wallet
+        $user = User::where('id', $request->user_id)->first();
+        // dd($withdraw);
+        if($withdraw->status != 'Failed'){
+            try {
+                DB::beginTransaction();
+
+                $withdraw->update([
+                    'status' => PaymentStatus::FAILED,
+                    'remarks' => $request->remark
+                ]);
+
+                WalletHistory::create([
+                    'user_id' => $request->user_id,
+                    'wallet_type' => WalletType::PURCHASE_WALLET,
+                    'type' => PaymentType::DEPOSIT,
+                    'cash_in' => $request->amount,
+                    'balance' => $user->purchase_wallet + $request->amount,
+                    'remarks' => 'Withdrawal rejected'
+
+                ]);
+
+                $user->purchase_wallet += $request->amount;
+                $user->update();
+
+                DB::commit();
+
+                Alert::success('Updated', 'the withdrawal status');
+                return redirect()->back();
+            } catch (\Throwable $th) {
+                DB::rollback();
+                Alert::error('Failed', 'The withdrawal request is failed to reject');
+                return redirect()->back();
+            }
+        }else{
+            Alert::error('Failed', 'The withdrawal request has already been rejected');
+                return redirect()->back();
+        }
+    }
+
 }

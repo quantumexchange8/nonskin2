@@ -45,7 +45,7 @@
                                 <th>Bank Holder Name</th>
                                 <th>Bank Acc No</th>
                                 <th>Bank IC</th>
-                                <th>Amount</th>
+                                <th>Amount (RM)</th>
                                 <th>Status</th>
                                 <th>Remarks</th>
                                 <th>Action</th>
@@ -85,7 +85,7 @@
                                         <div class="d-flex gap-3">
                                             <form action="{{ route('admin.approve-withdrawal', $row->id) }}" method="POST" id="approve-form-{{ $row->id }}">
                                                 @csrf
-                                                <button type="button" class="btn btn-link approve-btn">
+                                                <button type="button" class="btn btn-link approve-btn" data-row-id="{{ $row->id }}" data-row-status="{{ $row->status }}">
                                                     <i class="mdi mdi-check font-size-18"></i>
                                                 </button>
                                             </form>
@@ -93,7 +93,8 @@
                                             <form action="{{ route('admin.reject-withdrawal', $row->id) }}" method="POST" id="reject-form-{{ $row->id }}">
                                                 @csrf
                                                 <input type="hidden" name="remark" id="remark-{{ $row->id }}">
-                                                <button type="button" class="btn btn-link text-danger reject-button">
+                                                <button type="button" class="btn btn-link text-danger reject-button" data-row-id="{{ $row->id }}" data-row-status="{{ $row->status }}"
+                                                    data-row-amount="{{ $row->amount }}" data-row-user="{{ $row->user_id }}">
                                                     <i class="mdi mdi-delete font-size-18"></i>
                                                 </button>
                                             </form>
@@ -112,6 +113,7 @@
 @endsection
 @section('script')
     <script src="{{ URL::asset('assets/js/app.js') }}"></script>
+    <script src="{{ URL::asset('assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
     <script>
         new DataTable('#withdrawals', {
             responsive: true,
@@ -119,5 +121,102 @@
             lengthChange: false,
             pagingType: 'simple_numbers'
         });
+    </script>
+    <script>
+        @if (!$withdrawals->isEmpty())
+            $(document).ready(function() {
+                $('.reject-button').on('click', function() {
+                    let row_id = $(this).data('row-id');
+                    let row_status = $(this).data('row-status');
+                    let row_amount = $(this).data('row-amount');
+                    let row_user = $(this).data('row-user');
+
+                    // Check if the status is "Approved" and show an error message
+                    if (row_status === 'Approved') {
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'This withdrawal request has already been approved and cannot be rejected.',
+                            icon: 'error',
+                            confirmButtonText: 'Ok'
+                        });
+                        return; // Prevent further execution
+                    }
+
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: 'This action will reject the withdrawal request. Are you sure you want to proceed?',
+                        icon: 'warning',
+                        input: 'text', // Use a text input
+                        inputLabel: 'Remark',
+                        inputPlaceholder: 'Enter your remark...',
+                        showCancelButton: true,
+                        confirmButtonText: 'Yes, reject',
+                        cancelButtonText: 'Cancel',
+                    }).then((result) => {
+                        if(result.isConfirmed) {
+                            const remark = result.value;
+                            if(remark) {
+                                const form = document.getElementById('reject-form-' + row_id);
+
+                                const userInput = document.createElement('input');
+                                userInput.type = 'hidden';
+                                userInput.name = 'user_id';
+                                userInput.value = row_user;
+                                form.appendChild(userInput);
+
+                                const amountInput = document.createElement('input');
+                                amountInput.type = 'hidden';
+                                amountInput.name = 'amount'; // Use the same name as in the form
+                                amountInput.value = row_amount; // Use the extracted row_amount
+                                form.appendChild(amountInput);
+
+                                const remarkInput = document.createElement('input');
+                                remarkInput.type = 'hidden';
+                                remarkInput.name = 'remark';
+                                remarkInput.value = remark;
+                                form.appendChild(remarkInput);
+                                form.submit();
+                            } else {
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: 'Remark cannot be empty.',
+                                    icon: 'error',
+                                    confirmButtonText: 'Ok'
+                                });
+                            }
+                        }
+                    })
+                });
+
+                $('.approve-btn').on('click', function() {
+                    let row_id = $(this).data('row-id');
+                    let row_status = $(this).data('row-status');
+
+                    if (row_status === 'Approved') {
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'This withdrawal request has already been approved.',
+                            icon: 'error',
+                            confirmButtonText: 'Ok'
+                        });
+                        return; // Prevent further execution
+                    }
+
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: 'This withdrawal request will be approved. Are you sure you want to proceed?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Yes, Approve',
+                        cancelButtonText: 'Cancel',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            const form = document.getElementById('approve-form-' + row_id);
+                            form.submit();
+                        }
+                    });
+                });
+            });
+        @endif
     </script>
 @endsection

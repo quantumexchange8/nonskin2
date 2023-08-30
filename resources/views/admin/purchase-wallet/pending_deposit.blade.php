@@ -42,7 +42,7 @@
                                 <th>Payment ID</th>
                                 <th>User</th>
                                 <th>Date</th>
-                                <th>Amount</th>
+                                <th>Amount (RM)</th>
                                 <th>Receipt</th>
                                 <th>Status</th>
                                 <th>Remarks</th>
