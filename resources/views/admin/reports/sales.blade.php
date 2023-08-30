@@ -1,11 +1,11 @@
 @extends('layouts.master')
-@section('title') Sales Report @endsection
+@section('title') @lang('translation.Sales') @lang('translation.Report') @endsection
 
 @section('content')
     @component('components.breadcrumb')
-    @slot('url') {{ url('/') }} @endslot
-    @slot('li_1') Home @endslot
-    @slot('title') Sales Report @endslot
+    @slot('url') {{ route('admin-dashboard') }} @endslot
+    @slot('li_1') @lang('translation.Dashboard') @endslot
+    @slot('title') @lang('translation.Sales') @lang('translation.Report') @endslot
     @endcomponent
 
     <div class="row">

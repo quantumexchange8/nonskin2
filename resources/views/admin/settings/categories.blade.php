@@ -1,12 +1,10 @@
 @extends('layouts.master')
-@section('title')
-    @lang('translation.Product Categories Setting')
-@endsection
+@section('title') @lang('translation.Product Categories Setting') @endsection
 
 @section('content')
     @component('components.breadcrumb')
-        @slot('url') {{ url('/') }} @endslot
-        @slot('li_1') @lang('translation.Home') @endslot
+        @slot('url') {{ route('admin-dashboard') }} @endslot
+        @slot('li_1') @lang('translation.Dashboard') @endslot
         @slot('title') @lang('translation.Product Categories Setting') @endslot
     @endcomponent
 

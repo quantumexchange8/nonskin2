@@ -1,11 +1,13 @@
 @extends('layouts.master')
-@section('title') Edit Announcement @endsection
+@section('title') @lang('translation.Edit') @lang('translation.Announcement') @endsection
 
 @section('content')
     @component('components.breadcrumb')
-    @slot('url') {{ url('/') }} @endslot
-    @slot('li_1') Home @endslot
-    @slot('title') Edit Announcement @endslot
+    @slot('url') {{ route('admin-dashboard') }} @endslot
+    @slot('li_1') @lang('translation.Dashboard') @endslot
+    @slot('url2') {{ route('announcements.list') }} @endslot
+    @slot('li_2') @lang('translation.Announcement') @endslot
+    @slot('title') @lang('translation.Edit') @lang('translation.Announcement') @endslot
     @endcomponent
 
     <form action="{{ route('announcements.store') }}" method="post" enctype="multipart/form-data">
@@ -43,7 +45,7 @@
                                         <div class="col-lg-12">
                                             <div class="mb-3">
                                                 <label class="form-label required" for="content">Content</label>
-                                                <textarea class="form-control @error('content') is-invalid @enderror" name="content" id="content" placeholder="Enter the content for the announcement" rows="6">{{ $announcement->content }}</textarea>
+                                                <textarea class="form-control @error('content') is-invalid @enderror" name="content" id="content" placeholder="Enter the content for the announcement" rows="6">{!! $announcement->content !!}</textarea>
                                                 @error('content')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
@@ -57,7 +59,7 @@
                                                     <label for="image" class="form-label">Upload Announcement Image</label>
                                                     <input class="form-control" type="file" name="image" id="image">
                                                     @if ($announcement->image)
-                                                        <div class="mt-1">{{ $announcement->image }}</div>
+                                                        <div class="mt-1">Current image: {{ $announcement->image }}</div>
                                                     @endif
                                                 </div>
                                                 @error('image')
@@ -174,17 +176,33 @@
 @endsection
 @section('script')
     <script src="{{ URL::asset('assets/js/app.js') }}"></script>
+    <script src="{{ URL::asset('assets/libs/@ckeditor/@ckeditor.min.js') }}"></script>
+    <script>
+        ClassicEditor
+        .create( document.querySelector( '#content' ) )
+        .then( function(editor) {
+            editor.ui.view.editable.element.style.height = '200px';
+        } )
+        .catch( function(error) {
+            console.error( error );
+        } );
+    </script>
     <script>
         const checkboxPopup = document.getElementById('popup');
         const popupStatus = document.getElementById('popupDisplay');
         const checkboxPopupOnce = document.getElementById('popupOnce');
         const popupOnceStatus = document.getElementById('popupOnceDisplay');
 
+        checkboxPopupOnce.addEventListener('change', function() {
+            if (this.checked) {
+                checkboxPopup.checked = true;
+                popupStatus.textContent = 'Enabled';
+            }
+            popupOnceStatus.textContent = this.checked ? 'Enabled' : 'Disabled';
+        });
+
         checkboxPopup.addEventListener('change', function() {
             popupStatus.textContent = this.checked ? 'Enabled' : 'Disabled';
-        });
-        checkboxPopupOnce.addEventListener('change', function() {
-            popupOnceStatus.textContent = this.checked ? 'Enabled' : 'Disabled';
         });
     </script>
 @endsection

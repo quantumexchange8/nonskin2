@@ -1,13 +1,11 @@
 @extends('layouts.master')
-@section('title')
-    Announcement Listing
-@endsection
+@section('title') @lang('translation.Announcement') @lang('translation.Listing') @endsection
 
 @section('content')
     @component('components.breadcrumb')
-        @slot('url') {{ url('/') }} @endslot
-        @slot('li_1') Home @endslot
-        @slot('title') Announcement Listing @endslot
+        @slot('url') {{ route('admin-dashboard') }} @endslot
+        @slot('li_1') @lang('translation.Dashboard') @endslot
+        @slot('title') @lang('translation.Announcement') @lang('translation.Listing') @endslot
     @endcomponent
 
     @include('includes.alerts')
@@ -46,7 +44,7 @@
                                     @endif
                                 </td>
                                 <td>{{ $v->title }}</td>
-                                <td>{{ Str::limit($v->content, 50) }}</td>
+                                <td>{!! Str::limit($v->content, 50) !!}</td>
                                 <td>
                                     @if($v->status == 1)
                                     <span class="badge badge-pill badge-soft-success font-size-12">

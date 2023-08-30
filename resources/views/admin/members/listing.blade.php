@@ -1,13 +1,11 @@
 @extends('layouts.master')
-@section('title')
-    Member Listing
-@endsection
+@section('title') @lang('translation.member-listing') @endsection
 
 @section('content')
     @component('components.breadcrumb')
-        @slot('url') {{ url('/') }} @endslot
-        @slot('li_1') Home @endslot
-        @slot('title') Member Listing @endslot
+    @slot('url') {{ route('admin-dashboard') }} @endslot
+    @slot('li_1') @lang('translation.Dashboard') @endslot
+        @slot('title') @lang('translation.member-listing') @endslot
     @endcomponent
 
     @include('includes.alerts')

@@ -1,12 +1,10 @@
 @extends('layouts.master')
-@section('title')
-    @lang('translation.Shipping Charges Setting')
-@endsection
+@section('title') @lang('translation.Shipping Charges Setting') @endsection
 
 @section('content')
     @component('components.breadcrumb')
-        @slot('url') {{ url('/') }} @endslot
-        @slot('li_1') @lang('translation.Home') @endslot
+        @slot('url') {{ route('admin-dashboard') }} @endslot
+        @slot('li_1') @lang('translation.Dashboard') @endslot
         @slot('title') @lang('translation.Shipping Charges Setting') @endslot
     @endcomponent
 

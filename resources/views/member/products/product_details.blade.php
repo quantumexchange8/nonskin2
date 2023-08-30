@@ -7,8 +7,10 @@
 
 @section('content')
 @component('components.breadcrumb')
-@slot('url') {{ route('showdetails', $product->id) }} @endslot
-@slot('li_1') Products @endslot
+@slot('url') {{ route('user-dashboard') }} @endslot
+@slot('li_1') Dashboard @endslot
+@slot('url2') {{ route('product-list') }} @endslot
+@slot('li_2') Products @endslot
 @slot('title') {{ $product->name }} @endslot
 @endcomponent
 

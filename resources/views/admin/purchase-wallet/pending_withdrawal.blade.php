@@ -1,11 +1,11 @@
 @extends('layouts.master')
-@section('title') Purchase Wallet Withdrawals @endsection
+@section('title') @lang('translation.pending-withdrawal') @endsection
 
 @section('content')
     @component('components.breadcrumb')
-    @slot('url') {{ url('/') }} @endslot
-    @slot('li_1') Home @endslot
-    @slot('title') Purchase Wallet Withdrawals @endslot
+    @slot('url') {{ route('admin-dashboard') }} @endslot
+    @slot('li_1') @lang('translation.Dashboard') @endslot
+    @slot('title') @lang('translation.pending-withdrawal') @endslot
     @endcomponent
 
     <div class="row">

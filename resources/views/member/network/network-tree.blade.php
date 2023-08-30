@@ -5,7 +5,7 @@
 
 @section('content')
     @component('components.breadcrumb')
-        @slot('url') {{ url('/members/dashboard') }} @endslot
+        @slot('url') {{ route('user-dashboard') }} @endslot
         @slot('li_1') @lang('translation.Dashboard') @endslot
         @slot('title') Member Network Tree @endslot
     @endcomponent

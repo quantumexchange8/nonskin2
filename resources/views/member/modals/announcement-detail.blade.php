@@ -10,7 +10,7 @@
                     <img class="card-img-top img-fluid mb-3 p-1" src="{{ asset('images/announcements/' . $v->image) }}" alt="{{ $v->title }}">
                 @endif
                 <h5>{{ $v->title }}</h5>
-                {{ $v->content }}
+                {!! $v->content !!}
             </div>
             <div class="modal-footer">
                 @if(request()->route()->getName() == 'member.announcement')

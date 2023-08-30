@@ -8,6 +8,7 @@
         "List View" => "List View",
         "New Order" => "New Order",
         "Add" => "Add",
+        "Edit" => "Edit",
         "Commission" => "Commission",
         "My Orders" => "My Orders",
         "Top Up" => "Top Up",
@@ -48,6 +49,7 @@
         "Annually Commission" => "Annually Commission",
         "Performance Bonus" => "Performance Bonus",
         "New Topup" => "New Topup",
+        "Ranking History" => "Ranking History",
 
 
         // Custom

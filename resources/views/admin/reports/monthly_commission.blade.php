@@ -1,11 +1,11 @@
 @extends('layouts.master')
-@section('title') Monthly Commission Report @endsection
+@section('title') @lang('translation.Monthly Commission') @lang('translation.Report') @endsection
 
 @section('content')
     @component('components.breadcrumb')
-    @slot('url') {{ url('/') }} @endslot
-    @slot('li_1') Home @endslot
-    @slot('title') Monthly Commission Report @endslot
+    @slot('url') {{ route('admin-dashboard') }} @endslot
+    @slot('li_1') @lang('translation.Dashboard') @endslot
+    @slot('title') @lang('translation.Monthly Commission') @lang('translation.Report') @endslot
     @endcomponent
 
     <div class="row">

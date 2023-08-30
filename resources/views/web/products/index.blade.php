@@ -1,7 +1,5 @@
 @extends('layouts.master')
-@section('title')
-    Product List
-@endsection
+@section('title') @lang('translation.Product') @lang('translation.Listing') @endsection
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('assets/libs/nouislider/nouislider.min.css') }}">
@@ -9,9 +7,9 @@
 
 @section('content')
     @component('components.breadcrumb')
-        @slot('url') {{ url('/') }} @endslot
-        @slot('li_1') Home @endslot
-        @slot('title') Product List @endslot
+        @slot('url') {{ route('admin-dashboard') }} @endslot
+        @slot('li_1') @lang('translation.Dashboard') @endslot
+        @slot('title') @lang('translation.Product') @lang('translation.Listing') @endslot
     @endcomponent
 
     @include('includes.alerts')

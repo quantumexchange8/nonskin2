@@ -20,7 +20,7 @@
                     @endif
                     <div class="card-body">
                         <h4 class="card-title">{{ $v->title }}</h4>
-                        <p class="card-text">{{ Str::words($v->content,8,'...') }}</p>
+                        <p class="card-text">{!! Str::words($v->content,8,'...') !!}</p>
                         <p class="card-text">
                             <small class="text-muted">Updated on <span class="fw-bold">{{ $v->created_at->format('d/M/Y, h:m:s') }}</span></small>
                         </p>

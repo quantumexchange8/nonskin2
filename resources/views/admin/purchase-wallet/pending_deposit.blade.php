@@ -1,11 +1,11 @@
 @extends('layouts.master')
-@section('title') Purchase Wallet Deposits @endsection
+@section('title') @lang('translation.pending-deposit') @endsection
 
 @section('content')
     @component('components.breadcrumb')
-    @slot('url') {{ url('/') }} @endslot
-    @slot('li_1') Home @endslot
-    @slot('title') Purchase Wallet Deposits @endslot
+    @slot('url') {{ route('admin-dashboard') }} @endslot
+    @slot('li_1') @lang('translation.Dashboard') @endslot
+    @slot('title') @lang('translation.pending-deposit') @endslot
     @endcomponent
 
     <div class="row">

@@ -8,10 +8,11 @@
 
 @section('content')
     @component('components.breadcrumb')
-        @slot('url') {{ url('/') }} @endslot
-        @slot('li_1') Home @endslot
+        @slot('url') {{ route('admin-dashboard') }} @endslot
+        @slot('li_1') @lang('translation.Dashboard') @endslot
+        @slot('url2') {{ route('list') }} @endslot
+        @slot('li_2') @lang('translation.Products') @endslot
         @slot('title') Edit @endslot
-        @slot('title2') Edit Product @endslot
     @endcomponent
 
     @include('includes.alerts')

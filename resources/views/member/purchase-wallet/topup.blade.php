@@ -3,7 +3,7 @@
 
 @section('content')
     @component('components.breadcrumb')
-    @slot('url') {{ url('/members/dashboard') }} @endslot
+    @slot('url') {{ route('user-dashboard') }} @endslot
     @slot('li_1') @lang('translation.Dashboard') @endslot
     @slot('url2') {{ route('member.deposit') }} @endslot
     @slot('li_2') @lang('translation.Purchase Wallet Deposit') @endslot
