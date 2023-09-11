@@ -95,7 +95,16 @@
                                 <p class="mt-5 card-text">@lang('translation.Product Wallet')</p>
                             </div>
                             <div>
-                                <h2 class="mt-5 mb-0">RM {{ number_format($user->cash_wallet, 2) }}</h2>
+                                
+                                <div class="d-flex justify-content-between gap-3 mt-4">
+                                    <form action="{{ route('redeem-commission') }}" method="POST" id="redeem-form">
+                                        @csrf
+                                        <h2 class="mb-0 mt-5">RM {{ number_format($user->cash_wallet,2) }}</h2>
+                                        <button class="btn btn-primary 2-100 btn-redeem" type="submit" id="redeem-button">
+                                            Redeem
+                                        </button>
+                                    </form>
+                                </div>
                                 <h2 class="mt-5 mb-0">RM {{ number_format($user->product_wallet, 2) }}</h2>
                             </div>
                         </div>

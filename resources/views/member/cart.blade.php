@@ -78,7 +78,7 @@
                                                         </div><!-- /.modal -->
                                                     </div>
                                                 </div><!-- end card body -->
-
+                                                
                                             </li>
                                             <!-- Like button -->
                                             {{-- <li class="list-inline-item">
@@ -94,7 +94,7 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="mt-3">
-                                                <p class="text-muted mb-2">Unit Price</p>
+                                                <p class="text-muted mb-2">Unit Price {{number_format($row->product->price, 2)}}</p>
                                                 <h5 class="font-size-16">RM {{ number_format(($row->product->price*(100-$row->product->discount)/100),2,'.') }}</h5>
                                                 @if ($row->product->discount > 0)
                                                 <del class="text-muted">RM {{ number_format($row->product->price,2,'.',',') }}</del>
@@ -120,13 +120,11 @@
                                         <div class="col-md-4">
                                             <div class="mt-3">
                                                 <p class="text-muted mb-2">Total</p>
-                                                @if ($discountAmt > 0)
-                                                    <h5 class="font-size-16 total" data-product-id="{{ $row->product->id }}">RM {{ number_format(($row->product->price * (100-$discountAmt)/100) * $row->quantity,2,'.') }}</h5>
-                                                    <h6>{{ $discountAmt }}% Off</h6>
-                                                    <del><h5 class="font-size-16 price" data-product-id="{{ $row->product->id }}">RM {{ number_format(($row->product->price) * $row->quantity,2,'.') }}</h5></del>
-                                                @else
-                                                    {{-- <h5 class="font-size-16 total" data-product-id="{{ $row->product->id }}">RM {{ number_format(($row->product->price * (100-$row->product->discount)/100) * $row->quantity,2,'.') }}</h5> --}}
-                                                    <h4 class="total" data-product-id="{{ $row->product->id }}">RM {{ number_format($row->price - $row->discount_price ,2,'.') }}</h4>
+                                                <del><h5 class="font-size-16 total" data-product-id="{{ $row->product->id }}">RM {{ number_format(($row->product->price * (100-$row->product->discount)/100) * $row->quantity,2,'.') }}</h5></del> 
+                                                <h6>{{ $discountAmt }}% Off</h6>
+                                                <h4>RM {{ number_format($row->price - $row->discount_price ,2,'.') }}</h4>
+                                                @if ($row->product->discount > 0)
+                                                <del class="text-muted product-discount" data-product-id="{{ $row->product->id }}">RM {{ number_format($row->product->price * $row->quantity,2,'.',',') }}</del>
                                                 @endif
                                             </div>
                                         </div>
@@ -150,17 +148,17 @@
                                 <div class="table-responsive">
                                     <table class="table mb-0">
                                         <tbody>
-                                            <tr>
+                                            {{-- <tr>
                                                 <td>Sub Total :</td>
                                                 <td class="text-end sub-total">RM 0.00</td>
-                                            </tr>
+                                            </tr> --}}
                                             <tr>
-                                                <td>Total Discount : </td>
-                                                <td class="text-end total-discount">- RM 0.00</td>
+                                                <td>Discount per unit: </td>
+                                                <td class="text-end">- RM {{ $disAmt }}</td>
                                             </tr>
                                             <tr class="bg-light">
                                                 <th>Total Merchandise:</th>
-                                                <td class="text-end">
+                                                <td class="text-end total">
                                                     <span id="total" class="fw-bold">
                                                         RM 0.00
                                                     </span>
@@ -207,7 +205,7 @@
             let doneTypingInterval = 200; // Delay time in milliseconds
 
             // Handle keyup event on quantity input
-            $('.quantity-input').keyup(function(event) {
+            $('.quantity-input').keyup((event) => {
                 let quantityInput = $(this);
                 let productId = quantityInput.data('product-id');
                 let productPrice = quantityInput.data('product-price');
@@ -217,10 +215,9 @@
                 clearTimeout(typingTimer);
 
                 // Set a new timer to trigger update after the specified delay
-                typingTimer = setTimeout(function() {
+                typingTimer = setTimeout(() => {
                     if (currentValue >= 1) { // Ensure quantity is valid
                         updateCartItem(productId, currentValue, productPrice);
-                        getCartData();
                     } else {
                         // You may show an error message here if needed
                     }
@@ -253,7 +250,6 @@
                 getCartData();
             });
 
-
             $('.checkout').click(function() {
                 let quantityInput = $(this).siblings('.quantity-input');
                 let productId = quantityInput.data('product-id');
@@ -280,7 +276,7 @@
                             row.find('.total-price').text('RM ' + item.total_price.toLocaleString(undefined, { minimumFractionDigits: 2 }));
 
                             // Update the price and total for each item in the cart view
-                            $('.price[data-product-id="' + item.product_id + '"]').text('RM ' + (item.product.price*item.quantity).toLocaleString(undefined, { minimumFractionDigits: 2 }));
+                            $('.price[data-product-id="' + item.product_id + '"]').text('RM ' + item.product.price.toLocaleString(undefined, { minimumFractionDigits: 2 }));
                             $('.total-discount').text('- RM ' + response.total_discount.toLocaleString(undefined, { minimumFractionDigits: 2 }));
                             $('.total[data-product-id="' + item.product_id + '"]').text('RM ' + item.total_price.toLocaleString(undefined, { minimumFractionDigits: 2 }));
                             if (item.product.discount > 0) {

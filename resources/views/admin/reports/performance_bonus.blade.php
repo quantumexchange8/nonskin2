@@ -44,6 +44,7 @@
                         <thead>
                             <tr>
                                 <th>#</th>
+                                <th>commission_type</th>
                                 <th>Upline</th>
                                 <th>Upline Rank</th>
                                 <th>Downline</th>
@@ -55,19 +56,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- @foreach ($rows as $row) --}}
+                            @foreach ($performReport as $row)
                                 <tr>
-                                    <td></td>
-                                    <td>Leonard Hofstadter</td>
-                                    <td>Exclusive Distributor</td>
-                                    <td>Tiong Wan Chuah</td>
-                                    <td>Member</td>
-                                    <td>2.00</td>
-                                    <td>2.00</td>
-                                    <td>1.00</td>
-                                    <td>23/8/2023</td>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $row->commissions_type }}</td>
+                                    <td>{{ $row->upline_id }}</td>
+                                    <td>{{ $row->upline_rankid }}</td>
+                                    <td>{{ $row->downline_id }}</td>
+                                    <td>{{ $row->downline_rankid }}</td>
+                                    <td>{{ $row->upline_totalsales }}</td>
+                                    <td>{{ $row->percentage }}</td>
+                                    <td>{{ $row->total_bonus }}</td>
+                                    <td>{{ $row->commission_date }}</td>
                                 </tr>
-                            {{-- @endforeach --}}
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -83,7 +85,8 @@
             responsive: true,
             searching: false,
             lengthChange: false,
-            pagingType: 'simple_numbers'
+            pagingType: 'simple_numbers',
+            order: [[0, 'desc']],
         });
     </script>
     <script>

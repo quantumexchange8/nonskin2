@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\User;
 use App\Models\WalletHistory;
 use App\Models\RankingUpdateLog;
+use App\Models\CommissionsLogs;
 use Auth;
 
 class ReportController extends Controller
@@ -58,9 +59,31 @@ class ReportController extends Controller
     public function monthlyCommissionReport() {
         $role = Auth::user()->role;
         if($role == 'user'){
-            return view('member.reports.monthly_commission');
+
+            $user = Auth::user();
+            $hierarchyListArray = explode('-', trim($user->hierarchyList, '-'));
+            
+            $monthlyReport = CommissionsLogs::where('commissions_type', 'monthly_bonus')
+            // ->whereIn('downline_id', $hierarchyListArray)
+            ->where('upline_id', $user->id)
+            ->get();
+            // dd($monthlyReport);
+
+            return view('member.reports.monthly_commission', [
+                'monthlyReport' => $monthlyReport
+            ]);
         }else if ($role == 'admin' || $role == 'superadmin'){
-            return view('admin.reports.monthly_commission');
+
+            $user = Auth::user();
+            $hierarchyListArray = explode('-', trim($user->hierarchyList, '-'));
+            
+            $monthlyReport = CommissionsLogs::where('commissions_type', 'monthly_bonus')
+            // ->whereIn('downline_id', $hierarchyListArray)
+            ->get();
+
+            return view('admin.reports.monthly_commission', [
+                'monthlyReport' => $monthlyReport
+            ]);
         }else{
             return abort (404);
         }
@@ -68,9 +91,30 @@ class ReportController extends Controller
     public function quarterlyCommissionReport() {
         $role = Auth::user()->role;
         if($role == 'user'){
-            return view('member.reports.quarterly_commission');
+
+            $user = Auth::user();
+            $hierarchyListArray = explode('-', trim($user->hierarchyList, '-'));
+
+            $quaterReport = CommissionsLogs::where('commissions_type', 'quarter_bonus')
+            // ->whereIn('downline_id', $hierarchyListArray)
+            ->where('upline_id', $user->id)
+            ->get();
+
+            return view('member.reports.quarterly_commission', [
+                'quaterReport' => $quaterReport
+            ]);
         }else if ($role == 'admin' || $role == 'superadmin'){
-            return view('admin.reports.quarterly_commission');
+
+            $user = Auth::user();
+            $hierarchyListArray = explode('-', trim($user->hierarchyList, '-'));
+
+            $quaterReport = CommissionsLogs::where('commissions_type', 'quarter_bonus')
+            // ->whereIn('downline_id', $hierarchyListArray)
+            ->get();
+
+            return view('admin.reports.quarterly_commission', [
+                'quaterReport' => $quaterReport
+            ]);
         }else{
             return abort (404);
         }
@@ -78,9 +122,28 @@ class ReportController extends Controller
     public function annuallyCommissionReport() {
         $role = Auth::user()->role;
         if($role == 'user'){
-            return view('member.reports.annually_commission');
+
+            $user = Auth::user();
+
+            $anualReport = CommissionsLogs::where('commissions_type', 'annual_bonus')
+            // ->whereIn('downline_id', $hierarchyListArray)
+            ->get();
+
+
+            return view('member.reports.annually_commission', [
+                'anualReport' => $anualReport
+            ]);
         }else if ($role == 'admin' || $role == 'superadmin'){
-            return view('admin.reports.annually_commission');
+
+            $user = Auth::user();
+
+            $anualReport = CommissionsLogs::where('commissions_type', 'annual_bonus')
+            // ->whereIn('downline_id', $hierarchyListArray)
+            ->get();
+
+            return view('admin.reports.annually_commission', [
+                'anualReport' => $anualReport
+            ]);
         }else{
             return abort (404);
         }
@@ -88,9 +151,27 @@ class ReportController extends Controller
     public function performanceBonusReport() {
         $role = Auth::user()->role;
         if($role == 'user'){
-            return view('member.reports.performance_bonus');
+
+            $user = Auth::user();
+
+            $performReport = CommissionsLogs::where('commissions_type', 'performance_bonus')
+            // ->whereIn('downline_id', $hierarchyListArray)
+            ->get();
+
+            return view('member.reports.performance_bonus', [
+                'performReport' => $performReport
+            ]);
         }else if ($role == 'admin' || $role == 'superadmin'){
-            return view('admin.reports.performance_bonus');
+            
+            $user = Auth::user();
+            
+            $performReport = CommissionsLogs::where('commissions_type', 'performance_bonus')
+            // ->whereIn('downline_id', $hierarchyListArray)
+            ->get();
+
+            return view('admin.reports.performance_bonus', [
+                'performReport' => $performReport
+            ]);
         }else{
             return abort (404);
         }
@@ -100,7 +181,7 @@ class ReportController extends Controller
     {
 
         $rankingLog = RankingUpdateLog::get();
-        // dd($rankingLog);
+        
 
         return view('admin.reports.ranking', [
             'rankings' => $rankingLog,

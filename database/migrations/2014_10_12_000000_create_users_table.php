@@ -65,11 +65,13 @@ class CreateUsersTable extends Migration
             $table->tinyInteger('is_active')->default(1)->comment('0 - Inactive, 1 - Active');
             $table->tinyInteger('is_legacy')->default(0)->comment('0 - New User, 1 - Old existing users');
             $table->unsignedBigInteger('rank_id')->nullable();
+            $table->integer('lowest_rank')->default(0);
             // $table->foreign('rank_id')
             //     ->references('id')
             //     ->on('rankings')
             //     ->onUpdate('cascade');
             $table->softDeletes();
+            $table->integer('is_rank_manual')->default(0);
         });
 
         // DB::table('users')->insert(array('name'=>'default','email'=>'default@currenttech', 'avatar' => '', 'password'=>Hash::make('defaultsecret')));

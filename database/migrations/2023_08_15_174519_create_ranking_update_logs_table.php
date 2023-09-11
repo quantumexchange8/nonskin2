@@ -27,6 +27,7 @@ class CreateRankingUpdateLogsTable extends Migration
             $table->double('user_personal_sales');
             $table->double('target_personal_sales');
             $table->string('type', 10)->charset('utf8mb4')->collation('utf8mb4_unicode_ci');
+            $table->string('remarks')->nullable();
             $table->timestamps();
             // $table->foreign('user_id')
             //     ->references('id')

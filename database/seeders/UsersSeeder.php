@@ -41,7 +41,7 @@ class UsersSeeder extends Seeder
                 'full_name'         => $user['full_name'],
                 'id_no'             => $user['id_no'],
                 'contact'           => $user['contact'],
-                'password'          => Hash::make('Nonskin123456789'),
+                'password'          => Hash::make('Test123.'),
                 'role'              => $user['type'],
                 'superadmin'        => $user['superadmin'],
                 'member_type'       => $user['member_type'],

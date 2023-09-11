@@ -11,7 +11,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\Address;
-use App\Models\PromotionOrdersLog;
+use App\Models\DateTimeLogs;
 use App\Models\PaymentSetting;
 use App\Models\DeliverySetting;
 use App\Models\CompanyInfo;
@@ -44,7 +44,7 @@ class UserController extends Controller
 
         $now = Carbon::now();
 
-        $hasValidPromotion = PromotionOrdersLog::where('start_date', '<=', $now)
+        $hasValidPromotion = DateTimeLogs::where('start_date', '<=', $now)
             ->where('end_date', '>=', $now)
             ->exists();
         // Construct the query based on the existence of valid promotion records

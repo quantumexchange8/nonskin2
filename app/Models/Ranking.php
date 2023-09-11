@@ -18,6 +18,6 @@ class Ranking extends Model
 
     public function promotionOrdersLogs()
     {
-        return $this->hasMany(PromotionOrdersLog::class);
+        return $this->hasMany(DateTimeLogs::class);
     }
 }
