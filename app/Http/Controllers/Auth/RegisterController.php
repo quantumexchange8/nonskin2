@@ -128,7 +128,7 @@ class RegisterController extends Controller
 
         $banks = BankSetting::pluck('name', 'id');
         $countries = Country::select('id', 'name')->get();
-        dd($countries);
+        
         return view('auth.register', [
             'banks' => $banks,
             'referral' => $referral,
