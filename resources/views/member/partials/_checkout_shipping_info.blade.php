@@ -17,7 +17,15 @@
 
 <div id="checkout-shippinginfo-collapse" class="collapse show">
     <div class="p-4 border-top">
-        <h5 class="font-size-14 mb-3">Shipping Info</h5>
+        <div style="display: flex;justify-content: space-between;">
+            <div>
+                <h5 class="font-size-14 mb-3">Shipping Info</h5>
+            </div>
+            <div>
+                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addNewAddress"><i class="bx bx-plus-circle"></i> Add New Address</button>
+            </div>
+        </div>
+        
         <div class="row">
             @foreach ($shipping_address as $k => $v)
             <div class="col-lg-4 col-sm-6">

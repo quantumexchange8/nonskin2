@@ -20,6 +20,11 @@
             color: red;
         }
     </style>
+@section('modal')
+    @include('web.account.modal-add-address')
+@endsection 
+
+
 <form action="{{ route('place-order') }}" method="POST" id="checkout-form" enctype="multipart/form-data">
     @csrf
     <div class="row">
@@ -281,6 +286,8 @@
                                 formData.append('payment_proof', null);
                             }
 
+                            
+
                             $.ajax({
                                 url: '{{ route("place-order") }}',
                                 method: 'POST',
@@ -343,120 +350,144 @@
                             const proWallet = Number({{ $user->product_wallet }});
                             const totalAmountPrice = parseFloat(document.getElementById('totalAmountValue').value);
 
-                            $.ajax({
-                                url: '{{ route("get-user-purchase-wallet-balance") }}',
-                                method: 'GET',
-                                success: function(response) {
-                                    const UserPurchaseWalletBalance = response.purchase_wallet_balance;
-                                    
-                                    // Check if the user's purchase wallet balance is sufficient
-                                    if(walletAmount <= totalPrice) {
-                                        if (UserPurchaseWalletBalance >= formattedTotal) {
-                                            let formData = $('#checkout-form').serializeArray();
+                            // Add SweetAlert for confirmation
+                            Swal.fire({
+                                title: 'Confirm Purchase',
+                                text: 'Are you sure you want to make this purchase?',
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Yes, make the purchase'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    // User confirmed, proceed with the purchase
+                                    $.ajax({
+                                    url: '{{ route("get-user-purchase-wallet-balance") }}',
+                                    method: 'GET',
+                                    success: function(response) {
+                                        const UserPurchaseWalletBalance = response.purchase_wallet_balance;
+                                        
+                                        // Check if the user's purchase wallet balance is sufficient
+                                        if(walletAmount <= totalPrice) {
+                                            if (UserPurchaseWalletBalance >= formattedTotal) {
+                                                let formData = $('#checkout-form').serializeArray();
 
-                                            formData.push({
-                                                name: '_token',
-                                                value: $('meta[name="csrf-token"]').attr('content')
-                                            }, {
-                                                name: 'user_id',
-                                                value: {{ $user->id }}
-                                            }, {
-                                                name: 'email',
-                                                value: '{{ $user->email }}'
-                                            }, {
-                                                name: 'price',
-                                                value: totalAmountPrice
-                                            }, {
-                                                name: 'discount_amt',
-                                                value: '{{ $total_discounted }}'
-                                            }, {
-                                                name: 'total_amount',
-                                                value: formattedTotal
-                                            }, {
-                                                name: 'product_wallet',
-                                                value: walletAmount
-                                            });
+                                                formData.push({
+                                                    name: '_token',
+                                                    value: $('meta[name="csrf-token"]').attr('content')
+                                                }, {
+                                                    name: 'user_id',
+                                                    value: {{ $user->id }}
+                                                }, {
+                                                    name: 'email',
+                                                    value: '{{ $user->email }}'
+                                                }, {
+                                                    name: 'price',
+                                                    value: totalAmountPrice
+                                                }, {
+                                                    name: 'discount_amt',
+                                                    value: '{{ $total_discounted }}'
+                                                }, {
+                                                    name: 'total_amount',
+                                                    value: formattedTotal
+                                                }, {
+                                                    name: 'product_wallet',
+                                                    value: walletAmount
+                                                });
 
-                                            formData.push({
-                                                name: 'receiver',
-                                                value: name
-                                            }, {
-                                                name: 'contact',
-                                                value: contact
-                                            });
+                                                formData.push({
+                                                    name: 'receiver',
+                                                    value: name
+                                                }, {
+                                                    name: 'contact',
+                                                    value: contact
+                                                });
 
-                                            $.ajax({
-                                                url: '{{ route("place-order") }}',
-                                                method: 'POST',
-                                                data: formData,
-                                                success: function(response) {
-                                                    if (response && response.message) {
-                                                        var timerInterval;
-                                                        Swal.fire({
-                                                        title: response.message,
-                                                        html: 'Please do not click on anywhere while being redirected to the payment page',
-                                                        timer: 3000,
-                                                        timerProgressBar: true,
-                                                        allowOutsideClick: false, // Prevent outside click
-                                                        showConfirmButton: false, // Hide the confirm button
-                                                        didOpen:function () {
-                                                            Swal.showLoading()
-                                                            timerInterval = setInterval(function() {
-                                                            var content = Swal.getHtmlContainer()
-                                                            if (content) {
-                                                                var b = content.querySelector('b')
-                                                                if (b) {
-                                                                    b.textContent = Swal.getTimerLeft()
+                                                $.ajax({
+                                                    url: '{{ route("place-order") }}',
+                                                    method: 'POST',
+                                                    data: formData,
+                                                    success: function(response) {
+                                                        if (response && response.message) {
+                                                            var timerInterval;
+                                                            Swal.fire({
+                                                            title: response.message,
+                                                            html: 'Please do not click on anywhere while being redirected to the payment page',
+                                                            timer: 3000,
+                                                            timerProgressBar: true,
+                                                            allowOutsideClick: false, // Prevent outside click
+                                                            showConfirmButton: false, // Hide the confirm button
+                                                            didOpen:function () {
+                                                                Swal.showLoading()
+                                                                timerInterval = setInterval(function() {
+                                                                var content = Swal.getHtmlContainer()
+                                                                if (content) {
+                                                                    var b = content.querySelector('b')
+                                                                    if (b) {
+                                                                        b.textContent = Swal.getTimerLeft()
+                                                                    }
                                                                 }
-                                                            }
-                                                            }, 100)
-                                                        },
-                                                        onClose: function () {
-                                                            clearInterval(timerInterval);
-                                                            window.location.href = "{{ route('member.order-pending') }}";
-                                                        }
-                                                        }).then(function (result) {
-                                                            /* Read more about handling dismissals below */
-                                                            if (result.dismiss === Swal.DismissReason.timer) {
+                                                                }, 100)
+                                                            },
+                                                            onClose: function () {
+                                                                clearInterval(timerInterval);
                                                                 window.location.href = "{{ route('member.order-pending') }}";
                                                             }
+                                                            }).then(function (result) {
+                                                                /* Read more about handling dismissals below */
+                                                                if (result.dismiss === Swal.DismissReason.timer) {
+                                                                    window.location.href = "{{ route('member.order-pending') }}";
+                                                                }
+                                                            })
+                                                        }
+                                                    },
+                                                    error: function(xhr, status, error) {
+                                                        console.log(xhr);
+                                                        console.log(status);
+                                                        Swal.fire({
+                                                        icon: 'error',
+                                                        title: 'Oops...',
+                                                        text: error
                                                         })
+                                                        return;
                                                     }
-                                                },
-                                                error: function(xhr, status, error) {
-                                                    console.log(xhr);
-                                                    console.log(status);
-                                                    Swal.fire({
-                                                    icon: 'error',
-                                                    title: 'Oops...',
-                                                    text: error
-                                                    })
-                                                    return;
-                                                }
 
-                                            });
+                                                });
+                                            } else {
+                                                // User has insufficient balance, show an error message
+                                                Swal.fire({
+                                                    icon: 'error',
+                                                    title: 'Insufficient Purchase Wallet Balance',
+                                                    text: 'Your purchase wallet balance is not sufficient to complete this transaction.',
+                                                });
+                                            }
                                         } else {
-                                            // User has insufficient balance, show an error message
                                             Swal.fire({
-                                                icon: 'error',
-                                                title: 'Insufficient Purchase Wallet Balance',
-                                                text: 'Your purchase wallet balance is not sufficient to complete this transaction.',
-                                            });
+                                            icon: 'error',
+                                            title: 'Invalid Amount...',
+                                            text: 'Insufficient Amount'
+                                            })
+                                            return;
                                         }
-                                    } else {
-                                        Swal.fire({
-                                        icon: 'error',
-                                        title: 'Invalid Amount...',
-                                        text: 'Insufficient Amount'
-                                        })
-                                        return;
+                                        
+                                    },
+                                    error: function(xhr, status, error) {
+                                        console.error(error);
                                     }
-                                    
-                                },
-                                error: function(xhr, status, error) {
-                                    console.error(error);
+                                });
+                                } else {
+                                    // User canceled, do nothing or show a message
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Canceled',
+                                        text: 'Your have canceled.',
+                                    });
                                 }
                             });
+
+
+                            
 
                         } else {
 

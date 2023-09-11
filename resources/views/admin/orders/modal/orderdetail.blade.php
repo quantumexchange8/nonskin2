@@ -82,11 +82,11 @@
                         <input type="text" class="form-control d-none" value="{{$order->courier}}" name="courier">
                     </div>
 
-                    <div class="mb-2" id="consignment-section">
+                    {{-- <div class="mb-2" id="consignment-section">
                         <label class="mb-2">Consignment Note:</label>
                         <span class="text-primary" >{{$order->cn}}</span>
                         <input type="text" class="form-control d-none" value="{{$order->cn}}" name="cn">
-                    </div>
+                    </div> --}}
 
                     <div class="mb-2" id="tracking-section">
                         <label class="mb-2">Tracking Number:</label>

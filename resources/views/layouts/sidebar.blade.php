@@ -79,7 +79,7 @@
                 @hasanyrole('user')
                     <li><a href="{{ route('product-list') }}">
                             <i class="bx bxs-package icon icon nav-icon"></i>
-                            <span class="menu-item">@lang('translation.Product') @lang('translation.List')</span>
+                            <span class="menu-item">@lang('translation.View') @lang('translation.Orders')</span>
                         </a>
                     </li>
                 @endhasanyrole

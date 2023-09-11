@@ -46,7 +46,8 @@ class AdminController extends Controller
             (SELECT COUNT(*) FROM users WHERE rank_id = 2) as members,
             (SELECT COUNT(*) FROM users WHERE rank_id = 1) as clients,
             (SELECT COUNT(*) FROM payments WHERE type = "Deposit" AND status = "Pending") as pending_deposit,
-            (SELECT COUNT(*) FROM payments WHERE type = "Withdraw" AND status = "Pending") as pending_withdrawal
+            (SELECT COUNT(*) FROM payments WHERE type = "Withdraw" AND status = "Pending") as pending_withdrawal,
+            (SELECT SUM(total_amount) FROM orders WHERE status = 4 AND MONTH(created_at) = MONTH(CURDATE())) as monthly_sales
         ')
         ->first();
 
@@ -349,7 +350,7 @@ class AdminController extends Controller
         $order->update([
             'status' => $request->status,
             'courier' => $request->courier,
-            'cn' => $request->cn,
+            // 'cn' => $request->cn,
             'tracking_number' => $request->tracking_number,
         ]);
 

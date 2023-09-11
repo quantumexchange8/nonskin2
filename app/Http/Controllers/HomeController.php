@@ -113,6 +113,7 @@ class HomeController extends Controller
             $address = Address::updateOrCreate(
                 ['id' => $addressData['id'] ?? null],
                 [
+                    'user_id' => Auth::id(),
                     'name'          => $addressData['name'],
                     'contact'       => $addressData['contact_address'],
                     'address_1'     => $addressData['address_1'],

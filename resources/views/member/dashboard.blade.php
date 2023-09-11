@@ -293,16 +293,16 @@
                                         <h5 class="mt-1 mb-0 font-size-14">{{ $user->rank->level_discount }} %</h5>
                                     </div>
                                 </div>
-                                @if ($user->rank->level !== 5)
+                                {{-- @if ($user->rank->level !== 5)
                                     <div class="flex-1 text-end">
-                                        {{-- @if(($user->personal_sales/$user->rank->personal_sales)*100 >= 100) --}}
-                                            {{-- <span class="badge badge-soft-success">QUALIFIED</span> --}}
-                                        {{-- @else --}}
+                                        @if(($user->personal_sales/$user->rank->personal_sales)*100 >= 100)
+                                            <span class="badge badge-soft-success">QUALIFIED</span>
+                                        @else
                                             <span class="badge badge-soft-danger">NOT YET QUALIFIED</span>
-                                        {{-- @endif --}}
+                                        @endif
                                             <h5 class="mt-1 mb-0 font-size-14 text-wrap">{{ $next_rank->level_discount }} %</h5>
                                     </div>
-                                @endif
+                                @endif --}}
                             </div>
                             {{-- <div class="progress mt-2">
                                 <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
@@ -312,7 +312,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6 col-sm-12">
+            {{-- <div class="col-lg-3 col-md-6 col-sm-12">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-4">
@@ -326,8 +326,8 @@
                         <h4 class="mb-0">RM 150</h4>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12">
+            </div> --}}
+            {{-- <div class="col-lg-3 col-md-6 col-sm-12">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-4">
@@ -341,7 +341,7 @@
                         <h4 class="mb-0">RM 500</h4>
                     </div>
                 </div>
-            </div>
+            </div> --}}
             <div class="col-lg-3 col-md-6 col-sm-12">
                 <div class="card">
                     <div class="card-body">

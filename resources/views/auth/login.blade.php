@@ -14,9 +14,7 @@
                 <div class="col-md-8 col-lg-6 col-xl-5">
 
                     <div class="text-center mb-4">
-                        <a href="index">
-                            <img src="{{ URL::asset('assets/images/nonskin/non-logo.jpg') }}" alt="" height="100"> <span class="logo-txt"></span>
-                        </a>
+                        <img src="{{ URL::asset('assets/images/nonskin/non-logo.jpg') }}" alt="" height="100"> <span class="logo-txt"></span>
                     </div>
 
                     <div class="card">

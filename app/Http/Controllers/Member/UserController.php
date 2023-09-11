@@ -16,6 +16,7 @@ use App\Models\PaymentSetting;
 use App\Models\DeliverySetting;
 use App\Models\CompanyInfo;
 use App\Models\Ranking;
+use App\Models\State;
 use App\Models\WalletHistory;
 use App\Http\Middleware\CheckCartItem;
 use App\Http\Controllers\Controller;
@@ -126,12 +127,13 @@ class UserController extends Controller
 
     public function checkout()
     {
-        $payment_methods = PaymentSetting::whereIn('id', [1, 2, 3])->get();
+        $payment_methods = PaymentSetting::whereIn('id', [1, 3])->get();
         $payment_selfpick = PaymentSetting::get();
         $delivery_methods = DeliverySetting::get();
         $default_address = Address::where('id', 1)->first();
         $shipping_address = Address::where('user_id', auth()->user()->id)->get();
         $companyInfo = CompanyInfo::first();
+        $states = State::get();
 
         $user = User::with('cart.items', 'address.shippingCharge')
             ->where('id', Auth::id())
@@ -225,7 +227,8 @@ class UserController extends Controller
                 'payment_selfpick' => $payment_selfpick,
                 'shipping_address' => $shipping_address,
                 'member_discount_amount' => $member_discount_amount,
-                'companyInfo' => $companyInfo
+                'companyInfo' => $companyInfo,
+                'states' => $states,
             ]);
         }
 

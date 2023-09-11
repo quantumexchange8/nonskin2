@@ -37,6 +37,9 @@
     </div>
     <div class="card">
         <div class="card-body">
+            <button type="button" class="btn btn-primary" data-action="expand-all"
+                id="expand-all-downline">@lang('translation.expand_all')
+            </button>
             <div class="card col-lg-12 col-sm-3 col-md-3">
                 @if ($admins->isNotEmpty())
                 <div id="sponsor">
@@ -97,27 +100,63 @@
 
     <script>
         $(document).ready(function() {
-            // Add a click event listener to all buttons with class "toggle-downline"
-            $(".toggle-downline").click(function() {
-                // Find the target downline container using the data-target attribute
-                var target = $(this).data("target");
+        // Add a click event listener to the "Expand All Downline" button
+        $("#expand-all-downline").click(function() {
+            // Toggle the visibility of all downline containers
+            $(".downline").slideToggle();
 
-                // Toggle the visibility of the downline container
-                $(target).slideToggle();
+            // Check the current state of the button
+            var currentState = $(this).data("state");
 
-                // Check the current state of the icon
-                var currentState = $(this).data("state");
+            // Change the button's HTML and update the state
+            if (currentState === "expanded") {
+                // Change the button text to "Expand All"
+                $(this).html('@lang("public.expand_all_downline")');
 
-                // Change the button's HTML to use MDI icons and update the state
-                if (currentState === "visible") {
-                    $(this).html('<i class="mdi mdi-account-plus icon-lg"></i>'); // Change to plus icon
+                // Update the state to "collapsed"
+                $(this).data("state", "collapsed");
+
+                // Change the icons of all toggle buttons to plus icons
+                $(".toggle-downline").each(function() {
+                    $(this).html('<i class="mdi mdi-account-plus icon-lg"></i>');
                     $(this).data("state", "hidden");
-                } else {
-                    $(this).html('<i class="mdi mdi-account-remove icon-lg"></i>'); // Change to minus icon
+                });
+            } else {
+                // Change the button text to "Collapse All"
+                $(this).html('@lang("public.collapse_all_downline")');
+
+                // Update the state to "expanded"
+                $(this).data("state", "expanded");
+
+                // Change the icons of all toggle buttons to minus icons
+                $(".toggle-downline").each(function() {
+                    $(this).html('<i class="mdi mdi-account-remove icon-lg"></i>');
                     $(this).data("state", "visible");
-                }
-            });
+                });
+            }
         });
+
+        // Add a click event listener to all buttons with class "toggle-downline"
+        $(".toggle-downline").click(function() {
+            // Find the target downline container using the data-target attribute
+            var target = $(this).data("target");
+
+            // Toggle the visibility of the downline container
+            $(target).slideToggle();
+
+            // Check the current state of the icon
+            var currentState = $(this).data("state");
+
+            // Change the button's HTML to use MDI icons and update the state
+            if (currentState === "visible") {
+                $(this).html('<i class="mdi mdi-account-plus icon-lg"></i>'); // Change to plus icon
+                $(this).data("state", "hidden");
+            } else {
+                $(this).html('<i class="mdi mdi-account-remove icon-lg"></i>'); // Change to minus icon
+                $(this).data("state", "visible");
+            }
+        });
+    });
 
     </script>
 

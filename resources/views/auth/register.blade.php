@@ -84,8 +84,8 @@ use App\Models\{State, BankSetting};
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
                                                             <label for="basicpill-firstname-input" class="form-label">Referral <small class="text-muted">(Optional)</small></label>
-                                                            @if(isset($referral))
-                                                                <input type="text" class="form-control" placeholder="e.g. NON000000003" name="referral" id="referral" value="{{ $referral ?: null}}">
+                                                            {{-- @if(isset($referral))
+                                                                
                                                                 <div class="invalid-feedback" id="referral-error">
                                                                     <!-- Error message will be displayed here -->
                                                                 </div>
@@ -94,7 +94,9 @@ use App\Models\{State, BankSetting};
                                                                 <div class="invalid-feedback" id="referral-error">
                                                                     <!-- Error message will be displayed here -->
                                                                 </div>
-                                                            @endif
+                                                            @endif --}}
+
+                                                            <input type="text" class="form-control" placeholder="e.g. NON000000003" name="referral" id="referral" value="{{ $referral }}" required>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6">
@@ -245,7 +247,7 @@ use App\Models\{State, BankSetting};
                                                                 <select class="form-select @error('country') is-invalid @enderror" name="country" id="country" required>
                                                                     <option value="">Select Country</option>
                                                                     @foreach ($countries as $country)
-                                                                        <option value="{{ $country->code }}">{{ $country->name }}</option>
+                                                                        <option value="{{ $country->name }}">{{ $country->name }}</option>
                                                                     @endforeach
                                                                 </select>
                                                                 @error('country')

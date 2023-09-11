@@ -161,15 +161,9 @@ class RegisterController extends Controller
             $hierarchyList = "-" . 3 . "-";
         }
 
-        $memberPrefix = 'USER';
+        $memberPrefix = 'NON';
         // Find the corresponding row in the 'prefixes' table based on the prefix
         $prefixRow = Prefix::where('prefix', $memberPrefix)->first();
-
-        $countryCode = $request->country;
-
-        // Generate random and incrementing digits for referrer_id
-        $randomDigits = mt_rand(1000, 9999); // Generate 4 random digits
-        // $prefixRow = Prefix::where('prefix', $countryCode)->first();
 
         try {
             DB::beginTransaction();
@@ -182,7 +176,7 @@ class RegisterController extends Controller
             );
             $user = User::create([
                 'upline_id'     => $upline_user_id,
-                'referrer_id'   => $countryCode . $randomDigits . str_pad($newMemberNumber, $prefixRow->padding, '0', STR_PAD_LEFT),
+                'referrer_id'   => $memberPrefix . str_pad($newMemberNumber, $prefixRow->padding, '0', STR_PAD_LEFT),
                 'hierarchyList' => $hierarchyList,
                 'email'         => $request->email,
                 'password'      => Hash::make($request->password),
@@ -198,18 +192,18 @@ class RegisterController extends Controller
                 'bank_holder_name'  => $request->bank_holder_name,
                 'bank_acc_no'       => $request->bank_acc_no,
                 'bank_ic'           => $request->bank_ic,
-                'address_1'         => $request->address_1,
-                'address_2'         => $request->address_2,
-                'city'              => $request->city,
-                'postcode'          => $request->postcode,
-                'state'             => $request->state,
-                'country'           => $request->country,
-                'delivery_address_1'    => '',
-                'delivery_address_2'    => '',
-                'delivery_city'         => '',
-                'delivery_postcode'     => '',
-                'delivery_state'        => '',
-                'delivery_country'      => '',
+                'address_1'             => $request->address_1,
+                'address_2'             => $request->address_2,
+                'city'                  => $request->city,
+                'postcode'              => $request->postcode,
+                'state'                 => $request->state,
+                'country'               => $request->country,
+                'delivery_address_1'    => $request->address_1,
+                'delivery_address_2'    => $request->address_2,
+                'delivery_city'         => $request->city,
+                'delivery_postcode'     => $request->postcode,
+                'delivery_state'        => $request->state,
+                'delivery_country'      => $request->country,
                 // 'created_at' => now(),
                 // 'updated_at' => now(),
             ]);
@@ -220,7 +214,6 @@ class RegisterController extends Controller
                     'user_id'       => $user->id,
                     'name'          => $request->full_name,
                     'contact'       => $request->contact,
-                    'is_default'    => 1,
                     'address_1'     => $request->address_1,
                     'address_2'     => $request->address_2,
                     'city'          => $request->city,

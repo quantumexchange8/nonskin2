@@ -46,7 +46,6 @@
                                 <th>#</th>
                                 <th>Wallet Type</th>
                                 <th>Type</th>
-                                <th>Remarks</th>
                                 <th>Cash In</th>
                                 <th>Cash Out</th>
                                 <th>Balance</th>
@@ -59,7 +58,6 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $row->wallet_type }}</td>
                                     <td>{{ $row->type }}</td>
-                                    <td>{{ $row->remarks }}</td>
                                     @if ($row->cash_in == 0)
                                         <td>
                                             -
