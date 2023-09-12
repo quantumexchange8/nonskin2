@@ -21,7 +21,7 @@ class AnnouncementController extends Controller
     }
 
     public function store(Request $request, Announcement $announcement){
-        // dd($request);
+        // dd($request->all());
 
         $request->validate([
             'title'         => 'required',
@@ -39,13 +39,13 @@ class AnnouncementController extends Controller
             $imageName = time().'.'.$request->image->extension();
             $request->image->move(public_path('images/announcements'), $imageName);
         }
-        if($request->input('id')){
-            $announcement = Announcement::find($request->input('id'));
-        }
+        // if($request->input('id')){
+        //     $announcement = Announcement::find($request->input('id'));
+        // }
 
         try {
         $announcement = Announcement::updateOrCreate(
-            ['id' => $request->input('id')],
+            // ['id' => $request->input('id')],
             [
                 'title'         => $request->input('title'),
                 'content'       => $request->input('content'),

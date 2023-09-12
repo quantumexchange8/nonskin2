@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
+    private $path_url = "images/products";
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -86,38 +88,80 @@ class ProductController extends Controller
             //     $request->image_5->move(public_path('images/products'), $imageName5);
             // }
 
-            $imageNames = [];
+            // $imageNames = [];
 
-            for ($i = 1; $i <= 5; $i++) {
-                $inputName = "image_" . $i;
+            // for ($i = 1; $i <= 5; $i++) {
+            //     $inputName = "image_" . $i;
 
-                if ($request->hasFile($inputName)) {
-                    $imageName = time() . '_' . $i . '.' . $request->$inputName->extension();
-                    $request->$inputName->move(public_path('images/products'), $imageName);
-                    $imageNames[$inputName] = $imageName;
-                }
+            //     if ($request->hasFile($inputName)) {
+            //         $imageName = time() . '_' . $i . '.' . $request->$inputName->extension();
+            //         $request->$inputName->move(public_path('images/products'), $imageName);
+            //         $imageNames[$inputName] = $imageName;
+            //     }
+            // }
+
+            $data = new Product;
+
+            $image_1 = $request->file('image_1');
+            $imageName = pathinfo($image_1->getClientOriginalName(), PATHINFO_FILENAME) . time() . '.' . $image_1->getClientOriginalExtension();
+            $image_1->move($this->path_url, $imageName);
+            $data->image_1 = $imageName;
+
+            $image_2 = $request->file('image_2');
+            if ($image_2) {
+                $imageName = pathinfo($image_2->getClientOriginalName(), PATHINFO_FILENAME) . time() . '.' . $image_2->getClientOriginalExtension();
+                $image_2->move($this->path_url, $imageName);
+                $data->image_2 = $imageName;
+            }
+            $image_3 = $request->file('image_3');
+            if ($image_3) {
+                $imageName = pathinfo($image_3->getClientOriginalName(), PATHINFO_FILENAME) .  time() . '.' . $image_3->getClientOriginalExtension();
+                $image_3->move($this->path_url, $imageName);
+                $data->image_3 = $imageName;
+            }
+            $image_4 = $request->file('image_4');
+            if ($image_4) {
+                $imageName = pathinfo($image_4->getClientOriginalName(), PATHINFO_FILENAME) .  time() . '.' . $image_4->getClientOriginalExtension();
+                $image_4->move($this->path_url, $imageName);
+                $data->image_4 = $imageName;
+            }
+            $image_5 = $request->file('image_5');
+            if ($image_5) {
+                $imageName = pathinfo($image_5->getClientOriginalName(), PATHINFO_FILENAME) .  time() . '.' . $image_5->getClientOriginalExtension();
+                $image_5->move($this->path_url, $imageName);
+                $data->image_5 = $imageName;
             }
 
-            $product = Product::create([
-                'code' => $request->code,
-                'name' => $request->name,
-                'description' => $request->description,
-                'price' => $request->price,
-                'discount' => 0,
-                'category_id' => $request->category_id,
-                'shipping_quantity' => $request->shipping_quantity,
-                'status' => $request->status,
-                'image_1' => $imageNames['image_1'],
-                'image_2' => $imageNames['image_2'] ?? null,
-                'image_3' => $imageNames['image_3'] ?? null,
-                'image_4' => $imageNames['image_4'] ?? null,
-                'image_5' => $imageNames['image_5'] ?? null,
-                // uncomment images below if necessary
-                // 'image_6' => $imageNames['image_6'] ?? null,
-                // 'image_7' => $imageNames['image_7'] ?? null,
-                // 'image_8' => $imageNames['image_8'] ?? null,
-                // 'image_9' => $imageNames['image_9'] ?? null,
-            ]);
+            $data->code = $request->code;
+            $data->name = $request->name_en;
+            $data->description = $request->desc_en;
+            $data->price = $request->price;
+            $data->discount = 0;
+            $data->category_id = $request->category_id;
+            $data->shipping_quantity = $request->shipping_quantity;
+            $data->status = $request->status;
+            $data->save();
+
+            // $product = Product::create([
+            //     'code' => $request->code,
+            //     'name' => $request->name,
+            //     'description' => $request->description,
+            //     'price' => $request->price,
+            //     'discount' => 0,
+            //     'category_id' => $request->category_id,
+            //     'shipping_quantity' => $request->shipping_quantity,
+            //     'status' => $request->status,
+            //     'image_1' => $imageNames['image_1'],
+            //     'image_2' => $imageNames['image_2'] ?? null,
+            //     'image_3' => $imageNames['image_3'] ?? null,
+            //     'image_4' => $imageNames['image_4'] ?? null,
+            //     'image_5' => $imageNames['image_5'] ?? null,
+            //     uncomment images below if necessary
+            //     'image_6' => $imageNames['image_6'] ?? null,
+            //     'image_7' => $imageNames['image_7'] ?? null,
+            //     'image_8' => $imageNames['image_8'] ?? null,
+            //     'image_9' => $imageNames['image_9'] ?? null,
+            // ]);
 
             // Upload and store the images
             // if ($request->hasFile('image_1')) {

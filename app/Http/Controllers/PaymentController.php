@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Providers\RouteServiceProvider;
 Use Alert;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class PaymentController extends Controller
 {
@@ -113,35 +114,34 @@ class PaymentController extends Controller
         }
     }
 
-    public function purchaseWalletTopupStore(Request $request){
+   public function purchaseWalletTopupStore(Request $request){
         if(Auth::user()->role == 'user'){
-            try {
+            
                 // dd($request->all());
-                DB::beginTransaction();
-                $transactionPrefix = 'NONT';
-                $prefixRow2 = Prefix::where('prefix', $transactionPrefix)->first();
+                // DB::beginTransaction();
+                // $transactionPrefix = 'NONT';
+                // $prefixRow2 = Prefix::where('prefix', $transactionPrefix)->first();
 
-                $newTransactionNumber = $prefixRow2->counter + 1;
-                $prefixRow2->update(
-                    [
-                        'counter' => $newTransactionNumber,
-                        'updated_by' => Auth::id()
-                    ]
-                );
+                // $newTransactionNumber = $prefixRow2->counter + 1;
+                // $prefixRow2->update(
+                //     [
+                //         'counter' => $newTransactionNumber,
+                //         'updated_by' => Auth::id()
+                //     ]
+                // );
 
-                if($request->hasFile('receipt') != null) {
-                    $request->validate([
-                        'receipt' => 'image|max:2048', // Adjust the allowed mime types and file size as needed
-                    ]);
-                }
+                $lastPaymentId = Payment::latest()->first()?->id ?? 0;
+                $lastPaymentId += 1;
+                $paymentNumFormat = Prefix::where('description', 'Transaction No')->first();
+                $paymentNum = $paymentNumFormat['prefix'] . Str::padLeft($lastPaymentId, $paymentNumFormat['padding'], "0");
 
                 if ($request->hasFile('receipt')){
-                    $imageName1 = null; // Initialize the variable
-                    $imageName1 = time().'.'.$request->receipt->extension();
-                    $request->receipt->move(public_path('images/payment-proof'), $imageName1);
+                    $receipt = $request->file('receipt');
+                    $receipt_imageName = pathinfo($receipt->getClientOriginalName(), PATHINFO_FILENAME) . time() . '.' . $receipt->getClientOriginalExtension();
+                    $receipt->move("images/uploads/transaction", $receipt_imageName);
 
                     $payment                = new Payment();
-                    $payment->payment_num   = $transactionPrefix . str_pad($newTransactionNumber, $prefixRow2->padding, '0', STR_PAD_LEFT);
+                    $payment->payment_num   = $paymentNum;
                     $payment->type          = 'Deposit';
                     $payment->payment_method = 'Manual Transfer';
                     $payment->user_id       = Auth::id();
@@ -149,7 +149,7 @@ class PaymentController extends Controller
                     $payment->gateway       = null;
                     $payment->status        = 'Pending';
                     $payment->remarks       = $request->remark ?: null;
-                    $payment->receipt       = $imageName1;
+                    $payment->receipt       = $receipt_imageName;
                     $payment->save();
                     DB::commit();
 
@@ -159,11 +159,6 @@ class PaymentController extends Controller
                     Alert::error('Error', 'No Image Uploaded');
                     return redirect()->back();
                 }
-            } catch (\Throwable $th) {
-                DB::rollback();
-                Alert::error('Error', 'Please try deposit again');
-                return redirect()->back();
-            }
         }else{
             redirect(RouteServiceProvider::HOME);
         }

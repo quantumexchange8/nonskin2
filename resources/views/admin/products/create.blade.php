@@ -18,7 +18,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     @endif
-    <form action="{{ route('store') }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('store') }}" method="post" enctype="multipart/form-data" id="product-form">
         @csrf
         <div class="row">
             <div class="col-lg-12">
@@ -366,7 +366,7 @@
         <div class="row mb-4">
             <div class="col text-end">
 
-                <button type="submit" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#success-btn"> <i class=" bx bx-file me-1"></i> Save </button>
+                <button type="button" id="save-button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#success-btn"> <i class=" bx bx-file me-1"></i> Save </button>
             </div> <!-- end col -->
         </div>
     </form>
@@ -392,6 +392,7 @@
     <script src="{{ URL::asset('assets/libs/dropzone/dropzone.min.js') }}"></script>
     <script src="{{ URL::asset('assets/js/pages/ecommerce-choices.init.js') }}"></script>
     <script src="{{ URL::asset('assets/js/app.js') }}"></script>
+    <script src="{{ URL::asset('assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
     <script src="{{ URL::asset('assets/libs/@ckeditor/@ckeditor.min.js') }}"></script>
     <script>
         ClassicEditor
@@ -472,6 +473,30 @@
         });
 
         // Repeat the above code for imageInput2, imageInput3, imageInput4, and imageInput5
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const saveButton = document.getElementById("save-button");
+            const productForm = document.getElementById("product-form");
+
+            saveButton.addEventListener("click", function () {
+                Swal.fire({
+                    title: 'Confirm',
+                    text: 'Are you sure you want to add this product?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, save it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // If the user confirms, submit the form
+                        productForm.submit();
+                    }
+                });
+            });
+        });
     </script>
 
 @endsection

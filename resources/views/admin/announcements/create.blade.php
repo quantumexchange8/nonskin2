@@ -12,7 +12,7 @@
     @php
         // dd($errors)
     @endphp
-    <form action="{{ route('announcements.store') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('announcements.store') }}" method="POST" enctype="multipart/form-data" id="announcement-form">
         @csrf
         <div class="row">
             <div class="col-lg-12">
@@ -31,7 +31,7 @@
                         <div id="addproduct-productinfo-collapse" class="collapse show" data-bs-parent="#addproduct-accordion">
                             <div class="p-4 border-top">
                                 <div class="row">
-                                    <input type="hidden" name="id" value="{{ null }}">
+                                    {{-- <input type="hidden" name="id" value="{{ null }}"> --}}
                                     <div class="col-lg-6">
                                         <div class="col-12">
                                             <div class="mb-3">
@@ -149,7 +149,7 @@
         </div>
         <div class="row mb-4">
             <div class="col text-end">
-                <button type="submit" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#success-btn"> <i class=" bx bx-file me-1"></i> Save </button>
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#success-btn" id="save-button"> <i class=" bx bx-file me-1"></i> Save </button>
             </div> <!-- end col -->
         </div>
     </form>
@@ -157,6 +157,7 @@
 @endsection
 @section('script')
     <script src="{{ URL::asset('assets/js/app.js') }}"></script>
+    <script src="{{ URL::asset('assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
     <script src="{{ URL::asset('assets/libs/@ckeditor/@ckeditor.min.js') }}"></script>
     <script>
         ClassicEditor
@@ -184,6 +185,29 @@
 
         checkboxPopup.addEventListener('change', function() {
             popupStatus.textContent = this.checked ? 'Enabled' : 'Disabled';
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const saveButton = document.getElementById("save-button");
+            saveButton.addEventListener("click", function () {
+                Swal.fire({
+                    title: 'Confirm',
+                    text: 'Are you sure you want to save this announcement?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, save it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // If the user confirms, submit the form
+                        const form = document.getElementById("announcement-form");
+                        form.submit();
+                    }
+                });
+            });
         });
     </script>
 @endsection
