@@ -204,51 +204,111 @@
             let typingTimer; // Timer identifier
             let doneTypingInterval = 200; // Delay time in milliseconds
 
+            function updateTotalAmount() {
+                let totalAmount = 0;
+
+                $('.quantity-input').each(function() {
+                    let quantityInput = $(this);
+                    let productPrice = quantityInput.data('product-price');
+                    let currentValue = Number(quantityInput.val());
+
+                    if (!isNaN(currentValue)) {
+                        totalAmount += currentValue * productPrice;
+                    }
+                });
+
+                // Format and update the total amount
+                let formattedTotalAmount = 'RM ' + totalAmount.toLocaleString(undefined, { minimumFractionDigits: 2 });
+                $('#total').text(formattedTotalAmount);
+            }
+
             // Handle keyup event on quantity input
-            $('.quantity-input').keyup((event) => {
+            $('.quantity-input').keyup(function() {
                 let quantityInput = $(this);
                 let productId = quantityInput.data('product-id');
                 let productPrice = quantityInput.data('product-price');
                 let currentValue = Number(quantityInput.val());
+
+                if (isNaN(currentValue) || currentValue <= 0) {
+                    // Display a SweetAlert error message for invalid input
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Invalid Input',
+                        text: 'Please enter a valid quantity greater than 0.',
+                    });
+
+                    // Reset the input value to 1
+                    quantityInput.val(1);
+                    currentValue = 1;
+                }
+
+                // Update the product price based on the input value
+                let totalProductPrice = currentValue * productPrice;
+                let formattedTotalProductPrice = 'RM ' + totalProductPrice.toLocaleString(undefined, { minimumFractionDigits: 2 });
+                quantityInput.siblings('.total-product-price').text(formattedTotalProductPrice);
+
+                // Update the total amount
+                updateTotalAmount();
 
                 // Clear the previous timer
                 clearTimeout(typingTimer);
 
                 // Set a new timer to trigger update after the specified delay
                 typingTimer = setTimeout(() => {
-                    if (currentValue >= 1) { // Ensure quantity is valid
+                    if (currentValue >= 1) {
                         updateCartItem(productId, currentValue, productPrice);
                     } else {
                         // You may show an error message here if needed
                     }
                 }, doneTypingInterval);
             });
+            updateTotalAmount();
+
 
             // Handle minus button click
             $('.minus-btn').click(function() {
                 let quantityInput = $(this).siblings('.quantity-input');
-                let productId = quantityInput.data('product-id');
-                let productPrice = quantityInput.data('product-price');
                 let currentValue = Number(quantityInput.val());
 
                 if (currentValue > 1) {
                     quantityInput.val(currentValue - 1);
-                    updateCartItem(productId, currentValue - 1, productPrice);
                 }
-                getCartData();
+
+                // Trigger a keyup event to update the UI and cart item
+                quantityInput.trigger('keyup');
             });
 
             // Handle plus button click
             $('.plus-btn').click(function() {
                 let quantityInput = $(this).siblings('.quantity-input');
-                let productId = quantityInput.data('product-id');
-                let productPrice = quantityInput.data('product-price');
                 let currentValue = Number(quantityInput.val());
 
                 quantityInput.val(currentValue + 1);
-                updateCartItem(productId, currentValue + 1, productPrice);
-                getCartData();
+
+                // Trigger a keyup event to update the UI and cart item
+                quantityInput.trigger('keyup');
             });
+
+             // Function to update cart item and cart via AJAX
+             function updateCartItem(productId, quantity, productPrice) {
+                $.ajax({
+                    url: '{{ route("ajax.cart.update") }}',
+                    method: 'POST',
+                    data: {
+                        product_id: productId,
+                        quantity: quantity,
+                        price: productPrice
+                    },
+                    success: function(response) {
+                        // Perform any actions after successful update, if needed
+                        getCartData();
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle any errors that occur during the AJAX request
+                        console.log('Error updating cart item:', error);
+                    }
+                });
+            }
 
             $('.checkout').click(function() {
                 let quantityInput = $(this).siblings('.quantity-input');
@@ -263,33 +323,15 @@
                     url: '{{ url("member/cart/get") }}',
                     method: 'GET',
                     success: function(response) {
-
-                    if (response.cart) {
-                        // Update the Sub Total and Total in the cart view
-                        $('.sub-total').text('RM ' + response.total_price_without_discount.toLocaleString(undefined, { minimumFractionDigits: 2 }));
-                        $('#total').text('RM ' + response.total_price_with_discount.toLocaleString(undefined, { minimumFractionDigits: 2 }));
-
-                        // Update the quantity and total price for each cart item in the view
-                        $.each(response.cartItems, function(index, item) {
-                            let row = $('.cart-item-row[data-product-id="' + item.product_id + '"]');
-                            row.find('.quantity-input').val(item.quantity);
-                            row.find('.total-price').text('RM ' + item.total_price.toLocaleString(undefined, { minimumFractionDigits: 2 }));
-
-                            // Update the price and total for each item in the cart view
-                            $('.price[data-product-id="' + item.product_id + '"]').text('RM ' + item.product.price.toLocaleString(undefined, { minimumFractionDigits: 2 }));
-                            $('.total-discount').text('- RM ' + response.total_discount.toLocaleString(undefined, { minimumFractionDigits: 2 }));
-                            $('.total[data-product-id="' + item.product_id + '"]').text('RM ' + item.total_price.toLocaleString(undefined, { minimumFractionDigits: 2 }));
-                            if (item.product.discount > 0) {
-                                let discountedTotalPrice = item.product.price * item.quantity;
-                                $('.product-discount[data-product-id="' + item.product_id + '"]').text('RM ' + discountedTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2 }));
-                            }
-                        });
-                    } else {
-                        // Handle the case when the cart data is not found
-                        console.log('Cart not found');
-                    }
-                },
-
+                        if (response.cart) {
+                            // Update the Sub Total and Total in the cart view
+                            $('.sub-total').text('RM ' + response.total_price_without_discount.toLocaleString(undefined, { minimumFractionDigits: 2 }));
+                            $('#total').text('RM ' + response.total_price_with_discount.toLocaleString(undefined, { minimumFractionDigits: 2 }));
+                        } else {
+                            // Handle the case when the cart data is not found
+                            console.log('Cart not found');
+                        }
+                    },
                     error: function(xhr, status, error) {
                         // Handle any errors that occur during the AJAX request
                         console.log('Error fetching cart data:', error);
@@ -297,25 +339,9 @@
                 });
             }
 
-            // Function to update cart item and cart via AJAX
-            function updateCartItem(productId, quantity, productPrice) {
-                $.ajax({
-                    url: '{{ route("ajax.cart.update") }}',
-                    method: 'POST',
-                    data: {
-                        product_id: productId,
-                        quantity: quantity,
-                        price: productPrice
-                    },
-                    success: function(response) {
-                        // Perform any actions after successful update, if needed
-                    },
-                    error: function(xhr, status, error) {
-                        // Handle any errors that occur during the AJAX request
-                        console.log('Error updating cart item:', error);
-                    }
-                });
-            }
+            // Initial update of total amount
+            updateTotalAmount();
+
             $('.checkout').click(function() {
                 // Send an AJAX request to handle the checkout process
                 $.ajax({

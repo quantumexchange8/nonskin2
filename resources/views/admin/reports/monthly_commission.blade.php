@@ -42,6 +42,17 @@
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-body">
+                    <div>
+                        <label for="monthSelect">Filter by Month:</label>
+                        <select id="monthSelect">
+                            <option value="">All Months</option>
+                            <option value="January">January</option>
+                            <option value="February">February</option>
+                            <!-- Add options for all months -->
+                            <option value="September">September</option>
+                            <!-- Add options for all months -->
+                        </select>
+                    </div>
                     <table id="reportMonthly" class="stripe nowrap" style="width:100%">
                         {{-- <div class="d-flex justify-content-end text-end">
                             <div class="col-lg-2">
@@ -136,6 +147,14 @@
                         }
                     ]
                 });
+            });
+
+            // Add an event listener to the monthSelect dropdown
+            $('#monthSelect').on('change', function() {
+                var selectedMonth = $(this).val();
+                
+                // Use the column filter to search for the selected month
+                table.column(1).search(selectedMonth).draw();
             });
     </script>
     <script>

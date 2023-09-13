@@ -323,7 +323,7 @@ class AdminController extends Controller
 
     public function proceed(Request $request, Order $order)
     {
-        dd($request);
+        // dd($request);
         return redirect()->back();
     }
 

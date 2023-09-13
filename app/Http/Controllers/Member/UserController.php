@@ -128,7 +128,7 @@ class UserController extends Controller
     public function checkout()
     {
         $payment_methods = PaymentSetting::whereIn('id', [1, 3])->get();
-        $payment_selfpick = PaymentSetting::get();
+        $payment_selfpick = PaymentSetting::whereIn('id', [1, 3, 4])->get();
         $delivery_methods = DeliverySetting::get();
         $default_address = Address::where('id', 1)->first();
         $shipping_address = Address::where('user_id', auth()->user()->id)->get();

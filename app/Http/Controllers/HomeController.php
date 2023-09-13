@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 use Alert;
 
 class HomeController extends Controller
@@ -104,6 +105,43 @@ class HomeController extends Controller
 
         }
         return redirect()->back()->with('success', 'YOU HAVE SUCCESSFULLY UPDATED!');
+    }
+
+    public function addnewAddress(Request $request) 
+    {
+        $user = Auth::user();
+
+        $validator = Validator::make($request->all(), [
+            'name'         => 'required',
+            'contact_address'       => 'required',
+            'address_1'         => 'required',
+            'address_2'        => 'nullable',
+            'postcode'    => 'required',
+            'city'      => 'required',
+            'state'      => 'required',
+            'country'      => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            // Validation failed, return with errors and old input
+            Alert::error('Failed', 'Please fill in all the required fill');
+            return redirect()->back();
+        }
+
+        $address = new Address();
+        $address->user_id   = $user->id;
+        $address->name   = $request->name;
+        $address->contact   = $request->contact_address;
+        $address->address_1   = $request->address_1;
+        $address->address_2   = $request->address_2 ?? null;
+        $address->postcode   = $request->postcode;
+        $address->city   = $request->city;
+        $address->state   = $request->state;
+        $address->country   = $request->country;
+        $address->save();
+
+        Alert::success('Success', 'succesfully added new address');
+        return redirect()->back();
     }
 
     public function updateAddress(Request $request){

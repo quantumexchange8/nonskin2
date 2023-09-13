@@ -76,6 +76,13 @@ class OrderController extends Controller
                     $user->product_wallet -= $ProductWallet;
                     $user->purchase_wallet = $balance_remain;
                     $user->save();
+
+                    if ($user) {
+                        // Update the user's personal_sales with the order's total_amount
+                        $user->personal_sales += $totalAmount;
+                        $user->group_sales += $totalAmount;
+                        $user->save();
+                    }
                 }
             } else {
                 $user->product_wallet -= $ProductWallet;

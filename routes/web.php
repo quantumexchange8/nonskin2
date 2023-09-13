@@ -58,6 +58,7 @@ Route::post('/check-unique-contact', [RegisterController::class, 'checkUniqueCon
 Route::get('/my-profile',[HomeController::class, 'myProfile'])->name('myProfile');
 Route::post('/update-profile', [HomeController::class, 'updateProfile'])->name('updateProfile');
 Route::post('/update-address', [HomeController::class, 'updateAddress'])->name('updateAddress');
+Route::post('/addnewAddress', [HomeController::class, 'addnewAddress'])->name('addnewAddress');
 Route::post('/toggle-default-address', [HomeController::class, 'toggleDefaultAddress'])->name('toggleDefaultAddress');
 Route::post('/update-bank', [HomeController::class, 'updateBank'])->name('updateBank');
 Route::post('/update-password/{id}', [HomeController::class, 'updatePassword'])->name('updatePassword');

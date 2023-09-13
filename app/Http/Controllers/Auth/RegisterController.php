@@ -154,7 +154,7 @@ class RegisterController extends Controller
             if(empty($uplineId['hierarchyList'])){
                 $hierarchyList = "-" . $upline_user_id . "-";
             } else {
-                $hierarchyList = $upline_user_id['hierarchyList'] . $upline_user_id . "-";
+                $hierarchyList = $uplineId['hierarchyList'] . $upline_user_id . "-";
             }
             // $hierarchyList = $uplineId['hierarchyList'] . $upline_user_id . "-";
 
