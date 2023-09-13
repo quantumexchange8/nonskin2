@@ -275,7 +275,14 @@ class UserController extends Controller
         ]);
     }
     public function productWallet() {
-        return view('member.product_wallet');
+
+        $user = Auth::user();
+
+        $product_wallet = WalletHistory::where('wallet_type', 'product_wallet')->where('user_id', $user->id)->get();
+
+        return view('member.product_wallet', [
+            'product_wallet' => $product_wallet
+        ]);
     }
     public function memberDetail(User $user) {
 

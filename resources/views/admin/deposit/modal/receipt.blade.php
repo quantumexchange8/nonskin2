@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <img src="{{ asset('images/payment-proof/' . $deposit->receipt) }}"
+                <img src="{{ asset('images/uploads/transaction' . $deposit->receipt) }}"
                 alt="{{ $deposit->receipt }}"
                 class="img-fluid mx-auto d-block" style="width: 70% !important;">
             </div>

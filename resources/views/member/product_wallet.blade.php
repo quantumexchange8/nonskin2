@@ -34,28 +34,24 @@
                         <thead>
                             <tr>
                                 <th>#</th>
+                                <th>Date</th>
                                 <th>Wallet Type</th>
-                                <th>Type</th>
-                                <th>Remarks</th>
                                 <th>Cash In</th>
                                 <th>Cash Out</th>
                                 <th>Balance</th>
-                                <th>Date</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- @foreach ($orders as $order) --}}
+                            @foreach ($product_wallet as $row)
                                 <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>RM </td>
-                                    <td>RM </td>
-                                    <td>RM </td>
-                                    <td></td>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $row->created_at }}</td>
+                                    <td>{{ $row->wallet_type }}</td>
+                                    <td>@if($row->cash_in != null) {{ $row->cash_in }} @else - @endif</td>
+                                    <td>@if($row->cash_out != null) {{ $row->cash_out }} @else - @endif </td>
+                                    <td>RM {{ $row->balance }}</td>
                                 </tr>
-                            {{-- @endforeach --}}
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

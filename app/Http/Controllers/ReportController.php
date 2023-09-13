@@ -195,7 +195,7 @@ class ReportController extends Controller
 
             $user = Auth::user();
 
-            $performReport = CommissionsLogs::where('commissions_type', 'performance_bonus')
+            $performReport = CommissionsLogs::where('commissions_type', 'same_level_bonus')
             // ->whereIn('downline_id', $hierarchyListArray)
             ->get();
 

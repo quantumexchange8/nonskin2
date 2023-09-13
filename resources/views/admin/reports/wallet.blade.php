@@ -143,7 +143,7 @@
                     buttons: [
                         {
                             extend: 'excel',
-                            text: 'Excel', // Change button text if needed
+                            text: 'Export Excel', // Change button text if needed
                             className: 'custom-excel-button' // Add a custom class
                         }
                     ],

@@ -122,7 +122,7 @@
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    
+
     <script>
         
 
@@ -132,7 +132,7 @@
                     buttons: [
                         {
                             extend: 'excel',
-                            text: 'Excel', // Change button text if needed
+                            text: 'Export Excel', // Change button text if needed
                             className: 'custom-excel-button' // Add a custom class
                         }
                     ],
