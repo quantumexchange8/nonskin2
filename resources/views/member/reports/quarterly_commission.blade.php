@@ -94,8 +94,8 @@
                                     {{-- <td>{{ $row->commissions_type }}</td>
                                     <td>{{ $row->upline_id }}</td>
                                     <td>{{ $row->upline_rankid }}</td> --}}
-                                    <td>{{ $row->downline_id }}</td>
-                                    <td>{{ $row->downline_rankid }}</td>
+                                    <td>{{ $row->user->full_name }}</td>
+                                    <td>{{ $row->rank->name }}</td>
                                     {{-- <td>{{ $row->upline_totalsales }}</td> --}}
                                     <td>{{ $row->percentage }}</td>
                                     <td>{{ $row->total_bonus }}</td>

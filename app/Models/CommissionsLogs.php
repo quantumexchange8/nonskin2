@@ -11,6 +11,11 @@ class CommissionsLogs extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id', 'id');
+        return $this->belongsTo(User::class, 'downline_id', 'id');
+    }
+
+    public function rank()
+    {
+        return $this->belongsTo(Rankings::class, 'downline_rankid', 'id');
     }
 }

@@ -48,7 +48,6 @@
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-body">
-                    
                     <table id="reportSales" class="stripe nowrap" style="width:100%">
                         <thead>
                             <tr>

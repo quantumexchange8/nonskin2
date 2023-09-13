@@ -105,6 +105,7 @@ class ReportController extends Controller
             
             $monthlyReport = CommissionsLogs::where('commissions_type', 'monthly_bonus')
             // ->whereIn('downline_id', $hierarchyListArray)
+            ->with(['user', 'rank'])
             ->whereIn('upline_id', $downlinesCollection->pluck('id'))
             ->get();
             
@@ -119,7 +120,7 @@ class ReportController extends Controller
             
             $monthlyReport = CommissionsLogs::where('commissions_type', 'monthly_bonus')
             // ->whereIn('downline_id', $hierarchyListArray)
-            ->with(['user'])
+            ->with(['user', 'rank'])
             ->get();
 
             return view('admin.reports.monthly_commission', [
@@ -139,6 +140,7 @@ class ReportController extends Controller
             $quaterReport = CommissionsLogs::where('commissions_type', 'quarter_bonus')
             // ->whereIn('downline_id', $hierarchyListArray)
             ->where('upline_id', $user->id)
+            ->with(['user', 'rank'])
             ->get();
 
             return view('member.reports.quarterly_commission', [
@@ -151,6 +153,7 @@ class ReportController extends Controller
 
             $quaterReport = CommissionsLogs::where('commissions_type', 'quarter_bonus')
             // ->whereIn('downline_id', $hierarchyListArray)
+            ->with(['user', 'rank'])
             ->get();
 
             return view('admin.reports.quarterly_commission', [
@@ -168,6 +171,7 @@ class ReportController extends Controller
 
             $anualReport = CommissionsLogs::where('commissions_type', 'annual_bonus')
             // ->whereIn('downline_id', $hierarchyListArray)
+            ->with(['user', 'rank'])
             ->get();
 
 
@@ -180,6 +184,7 @@ class ReportController extends Controller
 
             $anualReport = CommissionsLogs::where('commissions_type', 'annual_bonus')
             // ->whereIn('downline_id', $hierarchyListArray)
+            ->with(['user', 'rank'])
             ->get();
 
             return view('admin.reports.annually_commission', [
@@ -197,6 +202,7 @@ class ReportController extends Controller
 
             $performReport = CommissionsLogs::where('commissions_type', 'same_level_bonus')
             // ->whereIn('downline_id', $hierarchyListArray)
+            ->with(['user', 'rank'])
             ->get();
 
             return view('member.reports.performance_bonus', [
@@ -208,6 +214,7 @@ class ReportController extends Controller
             
             $performReport = CommissionsLogs::where('commissions_type', 'performance_bonus')
             // ->whereIn('downline_id', $hierarchyListArray)
+            ->with(['user', 'rank'])
             ->get();
 
             return view('admin.reports.performance_bonus', [
@@ -221,8 +228,8 @@ class ReportController extends Controller
     public function reportRanking()
     {
 
-        $rankingLog = RankingUpdateLog::get();
-        
+        $rankingLog = RankingUpdateLog::with(['user', 'oldRank', 'newRank'])->get();
+        // dd($rankingLog);
 
         return view('admin.reports.ranking', [
             'rankings' => $rankingLog,

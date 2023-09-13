@@ -83,7 +83,7 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $order->created_at->format('d/m/Y, h:i:s') }}</td>
                                     <td>{{ $order->order_num }}</td>
-                                    <td>{{ $order->user->referrer_id }} | {{ $order->user->full_name }}</td>
+                                    <td>{{ $order->user->full_name }}</td>
                                     <td>{{ number_format($order->total_amount,2) }}</td>
                                 </tr>
                             @endforeach

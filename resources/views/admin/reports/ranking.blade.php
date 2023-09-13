@@ -89,9 +89,9 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $row->created_at }}</td>
-                                    <td>{{ $row->user_id }}</td>
-                                    <td>{{ $row->old_rank }}</td>
-                                    <td>{{ $row->new_rank }}</td>
+                                    <td>{{ $row->user->full_name }}</td>
+                                    <td>{{ $row->oldRank->name }}</td>
+                                    <td>{{ $row->newRank->name }}</td>
                                     <td>{{ $row->user_personal_sales }}</td>
                                     <td>{{ $row->user_group_sales }}</td>
                                     <td>{{ $row->type }}</td>
@@ -124,6 +124,7 @@
     $(document).ready(function() {
                 $('#reportRank').DataTable({
                     dom: 'Bfrtip',
+                    order: [[0, 'desc']], 
                     buttons: [
                         {
                             extend: 'excel',

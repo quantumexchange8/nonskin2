@@ -86,8 +86,8 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $row->commission_date }}</td>
-                                    <td>{{ $row->downline_id }}</td>
-                                    <td>{{ $row->downline_rankid }}</td>
+                                    <td>{{ $row->user->full_name }}</td>
+                                    <td>{{ $row->rank->name }}</td>
                                     <td>{{ $row->percentage }}</td>
                                     <td>{{ $row->total_bonus }}</td>
                                 </tr>

@@ -79,8 +79,8 @@
                             <div class="col-lg-3">
                                 <label class="form-label">&nbsp;</label>
                                 <button class="btn btn-primary w-100">Search</button>
-                            </div> --}}
-                        </div>
+                            </div>
+                        </div> --}}
 
                         <thead>
                             <tr>
@@ -98,8 +98,8 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $row->commission_date }}</td>
-                                    <td>{{ $row->downline_id }}</td>
-                                    <td>{{ $row->downline_rankid }}</td>
+                                    <td>{{ $row->user->full_name }}</td>
+                                    <td>{{ $row->rank->name }}</td>
                                     <td>{{ $row->percentage }}</td>
                                     <td>{{ $row->total_bonus }}</td>
                                     
