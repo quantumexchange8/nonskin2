@@ -13,6 +13,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <link rel="shortcut icon" href="{{ URL::asset('assets/images/nonskin/non-logo.jpg') }}">
         <link href="{{ URL::asset('assets/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
+        <link src="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />
         @include('layouts.head-css')
     </head>
 

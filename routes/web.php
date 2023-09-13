@@ -117,6 +117,7 @@ Route::group(['prefix' => 'admin',  'middleware' => ['auth', 'IsAdmin' ]], funct
     Route::get('/announcements', [AnnouncementController::class, 'list'])->name('announcements.list');
     Route::get('/announcements/add', [AnnouncementController::class, 'create'])->name('announcements.create');
     Route::get('/announcements/{announcement}/edit', [AnnouncementController::class, 'edit'])->name('announcements.edit');
+    Route::post('/announcements/update/{announcement}', [AnnouncementController::class, 'editSave'])->name('announcements.update');
     Route::post('/announcements', [AnnouncementController::class, 'store'])->name('announcements.store');
 
     // order

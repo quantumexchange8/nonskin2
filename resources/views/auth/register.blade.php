@@ -83,7 +83,7 @@ use App\Models\{State, BankSetting};
                                                 <div class="row">
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
-                                                            <label for="basicpill-firstname-input" class="form-label">Referral <small class="text-muted">(Optional)</small></label>
+                                                            <label for="referral" class="form-label">Referral</label>
                                                             {{-- @if(isset($referral))
                                                                 
                                                                 <div class="invalid-feedback" id="referral-error">
@@ -97,6 +97,9 @@ use App\Models\{State, BankSetting};
                                                             @endif --}}
 
                                                             <input type="text" class="form-control" placeholder="e.g. NON000000003" name="referral" id="referral" value="{{ $referral }}" required>
+                                                            <div class="invalid-feedback" id="referral-error">
+                                                                <!-- Error message will be displayed here -->
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6">
@@ -325,7 +328,7 @@ use App\Models\{State, BankSetting};
 
                                         <div class="d-flex align-items-start gap-3 mt-4">
                                             <button type="button" class="btn btn-primary w-sm" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
-                                            <button type="submit" class="btn btn-primary w-sm ms-auto" id="nextBtn" onclick="validateForm(+1)">Next</button>
+                                            <button type="submit" class="btn btn-primary w-sm ms-auto" id="nextBtn" onclick="validateForm(1)">Next</button>
                                         </div>
                                     </div>
                                     {{-- <div class="row mb-4">
@@ -388,23 +391,6 @@ use App\Models\{State, BankSetting};
             fixStepIndicator(n);
         }
 
-        function nextPrev(n) {
-            // This function will figure out which tab to display
-            let x = document.getElementsByClassName("wizard-tab");
-
-            // Hide the current tab:
-            x[currentTab].style.display = "none";
-            // Increase or decrease the current tab by 1:
-            currentTab = currentTab + n;
-            // if you have reached the end of the form...
-            if (currentTab >= x.length) {
-                currentTab = currentTab - n;
-                x[currentTab].style.display = "block";
-            }
-            // Otherwise, display the correct tab:
-            showTab(currentTab)
-        }
-
         function validateForm(n) {
             let x = document.getElementsByClassName("wizard-tab");
             let isValid = true;
@@ -432,6 +418,27 @@ use App\Models\{State, BankSetting};
             showTab(currentTab);
             }
         }
+        
+
+        function nextPrev(n) {
+            // This function will figure out which tab to display
+            let x = document.getElementsByClassName("wizard-tab");
+
+            // Hide the current tab:
+            x[currentTab].style.display = "none";
+            // Increase or decrease the current tab by 1:
+            currentTab = currentTab + n;
+            // if you have reached the end of the form...
+            if (currentTab >= x.length) {
+                currentTab = currentTab - n;
+                x[currentTab].style.display = "block";
+            }
+            // Otherwise, display the correct tab:
+            showTab(currentTab)
+        }
+
+        
+
 
         function fixStepIndicator(n) {
             let i, x = document.getElementsByClassName("list-item");
@@ -444,8 +451,14 @@ use App\Models\{State, BankSetting};
         $('#referral').on('keyup', function() {
             let referral = $(this).val().trim();
 
+            if (referral === '') {
+                $('#referral').addClass('is-invalid');
+                $('#referral-error').text('Referral is required.');
+                return;
+            }
+
             $.ajax({
-                url: '{{ route('registerExistingReferral') }}',
+                url: '{{ route('registerExistingReferral') }}', // Update the route name
                 type: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -454,15 +467,22 @@ use App\Models\{State, BankSetting};
                 success: function(response) {
                     if (response.exist === false) {
                         $('#referral').addClass('is-invalid');
+                        $('#referral').removeClass('is-valid'); // Remove the 'is-valid' class
                         $('#referral-error').text('Referral does not exist.');
                     } else {
-                        $('#referral').removeClass('is-invalid');
+                        $('#referral').removeClass('is-invalid'); // Remove the 'is-invalid' class
                         $('#referral').addClass('is-valid');
                         $('#referral-error').text('');
                     }
+                },
+                error: function() {
+                    $('#referral').addClass('is-invalid');
+                    $('#referral').removeClass('is-valid'); // Remove the 'is-valid' class
+                    $('#referral-error').text('Error checking referral.');
                 }
             });
         });
+
 
         $('#username').on('keyup', function() {
             let username = $(this).val().trim();
@@ -544,41 +564,53 @@ use App\Models\{State, BankSetting};
                 }
             });
         });
-        $('#contact').inputmask({
-            mask: '9999999999[9999]', // Allow 10 to 12 digits
-            placeholder: '',
-            showMaskOnHover: false // Hide the mask on hover
-        });
+        // $('#contact').inputmask({
+        //     mask: '9999999999[9999]', // Allow 10 to 12 digits
+        //     placeholder: '',
+        //     showMaskOnHover: false // Hide the mask on hover
+        // });
 
         $('#contact').on('keyup', function() {
             let contact = $(this).val().trim();
 
-            // Show error if field is blank
-            if (contact === '') {
-                $('#contact').addClass('is-invalid');
-                $('#contact-error').text('Contact is required.');
-                return;
-            }
+            // Remove any non-numeric characters
+            contact = contact.replace(/[^0-9]/g, '');
 
-            $.ajax({
-                url: '{{ route('registerUniqueContact') }}',
-                type: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                data: { contact: contact },
-                success: function(response) {
-                    if (response.unique === false) {
-                        $('#contact').addClass('is-invalid');
-                        $('#contact-error').text('Contact is already taken.');
-                    } else {
-                        $('#contact').removeClass('is-invalid');
-                        $('#contact').addClass('is-valid');
-                        $('#contact-error').text('');
+            // Update the value in the input field
+            $(this).val(contact);
+
+            // Show error if field is not within the digit range
+            if (contact.length < 10 || contact.length > 12) {
+                $('#contact').addClass('is-invalid');
+                $('#contact-error').text('Contact must be between 10 and 12 digits.');
+            } else {
+                $('#contact').removeClass('is-invalid');
+                $('#contact').addClass('is-valid');
+                $('#contact-error').text('');
+
+                // Check for uniqueness only if the length is valid
+                $.ajax({
+                    url: '{{ route('registerUniqueContact') }}',
+                    type: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: { contact: contact },
+                    success: function(response) {
+                        if (response.unique === false) {
+                            $('#contact').addClass('is-invalid');
+                            $('#contact-error').text('Contact is already taken.');
+                        } else {
+                            $('#contact').removeClass('is-invalid');
+                            $('#contact').addClass('is-valid');
+                            $('#contact-error').text('');
+                        }
                     }
-                }
-            });
+                });
+            }
         });
+
+
 
         $('#id_no').inputmask({
             mask: '**************', // Placeholder for A to Z and 0 to 9 characters
@@ -593,11 +625,22 @@ use App\Models\{State, BankSetting};
         $('#id_no').on('keyup', function() {
             let id_no = $(this).val().trim();
 
+            // Remove any non-numeric characters (except for spaces)
+            id_no = id_no.replace(/[^0-9 ]/g, '');
+
+            // Update the value in the input field
+            $(this).val(id_no);
+
             // Show error if field is blank
             if (id_no === '') {
                 $('#id_no').addClass('is-invalid');
-                $('#id-no-error').text('Idenfication / Passport No. is required.');
+                $('#id-no-error').text('Identification / Passport No. is required.');
+            } else {
+                $('#id_no').removeClass('is-invalid');
+                $('#id_no').addClass('is-valid');
+                $('#id-no-error').text('');
             }
+
             $.ajax({
                 url: '{{ route('registerUniqueID') }}',
                 type: 'POST',
@@ -608,7 +651,7 @@ use App\Models\{State, BankSetting};
                 success: function(response) {
                     if (response.unique === false) {
                         $('#id_no').addClass('is-invalid');
-                        $('#id-no-error').text('Idenfication No. is already taken.');
+                        $('#id-no-error').text('Identification No. is already taken.');
                     } else {
                         $('#id_no').removeClass('is-invalid');
                         $('#id_no').addClass('is-valid');
@@ -617,6 +660,7 @@ use App\Models\{State, BankSetting};
                 }
             });
         });
+
 
         function validatePasswordFields() {
             var password = $('#password').val().trim();

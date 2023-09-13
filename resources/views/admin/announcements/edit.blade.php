@@ -10,7 +10,7 @@
     @slot('title') @lang('translation.Edit') @lang('translation.Announcement') @endslot
     @endcomponent
 
-    <form action="{{ route('announcements.store') }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('announcements.update', $announcement->id) }}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="row">
             <div class="col-lg-12">

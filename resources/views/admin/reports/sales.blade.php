@@ -8,18 +8,48 @@
     @slot('title') @lang('translation.Sales') @lang('translation.Report') @endslot
     @endcomponent
 
+    <style>
+        .custom-excel-button {
+            background-color: #2b8972;
+            color: #ffffff;
+            width: 100px;
+            height: 40px;
+            border: none;
+            border-radius: 10px;
+        }
+        .dt-buttons {
+            display: flex;
+            justify-content: flex-end; /* Adjust as needed */
+            margin-bottom: 30px; /* Adjust as needed */
+        }
+        .dataTables_wrapper .dataTables_filter input[type="search"] {
+            /* Your custom styles here */
+            /* display: block;
+            width: 100%; */
+            padding: 0.47rem 0.75rem;
+            font-size: .875rem;
+            font-weight: 400;
+            line-height: 1.6;
+            color: #495057;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #e2e5e8;
+            /* Add more styles as needed */
+        }
+    </style>
+
     <div class="row">
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-body">
                     <table id="reportSales" class="stripe nowrap" style="width:100%">
-                        <div class="d-flex justify-content-end text-end mb-3">
+                        {{-- <div class="d-flex justify-content-end text-end mb-3">
                             <div class="col-lg-2">
                                 <a href="#" class="btn btn-success" id="exportCsvButton">
                                         Export to Excel
                                 </a>
                             </div>
-                        </div>
+                        </div> --}}
                         {{-- <div class="row justify-content-end">
                             <div class="col-lg-4">
                                 <label class="form-label">From Date</label>
@@ -40,19 +70,21 @@
                         </div> --}}
                         <thead>
                             <tr>
+                                <th>#</th>
+                                <th>Date</th>
                                 <th>Order Number</th>
                                 <th>Member</th>
                                 <th>Price (RM)</th>
-                                <th>Date</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($orders as $order)
                                 <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $order->created_at->format('d/m/Y, h:i:s') }}</td>
                                     <td>{{ $order->order_num }}</td>
                                     <td>{{ $order->user->referrer_id }} | {{ $order->user->full_name }}</td>
                                     <td>{{ number_format($order->total_amount,2) }}</td>
-                                    <td>{{ $order->created_at->format('d/m/Y, h:i:s') }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -65,11 +97,39 @@
 @endsection
 @section('script')
     <script src="{{ URL::asset('assets/js/app.js') }}"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
     <script>
-        new DataTable('#reportSales', {
-            responsive: true,
-            pagingType: 'simple_numbers'
-        });
+        // new DataTable('#reportSales', {
+        //     responsive: true,
+        //     pagingType: 'simple_numbers'
+        // });
+
+        $(document).ready(function() {
+                $('#reportSales').DataTable({
+                    dom: 'Bfrtip',
+                    buttons: [
+                        {
+                            extend: 'excel',
+                            text: 'Excel', // Change button text if needed
+                            className: 'custom-excel-button' // Add a custom class
+                        }
+                    ],
+                    "columnDefs": [
+                        {
+                            "targets": [1], // Apply the date filter to the second column (index 1)
+                            "type": "date-range", // Use date-range filter type
+                            "searchable": true // Allow searching within the date range
+                        }
+                    ], 
+                    language: {
+                        search: 'Search ID:'
+                    }
+                });
+            });
     </script>
     <script>
         document.getElementById("exportCsvButton").addEventListener("click", function() {

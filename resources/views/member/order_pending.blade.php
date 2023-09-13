@@ -163,7 +163,10 @@
             pagingType: 'simple_numbers',
             lengthChange: false,
             order: [[0, 'desc']], // Default sorting order
-            language: customLanguage // Custom language object
+            language: customLanguage, // Custom language object
+            buttons: [
+                'excelHtml5'
+            ]
         });
 
         // Add event listener to the date filter input

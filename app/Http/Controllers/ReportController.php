@@ -27,12 +27,22 @@ class ReportController extends Controller
 
     }
     public function reportDownlineSales() {
+        $user = Auth::user();
+
+        $downlines = $this->getAllDownlines($user->id);
+        
+        $downlinesCollection = collect($downlines);
+
+        $orders = Order::whereIn('user_id', $downlinesCollection->pluck('id'))
+        ->latest()
+        ->get();
+
         $users = User::where('upline_id', Auth::id())
             ->whereHas('orders') // Make sure the relationship method name is correct
             ->get();
 
             // dd($users[0]->orders);
-        return view('member.reports.downline_sales', compact('users'));
+        return view('member.reports.downline_sales', compact('users', 'orders'));
     }
     public function reportLeadership() {
         return view('member.reports.leadership');
@@ -56,18 +66,48 @@ class ReportController extends Controller
         }
     }
 
+    public function getAllDownlines($userId)
+    {
+        $downlines = [];
+        $user = User::find($userId);
+
+        if (!$user) {
+            return $downlines;
+        }
+
+        // Add the current user to the downlines array
+        $downlines[] = $user;
+
+        // Get direct downlines
+        $directDownlines = User::where('upline_id', $userId)->get();
+
+        // Recursively fetch downlines of each direct downline
+        foreach ($directDownlines as $directDownline) {
+            $downlines = array_merge($downlines, $this->getAllDownlines($directDownline->id));
+        }
+
+        return $downlines;
+    }
+
     public function monthlyCommissionReport() {
+        
         $role = Auth::user()->role;
+        $user = Auth::user();
+
+        $downlines = $this->getAllDownlines($user->id);
+        
+        $downlinesCollection = collect($downlines);
+
         if($role == 'user'){
 
-            $user = Auth::user();
+            
             $hierarchyListArray = explode('-', trim($user->hierarchyList, '-'));
             
             $monthlyReport = CommissionsLogs::where('commissions_type', 'monthly_bonus')
             // ->whereIn('downline_id', $hierarchyListArray)
-            ->where('upline_id', $user->id)
+            ->whereIn('upline_id', $downlinesCollection->pluck('id'))
             ->get();
-            // dd($monthlyReport);
+            
 
             return view('member.reports.monthly_commission', [
                 'monthlyReport' => $monthlyReport
@@ -79,6 +119,7 @@ class ReportController extends Controller
             
             $monthlyReport = CommissionsLogs::where('commissions_type', 'monthly_bonus')
             // ->whereIn('downline_id', $hierarchyListArray)
+            ->with(['user'])
             ->get();
 
             return view('admin.reports.monthly_commission', [

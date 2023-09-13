@@ -111,7 +111,7 @@
             // Change the button's HTML and update the state
             if (currentState === "expanded") {
                 // Change the button text to "Expand All"
-                $(this).html('@lang("public.expand_all_downline")');
+                $(this).html('@lang("translation.expand_all_downline")');
 
                 // Update the state to "collapsed"
                 $(this).data("state", "collapsed");
@@ -123,7 +123,7 @@
                 });
             } else {
                 // Change the button text to "Collapse All"
-                $(this).html('@lang("public.collapse_all_downline")');
+                $(this).html('@lang("translation.collapse_all_downline")');
 
                 // Update the state to "expanded"
                 $(this).data("state", "expanded");

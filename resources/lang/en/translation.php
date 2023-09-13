@@ -47,7 +47,7 @@
         "Monthly Commission" => "Monthly Commission",
         "Quarterly Commission" => "Quarterly Commission",
         "Annually Commission" => "Annually Commission",
-        "Performance Bonus" => "Performance Bonus",
+        "Performance Bonus" => "Same Level Bonus",
         "New Topup" => "New Topup",
         "Ranking History" => "Ranking History",
 
@@ -267,8 +267,10 @@
         "User_Profile" => "User Profile",
         "Google_Maps" => "Google Maps",
         "Vector_Maps" => "Vector Maps",
-        "View" => "View",
-        "expand_all" => "Expand All"
+        "View" => "New",
+        "expand_all" => "Expand All",
+        "collapse_all_downline" => "Collapse All",
+        "expand_all_downline" => "Expand All",
     ];
 
 ?>

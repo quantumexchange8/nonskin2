@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Announcement;
+use Illuminate\Support\Facades\Validator;
+Use Alert;
 use Auth;
 
 class AnnouncementController extends Controller
@@ -21,8 +23,53 @@ class AnnouncementController extends Controller
     }
 
     public function store(Request $request, Announcement $announcement){
-        // dd($request->all());
 
+        $validator = Validator::make($request->all(), [
+            'title'         => 'required',
+            'content'       => 'required',
+            'image'         => 'nullable|image|max:2048',
+            'status'        => 'required',
+            'start_date'    => 'nullable',
+            'end_date'      => 'nullable',
+        ]);
+
+        if ($validator->fails()) {
+            // Validation failed, return with errors and old input
+            Alert::error('Failed', 'Please fill in all the required fill');
+            return redirect()->back();
+        }
+
+        $popup = $request->input('popup') === 'on' ? 1 : 0;
+        $popup_once = $request->input('popup_once') === 'on' ? 1 : 0;
+
+        if ($request->hasFile('image')){
+            $imageName = time().'.'.$request->image->extension();
+            $request->image->move(public_path('images/announcements'), $imageName);
+        }
+
+        $announcement = new Announcement();
+        $announcement->title   = $request->input('title');
+        $announcement->content          = $request->input('content');
+        $announcement->status = $request->input('status');
+        $announcement->image       = $announcement->image ?? $imageName ?? null;
+        $announcement->start_date       = $request->input('start_date');
+        $announcement->end_date       = $request->input('end_date');
+        $announcement->popup       = $popup;
+        $announcement->popup_once       = $popup_once;
+        $announcement->created_by       = $announcement->created_by ?? Auth::id();
+        $announcement->updated_by       = Auth::id();
+        $announcement->save();
+
+        Alert::success('Success', 'successfully created');
+        return redirect()->route('announcements.list')->with('created', 'Announcement successfully created');
+    }
+    public function edit(Announcement $announcement){
+
+        return view('admin.announcements.edit', compact('announcement'));
+    }
+
+    public function editSave(Request $request, Announcement $announcement)
+    {
         $request->validate([
             'title'         => 'required',
             'content'       => 'required',
@@ -39,13 +86,10 @@ class AnnouncementController extends Controller
             $imageName = time().'.'.$request->image->extension();
             $request->image->move(public_path('images/announcements'), $imageName);
         }
-        // if($request->input('id')){
-        //     $announcement = Announcement::find($request->input('id'));
-        // }
 
         try {
         $announcement = Announcement::updateOrCreate(
-            // ['id' => $request->input('id')],
+            ['id' => $announcement->id],
             [
                 'title'         => $request->input('title'),
                 'content'       => $request->input('content'),
@@ -78,10 +122,5 @@ class AnnouncementController extends Controller
             // dd($e);
             return redirect()->back()->withErrors(['error' => 'Something went wrong!']);
         }
-
-    }
-    public function edit(Announcement $announcement){
-
-        return view('admin.announcements.edit', compact('announcement'));
     }
 }

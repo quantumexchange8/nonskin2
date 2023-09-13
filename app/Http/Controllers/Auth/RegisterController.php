@@ -145,14 +145,16 @@ class RegisterController extends Controller
             $uplineId = User::where('referrer_id', $request->referral)->first();
 
             if(!$uplineId) {
+                Alert::error('invalid action', 'invalid_referral_code');
                 return back()->withInput($request->input())->withErrors(['error_messages'=>'Invalid referral code!']);
             }
+
+            $upline_user_id = $uplineId->id;
 
             if(empty($uplineId['hierarchyList'])){
                 $hierarchyList = "-" . $upline_user_id . "-";
             } else {
-                $upline_user_id = $uplineId->id;
-                $hierarchyList = $uplineId['hierarchyList'] . $upline_user_id . "-";
+                $hierarchyList = $upline_user_id['hierarchyList'] . $upline_user_id . "-";
             }
             // $hierarchyList = $uplineId['hierarchyList'] . $upline_user_id . "-";
 

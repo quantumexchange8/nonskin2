@@ -187,7 +187,7 @@ class HomeController extends Controller
                     $obj_user->password = Hash::make($request->input('password'));
                     $obj_user->save();
 
-                    Alert::success(trans('public.success'), trans('public.successful_updated_password'));
+                    Alert::success('Success', 'Successful Updated Password');
                     return redirect()->back();
                 } else {
                     Alert::error(trans('public.failed'), trans('public.new_password_doesn\t_match_with_confirm_password'));
