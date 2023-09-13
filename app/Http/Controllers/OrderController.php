@@ -79,8 +79,8 @@ class OrderController extends Controller
 
                     if ($user) {
                         // Update the user's personal_sales with the order's total_amount
-                        $user->personal_sales += $totalAmount;
-                        $user->group_sales += $totalAmount;
+                        $user->personal_sales += $price;
+                        $user->group_sales += $price;
                         $user->save();
                     }
                 }
