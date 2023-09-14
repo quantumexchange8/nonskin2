@@ -43,31 +43,19 @@
             <div class="card">
                 <div class="card-body">
                     <table id="reportSales" class="stripe nowrap" style="width:100%">
-                        {{-- <div class="d-flex justify-content-end text-end mb-3">
-                            <div class="col-lg-2">
-                                <a href="#" class="btn btn-success" id="exportCsvButton">
-                                        Export to Excel
-                                </a>
+                        <div style="display: flex;align-items: flex-end;justify-content: center;padding-left: 26px;padding-right: 26px;padding-bottom: 30px;">
+                            <div class="col-lg-4" style="width:100%">
+                                <label class="form-label">Date</label>
+                                <input type="month" id="date-filter-input" class="form-control">
                             </div>
-                        </div> --}}
-                        {{-- <div class="row justify-content-end">
-                            <div class="col-lg-4">
-                                <label class="form-label">From Date</label>
-                                <input type="date" id="date-min-input" class="form-control">
+                            <div style="margin-left: 10px;">
+                                <form>
+                                    <button class="btn btn-primary" type="submit" value="reset">
+                                        <i class="mdi mdi-refresh"></i>
+                                    </button>
+                                </form>
                             </div>
-                            <div class="col-lg-4">
-                                <label class="form-label">To Date</label>
-                                <input type="date" id="date-max-input" class="form-control">
-                            </div>
-                            <div class="col-lg-4">
-                                <label class="form-label">Search</label>
-                                <input type="text" id="search-input" class="form-control" placeholder="Enter keywords here...">
-                            </div>
-                            <div class="col-lg-3">
-                                <label class="form-label">&nbsp;</label>
-                                <button class="btn btn-primary w-100">Search</button>
-                            </div>
-                        </div> --}}
+                        </div>
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -101,6 +89,7 @@
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
     <script>
         // new DataTable('#reportSales', {
@@ -109,67 +98,51 @@
         // });
 
         $(document).ready(function() {
-                $('#reportSales').DataTable({
+
+                var table = $('#reportSales').DataTable({
                     dom: 'Bfrtip',
                     buttons: [
                         {
                             extend: 'excel',
-                            text: 'Export Excel', // Change button text if needed
-                            className: 'custom-excel-button' // Add a custom class
+                            text: 'Export Excel',
+                            className: 'custom-excel-button'
                         }
                     ],
                     "columnDefs": [
                         {
-                            "targets": [1], // Apply the date filter to the second column (index 1)
-                            "type": "date-range", // Use date-range filter type
-                            "searchable": true // Allow searching within the date range
+                            "targets": [1],
+                            "type": "date-range",
+                            "searchable": true
                         }
-                    ], 
+                    ],
                     language: {
-                        search: 'Search ID:'
+                        search: 'Search:'
+                    }
+                });
+
+                // Add an event listener to the date input field
+                $('#date-filter-input').on('change', function() {
+                    var selectedDate = $(this).val();
+                    if (selectedDate) {
+                        // Use DataTables search to filter rows based on a custom function
+                        $.fn.dataTable.ext.search.push(
+                            function(settings, data, dataIndex) {
+                                var dateColumn = data[1]; // Assuming date is in the second column
+                                // Format the selected date to match the database format ('YYYY-MM-DD HH:mm:ss')
+                                var formattedDate = moment(selectedDate, 'YYYY-MM-DD').format('YYYY-MM-DD');
+                                return dateColumn.includes(formattedDate);
+                            }
+                        );
+                        // Redraw the DataTable to apply the filter
+                        table.draw();
+                        // Remove the custom filter function to avoid interference with other searches
+                        $.fn.dataTable.ext.search.pop();
+                    } else {
+                        // If no date is selected, clear the filter
+                        table.search('').draw();
                     }
                 });
             });
     </script>
-    <script>
-        document.getElementById("exportCsvButton").addEventListener("click", function() {
-            exportToCsv();
-        });
-    </script>
-    <script>
-        function exportToCsv() {
-            const table = document.querySelector("#reportSales");
-            const rows = table.querySelectorAll("tbody tr");
-            const headerRow = table.querySelector("thead tr");
-            const csvData = [];
-
-            // Collect the header row data and format it as a CSV row
-            const headerData = [];
-            headerRow.querySelectorAll("th").forEach((cell) => {
-                headerData.push('"' + cell.textContent.trim() + '"');
-            });
-            csvData.push(headerData.join(","));
-
-            // Collect table data and format as CSV rows
-            rows.forEach((row) => {
-                const rowData = [];
-                row.querySelectorAll("td").forEach((cell) => {
-                    // Wrap cell content in double quotes to preserve commas and currency symbols
-                    rowData.push('"' + cell.textContent.trim() + '"');
-                });
-                csvData.push(rowData.join(","));
-            });
-
-            // Create a CSV blob
-            const csvBlob = new Blob([csvData.join("\n")], { type: "text/csv" });
-
-            // Create a download link and trigger the download
-            const a = document.createElement("a");
-            a.href = window.URL.createObjectURL(csvBlob);
-            a.download = "Sales Report.csv";
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-        }
-    </script>
+    
 @endsection

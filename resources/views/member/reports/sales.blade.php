@@ -21,7 +21,7 @@
             width: 100px;
             height: 40px;
             border: none;
-            border-radius: 10px;
+            border-radius: 7px;
         }
         .dt-buttons {
             display: flex;
@@ -48,6 +48,19 @@
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-body">
+                    <div style="display: flex;align-items: flex-end;">
+                        <div class="col-lg-4">
+                            <label class="form-label">Date</label>
+                            <input type="date" id="date-filter-input" class="form-control">
+                        </div>
+                        <div style="margin-left: 10px;">
+                            <form>
+                                <button class="btn btn-primary" type="submit" value="reset">
+                                    <i class="mdi mdi-refresh"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                     <table id="reportSales" class="stripe nowrap" style="width:100%">
                         <thead>
                             <tr>
@@ -62,7 +75,7 @@
                             @foreach ($orders as $order)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $order->created_at->format('d/m/Y, h:i:s') }}</td>
+                                    <td>{{ $order->created_at->format('Y-m-d') }}</td>
                                     <td>{{ $order->order_num }}</td>
                                     <td>{{ number_format($order->total_amount,2) }}</td>
                                     <td>
@@ -74,8 +87,6 @@
                             @endforeach
                         </tbody>
                     </table>
-
-                    
                 </div>
             </div>
         </div>
@@ -88,30 +99,85 @@
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    
-    <script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
+    <script>
         $(document).ready(function() {
-                $('#reportSales').DataTable({
-                    dom: 'Bfrtip',
-                    buttons: [
-                        {
-                            extend: 'excel',
-                            text: 'Export Excel', // Change button text if needed
-                            className: 'custom-excel-button' // Add a custom class
-                        }
-                    ],
-                    "columnDefs": [
-                        {
-                            "targets": [1], // Apply the date filter to the second column (index 1)
-                            "type": "date-range", // Use date-range filter type
-                            "searchable": true // Allow searching within the date range
-                        }
-                    ], 
-                    language: {
-                        search: 'Search ID:'
+            var table = $('#reportSales').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'excel',
+                        text: 'Export Excel',
+                        className: 'custom-excel-button'
                     }
-                });
+                ],
+                "columnDefs": [
+                    {
+                        "targets": [1],
+                        "type": "date-range",
+                        "searchable": true
+                    }
+                ],
+                language: {
+                    search: 'Search:'
+                }
             });
+        
+            // Add an event listener to the date input field
+            $('#date-filter-input').on('change', function() {
+                var selectedDate = $(this).val();
+                if (selectedDate) {
+                    // Use DataTables search to filter rows based on a custom function
+                    $.fn.dataTable.ext.search.push(
+                        function(settings, data, dataIndex) {
+                            var dateColumn = data[1]; // Assuming date is in the second column
+                            // Format the selected date to match the database format ('YYYY-MM-DD HH:mm:ss')
+                            var formattedDate = moment(selectedDate, 'YYYY-MM-DD').format('YYYY-MM-DD');
+                            return dateColumn.includes(formattedDate);
+                        }
+                    );
+                    // Redraw the DataTable to apply the filter
+                    table.draw();
+                    // Remove the custom filter function to avoid interference with other searches
+                    $.fn.dataTable.ext.search.pop();
+                } else {
+                    // If no date is selected, clear the filter
+                    table.search('').draw();
+                }
+            });
+        });
     </script>
+    
+
+    {{-- <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const dateFilterInput = document.getElementById("date-filter-input");
+            const reportSalesTable = document.getElementById("reportSales").getElementsByTagName("tbody")[0];
+            const rows = reportSalesTable.getElementsByTagName("tr");
+
+            dateFilterInput.addEventListener("input", function() {
+                const filterDateInput = new Date(dateFilterInput.value); // Parse the input date
+                const filterDate = filterDateInput.toLocaleDateString("en-GB", {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "2-digit",
+                });
+
+                for (let i = 0; i < rows.length; i++) {
+                    const dateCell = rows[i].getElementsByTagName("td")[1];
+
+                    if (dateCell) {
+                        const cellDate = dateCell.textContent.trim();
+                        if (cellDate === filterDate) { // Exact match
+                            rows[i].style.display = "";
+                        } else {
+                            rows[i].style.display = "none";
+                        }
+                    }
+                }
+            });
+        });
+    </script> --}}
+
 @endsection

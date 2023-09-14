@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Models\User;
 use App\Models\Address;
 use App\Models\Category;
@@ -16,19 +17,26 @@ use App\Models\Payment;
 use App\Models\Product;
 use App\Models\Rankings;
 use App\Models\RankingUpdateLog;
+use App\Models\WalletHistory;
 use Validator;
 use Response;
 use Redirect;
+use Carbon\Carbon;
 use App\Models\{Country, State, City};
 use Illuminate\Support\Facades\DB;
 use Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 use Barryvdh\DomPDF\Facade\Pdf;
 
+
 class AdminController extends Controller
 {
     public function dashboard()
     {
+
+        $currentMonth = Carbon::now()->month; // Get the current month
+        $currentYear = Carbon::now()->year; // Get the current year
+
         $res = DB::table('orders')
         ->selectRaw('
             COUNT(*) as total_orders,
@@ -47,11 +55,22 @@ class AdminController extends Controller
             (SELECT COUNT(*) FROM users WHERE rank_id = 1) as clients,
             (SELECT COUNT(*) FROM payments WHERE type = "Deposit" AND status = "Pending") as pending_deposit,
             (SELECT COUNT(*) FROM payments WHERE type = "Withdraw" AND status = "Pending") as pending_withdrawal,
-            (SELECT SUM(total_amount) FROM orders WHERE status = 4 AND MONTH(created_at) = MONTH(CURDATE())) as monthly_sales
+            (SELECT SUM(total_amount) FROM orders WHERE status = 6 AND MONTH(created_at) = MONTH(CURDATE())) as monthly_sales
         ')
         ->first();
 
-        return view('admin.dashboard', compact('res'));
+        $total_orders = Order::count();
+        $monthly_sale = Order::where('status', '!=', 6)
+            ->whereYear('created_at', $currentYear)
+            ->whereMonth('created_at', $currentMonth)
+            ->sum('total_amount');
+        // dd($monthly_sale);
+
+        return view('admin.dashboard', [
+            'res' => $res,
+            'total_orders' => $total_orders,
+            'monthly_sale' => $monthly_sale,
+        ]);
     }
     public function memberList(){
         $states = State::select('id', 'name')->get();
@@ -487,5 +506,65 @@ class AdminController extends Controller
         return view('admin.network.network-tree', [
             'admins' => $admins
         ]);
+    }
+
+    public function productWallet()
+    {
+
+        $users = User::where('role', 'user')->get();
+
+        return view('admin.productwallet.product_wallet', [
+            'users' => $users,
+        ]);
+    }
+
+    public function productWalletAdjustment(User $user)
+    {
+        return view('admin.productwallet.adjustment', [
+            'user' => $user
+        ]);
+    }
+
+    public function productWalletUpdate(Request $request, User $user)
+    {
+       
+        if($request->wallet_type == 'cash_wallet')
+        {
+            $new_amount = $request->cash_amount;
+
+            $user->cash_wallet += $new_amount;
+            $user->save();
+    
+            $wallet_log = new WalletHistory();
+            $wallet_log->user_id = $user->id;
+            $wallet_log->wallet_type = 'Cash Wallet';
+            $wallet_log->type = 'Deposit';
+            $wallet_log->cash_in = $new_amount;
+            $wallet_log->cash_out = null;
+            $wallet_log->balance = $user->cash_wallet;
+            $wallet_log->remarks = $request->remark ?? 'Top up by Admin';
+            $wallet_log->save();
+
+        } else {
+            $new_amount = $request->product_amount;
+
+            $user->product_wallet += $new_amount;
+            $user->save();
+
+            $wallet_log = new WalletHistory();
+            $wallet_log->user_id = $user->id;
+            $wallet_log->wallet_type = 'Product Wallet';
+            $wallet_log->type = 'Deposit';
+            $wallet_log->cash_in = $new_amount;
+            $wallet_log->cash_out = null;
+            $wallet_log->balance = $user->product_wallet;
+            $wallet_log->remarks = $request->remark ?? 'Top up by Admin';
+            $wallet_log->save();
+        }
+        
+
+
+        Alert::success('Successful', 'product wallet added');
+        return redirect()->back();
     }
 }

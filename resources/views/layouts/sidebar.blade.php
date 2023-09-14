@@ -224,6 +224,7 @@
                         @hasanyrole('superadmin|admin')
                             <li><a href="{{ route('member-list') }}">@lang('translation.Member') @lang('translation.Listing')</a></li>
                             <li><a href="{{ route('admin-networktree') }}">@lang('translation.Network-tree')</a></li>
+                            <li><a href="{{ route('productWallet') }}">@lang('translation.Product Wallet Adjustment')</a></li>
                         @endhasanyrole
                     </ul>
                 </li>

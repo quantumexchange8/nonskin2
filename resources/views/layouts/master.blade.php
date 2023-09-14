@@ -3,7 +3,7 @@
 
     <head>
         <meta charset="utf-8" />
-        <title> @yield('title') | Nonskin - Admin & Dashboard</title>
+        <title> @yield('title') | Nonskin </title>
         @if (App::environment('production'))
             <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
         @endif

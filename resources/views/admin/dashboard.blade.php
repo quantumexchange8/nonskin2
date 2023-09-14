@@ -18,7 +18,7 @@
                             <div class="d-flex flex-wrap align-items-center mb-3">
                                 <h5 class="card-title mb-0">Orders Statistics</h5>
                                 <div class="ms-auto text-muted">
-                                    Total Orders: {{ $res->total_orders }}
+                                    Total Orders: {{ $total_orders }}
                                     {{-- <div class="dropdown">
                                         <a class="dropdown-toggle text-reset" href="#" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <span class="text-muted font-size-12">Sort By:</span> <span class="fw-medium">Monthly<i class="mdi mdi-chevron-down ms-1"></i></span>
@@ -410,7 +410,7 @@
                                 </div>
                                 <p class="mt-2">Monthly Sales</p>
                             </div>
-                            <h4 class="mb-0">RM {{ number_format($res->monthly_sales,2 ?? 'N/A') }} <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
+                            <h4 class="mb-0">RM {{ number_format($monthly_sale,2 ) }} <!-- <sup class="text-success fw-medium font-size-14"><i class="mdi mdi-arrow-down"></i> 10%</sup> --></h4>
                             <div>
                                 {{-- <div class="py-3 my-1">
                                     <div id="mini-1" data-colors='["#3980c0"]'></div>

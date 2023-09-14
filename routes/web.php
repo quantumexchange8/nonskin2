@@ -161,7 +161,10 @@ Route::group(['prefix' => 'admin',  'middleware' => ['auth', 'IsAdmin' ]], funct
     Route::post('/reject-withdrawal/{withdraw}', [PaymentController::class, 'rejectWithdrawal'])->name('admin.reject-withdrawal');
 
     Route::get('cash-wallet', [AdminController::class, 'cashWallet'])->name('admin.cash-wallet');
-    Route::get('product-wallet', [AdminController::class, 'productWallet'])->name('admin.product-wallet');
+    Route::get('product-wallet', [AdminController::class, 'productWallet'])->name('productWallet');
+    Route::get('product-wallet', [AdminController::class, 'productWallet'])->name('productWallet');
+    Route::get('product-wallet/{user}/adjustment', [AdminController::class, 'productWalletAdjustment'])->name('productWalletAdjustment');
+    Route::post('product-wallet/update/{user}', [AdminController::class, 'productWalletUpdate'])->name('productWalletUpdate');
 
     // Profile
     Route::get('my-profile', [AdminController::class, 'profile'])->name('admin.profile');
