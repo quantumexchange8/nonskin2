@@ -333,10 +333,12 @@ class AdminController extends Controller
         // $ordersJson = json_encode($orders);
         // dd($orders);
 
-        $orders = Order::get();
+        $orders = Order::latest()->get();
+        $rankingLog = RankingUpdateLog::with(['user', 'oldRank', 'newRank'])->get();
 
         return view('admin.orders.orderlisting', [
             'orders' => $orders,
+            'rankings' => $rankingLog
         ]);
     }
 
@@ -520,8 +522,16 @@ class AdminController extends Controller
 
     public function productWalletAdjustment(User $user)
     {
+        
+        $rows = WalletHistory::latest()
+        ->where('type', 'Wallet Adjustment')
+        ->where('user_id', $user->id)
+        ->with(['user'])
+        ->get();
+
         return view('admin.productwallet.adjustment', [
-            'user' => $user
+            'user' => $user,
+            'rows' => $rows
         ]);
     }
 
@@ -538,7 +548,7 @@ class AdminController extends Controller
             $wallet_log = new WalletHistory();
             $wallet_log->user_id = $user->id;
             $wallet_log->wallet_type = 'Cash Wallet';
-            $wallet_log->type = 'Deposit';
+            $wallet_log->type = 'Wallet Adjustment';
             $wallet_log->cash_in = $new_amount;
             $wallet_log->cash_out = null;
             $wallet_log->balance = $user->cash_wallet;
@@ -546,25 +556,50 @@ class AdminController extends Controller
             $wallet_log->save();
 
         } else {
-            $new_amount = $request->product_amount;
 
-            $user->product_wallet += $new_amount;
-            $user->save();
+            
+            if($request->type == 'deposit') {
+                
+                $new_amount = $request->product_amount;
 
-            $wallet_log = new WalletHistory();
-            $wallet_log->user_id = $user->id;
-            $wallet_log->wallet_type = 'Product Wallet';
-            $wallet_log->type = 'Deposit';
-            $wallet_log->cash_in = $new_amount;
-            $wallet_log->cash_out = null;
-            $wallet_log->balance = $user->product_wallet;
-            $wallet_log->remarks = $request->remark ?? 'Top up by Admin';
-            $wallet_log->save();
+                $user->product_wallet += $new_amount;
+                $user->save();
+    
+                $wallet_log = new WalletHistory();
+                $wallet_log->user_id = $user->id;
+                $wallet_log->wallet_type = 'Product Wallet';
+                $wallet_log->type = 'Wallet Adjustment';
+                $wallet_log->cash_in = $new_amount;
+                $wallet_log->cash_out = null;
+                $wallet_log->balance = $user->product_wallet;
+                $wallet_log->remarks = $request->remarks ?? 'Top up by Admin';
+                $wallet_log->save();
+
+                Alert::success('Successful', 'product wallet added');
+                return redirect()->back();
+
+            } elseif($request->type == 'withdrawal') {
+                
+                $new_amount = $request->product_amount;
+
+                $user->product_wallet -= $new_amount;
+                
+                $user->save();
+    
+                $wallet_log = new WalletHistory();
+                $wallet_log->user_id = $user->id;
+                $wallet_log->wallet_type = 'Product Wallet';
+                $wallet_log->type = 'Wallet Adjustment';
+                $wallet_log->cash_in = null;
+                $wallet_log->cash_out = $new_amount;
+                $wallet_log->balance = $user->product_wallet;
+                $wallet_log->remarks = $request->remarks ?? 'Deducted by Admin';
+                $wallet_log->save();
+
+                Alert::success('Successful', 'product wallet deducted');
+                return redirect()->back();
+            }
+            
         }
-        
-
-
-        Alert::success('Successful', 'product wallet added');
-        return redirect()->back();
     }
 }

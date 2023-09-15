@@ -61,10 +61,13 @@
                             <tr>
                                 <th>#</th>
                                 <th>Date</th>
+                                <th>Upline</th> {{-- upline --}}
+                                <th>Upline Sales</th>
                                 <th>Downline</th>
                                 <th>Downline Rank</th>
-                                <th>Percentage (%)</th>
-                                <th>Amount (RM)</th>
+                                <th>Downline Sales</th>
+                                <th>Percentage</th>
+                                <th>Total Amount</th>
                                 
                             </tr>
                         </thead>
@@ -73,8 +76,16 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $row->commission_date }}</td>
-                                <td>{{ $row->user->full_name }}</td>
+                                @php
+                                    // Assuming $row->upline_id corresponds to the id column in the user table
+                                    $user = \App\Models\User::find($row->upline_id);
+                                    $downline = \App\Models\User::find($row->downline_id);
+                                @endphp
+                                <td>{{ $user ? $user->full_name : 'User not found'}}</td>
+                                <td>{{ $row->upline_totalsales}}</td>
+                                <td>{{ $downline ? $downline->full_name : 'User not found' }}</td>
                                 <td>{{ $row->rank->name }}</td>
+                                <td>{{ $row->downline_sales }}</td>
                                 <td>{{ $row->percentage }}</td>
                                 <td>{{ $row->total_bonus }}</td>
                                 

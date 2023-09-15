@@ -8,6 +8,12 @@
     @slot('title') @lang('translation.Sales') @lang('translation.Report') @endslot
     @endcomponent
 
+@section('modal')
+    @foreach($orders as $order)
+        @include('member.modals.saleReport')
+    @endforeach
+@endsection
+
     <style>
         .custom-excel-button {
             background-color: #2b8972;
@@ -20,7 +26,7 @@
         .dt-buttons {
             display: flex;
             justify-content: flex-end; /* Adjust as needed */
-            margin-bottom: 30px; /* Adjust as needed */
+            margin-top: 20px;
         }
         .dataTables_wrapper .dataTables_filter input[type="search"] {
             /* Your custom styles here */
@@ -36,6 +42,14 @@
             border: 1px solid #e2e5e8;
             /* Add more styles as needed */
         }
+        .dataTables_wrapper .dataTables_filter {
+            float: left; /* Move the search field to the left */
+            text-align: left;
+            width: 570px;
+        }
+        .dataTables_filter input {
+            width: 570px;
+        }
     </style>
 
     <div class="row">
@@ -46,7 +60,7 @@
                         <div style="display: flex;align-items: flex-end;justify-content: center;padding-left: 26px;padding-right: 26px;padding-bottom: 30px;">
                             <div class="col-lg-4" style="width:100%">
                                 <label class="form-label">Date</label>
-                                <input type="month" id="date-filter-input" class="form-control">
+                                <input type="date" id="date-filter-input" class="form-control">
                             </div>
                             <div style="margin-left: 10px;">
                                 <form>
@@ -63,6 +77,7 @@
                                 <th>Order Number</th>
                                 <th>Member</th>
                                 <th>Price (RM)</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -73,6 +88,11 @@
                                     <td>{{ $order->order_num }}</td>
                                     <td>{{ $order->user->full_name }}</td>
                                     <td>{{ number_format($order->total_amount,2) }}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-link btn-sm btn-rounded view-detail-button" data-bs-toggle="modal" data-bs-target="#orderdetailsModal_{{ $order->id }}" id="{{$order->id}}">
+                                            <i class="mdi mdi-printer-settings"></i>
+                                        </button>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -100,7 +120,9 @@
         $(document).ready(function() {
 
                 var table = $('#reportSales').DataTable({
-                    dom: 'Bfrtip',
+                    dom: '<"row"<"col-lg-10"f><"col-lg-2"B>>' +
+                    '<"row"<"col-lg-12"t>>' +
+                    '<"row"<"col-lg-6"i><"col-lg-6"p>>',
                     buttons: [
                         {
                             extend: 'excel',

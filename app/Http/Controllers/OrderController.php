@@ -250,9 +250,9 @@ class OrderController extends Controller
             'orders' => $orders,
         ]);
     }
-    public function history() {
-        return view('admin.orders.history');
-    }
+    // public function history() {
+    //     return view('admin.orders.history');
+    // }
 
     public function index()
     {

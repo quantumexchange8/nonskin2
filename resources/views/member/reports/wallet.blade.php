@@ -133,7 +133,7 @@
             var table = $('#reportWallet').DataTable({
                 responsive: true,
                 lengthChange: false,
-                // order: [[0, 'desc']],
+                // order: [[0, 'desc']], 
                 dom: 'Bfrtip',
                 buttons: [
                     {

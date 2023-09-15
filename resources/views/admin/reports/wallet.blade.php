@@ -46,7 +46,7 @@
                         <div style="display: flex;align-items: flex-end;justify-content: center;padding-left: 26px;padding-right: 26px;padding-bottom: 30px;">
                             <div class="col-lg-4" style="width:100%">
                                 <label class="form-label">Date</label>
-                                <input type="month" id="date-filter-input" class="form-control">
+                                <input type="date" id="date-filter-input" class="form-control">
                             </div>
                             <div style="margin-left: 10px;">
                                 <form>
