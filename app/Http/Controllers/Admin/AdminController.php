@@ -555,7 +555,7 @@ class AdminController extends Controller
             $wallet_log->remarks = $request->remark ?? 'Top up by Admin';
             $wallet_log->save();
 
-        } else {
+        } else if ($request->wallet_type == 'product_wallet') {
 
             
             if($request->type == 'deposit') {
@@ -600,6 +600,52 @@ class AdminController extends Controller
                 return redirect()->back();
             }
             
+        } else {
+            // dd($request->all());
+
+            if($request->purchase_type == 'deposit') {
+
+                $new_amount = $request->purchase_amount;
+
+                $user->purchase_wallet += $new_amount;
+                $user->save();
+    
+                $wallet_log = new WalletHistory();
+                $wallet_log->user_id = $user->id;
+                $wallet_log->wallet_type = 'Purchase Wallet';
+                $wallet_log->type = 'Wallet Adjustment ';
+                $wallet_log->cash_in = $new_amount;
+                $wallet_log->cash_out = null;
+                $wallet_log->balance = $user->purchase_wallet;
+                $wallet_log->remarks = $request->remark ?? 'Top up by Admin';
+                $wallet_log->save();
+
+                Alert::success('Successful', 'purchase wallet added');
+                return redirect()->back();
+
+            } else if ($request->purchase_type == 'withdrawal'){
+
+                $new_amount = $request->purchase_amount;
+
+                $user->purchase_wallet -= $new_amount;
+                
+                $user->save();
+    
+                $wallet_log = new WalletHistory();
+                $wallet_log->user_id = $user->id;
+                $wallet_log->wallet_type = 'Purchase Wallet';
+                $wallet_log->type = 'Wallet Adjustment';
+                $wallet_log->cash_in = null;
+                $wallet_log->cash_out = $new_amount;
+                $wallet_log->balance = $user->purchase_wallet;
+                $wallet_log->remarks = $request->remarks ?? 'Deducted by Admin';
+                $wallet_log->save();
+
+                Alert::success('Successful', 'purchase wallet deducted');
+                return redirect()->back();
+
+            }
+
         }
     }
 }

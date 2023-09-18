@@ -69,6 +69,7 @@
                                     {{-- <option class="form-select" disabled>---please select---</option> --}}
                                     <option class="form-select" value="cash_wallet" selected>Cash Wallet</option>
                                     <option class="form-select" value="product_wallet">Product Wallet</option>
+                                    <option class="form-select" value="purchase_wallet">Purchase Wallet</option>
                                 </select>
                             </div>
                         </div>
@@ -115,6 +116,37 @@
                                 <label for="referral" class="col-lg-2 col-md-3 col-form-label required">Amount</label>
                                 <div class="col-lg-8 col-md-9">
                                     <input type="number" class="form-control" name="cash_amount" required min="1">
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="username" class="col-lg-2 col-md-3 col-form-label">Remark<small> (Optional) </small></label>
+                                <div class="col-lg-8 col-md-9">
+                                    <input type="text" class="form-control" name="remark">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="purchase_wallet_fields">
+                            <div class="mb-3 row">
+                                <label for="referral" class="col-lg-2 col-md-3 col-form-label">Purchase Wallet Balance</label>
+                                <div class="col-lg-8 col-md-9">
+                                    <input type="text" class="form-control" value="{{ number_format($user->purchase_wallet, 2) }}" name="purchase_balance" disabled>
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="referral" class="col-lg-2 col-md-3 col-form-label">Select Type</label>
+                                <div class="col-lg-8 col-md-9">
+                                    <select class="form-select" name="purchase_type" id="type">
+                                        {{-- <option class="form-select" disabled>---please select---</option> --}}
+                                        <option class="form-select" value="deposit" selected>Deposit</option>
+                                        <option class="form-select" value="withdrawal">Withdrawal</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="referral" class="col-lg-2 col-md-3 col-form-label required">Amount</label>
+                                <div class="col-lg-8 col-md-9">
+                                    <input type="number" class="form-control" name="purchase_amount" required min="1">
                                 </div>
                             </div>
                             <div class="mb-3 row">
@@ -320,8 +352,11 @@
             var walletSelect = document.getElementById("wallet_type");
             var cashWalletFields = document.getElementById("cash_wallet_fields");
             var productWalletFields = document.getElementById("product_wallet_fields");
+            var purchaseWalletFields = document.getElementById("purchase_wallet_fields");
+
             var cashAmountInput = document.querySelector("#cash_wallet_fields input[name='cash_amount']");
             var productAmountInput = document.querySelector("#product_wallet_fields input[name='product_amount']");
+            var purchaseAmountInput = document.querySelector("#purchase_wallet_fields input[name='purchase_amount']");
 
             // Initially hide both sets of fields and disable their inputs
             cashWalletFields.style.display = "block";
@@ -330,23 +365,51 @@
             productWalletFields.style.display = "none";
             productAmountInput.disabled = true;
 
+            purchaseWalletFields.style.display = "none";
+            purchaseAmountInput.disabled = true;
+
             walletSelect.addEventListener("change", function() {
                 if (walletSelect.value === "cash_wallet") {
                     cashWalletFields.style.display = "block";
                     cashAmountInput.disabled = false;
+
                     productWalletFields.style.display = "none";
                     productAmountInput.disabled = true;
+
+                    purchaseWalletFields.style.display = "none";
+                    purchaseAmountInput.disabled = true;
+
                 } else if (walletSelect.value === "product_wallet") {
                     cashWalletFields.style.display = "none";
                     cashAmountInput.disabled = true;
+
                     productWalletFields.style.display = "block";
                     productAmountInput.disabled = false;
+
+                    purchaseWalletFields.style.display = "none";
+                    purchaseAmountInput.disabled = true;
+
+                } else if (walletSelect.value === "purchase_wallet") {
+                    cashWalletFields.style.display = "none";
+                    cashAmountInput.disabled = true;
+
+                    productWalletFields.style.display = "none";
+                    productAmountInput.disabled = true;
+
+                    purchaseWalletFields.style.display = "block";
+                    purchaseAmountInput.disabled = false;
+
                 } else {
                     // Handle any other cases if needed
                     cashWalletFields.style.display = "none";
                     cashAmountInput.disabled = true;
+
                     productWalletFields.style.display = "none";
                     productAmountInput.disabled = true;
+
+                    purchaseWalletFields.style.display = "none";
+                    purchaseAmountInput.disabled = true;
+
                 }
             });
         });
