@@ -48,7 +48,7 @@
             width: 570px;
         }
         .dataTables_filter input {
-            width: 570px;
+            width: 100%;
         }
     </style>
 
@@ -84,7 +84,7 @@
                             @foreach ($orders as $order)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $order->created_at->format('d/m/Y, h:i:s') }}</td>
+                                    <td>{{ $order->created_at }}</td>
                                     <td>{{ $order->order_num }}</td>
                                     <td>{{ $order->user->full_name }}</td>
                                     <td>{{ number_format($order->total_amount,2) }}</td>

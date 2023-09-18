@@ -36,6 +36,14 @@
             border: 1px solid #e2e5e8;
             /* Add more styles as needed */
         }
+        .dataTables_wrapper .dataTables_filter {
+            float: left; /* Move the search field to the left */
+            text-align: left;
+            width: 570px;
+        }
+        .dataTables_filter input {
+            width: 100%;
+        }
     </style>
 
     <div class="row">
@@ -59,6 +67,7 @@
                         <thead>
                             <tr>
                                 <th>#</th>
+                                <th>Date</th>
                                 <th>Full Name</th>
                                 <th>Wallet Type</th>
                                 <th>Type</th>
@@ -66,13 +75,13 @@
                                 <th>Cash In</th>
                                 <th>Cash Out</th>
                                 <th>Balance</th>
-                                <th>Date</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($rows as $row)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $row->updated_at }}</td>
                                     <td>{{ $row->user ? $row->user->full_name : null }}</td>
                                     <td>{{ $row->wallet_type }}</td>
                                     <td>{{ $row->type }}</td>
@@ -98,7 +107,6 @@
                                     <td>
                                         RM {{ number_format($row->balance,2) }}
                                     </td>
-                                    <td>{{ $row->updated_at->format('d/m/Y') }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -128,7 +136,9 @@
         $(document).ready(function() {
                 
                 var table = $('#reportWallet').DataTable({
-                    dom: 'Bfrtip',
+                    dom: '<"row"<"col-lg-10"f><"col-lg-2"B>>' +
+                    '<"row"<"col-lg-12"t>>' +
+                    '<"row"<"col-lg-6"i><"col-lg-6"p>>',
                     buttons: [
                         {
                             extend: 'excel',

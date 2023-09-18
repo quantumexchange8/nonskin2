@@ -36,6 +36,14 @@
             border: 1px solid #e2e5e8;
             /* Add more styles as needed */
         }
+        .dataTables_wrapper .dataTables_filter {
+            float: left; /* Move the search field to the left */
+            text-align: left;
+            width: 570px;
+        }
+        .dataTables_filter input {
+            width: 100%;
+        }
     </style>
 
     <div class="row">
@@ -43,8 +51,8 @@
             <div class="card">
                 <div class="card-body">
                     <table id="reportAnnually" class="stripe nowrap" style="width:100%">
-                        <div style="display: flex;align-items: flex-end;">
-                            <div class="col-lg-4">
+                        <div style="display: flex;align-items: flex-end;justify-content: center;padding-left: 26px;padding-right: 26px;padding-bottom: 30px;">
+                            <div class="col-lg-4" style="width:100%">
                                 <label class="form-label">Filter Month</label>
                                 <input type="month" id="date-filter-input" class="form-control">
                             </div>
@@ -107,7 +115,9 @@
         $(document).ready(function() {
 
                 var table = $('#reportAnnually').DataTable({
-                    dom: 'Bfrtip',
+                    dom: '<"row"<"col-lg-10"f><"col-lg-2"B>>' +
+                    '<"row"<"col-lg-12"t>>' +
+                    '<"row"<"col-lg-6"i><"col-lg-6"p>>',
                     buttons: [
                         {
                             extend: 'excel',
