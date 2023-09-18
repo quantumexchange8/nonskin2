@@ -104,12 +104,12 @@
                             @foreach($orders as $order)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
+                                <td>{{ $order->updated_at }}</td>
                                 <td class="fw-bold">{{$order->order_num}}</td>
                                 <td>RM {{ number_format($order->total_amount, 2) }}</td>
                                 <td>{{$order->delivery_method}}</td>
                                 <td>{{ $order->courier ?? '-' }}</td>
                                 <td>{{ $order->tracking_number ?? '-' }}</td>
-                                <td>{{$order->updated_at}}</td>
                                 <td>{{$order->payment_method}}</td>
                                 <td>
                                     @php
@@ -221,7 +221,7 @@
                 // Use DataTables search to filter rows based on the selected status
                 $.fn.dataTable.ext.search.push(
                     function(settings, data, dataIndex) {
-                        var statusColumn = data[7]; // Assuming status is in the eighth column (index 7)
+                        var statusColumn = data[8]; // Assuming status is in the ninth column (index 8) //table column
                         return statusColumn === selectedStatus;
                     }
                 );
