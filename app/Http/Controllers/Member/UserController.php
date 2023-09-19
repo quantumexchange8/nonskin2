@@ -16,6 +16,7 @@ use App\Models\PaymentSetting;
 use App\Models\DeliverySetting;
 use App\Models\CompanyInfo;
 use App\Models\Ranking;
+use App\Models\Rankings;
 use App\Models\State;
 use App\Models\WalletHistory;
 use App\Http\Middleware\CheckCartItem;
@@ -36,15 +37,50 @@ class UserController extends Controller
         $this->middleware(CheckCartItem::class)->only('member.checkout');
     }
 
+    private function calculateTotalPrice($user, $month)
+    {
+        // Get the user's orders for the current month
+        $userOrders = Order::where('user_id', $user->id)
+            ->whereMonth('created_at', $month)
+            ->sum('price');
+
+        // Get the downline users
+        $downlineUsers = $user->downline;
+
+        // Initialize the total price with the user's own orders
+        $totalPrice = $userOrders;
+
+        // Recursively calculate the total price for downline users
+        foreach ($downlineUsers as $downlineUser) {
+            $totalPrice += $this->calculateTotalPrice($downlineUser, $month);
+        }
+
+        return $totalPrice;
+    }
+    
+
     public function dashboard()
     {
 
         $user = Auth::user();
+        $ranking = Rankings::find($user->rank_id);
+        
         $user->url = url('') .'/register/' . $user->referrer_id;
         $referral = User::where('upline_id', Auth::id())->count();
 
         $now = Carbon::now();
+        $curMonthGroup = $this->calculateTotalPrice($user, $now->month);
 
+        $curMonthPersonal = Order::where('user_id', $user->id)
+        ->whereMonth('created_at', $now->month)
+        ->sum('price');
+
+        // $curMonthGroup = Order::where('user_id', $user->id)
+        // ->whereMonth('created_at', $now->month)
+        // ->sum('price');
+
+        
+        
         $hasValidPromotion = DateTimeLogs::where('start_date', '<=', $now)
             ->where('end_date', '>=', $now)
             ->exists();
@@ -81,8 +117,8 @@ class UserController extends Controller
                 }
             }
         }
-        // dd($announcements);
-        return view('member.dashboard', compact('user', 'next_rank', 'referral', 'announcements'));
+        // dd($curMonthGroup);
+        return view('member.dashboard', compact('user', 'next_rank', 'referral', 'announcements', 'ranking', 'curMonthPersonal', 'curMonthGroup'));
     }
 
     public function announcement() {
@@ -115,7 +151,7 @@ class UserController extends Controller
         $subtotal = 0;
 
         $disAmt = $cartItems->sum('discount_price');
-
+        // dd($member_discount_amount);
         return view('member.cart', [
             'cartItems' => $cartItems,
             'subtotal' => $subtotal,
@@ -128,7 +164,7 @@ class UserController extends Controller
     public function checkout()
     {
         $payment_methods = PaymentSetting::whereIn('id', [1, 3])->get();
-        $payment_selfpick = PaymentSetting::whereIn('id', [1, 3, 4])->get();
+        $payment_selfpick = PaymentSetting::whereIn('id', [1, 3])->get();
         $delivery_methods = DeliverySetting::get();
         $default_address = Address::where('id', 1)->first();
         $shipping_address = Address::where('user_id', auth()->user()->id)->get();

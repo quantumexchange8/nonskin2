@@ -178,10 +178,11 @@ class CartController extends Controller
 
     public function addToCart(Request $request)
     {
+        // dd($request->all());
         $productId = $request->input('product_id');
         $productPrice = $request->input('price');
         $quantity = $request->input('quantity');
-
+        
         // Retrieve the user's cart
         $cart = Cart::where('user_id', Auth::id())->first();
 

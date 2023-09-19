@@ -1,11 +1,11 @@
 @extends('layouts.master')
-@section('title') @lang('translation.pending-deposit') @endsection
+@section('title') @lang('translation.approved_deposit') @endsection
 
 @section('content')
     @component('components.breadcrumb')
     @slot('url') {{ route('admin-dashboard') }} @endslot
     @slot('li_1') @lang('translation.Dashboard') @endslot
-    @slot('title') @lang('translation.pending-deposit') @endslot
+    @slot('title') @lang('translation.approved_deposit') @endslot
     @endcomponent
 
     <style>
@@ -30,47 +30,11 @@
             <div class="card">
                 <div class="card-body">
                     <table id="deposits" class="stripe nowrap" style="width:100%">
-                        {{-- <div class="row mb-3">
-                            <div class="col-lg-3">
-                                <label class="form-label">Status</label>
-                                <select class="form-select status-input" name="status">
-                                    <option value="">All</option>
-                                    @foreach (App\Enums\PaymentStatus::cases() as $status)
-                                        <option value="{{ $status->value }}">{{ $status->value }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-lg-3">
-                                <label class="form-label">From Date</label>
-                                <input type="date" id="date-min-input" class="form-control">
-                            </div>
-                            <div class="col-lg-3">
-                                <label class="form-label">To Date</label>
-                                <input type="date" id="date-max-input" class="form-control">
-                            </div>
-                            <div class="col-lg-3">
-                                <label class="form-label">Search</label>
-                                <input type="text" id="search-input" class="form-control" placeholder="Enter keywords here...">
-                            </div>
-                        </div> --}}
                         <div style="display: flex;align-items: flex-end;justify-content: center;padding-left: 26px;padding-right: 26px;padding-bottom: 30px;">
                             <div class="col-lg-4" style="width:100%;margin-right:10px">
                                 <label class="form-label">Date</label>
                                 <input type="date" id="date-filter-input" class="form-control">
                             </div>
-                            {{-- <div class="col-lg-4" style="width:50%">
-                                <label class="form-label">Status</label>
-                                <select class="form-control" id="status-filter-input">
-                                    <option value="">All Status</option>                                                                               
-                                    <option value="Processing">Processing</option>
-                                    <option value="Packing">Packing</option>
-                                    <option value="Delivering">Delivering</option>
-                                    <option value="Complete">Complete</option>
-                                    <option value="Cancel">Cancel</option>
-                                    <option value="Reject">Reject</option>
-                                    <option value="Unpaid">Unpaid</option>
-                                </select>
-                            </div> --}}
                             <div style="margin-left: 10px;">
                                 <form>
                                     <button class="btn btn-primary" type="submit" value="reset">
@@ -89,7 +53,7 @@
                                 <th>Receipt</th>
                                 <th>Status</th>
                                 <th>Remarks</th>
-                                <th>Action</th>
+                                {{-- <th>Action</th> --}}
                             </tr>
                         </thead>
                         <tbody>
@@ -123,7 +87,7 @@
 
                                     </td>
                                     <td>{{ $deposit->remarks }}</td>
-                                    <td>
+                                    {{-- <td>
                                         <div class="d-flex gap-3">
                                             <form action="{{ route('admin.approve-deposit', $deposit->id) }}" method="POST" id="approve-form-{{ $deposit->id }}">
                                                 @csrf
@@ -141,7 +105,7 @@
                                             </form>
 
                                         </div>
-                                    </td>
+                                    </td> --}}
                                 </tr>
                             @endforeach
                         </tbody>
@@ -155,13 +119,14 @@
 @section('script')
     <script src="{{ URL::asset('assets/js/app.js') }}"></script>
     <script src="{{ URL::asset('assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
-    {{-- <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script> --}}
-
     <script>
+        // new DataTable('#deposits', {
+        //     responsive: true,
+        //     searching: false,
+        //     lengthChange: false,
+        //     pagingType: 'simple_numbers'
+        // });
+
         $(document).ready(function() {
             var table = $('#deposits').DataTable({
                 lengthChange: false,
@@ -187,6 +152,7 @@
                     search: 'Search:'
                 }
             });
+
             $('#date-filter-input').on('change', function() {
                 var selectedDate = $(this).val();
                 if (selectedDate) {
@@ -209,12 +175,6 @@
                 }
             });
         });
-        // new DataTable('#deposits', {
-        //     responsive: true,
-        //     searching: false,
-        //     lengthChange: false,
-        //     pagingType: 'simple_numbers'
-        // });
     </script>
     <script>
         @if (!$deposits->isEmpty())

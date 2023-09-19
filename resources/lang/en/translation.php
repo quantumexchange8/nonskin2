@@ -35,6 +35,7 @@
         "member-listing" => "Member Listing",
         "Network-tree" => "Network Tree",
         "pending-deposit" => "Pending Deposit",
+        "approved_deposit" => "Approved Deposit",
         "pending-withdrawal" => "Pending Withdrawal",
         "my-rewards" => "My Rewards",
         "reward-voucher" => "Reward Voucher",
@@ -103,6 +104,7 @@
         "Personal Sales" => "Personal Sales",
         "RANKING MAINTAINED" => "RANKING MAINTAINED",
         "UNQUALIFIED" => "UNQUALIFIED",
+        "Target" => "Target",
 
         // Ranking
         "Client" => "Client",

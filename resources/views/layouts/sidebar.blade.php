@@ -158,6 +158,7 @@
                     @hasanyrole('superadmin|admin')
                     <li><a href="{{ route('admin.new-topup') }}">@lang('translation.New Topup')</a></li>
                     <li><a href="{{ route('admin.pending-deposit') }}">@lang('translation.Pending') @lang('translation.Deposit')</a></li>
+                    <li><a href="{{ route('admin.approved-deposit') }}">@lang('translation.approved_deposit')</a></li>
                     <li><a href="{{ route('admin.pending-withdrawal') }}">@lang('translation.Pending') @lang('translation.Withdrawal')</a></li>
                     @endhasanyrole
                 </ul>

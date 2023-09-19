@@ -89,6 +89,17 @@
                                                                 <input type="hidden" name="price" value="{{ $product->selling_price }}">
                                                                 <input type="hidden" name="quantity" value="1">
                                                                 @if (Auth::user()->role == 'user')
+                                                                    <div class="d-inline-flex">
+                                                                        <div class="input-group">
+                                                                            <button type="button" class="btn btn-light btn-sm minus-btn" data-product-id="{{ $product->id }}" data-product-price="{{ $product->price }}">
+                                                                                <i class="bx bx-minus"></i>
+                                                                            </button>
+                                                                            <input type="text" class="form-control quantity-input" name="quantity" value="1" data-product-id="{{ $product->id }}" data-product-price="{{ $product->price }}">
+                                                                            <button type="button" class="btn btn-light btn-sm plus-btn" data-product-id="{{ $product->id }}" data-product-price="{{ $product->price }}">
+                                                                                <i class="bx bx-plus"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
                                                                     <button class="btn btn-primary btn"><i class='bx bx-cart-alt'></i> Add to Cart</button>
                                                                 @else
                                                                     <a href="{{ route('edit', $product->id) }}" class="btn btn-primary btn"><i class='bx bxs-edit'></i> Edit Product</a>
@@ -125,13 +136,39 @@
                 }
             });
 
+            $('.minus-btn').click(function() {
+                let quantityInput = $(this).siblings('.quantity-input');
+                let currentValue = Number(quantityInput.val());
+
+                if (currentValue > 1) {
+                    quantityInput.val(currentValue - 1);
+                }
+
+                // Trigger a keyup event to update the UI and cart item
+                quantityInput.trigger('keyup');
+            });
+
+            // Handle plus button click
+            $('.plus-btn').click(function() {
+                let quantityInput = $(this).siblings('.quantity-input');
+                let currentValue = Number(quantityInput.val());
+
+                quantityInput.val(currentValue + 1);
+
+                // Trigger a keyup event to update the UI and cart item
+                quantityInput.trigger('keyup');
+            });
+
             $('.add-to-cart-btn').click(function(e) {
                 e.preventDefault(); // Prevent default form submission
 
                 // Get the product ID from the data attribute
                 const productId = $(this).data('product-id');
                 const productPrice = $(this).data('product-price');
-                const quantity = 1;
+
+                const quantity = $(this).siblings('.quantity-input');
+                const qty = Number(quantityInput.val());
+                
 
                 // Send an AJAX request to add the product to the cart
                 $.ajax({

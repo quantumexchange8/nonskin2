@@ -252,9 +252,20 @@ class PaymentController extends Controller
 
         $user = Auth::user();
 
-        $deposits = Payment::where('type', 'Deposit')->latest()->get();
+        $deposits = Payment::where('type', 'Deposit')->where('status', 'Pending')->latest()->get();
 
         return view('admin.purchase-wallet.pending_deposit', [
+            'deposits' => $deposits,
+        ]);
+    }
+
+    public function DepositHistory(){
+
+        $user = Auth::user();
+
+        $deposits = Payment::where('type', 'Deposit')->where('status', 'Approved')->latest()->get();
+
+        return view('admin.purchase-wallet.approval_deposit', [
             'deposits' => $deposits,
         ]);
     }

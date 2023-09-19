@@ -192,6 +192,7 @@
 
         var table = $('#reportRank').DataTable({
             lengthChange: false,
+            responsive: true,
             dom: '<"row"<"col-lg-10"f><"col-lg-2"B>>' +
                     '<"row"<"col-lg-12"t>>' +
                     '<"row"<"col-lg-6"i><"col-lg-6"p>>',

@@ -188,7 +188,7 @@
                                         {{-- <span class="badge badge-soft-success">RM {{ number_format($user->personal_sales,2) }}</span> --}}
                                     </div>
                                 </div>
-                                <div class="progress mt-2">
+                                <div class="progress mt-2" style="height: 15px;">
                                     <div class="progress-bar" role="progressbar"
                                         style="width: {{ $user->personal_sales == 0 ? 0 : ($user->personal_sales/$user->rank->personal_sales)*100 }}%;"
                                         aria-valuenow="{{ $user->personal_sales }}"
@@ -205,12 +205,14 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="d-flex">
                                     <div class="flex-1">
+                                        <p class="mb-0">Current Level</p>
                                         <h5 class="mt-1 mb-0 font-size-14 text-wrap">{{ $user->rank->name }}</h5>
                                     </div>
                                 </div>
                                 <div>
                                     <div class="flex-1 text-end">
                                         @if ($user->rank->name !== 'Chief Distributor')
+                                            <p class="mb-0">Next Level</p>
                                             <h5 class="mt-1 mb-0 font-size-14 text-wrap">{{ $next_rank->name }}</h5>
                                         @endif
                                     </div>
@@ -238,7 +240,7 @@
                                         <h5 class="mt-1 mb-0 font-size-14">RM {{ number_format($next_rank->package_requirement,2) }}</h5>
                                     </div>
                                 </div>
-                                <div class="progress mt-2">
+                                <div class="progress mt-2" style="height: 15px;">
                                     <div class="progress-bar" role="progressbar"
                                         style="width: {{ $user->personal_sales > 0 ? ($user->personal_sales/$next_rank->package_requirement)*100 : 0 }}%;"
                                         aria-valuenow="{{ $user->personal_sales }}"
@@ -270,7 +272,7 @@
                                         <h5 class="mt-1 mb-0 font-size-14">RM {{ number_format($next_rank->group_sale_requirement,2) }}</h5>
                                     </div>
                                 </div>
-                                <div class="progress mt-2">
+                                <div class="progress mt-2" style="height: 15px;">
                                     <div class="progress-bar" role="progressbar" style="width: {{ ($user->group_sales == 0 ? 0 : $user->group_sales/$next_rank->group_sale_requirement)*100 }}%;"
                                         aria-valuenow="{{ ($user->group_sales == 0 ? 0 : $user->group_sales/$next_rank->group_sale_requirement)*100 }}"
                                         aria-valuemin="0"
@@ -357,18 +359,52 @@
                     </div>
                 </div>
             </div>
-            {{-- <div class="col-lg-3 col-md-6 col-sm-12">
+             <div class="col-lg-3 col-md-6 col-sm-12">
                 <div class="card">
                     <div class="card-body">
-                        <div class="d-flex justify-content-between mb-4">
+                        <div class="d-flex justify-content-between">
                             <div class="avatar">
                                 <span class="avatar-title bg-soft-success rounded">
                                     <i class="mdi mdi-currency-usd text-success font-size-24"></i>
                                 </span>
                             </div>
-                            <p class="mt-2">Total Commission</p>
+                            <p class="mt-2" style="width: 100px;text-align: right;">Current Month Personal Sales</p>
                         </div>
-                        <h4 class="mb-0">RM 1,088.00</h4>
+                        <div class="mt-3 pt-3">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex">
+                                    <div class="flex-1">
+                                        <p class="mb-0">@lang('translation.Personal Sales')</p>
+                                        <h5 class="mt-1 mb-0 font-size-14">RM {{ number_format($curMonthPersonal, 2) }}</h5>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex-1 text-end">
+                                        <p class="mb-0">@lang('translation.Target')</p>
+                                        <h5 class="mt-1 mb-0 font-size-14 text-wrap">RM {{ number_format($user->rank->personal_sales, 2) }}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress mt-2" style="height: 15px;">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                                style="width: {{ ($user->rank->personal_sales == 0 && $curMonthPersonal > 0) ? '100%' : ($user->rank->personal_sales == 0 ? '0%' : ($curMonthPersonal == 0 ? '0%' : (($curMonthPersonal / max($user->rank->personal_sales, 1)) * 100))) }}%;"
+                                {{-- style="width: {{ $curMonthPersonal == 0 ? '0%' : (($curMonthPersonal / max($user->rank->personal_sales, 1)) <= 1 ? ($curMonthPersonal / max($user->rank->personal_sales, 1)) * 100 : '100%') }};" --}}
+
+                                    {{-- style="width: {{ $user->rank->personal_sales == 0 ? '0%' : (($curMonthPersonal / $user->rank->personal_sales) <= 1 ? ($curMonthPersonal / $user->rank->personal_sales) * 100 : '100%') }};" --}}
+                                    aria-valuenow="{{ $curMonthPersonal }}"
+                                    aria-valuemin="0"
+                                    aria-valuemax="{{ $user->rank->personal_sales }}">
+                                    {{ $user->rank->personal_sales == 0 ? '0.00%' : number_format(min(($curMonthPersonal / $user->rank->personal_sales) * 100, 100), 2) }}%
+                                </div>
+                                {{-- <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                                    style="width: {{ $curMonthPersonal > 0 && $user->rank->personal_sales == 0 ? '100%' : ($user->rank->personal_sales == 0 ? '0%' : (($curMonthPersonal / max($user->rank->personal_sales, 1)) <= 1 ? ($curMonthPersonal / max($user->rank->personal_sales, 1)) * 100 : '100%')) }};"
+                                    aria-valuenow="{{ $curMonthPersonal }}"
+                                    aria-valuemin="0"
+                                    aria-valuemax="{{ $user->rank->personal_sales }}">
+                                    {{ $curMonthPersonal > 0 && $user->rank->personal_sales == 0 ? '100.00%' : ($user->rank->personal_sales == 0 ? '0.00%' : number_format(min(($curMonthPersonal / max($user->rank->personal_sales, 1)) * 100, 100), 2)) }}%
+                                </div> --}}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -381,15 +417,36 @@
                                     <i class="mdi mdi-currency-usd text-success font-size-24"></i>
                                 </span>
                             </div>
-                            <p class="mt-2">Total Sales</p>
+                            <p class="mt-2" style="width: 100px;text-align: right;">Current Month Group Sales</p>
                         </div>
-                        <div class="d-flex justify-content-between">
-                            <h4 class="mb-0">RM 1,888.88</h4>
-                            <p class="mb-0 mt-1">RM 600 to rank up</p>
+                        <div class="mt-3 pt-3">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex">
+                                    <div class="flex-1">
+                                        <p class="mb-0">@lang('translation.Group Sales')</p>
+                                        <h5 class="mt-1 mb-0 font-size-14">RM {{ number_format($curMonthGroup, 2) }}</h5>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex-1 text-end">
+                                        <p class="mb-0">@lang('translation.Target')</p>
+                                        <h5 class="mt-1 mb-0 font-size-14 text-wrap">RM {{ number_format($user->rank->group_sale_requirement, 2) }}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress mt-2" style="height: 15px;">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                                    style="width: {{ $curMonthGroup == 0 ? '0%' : (($curMonthGroup / max($user->rank->group_sale_requirement, 1)) <= 1 ? ($curMonthGroup / max($user->rank->group_sale_requirement, 1)) * 100 : '100%') }};"
+                                    aria-valuenow="{{ $curMonthGroup }}"
+                                    aria-valuemin="0"
+                                    aria-valuemax="{{ $user->rank->group_sale_requirement }}">
+                                    {{ $curMonthGroup == 0 ? '0.00%' : number_format(min(($curMonthGroup / max($user->rank->group_sale_requirement, 1)) * 100, 100), 2) }}%
+                                </div>
+                            </div>                            
                         </div>
                     </div>
                 </div>
-            </div> --}}
+            </div>
 
             <!-- Monthly -->
             {{-- <div class="col-lg-3 col-md-6 col-sm-12">
