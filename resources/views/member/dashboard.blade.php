@@ -387,15 +387,13 @@
                             </div>
                             <div class="progress mt-2" style="height: 15px;">
                                 <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
-                                style="width: {{ ($user->rank->personal_sales == 0 && $curMonthPersonal > 0) ? '100%' : ($user->rank->personal_sales == 0 ? '0%' : ($curMonthPersonal == 0 ? '0%' : (($curMonthPersonal / max($user->rank->personal_sales, 1)) * 100))) }}%;"
-                                {{-- style="width: {{ $curMonthPersonal == 0 ? '0%' : (($curMonthPersonal / max($user->rank->personal_sales, 1)) <= 1 ? ($curMonthPersonal / max($user->rank->personal_sales, 1)) * 100 : '100%') }};" --}}
-
-                                    {{-- style="width: {{ $user->rank->personal_sales == 0 ? '0%' : (($curMonthPersonal / $user->rank->personal_sales) <= 1 ? ($curMonthPersonal / $user->rank->personal_sales) * 100 : '100%') }};" --}}
+                                    style="width: {{ $curMonthPersonal == 0 ? '0%' : ($curMonthPersonal >= $user->rank->personal_sales ? '100%' : ($curMonthPersonal / max($user->rank->personal_sales, 1) * 100) . '%') }};"
                                     aria-valuenow="{{ $curMonthPersonal }}"
                                     aria-valuemin="0"
                                     aria-valuemax="{{ $user->rank->personal_sales }}">
-                                    {{ $user->rank->personal_sales == 0 ? '0.00%' : number_format(min(($curMonthPersonal / $user->rank->personal_sales) * 100, 100), 2) }}%
+                                    {{ $curMonthPersonal == 0 ? '0.00%' : ($curMonthPersonal >= $user->rank->personal_sales ? '100.00%' : number_format($curMonthPersonal / max($user->rank->personal_sales, 1) * 100, 2) . '%') }}
                                 </div>
+
                                 {{-- <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
                                     style="width: {{ $curMonthPersonal > 0 && $user->rank->personal_sales == 0 ? '100%' : ($user->rank->personal_sales == 0 ? '0%' : (($curMonthPersonal / max($user->rank->personal_sales, 1)) <= 1 ? ($curMonthPersonal / max($user->rank->personal_sales, 1)) * 100 : '100%')) }};"
                                     aria-valuenow="{{ $curMonthPersonal }}"

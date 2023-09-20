@@ -88,7 +88,7 @@
                                     <td>{{ $order->created_at->format('Y-m-d') }}</td>
                                     <td>{{ $order->order_num }}</td>
                                     <td>{{ $order->user->full_name }}</td>
-                                    <td>{{ number_format($order->total_amount,2) }}</td>
+                                    <td>RM {{ number_format($order->total_amount,2) }}</td>
                                     {{-- <td>{{ $user->orders }}</td> --}}
                                     {{-- <td>RM {{ number_format($user->orders->total_amount,2) }}</td> --}}
                                     {{-- <td>{{ $user->orders->created_at->format('d/m/Y, h:i:s') }}</td> --}}

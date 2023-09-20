@@ -52,8 +52,10 @@ class ReportController extends Controller
     }
     public function reportWallet() {
         $role = Auth::user()->role;
+        $user = Auth::user();
         if($role == 'user'){
-            $rows = WalletHistory::where('user_id', Auth::id())->latest()->get();
+            $rows = WalletHistory::where('user_id', Auth::id())->get();
+            
             return view('member.reports.wallet', compact('rows'));
         }else if ($role == 'admin' || $role == 'superadmin'){
             $rows = WalletHistory::latest()->with(['user'])->get();

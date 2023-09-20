@@ -174,39 +174,6 @@
         <div style="clear: both;"></div>
     </div>
     <hr />
-    {{-- <div class="table-section bill-tbl w-100 mt-10">
-        <p>Name: {{ $order['receiver'] }}</p>
-        <p>Address: {{ $order['delivery_address'] }}</p>
-        <p>Contact : {{ $order['contact'] }}</p>
-        <p>Email : {{ $order['email'] }}</p>
-        <p>Delivery Method:
-            {{ $order['delivery_method'] == 'self_pickup' ? 'Self Pickup' : 'Delivery' }}</p>
-    </div> --}}
-    {{-- <div class="table-section bill-tbl w-100 mt-10">
-
-        <div class="w-65 float-left">
-
-            <p>Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
-                {{ $order['receiver'] }}</p>
-            <p>Address&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
-                {{ $order['delivery_address'] }}
-            </p>
-            <p>Contact&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
-                {{ $order['contact'] }}</p>
-            <p>Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
-                {{ $order['email'] }}
-            </p>
-            <p>Delivery Method&nbsp;&nbsp;:
-                {{ $order['delivery_method'] == 'self_pickup' ? 'Self Pickup' : 'Delivery' }}</p>
-        </div>
-        <div class="w-35 float-left">
-            <p>Invoice No&nbsp;&nbsp;&nbsp;: {{ $order['order_num'] }}</p>
-            <p>Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
-                {{ \Carbon\Carbon::parse($order['created_at'])->format('d/m/Y') }}</p>
-        </div>
-        <div style="clear: both;"></div>
-
-    </div> --}}
     <div class="table-section bill-tbl w-100 mt-10">
 
         <div class="w-65 float-left">
@@ -263,6 +230,9 @@
                 <th class="w-10">#</th>
                 <th class="w-60">Product Name</th>
                 <th class="w-10">Price</th>
+                @if($invoice->discount_amt != 0)
+                <th class="w-10">Discount</th>
+                @endif
                 <th class="w-10">Qty</th>
                 <th class="w-10">Total Price</th>
             </tr>
@@ -272,17 +242,21 @@
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $item->product->name }}</td>
                     <td>RM {{ number_format($item['price'],2) }}</td>
+                    @if($invoice->discount_amt != 0)
+                    <td>RM {{$invoice->discount_amt}}</td>
+                    @endif
                     <td>{{ $item['quantity'] }}</td>
                     <td align="right">RM {{ number_format($item['price'] * $item['quantity'], 2) }}</td>
                 </tr>
                 @php($total += $item['price'] * $item['quantity'])
             @endforeach
             <tr>
-                <td colspan="5">
+                @if($invoice->discount_amt != 0)
+                <td colspan="6">
                     <div class="total-part">
                         <div class="total-left w-70 float-left" align="right">
                             <p>Shipping Fee</p>
-                            <p>Grand Total Price</p>
+                            <p>Total Price</p>
                             <p>Payment Method</p>
                         </div>
                         <div class="total-right w-30 float-left text-bold" align="right">
@@ -293,6 +267,24 @@
                         <div style="clear: both;"></div>
                     </div>
                 </td>
+                @else
+                <td colspan="5">
+                    <div class="total-part">
+                        <div class="total-left w-70 float-left" align="right">
+                            <p>Shipping Fee</p>
+                            <p>Total Price</p>
+                            <p>Payment Method</p>
+                        </div>
+                        <div class="total-right w-30 float-left text-bold" align="right">
+                            <p>RM {{ number_format($invoice['delivery_fee'],2) }}</p>
+                            <p>RM {{ number_format($total + $invoice['delivery_fee'],2) }}</p>
+                            <p>{{ $invoice['payment_method'] }}</p>
+                        </div>
+                        <div style="clear: both;"></div>
+                    </div>
+                </td>
+                @endif
+                
             </tr>
         </table>
 

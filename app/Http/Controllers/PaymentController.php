@@ -22,12 +22,14 @@ class PaymentController extends Controller
     public function purchaseWalletDeposit(){
 
         $user = Auth::user();
+        $companyInfo = CompanyInfo::first();
 
             $deposits = Payment::where('type', 'Deposit')
                             ->where('user_id', $user->id)
                             ->get();
             return view('member.purchase-wallet.deposit', [
                 'deposits' => $deposits,
+                'companyInfo' => $companyInfo,
             ]);
     }
 
@@ -313,7 +315,7 @@ class PaymentController extends Controller
 
         if ($request->hasFile('newpayslip')){
             $imageName1 = time().'.'.$request->newpayslip->extension();
-            $request->newpayslip->move(public_path('images/payment-proof'), $imageName1);
+            $request->newpayslip->move(public_path('images/uploads/transaction/'), $imageName1);
 
             $row->receipt = $imageName1;
             $row->status = 'Pending';

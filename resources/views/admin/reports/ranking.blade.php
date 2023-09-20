@@ -68,7 +68,7 @@
                             <tr>
                                 <th>#</th>
                                 <th>Date</th>
-                                <th>user ID</th>
+                                <th>user</th>
                                 <th>Old Rank</th>
                                 <th>New Rank</th>
                                 <th>Personal Sales</th>
@@ -85,8 +85,8 @@
                                     <td>{{ $row->user->full_name }}</td>
                                     <td>{{ $row->oldRank->name }}</td>
                                     <td>{{ $row->newRank->name }}</td>
-                                    <td>{{ $row->user_personal_sales }}</td>
-                                    <td>{{ $row->user_group_sales }}</td>
+                                    <td>RM {{ number_format($row->user_personal_sales, 2) }}</td>
+                                    <td>RM {{ number_format($row->user_group_sales, 2) }}</td>
                                     <td>{{ $row->type }}</td>
                                 </tr>
                             @endforeach

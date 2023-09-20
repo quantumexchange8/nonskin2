@@ -123,7 +123,9 @@
                                                 @if($discountAmt > 0 )
                                                     <del><h5 class="font-size-16 total" data-product-id="{{ $row->product->id }}">RM {{ number_format(($row->product->price * (100-$row->product->discount)/100) * $row->quantity,2,'.') }}</h5></del> 
                                                     <h6>{{ $discountAmt }}% Off</h6>
-                                                    <h4>RM {{ number_format($row->price - $row->discount_price ,2,'.') }}</h4>
+                                                    <span id="total1" class="fw-bold">
+                                                        RM 0.00
+                                                    </span>
                                                     @if ($row->product->discount > 0)
                                                     <del class="text-muted product-discount" data-product-id="{{ $row->product->id }}">RM {{ number_format($row->product->price * $row->quantity,2,'.',',') }}</del>
                                                     @endif
@@ -162,7 +164,7 @@
                                             </tr> --}}
                                             <tr>
                                                 <td>Discount per unit: </td>
-                                                <td class="text-end">- RM {{ $disAmt }}</td>
+                                                <td class="text-end">- RM {{ number_format($disAmt, 2) }}</td>
                                             </tr>
                                             <tr class="bg-light">
                                                 <th>Total Merchandise:</th>

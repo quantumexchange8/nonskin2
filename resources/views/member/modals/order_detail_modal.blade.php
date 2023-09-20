@@ -137,7 +137,7 @@
                     </table>
                     @if($order->payment_method == 'Manual Transfer')
                         <div style="display: flex;justify-content: center;">
-                            <img src="{{ asset('images/payment-proof/' . $order->payment_proof) }}" class="object-fit-cover" style="height: 450px" alt="Order Payment Proof" >
+                            <img src="{{ asset('images/uploads/transaction//' . $order->payment_proof) }}" class="object-fit-cover" style="height: 450px" alt="Order Payment Proof" >
                         </div>
                     @endif
                 </div>

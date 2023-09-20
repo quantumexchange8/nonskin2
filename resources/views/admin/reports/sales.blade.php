@@ -87,7 +87,7 @@
                                     <td>{{ $order->created_at }}</td>
                                     <td>{{ $order->order_num }}</td>
                                     <td>{{ $order->user->full_name }}</td>
-                                    <td>{{ number_format($order->total_amount,2) }}</td>
+                                    <td>RM {{ number_format($order->total_amount,2) }}</td>
                                     <td>
                                         <button type="button" class="btn btn-link btn-sm btn-rounded view-detail-button" data-bs-toggle="modal" data-bs-target="#orderdetailsModal_{{ $order->id }}" id="{{$order->id}}">
                                             <i class="mdi mdi-printer-settings"></i>

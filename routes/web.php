@@ -88,6 +88,7 @@ Route::group(['prefix' => 'member',  'middleware' => ['auth', 'IsUser' ]], funct
 
     // order
     Route::get('/invoice/{order}', [UserController::class, 'invoice'])->name('invoice');
+    Route::get('/invoice_downline/{order}', [UserController::class, 'invoiceDownlineSales'])->name('invoiceDownlineSales');
     Route::post('/upload_payment_slip/{order}', [UserController::class, 'uploadpayment'])->name('uploadpayment');
 
     Route::get('/search-orders', [OrderController::class, 'searchOrders'])->name('search.orders');

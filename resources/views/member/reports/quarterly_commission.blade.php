@@ -91,8 +91,7 @@
                                     <td>{{ $row->rank->name }}</td>
                                     {{-- <td>{{ $row->upline_totalsales }}</td> --}}
                                     <td>{{ $row->percentage }}</td>
-                                    <td>{{ $row->total_bonus }}</td>
-                                    
+                                    <td>RM {{ number_format($row->total_bonus, 2) }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

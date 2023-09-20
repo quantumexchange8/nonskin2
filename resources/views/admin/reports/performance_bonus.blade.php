@@ -98,13 +98,13 @@
                                     @endphp
                                     <td>{{ $user ? $user->full_name : 'User not found'}}</td>
                                     <td>{{ $upline_rank ? $upline_rank->rank_short : 'User not found'}}</td>
-                                    <td>{{ $row->upline_totalsales }}</td>
+                                    <td>RM {{ number_format($row->upline_totalsales, 2) }}</td>
                                     <td>{{ $downline ? $downline->full_name : 'User not found' }}</td>
                                     <td>{{ $downline_rank ? $downline_rank->rank_short : 'User not found' }}</td>
-                                    <td>{{ $row->downline_sales }}</td>
+                                    <td>RM {{ number_format($row->downline_sales, 2) }}</td>
                                     <td>{{ $row->commission_level }}</td>
                                     <td>{{ $row->percentage }}</td>
-                                    <td>{{ $row->total_bonus }}</td>
+                                    <td>RM {{ number_format($row->total_bonus, 2) }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

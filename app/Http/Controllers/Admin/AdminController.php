@@ -547,13 +547,16 @@ class AdminController extends Controller
     
             $wallet_log = new WalletHistory();
             $wallet_log->user_id = $user->id;
-            $wallet_log->wallet_type = 'Cash Wallet';
+            $wallet_log->wallet_type = 'cash_wallet';
             $wallet_log->type = 'Wallet Adjustment';
             $wallet_log->cash_in = $new_amount;
             $wallet_log->cash_out = null;
             $wallet_log->balance = $user->cash_wallet;
             $wallet_log->remarks = $request->remark ?? 'Top up by Admin';
             $wallet_log->save();
+
+            Alert::success('Successful', 'product wallet added');
+            return redirect()->back();
 
         } else if ($request->wallet_type == 'product_wallet') {
 
@@ -567,7 +570,7 @@ class AdminController extends Controller
     
                 $wallet_log = new WalletHistory();
                 $wallet_log->user_id = $user->id;
-                $wallet_log->wallet_type = 'Product Wallet';
+                $wallet_log->wallet_type = 'product_wallet';
                 $wallet_log->type = 'Wallet Adjustment';
                 $wallet_log->cash_in = $new_amount;
                 $wallet_log->cash_out = null;
@@ -588,7 +591,7 @@ class AdminController extends Controller
     
                 $wallet_log = new WalletHistory();
                 $wallet_log->user_id = $user->id;
-                $wallet_log->wallet_type = 'Product Wallet';
+                $wallet_log->wallet_type = 'product_wallet';
                 $wallet_log->type = 'Wallet Adjustment';
                 $wallet_log->cash_in = null;
                 $wallet_log->cash_out = $new_amount;

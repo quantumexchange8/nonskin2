@@ -59,7 +59,7 @@ class OrderController extends Controller
 
             if ($request->hasFile('payment_proof')){
                 $imageName1 = time().'.'.$request->payment_proof->extension();
-                $request->payment_proof->move(public_path('images/payment-proof'), $imageName1);
+                $request->payment_proof->move(public_path('images/uploads/transaction/'), $imageName1);
             }
 
             $nettprice = $price - $discountAmt + $deliveryFee;

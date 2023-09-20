@@ -547,6 +547,23 @@ class UserController extends Controller
         return $pdf->download('invoice.pdf');
     }
 
+    public function invoiceDownlineSales(Order $order, Request $request)
+    {
+        // dd($order);
+        $user = Auth::user();
+        $invoice = Order::where('order_num', '=', $order->order_num)->first();
+
+        // $orderItems = OrderItem::query()->join('products', 'order_items.product_id', '=', 'products.id')
+        //                         ->where('order_num', '=', $order)
+        //                         ->select('order_items.*', 'products.name_en as product_name_en', 'products.name_cn as product_name_cn')
+        //                         ->get();
+        $orderItems = OrderItem::where('order_num', $order->order_num)->with(['product'])->get();
+        $companyInfo = CompanyInfo::get()->first();
+
+        $pdf = PDF::loadView('member.orders..pdf.invoice', ['invoice' => $invoice, 'orderItems' => $orderItems, 'companyInfo' => $companyInfo]);
+        return $pdf->download('invoicedownline.pdf');
+    }
+
     public function uploadpayment(Request $request,Order $order)
     {
         // dd($request->all());
@@ -558,7 +575,7 @@ class UserController extends Controller
         if ($request->hasFile('payment_proof')){
             // dd($request->all());
             $imageName1 = time().'.'.$request->payment_proof->extension();
-            $request->payment_proof->move(public_path('images/payment-proof'), $imageName1);
+            $request->payment_proof->move(public_path('images/uploads/transaction/'), $imageName1);
 
             $order->payment_proof = $imageName1;
             $order->status = 1;

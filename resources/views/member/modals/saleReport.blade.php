@@ -6,7 +6,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <a href="{{ route('invoice', $order->id) }}" target="_blank">
+                <a href="{{ route('invoiceDownlineSales', $order->id) }}" target="_blank">
                     <button class="btn btn-success">
                         Print
                     </button>

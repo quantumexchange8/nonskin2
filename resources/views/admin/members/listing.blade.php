@@ -47,7 +47,7 @@
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->contact }}</td>
                                 <td>{{ $user->rank->name}}</td>
-                                <td>{{ $user->created_at->format('d/m/Y, h:i:s') }}</td>
+                                <td>{{ $user->created_at->format('d/m/Y') }}</td>
                                 <td>
                                     <div class="d-flex gap-1 align-items-center">
                                         {{-- <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="View" data-bs-original-title="View" class="text-primary">

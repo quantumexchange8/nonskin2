@@ -97,8 +97,7 @@
                                         @endif
                                     </td>
                                     <td>{{ $row->percentage }}</td>
-                                    <td>{{ $row->total_bonus }}</td>
-                                    
+                                    <td>RM {{ number_format($row->total_bonus, 2) }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

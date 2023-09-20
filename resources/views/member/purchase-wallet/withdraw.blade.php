@@ -90,23 +90,18 @@
                 <div class="card-body">
                     <div class="p-4">
                         <table id="withdraw" class="stripe nowrap" style="width:100%">
-                            <div class="row justify-content-end mb-3">
-                                <div class="col-lg-4">
-                                    <label class="form-label">From Date</label>
-                                    <input type="date" id="date-min-input" class="form-control">
+                            <div style="display: flex;align-items: flex-end;justify-content: center;padding-left: 26px;padding-right: 26px;padding-bottom: 30px;">
+                                <div class="col-lg-4" style="width:100%">
+                                    <label class="form-label">Date</label>
+                                    <input type="date" id="date-filter-input" class="form-control">
                                 </div>
-                                <div class="col-lg-4">
-                                    <label class="form-label">To Date</label>
-                                    <input type="date" id="date-max-input" class="form-control">
+                                <div style="margin-left: 10px;">
+                                    <form>
+                                        <button class="btn btn-primary" type="submit" value="reset">
+                                            <i class="mdi mdi-refresh"></i>
+                                        </button>
+                                    </form>
                                 </div>
-                                <div class="col-lg-4">
-                                    <label class="form-label">Search</label>
-                                    <input type="text" id="search-input" class="form-control" placeholder="Enter keywords here...">
-                                </div>
-                                {{-- <div class="col-lg-3">
-                                    <label class="form-label">&nbsp;</label>
-                                    <button class="btn btn-primary w-100">Search</button>
-                                </div> --}}
                             </div>
                             <thead>
                                 <tr>
