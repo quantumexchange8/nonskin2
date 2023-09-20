@@ -105,6 +105,7 @@
         "RANKING MAINTAINED" => "RANKING MAINTAINED",
         "UNQUALIFIED" => "UNQUALIFIED",
         "Target" => "Target",
+        "Group Sales" => "Group Sales",
 
         // Ranking
         "Client" => "Client",

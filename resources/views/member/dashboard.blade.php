@@ -89,23 +89,23 @@
                 <div class="card w-100">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
-                            <div>
+                            <div style="width: 175px;">
                                 <h5 class="card-title mb-2 font-size-18">COMMISSIONS AND VOUCHERS</h5>
                                 <p class="mt-5 card-text">@lang('translation.Cash Wallet')</p>
                                 <p class="mt-5 card-text">@lang('translation.Product Wallet')</p>
                             </div>
                             <div>
-                                
+                                <div></div>
                                 <div class="d-flex justify-content-between gap-3 mt-4">
                                     <form action="{{ route('redeem-commission') }}" method="POST" id="redeem-form">
                                         @csrf
-                                        <h2 class="mb-0 mt-5">RM {{ number_format($user->cash_wallet,2) }}</h2>
+                                        <h4 class="mb-0 mt-5">RM {{ number_format($user->cash_wallet,2) }}</h4>
                                         <button class="btn btn-primary 2-100 btn-redeem" type="submit" id="redeem-button">
                                             Redeem
                                         </button>
                                     </form>
                                 </div>
-                                <h2 class="mt-5 mb-0">RM {{ number_format($user->product_wallet, 2) }}</h2>
+                                <h4 class="mt-5 mb-0">RM {{ number_format($user->product_wallet, 2) }}</h4>
                             </div>
                         </div>
                     </div>
@@ -350,7 +350,7 @@
                         <div class="d-flex justify-content-between mb-4">
                             <div class="avatar">
                                 <span class="avatar-title bg-soft-success rounded">
-                                    <i class="mdi mdi-lan text-success font-size-24"></i>
+                                    <i class="mdi mdi-account-multiple-outline text-success font-size-24"></i>
                                 </span>
                             </div>
                             <p class="mt-2">Total Referrals</p>
