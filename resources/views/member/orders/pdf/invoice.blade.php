@@ -243,7 +243,7 @@
                     <td>{{ $item->product->name }}</td>
                     <td>RM {{ number_format($item['price'],2) }}</td>
                     @if($invoice->discount_amt != 0)
-                    <td>RM {{$invoice->discount_amt}}</td>
+                    <td>RM {{$item->discount}}</td>
                     @endif
                     <td>{{ $item['quantity'] }}</td>
                     <td align="right">RM {{ number_format($item['price'] * $item['quantity'], 2) }}</td>

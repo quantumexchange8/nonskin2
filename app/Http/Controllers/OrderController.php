@@ -202,7 +202,7 @@ class OrderController extends Controller
                 $orderItem->order_num       = $order->order_num;
                 $orderItem->product_id      = $item->product_id;
                 $orderItem->price           = $item->price;             // because price in cart is the discounted/selling/price that user needs to pay per qty
-                $orderItem->discount        = $item->product->discount; // gets discount information for reference
+                $orderItem->discount        = $item->discount_price; // gets discount information for reference
                 $orderItem->quantity        = $item->quantity;
                 $orderItem->created_by      = Auth::id();
                 $orderItem->save();
