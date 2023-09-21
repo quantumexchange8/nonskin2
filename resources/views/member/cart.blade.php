@@ -106,11 +106,11 @@
                                                 <p class="text-muted mb-2">Quantity</p>
                                                 <div class="d-inline-flex">
                                                     <div class="input-group">
-                                                        <button type="button" class="btn btn-light btn-sm minus-btn" data-product-id="{{ $row->product->id }}" data-product-price="{{ $row->product->price }}">
+                                                        <button type="button" class="btn btn-light btn-sm minus-btn" data-product-id="{{ $row->product->id }}" data-product-price="{{ $row->product->price }}" data-discount-price="{{ $row->discount_price }}">
                                                             <i class="bx bx-minus"></i>
                                                         </button>
-                                                        <input type="text" class="form-control quantity-input" name="quantity" value="{{ $row->quantity }}" data-product-id="{{ $row->product->id }}" data-product-price="{{ $row->product->price }}">
-                                                        <button type="button" class="btn btn-light btn-sm plus-btn" data-product-id="{{ $row->product->id }}" data-product-price="{{ $row->product->price }}">
+                                                        <input type="text" class="form-control quantity-input" name="quantity" value="{{ $row->quantity }}" data-product-id="{{ $row->product->id }}" data-product-price="{{ $row->product->price }}" data-discount-price="{{ $row->discount_price }}">
+                                                        <button type="button" class="btn btn-light btn-sm plus-btn" data-product-id="{{ $row->product->id }}" data-product-price="{{ $row->product->price }}" data-discount-price="{{ $row->discount_price }}">
                                                             <i class="bx bx-plus"></i>
                                                         </button>
                                                     </div>
@@ -121,17 +121,26 @@
                                             <div class="mt-3">
                                                 <p class="text-muted mb-2">Total</p>
                                                 @if($discountAmt > 0 )
-                                                    <del><h5 class="font-size-16 total" data-product-id="{{ $row->product->id }}">RM {{ number_format(($row->product->price * (100-$row->product->discount)/100) * $row->quantity,2,'.') }}</h5></del> 
+                                                    <del>
+                                                        <h5 class="font-size-16 total1" data-product-id="{{ $row->product->id }}">
+                                                            <span class="fw-bold nodis">
+                                                                RM {{ number_format(($row->product->price * (100-$row->product->discount)/100) * $row->quantity,2,'.') }}
+                                                            </span>
+                                                        </h5>
+                                                    </del> 
                                                     <h6>{{ $discountAmt }}% Off</h6>
-                                                    <span id="total1" class="fw-bold">
-                                                        RM 0.00
+                                                    <h5 class="font-size-16 total1" data-product-id="{{ $row->product->id }}"><span class="fw-bold dis">
+                                                        RM {{ number_format((($row->product->price - $row->discount_price) * $row->quantity), 2, '.') }}
                                                     </span>
+                                                    {{-- <span id="discountedprice" class="fw-bold" data-product-id="{{ $row->product->id }}">
+                                                        RM 0.00
+                                                    </span> --}}
                                                     @if ($row->product->discount > 0)
                                                     <del class="text-muted product-discount" data-product-id="{{ $row->product->id }}">RM {{ number_format($row->product->price * $row->quantity,2,'.',',') }}</del>
                                                     @endif
                                                 @else
-                                                    <h5 class="font-size-16 total1" data-product-id="{{ $row->product->id }}"><span id="total1" class="fw-bold">
-                                                        RM 0.00
+                                                    <h5 class="font-size-16 total1" data-product-id="{{ $row->product->id }}"><span class="fw-bold nodis">
+                                                        RM {{ number_format(($row->product->price * (100-$row->product->discount)/100) * $row->quantity,2,'.') }}
                                                     </span>
                                                 @endif
                                                 
@@ -163,8 +172,13 @@
                                                 <td class="text-end sub-total">RM 0.00</td>
                                             </tr> --}}
                                             <tr>
-                                                <td>Discount per unit: </td>
-                                                <td class="text-end">- RM {{ number_format($disAmt, 2) }}</td>
+                                                <td>Total Discount: </td>
+                                                <td class="text-end">
+                                                    {{-- {{ number_format($disAmt, 2) }} --}}
+                                                    <span id="total2" class="fw-bold">
+                                                        RM 0.00
+                                                    </span>
+                                                </td>
                                             </tr>
                                             <tr class="bg-light">
                                                 <th>Total Merchandise:</th>
@@ -216,22 +230,27 @@
 
             function updateTotalAmount() {
                 let totalAmount = 0;
+                let totalDis = 0;
 
                 $('.quantity-input').each(function() {
                     let quantityInput = $(this);
                     let productPrice = quantityInput.data('product-price');
+                    let discountPrice = quantityInput.data('discount-price');
                     let currentValue = Number(quantityInput.val());
 
                     if (!isNaN(currentValue)) {
                         totalAmount += currentValue * productPrice;
+                        totalDis += currentValue * discountPrice;
                     }
                 });
 
                 // Format and update the total amount
                 let formattedTotalAmount = 'RM ' + totalAmount.toLocaleString(undefined, { minimumFractionDigits: 2 });
                 let formattedTotalAmount1 = 'RM ' + totalAmount.toLocaleString(undefined, { minimumFractionDigits: 2 });
+                let formattedTotalAmount2 = 'RM ' + totalDis.toLocaleString(undefined, { minimumFractionDigits: 2 });
                 $('#total').text(formattedTotalAmount);
                 $('#total1').text(formattedTotalAmount1);
+                $('#total2').text(formattedTotalAmount2);
             }
 
             // Handle keyup event on quantity input
@@ -282,12 +301,27 @@
                 let quantityInput = $(this).siblings('.quantity-input');
                 let currentValue = Number(quantityInput.val());
 
-                if (currentValue > 1) {
-                    quantityInput.val(currentValue - 1);
-                }
+                quantityInput.val(currentValue - 1);
+                quantityInput.trigger('keyup'); // Trigger a keyup event to update the UI and cart item
 
-                // Trigger a keyup event to update the UI and cart item
-                quantityInput.trigger('keyup');
+                // Calculate and update the total amount
+                let productId = quantityInput.data('product-id');
+                let productPrice = quantityInput.data('product-price');
+                let discountPrice = quantityInput.data('discount-price');
+                let newQuantity = Number(quantityInput.val());
+                let newTotalAmount = newQuantity * productPrice;
+                let newDiscountAmount = newQuantity * discountPrice;
+                let FinalAmount = newTotalAmount - newDiscountAmount;
+
+                // Find the specific <span> element and update its content
+                let totalAmountElement = $(`[data-product-id="${productId}"] .nodis`);
+                let totalDisAmountElement = $(`[data-product-id="${productId}"] .dis`);
+
+                totalAmountElement.text('RM ' + newTotalAmount.toFixed(2));
+                totalDisAmountElement.text('RM ' + FinalAmount.toFixed(2));
+
+                // You may also want to update the server-side data via AJAX if needed
+                updateCartItem(productId, newQuantity, productPrice);
             });
 
             // Handle plus button click
@@ -296,10 +330,28 @@
                 let currentValue = Number(quantityInput.val());
 
                 quantityInput.val(currentValue + 1);
+                quantityInput.trigger('keyup'); // Trigger a keyup event to update the UI and cart item
 
-                // Trigger a keyup event to update the UI and cart item
-                quantityInput.trigger('keyup');
+                // Calculate and update the total amount
+                let productId = quantityInput.data('product-id');
+                let productPrice = quantityInput.data('product-price');
+                let discountPrice = quantityInput.data('discount-price');
+                let newQuantity = Number(quantityInput.val());
+                let newTotalAmount = newQuantity * productPrice;
+                let newDiscountAmount = newQuantity * discountPrice;
+                let FinalAmount = newTotalAmount - newDiscountAmount;
+
+                // Find the specific <span> element and update its content
+                let totalAmountElement = $(`[data-product-id="${productId}"] .nodis`);
+                let totalDisAmountElement = $(`[data-product-id="${productId}"] .dis`);
+
+                totalAmountElement.text('RM ' + newTotalAmount.toFixed(2));
+                totalDisAmountElement.text('RM ' + FinalAmount.toFixed(2));
+
+                // You may also want to update the server-side data via AJAX if needed
+                updateCartItem(productId, newQuantity, productPrice);
             });
+
 
              // Function to update cart item and cart via AJAX
              function updateCartItem(productId, quantity, productPrice) {
@@ -355,13 +407,18 @@
             updateTotalAmount();
 
             $('.checkout').click(function() {
+                let quantityInput = $(this).siblings('.quantity-input');
+                let productId = quantityInput.data('product-id');
+                let productPrice = quantityInput.data('product-price');
+                let currentValue = Number(quantityInput.val());
+
                 // Send an AJAX request to handle the checkout process
                 $.ajax({
                     url: '{{ route("ajax.cart.update") }}',
                     method: 'POST',
                     data: {
                         product_id: productId,
-                        quantity: quantity,
+                        quantity: currentValue,
                         price: productPrice
                     },
                     success: function(response) {
