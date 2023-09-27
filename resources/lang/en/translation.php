@@ -275,6 +275,7 @@
         "expand_all" => "Expand All",
         "collapse_all_downline" => "Collapse All",
         "expand_all_downline" => "Expand All",
+        "Retail Profit" => "Retail Profit"
     ];
 
 ?>

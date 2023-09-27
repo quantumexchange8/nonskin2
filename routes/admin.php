@@ -36,5 +36,6 @@ Route::group(['prefix' => 'admin/', 'as' => 'admin.',  'middleware' => ['auth', 
     Route::get('annually-commission-report', [ReportController::class, 'annuallyCommissionReport'])->name('annually-commission-report');
     Route::get('performance-bonus-report', [ReportController::class, 'performanceBonusReport'])->name('performance-bonus-report');
     Route::get('wallet-ranking', [ReportController::class, 'reportRanking'])->name('report-ranking');
+    Route::get('retail-profit-report', [ReportController::class, 'retailprofit'])->name('retailprofit');
 });
 

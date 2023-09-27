@@ -237,4 +237,36 @@ class ReportController extends Controller
             'rankings' => $rankingLog,
         ]);
     }
+
+    public function retailprofit()
+    {
+        $role = Auth::user()->role;
+
+        if($role == 'user'){
+            $user = Auth::user();
+
+            $profitReport = CommissionsLogs::where('commissions_type', 'retail_profit')
+            ->where('downline_id', $user->id)
+            ->with(['user', 'rank'])
+            ->get();
+
+            return view('member.reports.retailprofit', [
+                'profitReport' => $profitReport,
+            ]);
+
+        } else if ($role == 'admin' || $role == 'superadmin'){
+            
+            $profitReport = CommissionsLogs::where('commissions_type', 'retail_profit')
+            ->with(['user', 'rank'])
+            ->get();
+
+            return view('admin.reports.retailprofit', [
+                'profitReport' => $profitReport,
+            ]);
+        }
+        
+
+
+        
+    }
 }
