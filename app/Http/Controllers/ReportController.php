@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\WalletHistory;
 use App\Models\RankingUpdateLog;
 use App\Models\CommissionsLogs;
+use App\Models\CommissionsRetailProfitLog;
 use Auth;
 
 class ReportController extends Controller
@@ -174,6 +175,7 @@ class ReportController extends Controller
             $anualReport = CommissionsLogs::where('commissions_type', 'annual_bonus')
             // ->whereIn('downline_id', $hierarchyListArray)
             ->with(['user', 'rank'])
+            ->where('upline_id', $user->id)
             ->get();
 
 
@@ -205,6 +207,7 @@ class ReportController extends Controller
             $performReport = CommissionsLogs::where('commissions_type', 'same_level_bonus')
             // ->whereIn('downline_id', $hierarchyListArray)
             ->with(['user', 'rank'])
+            ->where('upline_id', $user->id)
             ->get();
 
             return view('member.reports.performance_bonus', [
@@ -240,15 +243,23 @@ class ReportController extends Controller
 
     public function retailprofit()
     {
+
         $role = Auth::user()->role;
 
         if($role == 'user'){
-            $user = Auth::user();
+            $user = Auth::user(); // Assuming you're authenticated as the user with ID 7
 
-            $profitReport = CommissionsLogs::where('commissions_type', 'retail_profit')
-            ->where('downline_id', $user->id)
-            ->with(['user', 'rank'])
-            ->get();
+            $downlineUsers = User::where('hierarchyList', 'like', '%' . $user->id . '%')
+                ->pluck('id')
+                ->toArray();
+            
+            $profitReport = CommissionsRetailProfitLog::where('commissions_type', 'retail_profit')
+                ->where(function ($query) use ($user, $downlineUsers) {
+                    $query->where('upline_id', $user->id)
+                        ->orWhereIn('downline_id', $downlineUsers);
+                })
+                ->with(['user', 'userdownline', 'downlinerank', 'uplinerank'])
+                ->get();
 
             return view('member.reports.retailprofit', [
                 'profitReport' => $profitReport,
@@ -256,8 +267,8 @@ class ReportController extends Controller
 
         } else if ($role == 'admin' || $role == 'superadmin'){
             
-            $profitReport = CommissionsLogs::where('commissions_type', 'retail_profit')
-            ->with(['user', 'rank'])
+            $profitReport = CommissionsRetailProfitLog::where('commissions_type', 'retail_profit')
+            ->with(['user', 'userdownline', 'downlinerank', 'uplinerank'])
             ->get();
 
             return view('admin.reports.retailprofit', [

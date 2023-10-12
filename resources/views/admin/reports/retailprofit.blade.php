@@ -69,14 +69,14 @@
                             <tr>
                                 <th>#</th>
                                 <th>Date</th>
-                                <th>Downline</th>
-                                <th>Downline Ranking</th>
                                 <th>Upline </th>
                                 <th>Upline Rank</th>
-                                <th>Personal Sales</th>
-                                <th>Group Sales</th>
-                                <th>Type</th>
-                                
+                                <th>Downline</th>
+                                <th>Downline Rank</th>
+                                <th>Order Number</th>
+                                <th>Percentage</th>
+                                <th>Total Bonus</th>
+                                {{-- <th>Detail</th> --}}
                             </tr>
                         </thead>
                         <tbody>
@@ -85,12 +85,22 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $row->created_at }}</td>
                                     <td>{{ $row->user->full_name }}</td>
-                                    <td>{{ $row->user->rank_id }}</td>
-                                    <td>{{ $row->upline_id }}</td>
-                                    <td>{{ $row->upline_rankid }}</td>
-                                    <td>RM {{ number_format($row->user_personal_sales, 2) }}</td>
-                                    <td>RM {{ number_format($row->user_group_sales, 2) }}</td>
-                                    <td>{{ $row->commissions_type }}</td>
+                                    <td>{{ $row->uplinerank->rank_short }}</td>
+                                    <td>{{ $row->userdownline->full_name }}</td>
+                                    <td>{{ $row->downlinerank->rank_short }}</td>
+                                    <td>{{ $row->order_num }}</td>
+                                    <td>{{ $row->percentage }}</td>
+                                    <td>{{ $row->total_bonus }}</td>
+                                    {{-- <td>
+                                        <div class="d-flex gap-3">
+
+                                            <button type="button" class="btn btn-link view-detail-button" data-bs-toggle="modal" data-bs-target="#orderdetailsModal_{{ $row->order_num }}" id="{{$row->order_num}}">
+                                                <i class="mdi mdi-pencil font-size-18"></i>
+                                            </button>
+                                            @include('admin.orders.modal.orderdetail')
+
+                                    </div>
+                                    </td> --}}
                                 </tr>
                             @endforeach
                         </tbody>

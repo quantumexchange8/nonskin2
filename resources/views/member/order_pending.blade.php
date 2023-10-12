@@ -89,12 +89,13 @@
                         <thead>
                             <tr>
                                 <th>#</th>
+                                <th>Date</th>
                                 <th>Order ID</th>
                                 <th>Price</th>
                                 <th>Shipping Type</th>
                                 <th>Courier</th>
                                 <th>Tracking No</th>
-                                <th>Date</th>
+                                
                                 <th>Payment Method</th>
                                 <th>Status</th>
                                 <th>Action</th>

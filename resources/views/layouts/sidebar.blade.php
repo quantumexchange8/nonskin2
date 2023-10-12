@@ -244,7 +244,7 @@
                             <li><a href="{{ route('member.quarterly-commission-report') }}">@lang('translation.Quarterly Commission')</a></li>
                             <li><a href="{{ route('member.annually-commission-report') }}">@lang('translation.Annually Commission')</a></li>
                             <li><a href="{{ route('member.performance-bonus-report') }}">@lang('translation.Performance Bonus')</a></li>
-                            {{-- <li><a href="{{ route('member.report-leadership') }}">@lang('translation.Leadership')</a></li> --}}
+                            <li><a href="{{ route('member.retailprofit') }}">@lang('translation.Retail Profit Report')</a></li>
                             {{-- <li><a href="{{ route('member.report-levelling') }}">@lang('translation.Levelling')</a></li> --}}
                         @endhasanyrole
                         @hasanyrole('superadmin|admin')
@@ -255,6 +255,7 @@
                             <li><a href="{{ route('admin.annually-commission-report') }}">@lang('translation.Annually Commission')</a></li>
                             <li><a href="{{ route('admin.performance-bonus-report') }}">@lang('translation.Performance Bonus')</a></li>
                             <li><a href="{{ route('admin.report-ranking') }}">@lang('translation.Ranking History')</a></li>
+                            <li><a href="{{ route('admin.retailprofit') }}">@lang('translation.Retail Profit Report')</a></li>
                         @endhasanyrole
                     </ul>
                 </li>

@@ -9,6 +9,7 @@ use App\Models\Payment;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\WalletHistory;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Okipa\Grid\DataGrid;
 use Auth;
@@ -82,6 +83,24 @@ class OrderController extends Controller
                         $user->personal_sales += $price;
                         $user->group_sales += $price;
                         $user->save();
+                    
+                        // Get the hierarchy list as an array of user IDs
+                        $upline = explode('-', $user->hierarchyList);
+                    
+                        // Remove any empty or non-numeric values from the array
+                        $upline = array_filter($upline, 'is_numeric');
+                    
+                        // Update group_sales for each user in the hierarchy
+                        foreach ($upline as $userId) {
+                            $uplineUser = User::find($userId);
+                            if ($userId != 3) {
+                                $uplineUser = User::find($userId);
+                                if ($uplineUser) {
+                                    $uplineUser->group_sales += $price;
+                                    $uplineUser->save();
+                                }
+                            }
+                        }
                     }
                 }
             } else {
