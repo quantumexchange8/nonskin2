@@ -68,8 +68,8 @@
                             <tr>
                                 <th>#</th>
                                 <th>Date</th>
-                                <th>Upline </th>
-                                <th>Upline Rank</th>
+                                {{-- <th>Upline </th>
+                                <th>Upline Rank</th> --}}
                                 <th>Downline</th>
                                 <th>Downline Rank</th>
                                 <th>Order Number</th>
@@ -83,8 +83,8 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $row->created_at }}</td>
-                                    <td>{{ $row->user->full_name }}</td>
-                                    <td>{{ $row->uplinerank->rank_short }}</td>
+                                    {{-- <td>{{ $row->user->full_name }}</td>
+                                    <td>{{ $row->uplinerank->rank_short }}</td> --}}
                                     <td>{{ $row->userdownline->full_name }}</td>
                                     <td>{{ $row->downlinerank->rank_short }}</td>
                                     <td>{{ $row->order_num }}</td>

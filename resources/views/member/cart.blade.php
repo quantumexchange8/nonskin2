@@ -355,6 +355,9 @@
 
              // Function to update cart item and cart via AJAX
              function updateCartItem(productId, quantity, productPrice) {
+
+                // var totalprice = 
+                console.log(productPrice)
                 $.ajax({
                     url: '{{ route("ajax.cart.update") }}',
                     method: 'POST',
@@ -389,6 +392,7 @@
                     success: function(response) {
                         if (response.cart) {
                             // Update the Sub Total and Total in the cart view
+                            console.log(response.total_price_with_discount)
                             $('.sub-total').text('RM ' + response.total_price_without_discount.toLocaleString(undefined, { minimumFractionDigits: 2 }));
                             $('#total').text('RM ' + response.total_price_with_discount.toLocaleString(undefined, { minimumFractionDigits: 2 }));
                         } else {

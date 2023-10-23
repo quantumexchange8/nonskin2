@@ -151,6 +151,9 @@
 
                         <!-- Personal Sales to Maintain Rank -->
                         @if ($user->rank->name !== 'Client')
+                            {{-- @if()
+                            @endif --}}
+                            {{$next_rank->category}}
                             <div class="mt-3 border-top pt-3">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="d-flex">

@@ -75,27 +75,36 @@ class UserController extends Controller
         ->whereMonth('created_at', $now->month)
         ->sum('price');
 
-        // $curMonthGroup = Order::where('user_id', $user->id)
-        // ->whereMonth('created_at', $now->month)
-        // ->sum('price');
+        // $promotion = DateTimeLogs::find(1);
+
+        $currentDate = \Carbon\Carbon::now();
+        // $startDate = \Carbon\Carbon::parse($promotion->start_date);
+        // $endDate = \Carbon\Carbon::parse($promotion->end_date);
+
+        $promotion = DateTimeLogs::where('start_date', '<=', $currentDate)
+            ->where('end_date', '>=', $currentDate)
+            ->where('name', 'promotion')
+            ->first();
 
         
         
-        $hasValidPromotion = DateTimeLogs::where('start_date', '<=', $now)
-            ->where('end_date', '>=', $now)
-            ->exists();
+        
         // Construct the query based on the existence of valid promotion records
-        $next_rank = Ranking::where('level', $user->rank->level + 1)
-            ->where(function ($query) use ($hasValidPromotion) {
-                if ($hasValidPromotion) {
-                    $query->whereIn('level', [1, 2, 3, 4, 5])
-                        ->where('category', 'promotion');
-                } else {
-                    $query->whereIn('level', [1, 2, 3, 4, 5])
-                        ->where('category', 'normal');
-                }
-            })
-            ->first();
+        if ($promotion) {
+            // There is a valid promotion for the current date
+            $next_rank = Ranking::where('level', $user->rank->level + 1)
+                ->whereIn('level', [1, 2, 3, 4, 5])
+                ->where('category', 'promotion')
+                ->first();
+        } else {
+            // No valid promotion for the current date, show "normal"
+            $next_rank = Ranking::where('level', $user->rank->level + 1)
+                ->whereIn('level', [1, 2, 3, 4, 5])
+                ->where('category', 'normal')
+                ->first();
+        }
+
+        
 
         $announcements = [];
         if (Session::has('show_announcement')) {

@@ -253,13 +253,18 @@ class ReportController extends Controller
                 ->pluck('id')
                 ->toArray();
             
+            // $profitReport = CommissionsRetailProfitLog::where('commissions_type', 'retail_profit')
+            //     ->where(function ($query) use ($user, $downlineUsers) {
+            //         $query->where('upline_id', $user->id)
+            //             ->orWhereIn('downline_id', $downlineUsers);
+            //     })
+            //     ->with(['user', 'userdownline', 'downlinerank', 'uplinerank'])
+            //     ->get();
+
             $profitReport = CommissionsRetailProfitLog::where('commissions_type', 'retail_profit')
-                ->where(function ($query) use ($user, $downlineUsers) {
-                    $query->where('upline_id', $user->id)
-                        ->orWhereIn('downline_id', $downlineUsers);
-                })
-                ->with(['user', 'userdownline', 'downlinerank', 'uplinerank'])
-                ->get();
+            ->where('upline_id', $user->id)
+            ->with(['user', 'userdownline', 'downlinerank', 'uplinerank'])
+            ->get();
 
             return view('member.reports.retailprofit', [
                 'profitReport' => $profitReport,
