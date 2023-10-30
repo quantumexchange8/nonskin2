@@ -78,7 +78,7 @@
                                 <th>Downline Sales</th>
                                 <th>Level</th>
                                 <th>Percentage</th>
-                                <th>Amount</th>
+                                <th>Total Bonus</th>
                                 
                             </tr>
                         </thead>
@@ -103,7 +103,7 @@
                                     <td>{{ $downline_rank ? $downline_rank->rank_short : 'User not found' }}</td>
                                     <td>RM {{ number_format($row->downline_sales, 2) }}</td>
                                     <td>{{ $row->commission_level }}</td>
-                                    <td>{{ $row->percentage }}</td>
+                                    <td>{{ $row->percentage }}%</td>
                                     <td>RM {{ number_format($row->total_bonus, 2) }}</td>
                                 </tr>
                             @endforeach

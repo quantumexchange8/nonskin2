@@ -71,8 +71,9 @@
                                 {{-- <th>Commission type</th> --}}
                                 <th>Downline</th>
                                 <th>Downline Rank</th>
+                                <th>Downline Sales</th>
                                 <th>Percentage (%)</th>
-                                <th>Total Bonus</th>
+                                <th>Total Bonus(RM)</th>
                                 
                             </tr>
                         </thead>
@@ -96,7 +97,8 @@
                                             <span>Chief Distributor</span>
                                         @endif
                                     </td>
-                                    <td>{{ $row->percentage }}</td>
+                                    <td>RM {{ number_format($row->downline_sales, 2) }}</td>
+                                    <td>{{ $row->percentage }}%</td>
                                     <td>RM {{ number_format($row->total_bonus, 2) }}</td>
                                 </tr>
                             @endforeach

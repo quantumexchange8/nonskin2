@@ -74,7 +74,7 @@
                                 <th>Downline Rank</th>
                                 <th>Downline Sales</th>
                                 <th>Percentage</th>
-                                <th>Total Amount</th>
+                                <th>Total Bonus</th>
                                 
                             </tr>
                         </thead>
@@ -93,7 +93,7 @@
                                     <td>{{ $downline ? $downline->full_name : 'User not found' }}</td>
                                     <td>{{ $row->rank->name }}</td>
                                     <td>RM {{ number_format($row->downline_sales, 2) }}</td>
-                                    <td>{{ $row->percentage }}</td>
+                                    <td>{{ $row->percentage }}%</td>
                                     <td>RM {{ number_format($row->total_bonus, 2) }}</td>
                                     
                                 </tr>

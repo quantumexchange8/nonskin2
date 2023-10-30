@@ -134,8 +134,9 @@
         // });
 
         $(document).ready(function() {
-                
                 var table = $('#reportWallet').DataTable({
+                    responsive: true,
+                    lengthChange: false,
                     dom: '<"row"<"col-lg-10"f><"col-lg-2"B>>' +
                     '<"row"<"col-lg-12"t>>' +
                     '<"row"<"col-lg-6"i><"col-lg-6"p>>',
