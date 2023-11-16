@@ -246,9 +246,15 @@
                     <td>RM {{$item->discount}}</td>
                     @endif
                     <td>{{ $item['quantity'] }}</td>
+                    @if($invoice->discount_amt != 0)
+                        {{-- <td align="right">RM {{ number_format($item['price'] * $item['quantity'], 2) }}</td> --}}
+                        <td align="right">RM {{ number_format(($item['price'] - $item['discount']) * $item['quantity'], 2) }}</td>
+                    @else
                     <td align="right">RM {{ number_format($item['price'] * $item['quantity'], 2) }}</td>
+                    @endif
+                    
                 </tr>
-                @php($total += $item['price'] * $item['quantity'])
+                @php($total += ($item['price'] - $item['discount']) * $item['quantity'])
             @endforeach
             <tr>
                 @if($invoice->discount_amt != 0)

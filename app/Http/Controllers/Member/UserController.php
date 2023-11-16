@@ -148,12 +148,81 @@ class UserController extends Controller
         $user = Auth::user();
         if ($user->rank_id == 2) {
             $member_discount_amount = 10;
+            
+            $total_amount = 0;
+            $dis = 0;
+
+            foreach ($cartItems as $cartItem) {
+                $total_amount = $cartItem->price * $cartItem->quantity;
+                $dis = (($cartItem->price * $member_discount_amount) / 100);
+
+                $cartItem->update([
+                    'discount_price' => $dis,
+                ]);
+
+                $cartItem->refresh();
+            }
+            
+            $total_discount = $total_amount - $dis;
+            
+
         } elseif ($user->rank_id == 3) {
             $member_discount_amount = 35;
+
+            $total_amount = 0;
+            $dis = 0;
+
+            foreach ($cartItems as $cartItem) {
+                $total_amount = $cartItem->price * $cartItem->quantity;
+                $dis = (($cartItem->price * $member_discount_amount) / 100);
+
+                $cartItem->update([
+                    'discount_price' => $dis,
+                ]);
+
+                $cartItem->refresh();
+            }
+            
+            $total_discount = $total_amount - $dis;
+
         } elseif ($user->rank_id == 4) {
             $member_discount_amount = 45;
+
+            $total_amount = 0;
+            $dis = 0;
+
+            foreach ($cartItems as $cartItem) {
+                $total_amount = $cartItem->price * $cartItem->quantity;
+                $dis = (($cartItem->price * $member_discount_amount) / 100);
+
+                $cartItem->update([
+                    'discount_price' => $dis,
+                ]);
+
+                $cartItem->refresh();
+            }
+            
+            $total_discount = $total_amount - $dis;
+
         } elseif ($user->rank_id == 5) {
             $member_discount_amount = 50;
+
+            $total_amount = 0;
+            $dis = 0;
+
+            foreach ($cartItems as $cartItem) {
+                $total_amount = $cartItem->price * $cartItem->quantity;
+                $dis = (($cartItem->price * $member_discount_amount) / 100);
+
+                $cartItem->update([
+                    'discount_price' => $dis,
+                ]);
+
+                $cartItem->refresh();
+            }
+            
+            $total_discount = $total_amount - $dis;
+
         } else {
             $member_discount_amount = 0; // Handle other ranks if needed
         }
