@@ -66,7 +66,7 @@ class OrderController extends Controller
             $nettprice = $price - $discountAmt + $deliveryFee;
 
 
-            if($paymentMethod == 'Purchase Wallet'){
+            if($paymentMethod == 'Purchase Wallet' || $paymentMethod == 'Online Banking'){
 
                 //  Calculate purchase Wallet Deduct product amount
                 $balance = $user->purchase_wallet;

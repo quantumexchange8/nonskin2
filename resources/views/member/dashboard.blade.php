@@ -228,11 +228,11 @@
                                         {{-- <i class="mdi mdi-circle font-size-10 mt-1 text-secondary"></i> --}}
                                         <div class="flex-1 ">
                                             <p class="mb-0">Package Requirement</p>
-                                            <h5 class="mt-1 mb-0 font-size-14">RM {{ number_format($user->personal_sales,2) }}</h5>
+                                            <h5 class="mt-1 mb-0 font-size-14">RM {{ number_format($user->group_sales,2) }}</h5>
                                         </div>
                                     </div>
                                     <div class="flex-1 text-end">
-                                        @if(($user->personal_sales == 0 ? 0 : $user->personal_sales/$next_rank->package_requirement)*100 >= 100)
+                                        @if(($user->group_sales == 0 ? 0 : $user->group_sales/$next_rank->package_requirement)*100 >= 100)
                                             <span class="badge badge-soft-success">QUALIFIED</span>
                                         @else
                                             <span class="badge badge-soft-danger">NOT YET QUALIFIED</span>
@@ -242,11 +242,11 @@
                                 </div>
                                 <div class="progress mt-2" style="height: 15px;">
                                     <div class="progress-bar" role="progressbar"
-                                        style="width: {{ $user->personal_sales > 0 ? ($user->personal_sales/$next_rank->package_requirement)*100 : 0 }}%;"
-                                        aria-valuenow="{{ $user->personal_sales }}"
+                                        style="width: {{ $user->group_sales > 0 ? ($user->group_sales/$next_rank->package_requirement)*100 : 0 }}%;"
+                                        aria-valuenow="{{ $user->group_sales }}"
                                         aria-valuemin="0"
                                         aria-valuemax="{{ $next_rank->package_requirement }}">
-                                        {{ $user->personal_sales == 0 ? 0 : number_format(($user->personal_sales/$next_rank->package_requirement)*100,2) }}%
+                                        {{ $user->group_sales == 0 ? 0 : number_format(($user->group_sales/$next_rank->package_requirement)*100,2) }}%
                                     </div>
                                 </div>
                             </div>

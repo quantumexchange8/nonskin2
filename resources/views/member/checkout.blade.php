@@ -495,92 +495,106 @@
                             const walletAmount = parseFloat(walletInput.value) || 0;
                             const totalAmountPrice = parseFloat(document.getElementById('totalAmountValue').value);
 
-                            let formData = $('#checkout-form').serializeArray();
+                            Swal.fire({
+                                title: 'Confirm Purchase',
+                                text: 'Are you sure you want to make this purchase?',
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Yes, make the purchase'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    let formData = $('#checkout-form').serializeArray();
 
-                            formData.push({
-                                name: '_token',
-                                value: $('meta[name="csrf-token"]').attr('content')
-                            }, {
-                                name: 'user_id',
-                                value: {{ $user->id }}
-                            }, {
-                                name: 'email',
-                                value: '{{ $user->email }}'
-                            }, {
-                                name: 'total_amount',
-                                value: formattedTotal
-                            }, {
-                                name: 'price',
-                                value: totalAmountPrice
-                            }, {
-                                name: 'discount_amt',
-                                value: '{{ $total_discounted }}'
-                            }, {
-                                name: 'product_wallet',
-                                value: walletAmount
-                            });
+                                    formData.push({
+                                        name: '_token',
+                                        value: $('meta[name="csrf-token"]').attr('content')
+                                    }, {
+                                        name: 'user_id',
+                                        value: {{ $user->id }}
+                                    }, {
+                                        name: 'email',
+                                        value: '{{ $user->email }}'
+                                    }, {
+                                        name: 'total_amount',
+                                        value: formattedTotal
+                                    }, {
+                                        name: 'price',
+                                        value: totalAmountPrice
+                                    }, {
+                                        name: 'discount_amt',
+                                        value: '{{ $total_discounted }}'
+                                    }, {
+                                        name: 'product_wallet',
+                                        value: walletAmount
+                                    });
 
-                            formData.push({
-                                name: 'receiver',
-                                value: name
-                            }, {
-                                name: 'contact',
-                                value: contact
-                            }, {
-                                name: 'product_wallet',
-                                value: walletAmount
-                            });
+                                    formData.push({
+                                        name: 'receiver',
+                                        value: name
+                                    }, {
+                                        name: 'contact',
+                                        value: contact
+                                    }, {
+                                        name: 'product_wallet',
+                                        value: walletAmount
+                                    });
 
-                            $.ajax({
-                                url: '{{ route("place-order") }}',
-                                method: 'POST',
-                                data: formData,
-                                success: function(response) {
-                                    if (response && response.message) {
-                                        var timerInterval;
-                                        Swal.fire({
-                                        title: response.message,
-                                        html: 'Please do not click on anywhere while being redirected to the payment page',
-                                        timer: 3000,
-                                        timerProgressBar: true,
-                                        allowOutsideClick: false, // Prevent outside click
-                                        showConfirmButton: false, // Hide the confirm button
-                                        didOpen:function () {
-                                            Swal.showLoading()
-                                            timerInterval = setInterval(function() {
-                                            var content = Swal.getHtmlContainer()
-                                            if (content) {
-                                                var b = content.querySelector('b')
-                                                if (b) {
-                                                    b.textContent = Swal.getTimerLeft()
+                                    $.ajax({
+                                        url: '{{ route("place-order") }}',
+                                        method: 'POST',
+                                        data: formData,
+                                        success: function(response) {
+                                            if (response && response.message) {
+                                                var timerInterval;
+                                                Swal.fire({
+                                                title: response.message,
+                                                html: 'Please do not click on anywhere while being redirected to the payment page',
+                                                timer: 3000,
+                                                timerProgressBar: true,
+                                                allowOutsideClick: false, // Prevent outside click
+                                                showConfirmButton: false, // Hide the confirm button
+                                                didOpen:function () {
+                                                    Swal.showLoading()
+                                                    timerInterval = setInterval(function() {
+                                                    var content = Swal.getHtmlContainer()
+                                                    if (content) {
+                                                        var b = content.querySelector('b')
+                                                        if (b) {
+                                                            b.textContent = Swal.getTimerLeft()
+                                                        }
+                                                    }
+                                                    }, 100)
+                                                },
+                                                onClose: function () {
+                                                    clearInterval(timerInterval);
+                                                    window.location.href = "{{ route('member.order-pending') }}";
                                                 }
+                                                }).then(function (result) {
+                                                    /* Read more about handling dismissals below */
+                                                    if (result.dismiss === Swal.DismissReason.timer) {
+                                                        window.location.href = "{{ route('member.order-pending') }}";
+                                                    }
+                                                })
                                             }
-                                            }, 100)
                                         },
-                                        onClose: function () {
-                                            clearInterval(timerInterval);
-                                            window.location.href = "{{ route('member.order-pending') }}";
+                                        error: function(xhr, status, error) {
+                                            console.log(xhr);
+                                            console.log(status);
+                                            Swal.fire({
+                                            icon: 'error',
+                                            title: 'Oops...',
+                                            text: error
+                                            })
+                                            return;
                                         }
-                                        }).then(function (result) {
-                                            /* Read more about handling dismissals below */
-                                            if (result.dismiss === Swal.DismissReason.timer) {
-                                                window.location.href = "{{ route('member.order-pending') }}";
-                                            }
-                                        })
-                                    }
-                                },
-                                error: function(xhr, status, error) {
-                                    console.log(xhr);
-                                    console.log(status);
-                                    Swal.fire({
-                                    icon: 'error',
-                                    title: 'Oops...',
-                                    text: error
-                                    })
-                                    return;
-                                }
 
+                                    });
+                                }
                             });
+
+                            
                         }
                         
                         
@@ -810,91 +824,102 @@
                             const walletAmount = parseFloat(walletInput.value) || 0;
                             const totalAmountPrice = parseFloat(document.getElementById('totalAmountValue').value);
 
-                            let formData = $('#checkout-form').serializeArray();
+                            Swal.fire({
+                                title: 'Confirm Purchase',
+                                text: 'Are you sure you want to make this purchase?',
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Yes, make the purchase'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    let formData = $('#checkout-form').serializeArray();
                             
-                            formData.push({
-                                name: '_token',
-                                value: $('meta[name="csrf-token"]').attr('content')
-                            }, {
-                                name: 'user_id',
-                                value: {{ $user->id }}
-                            }, {
-                                name: 'email',
-                                value: '{{ $user->email }}'
-                            }, {
-                                name: 'total_amount',
-                                value: formattedTotal
-                            }, {
-                                name: 'price',
-                                value: totalAmountPrice
-                            }, {
-                                name: 'product_wallet',
-                                value: walletAmount
-                            }, {
-                                name: 'discount_amt',
-                                value: '{{ $total_discounted }}'
-                            }, {
-                                name: 'product_wallet',
-                                value: walletAmount
-                            });
+                                    formData.push({
+                                        name: '_token',
+                                        value: $('meta[name="csrf-token"]').attr('content')
+                                    }, {
+                                        name: 'user_id',
+                                        value: {{ $user->id }}
+                                    }, {
+                                        name: 'email',
+                                        value: '{{ $user->email }}'
+                                    }, {
+                                        name: 'total_amount',
+                                        value: formattedTotal
+                                    }, {
+                                        name: 'price',
+                                        value: totalAmountPrice
+                                    }, {
+                                        name: 'product_wallet',
+                                        value: walletAmount
+                                    }, {
+                                        name: 'discount_amt',
+                                        value: '{{ $total_discounted }}'
+                                    }, {
+                                        name: 'product_wallet',
+                                        value: walletAmount
+                                    });
 
-                            formData.push({
-                                name: 'receiver',
-                                value: '{{ $user->full_name }}'
-                            }, {
-                                name: 'contact',
-                                value: {{ $user->contact }}
-                            });
+                                    formData.push({
+                                        name: 'receiver',
+                                        value: '{{ $user->full_name }}'
+                                    }, {
+                                        name: 'contact',
+                                        value: {{ $user->contact }}
+                                    });
 
-                            $.ajax({
-                                url: '{{ route("place-order") }}',
-                                method: 'POST',
-                                data: formData,
-                                success: function(response) {
-                                    if (response && response.message) {
-                                        var timerInterval;
-                                        Swal.fire({
-                                        title: response.message,
-                                        html: 'Please do not click on anywhere while being redirected to the payment page',
-                                        timer: 3000,
-                                        timerProgressBar: true,
-                                        allowOutsideClick: false, // Prevent outside click
-                                        showConfirmButton: false, // Hide the confirm button
-                                        didOpen:function () {
-                                            Swal.showLoading()
-                                            timerInterval = setInterval(function() {
-                                            var content = Swal.getHtmlContainer()
-                                            if (content) {
-                                                var b = content.querySelector('b')
-                                                if (b) {
-                                                    b.textContent = Swal.getTimerLeft()
+                                    $.ajax({
+                                        url: '{{ route("place-order") }}',
+                                        method: 'POST',
+                                        data: formData,
+                                        success: function(response) {
+                                            if (response && response.message) {
+                                                var timerInterval;
+                                                Swal.fire({
+                                                title: response.message,
+                                                html: 'Please do not click on anywhere while being redirected to the payment page',
+                                                timer: 3000,
+                                                timerProgressBar: true,
+                                                allowOutsideClick: false, // Prevent outside click
+                                                showConfirmButton: false, // Hide the confirm button
+                                                didOpen:function () {
+                                                    Swal.showLoading()
+                                                    timerInterval = setInterval(function() {
+                                                    var content = Swal.getHtmlContainer()
+                                                    if (content) {
+                                                        var b = content.querySelector('b')
+                                                        if (b) {
+                                                            b.textContent = Swal.getTimerLeft()
+                                                        }
+                                                    }
+                                                    }, 100)
+                                                },
+                                                onClose: function () {
+                                                    clearInterval(timerInterval);
+                                                    window.location.href = "{{ route('member.order-pending') }}";
                                                 }
+                                                }).then(function (result) {
+                                                    /* Read more about handling dismissals below */
+                                                    if (result.dismiss === Swal.DismissReason.timer) {
+                                                        window.location.href = "{{ route('member.order-pending') }}";
+                                                    }
+                                                })
                                             }
-                                            }, 100)
                                         },
-                                        onClose: function () {
-                                            clearInterval(timerInterval);
-                                            window.location.href = "{{ route('member.order-pending') }}";
+                                        error: function(xhr, status, error) {
+                                            console.log(xhr);
+                                            console.log(status);
+                                            Swal.fire({
+                                            icon: 'error',
+                                            title: 'Oops...',
+                                            text: error
+                                            })
+                                            return;
                                         }
-                                        }).then(function (result) {
-                                            /* Read more about handling dismissals below */
-                                            if (result.dismiss === Swal.DismissReason.timer) {
-                                                window.location.href = "{{ route('member.order-pending') }}";
-                                            }
-                                        })
-                                    }
-                                },
-                                error: function(xhr, status, error) {
-                                    console.log(xhr);
-                                    console.log(status);
-                                    Swal.fire({
-                                    icon: 'error',
-                                    title: 'Oops...',
-                                    text: error
-                                    })
-                                    return;
+                                    });
                                 }
-
                             });
                         }
                     }
