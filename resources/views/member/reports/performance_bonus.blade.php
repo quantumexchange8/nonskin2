@@ -1,6 +1,12 @@
 @extends('layouts.master')
 @section('title') @lang('translation.Performance Bonus') @lang('translation.Report') @endsection
 
+@section('css')
+    <link href="{{ URL::asset('assets/libs/choices.js/choices.js.min.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{ URL::asset('assets/libs/@simonwep/@simonwep.min.css') }}"/>
+    <link rel="stylesheet" href="{{ URL::asset('assets/libs/flatpickr/flatpickr.min.css') }}">
+@endsection
+
 @section('content')
     @component('components.breadcrumb')
     @slot('url') {{ route('user-dashboard') }} @endslot
@@ -51,10 +57,48 @@
             <div class="card">
                 <div class="card-body">
                     <table id="performanceBonus" class="stripe nowrap" style="width:100%">
+                        <div class="row" style="display: none">
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4 class="card-title">Colorpicker</h4>
+                                        <p class="card-title-desc">Flat, Simple, Hackable Color-Picker.</p>
+                                    </div>
+                                    <div class="card-body">
+                
+                                        <div class="text-center">
+                                            <div class="row">
+                                                <div class="col-lg-4">
+                                                    <div class="mt-4">
+                                                        <h5 class="font-size-14">Classic Demo</h5>
+                                                        <div class="classic-colorpicker"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="mt-4">
+                                                        <h5 class="font-size-14">Monolith Demo</h5>
+                                                        <div class="monolith-colorpicker"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="mt-4">
+                                                        <h5 class="font-size-14">Nano Demo</h5>
+                                                        <div class="nano-colorpicker"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- end card body -->
+                                </div>
+                                <!-- end card -->
+                            </div>
+                            <!-- end col -->
+                        </div>
                         <div style="display: flex;align-items: flex-end;justify-content: center;padding-left: 26px;padding-right: 26px;padding-bottom: 30px;">
                             <div class="col-lg-4" style="width:100%">
                                 <label class="form-label">Date</label>
-                                <input type="date" id="date-filter-input" class="form-control">
+                                <input type="text" id="datepicker-range" class="form-control">
                             </div>
                             <div style="margin-left: 10px;">
                                 <form>
@@ -106,6 +150,10 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
+    <script src="{{ URL::asset('assets/libs/choices.js/choices.js.min.js') }}"></script>
+    <script src="{{ URL::asset('assets/libs/@simonwep/@simonwep.min.js') }}"></script>
+    <script src="{{ URL::asset('assets/libs/flatpickr/flatpickr.min.js') }}"></script>
+    <script src="{{ URL::asset('assets/js/pages/form-advanced.init.js') }}"></script>
     <script>
         // new DataTable('#performanceBonus', {
         //     responsive: true,
@@ -141,24 +189,34 @@
                 });
 
                 // Add an event listener to the date input field
-                $('#date-filter-input').on('change', function() {
+                $('#datepicker-range').on('change', function() {
                     var selectedDate = $(this).val();
-                    if (selectedDate) {
+                    console.log(selectedDate);
+
+                    // Split the date range input into start and end dates
+                    var dateRange = selectedDate.split(' to ');
+                    var startDate = dateRange[0];
+                    var endDate = dateRange[1];
+
+                    if (startDate && endDate) {
                         // Use DataTables search to filter rows based on a custom function
                         $.fn.dataTable.ext.search.push(
                             function(settings, data, dataIndex) {
                                 var dateColumn = data[1]; // Assuming date is in the second column
-                                // Format the selected date to match the database format ('YYYY-MM-DD HH:mm:ss')
-                                var formattedDate = moment(selectedDate, 'YYYY-MM-DD').format('YYYY-MM-DD');
-                                return dateColumn.includes(formattedDate);
+
+                                // Check if the date falls within the selected range
+                                return moment(dateColumn, 'YYYY-MM-DD').isSameOrAfter(startDate) &&
+                                    moment(dateColumn, 'YYYY-MM-DD').isSameOrBefore(endDate);
                             }
                         );
+
                         // Redraw the DataTable to apply the filter
                         table.draw();
+
                         // Remove the custom filter function to avoid interference with other searches
                         $.fn.dataTable.ext.search.pop();
                     } else {
-                        // If no date is selected, clear the filter
+                        // If no date range is selected, clear the filter
                         table.search('').draw();
                     }
                 });
