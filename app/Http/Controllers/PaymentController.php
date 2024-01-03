@@ -104,7 +104,7 @@ class PaymentController extends Controller
                     ]);
                 }
 
-                Alert::success('Topup Successful', 'Purchase Wallet for '. $user->referrer_id . ' | ' . $user->full_name . ' has been topped up RM ' . number_format($request->amount,2));
+                Alert::success('Topup Successful', 'Purchase Wallet for '. $user->full_name . ' has been topped up RM ' . number_format($request->amount,2));
                 return redirect()->back();
             } catch (\Throwable $th) {
                 Alert::error('Topup Failed', 'Please try topup later');

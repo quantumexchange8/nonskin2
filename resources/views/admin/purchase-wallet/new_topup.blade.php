@@ -49,10 +49,10 @@
 
                                         <div class="mb-3">
                                             <label for="user_id" class="form-label required">Select Member</label>
-                                            <select class="form-control form-select" data-trigger name="user_id"
+                                            <select class="form-control form-select js-example-basic-single" data-trigger name="user_id"
                                                 id="user_id"
                                                 placeholder="Search Member">
-                                                <option value="" disabled>Search for Member</option>
+                                                {{-- <option value="" disabled>Search for Member</option> --}}
                                                 @foreach ($members as $member)
                                                     <option value="{{ $member->id }}">{{ $member->referrer_id }} | {{ $member->full_name }}</option>
                                                 @endforeach
@@ -115,4 +115,10 @@
 @section('script')
     <script src="{{ URL::asset('assets/libs/choices.js/choices.js.min.js') }}"></script>
     <script src="{{ URL::asset('assets/js/app.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.js-example-basic-single').select2();
+        });
+    </script>
 @endsection
