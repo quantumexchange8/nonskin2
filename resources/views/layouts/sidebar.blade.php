@@ -260,6 +260,14 @@
                     </ul>
                 </li>
 
+                @hasanyrole('superadmin|admin')
+                    <li>
+                        <a href="{{ route('promotion') }}">
+                            <i class="bx bxs-ship icon nav-icon"></i> <span class="menu-item">@lang('translation.Promotion Adjust')</span>
+                        </a>
+                    </li>
+                @endhasanyrole
+
                 <!-- Admin Setting Pages -->
                 @hasanyrole('superadmin|admin')
                     <li class="menu-title" data-key="t-applications">@lang('translation.Settings')</li>

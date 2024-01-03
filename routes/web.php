@@ -181,6 +181,10 @@ Route::group(['prefix' => 'admin',  'middleware' => ['auth', 'IsAdmin' ]], funct
     Route::post('/check-current-password', [UserController::class, 'checkCurrentPass'])->name('admin.checkCurrentPass');
 
     Route::get('network_tree', [AdminController::class, 'networktree'])->name('admin-networktree');
+
+    // promotion adjustment
+    Route::get('promotion-adjustment', [AdminController::class, 'promotion'])->name('promotion');
+    Route::post('promotion-adjustment-add', [AdminController::class, 'promotionAdd'])->name('promotionAdd');
 });
 
 Route::resource('cart', CartController::class);

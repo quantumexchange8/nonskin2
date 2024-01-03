@@ -18,6 +18,7 @@ use App\Models\Product;
 use App\Models\Rankings;
 use App\Models\RankingUpdateLog;
 use App\Models\WalletHistory;
+use App\Models\DateTimeLogs;
 use Validator;
 use Response;
 use Redirect;
@@ -650,5 +651,58 @@ class AdminController extends Controller
             }
 
         }
+    }
+
+    public function promotion()
+    {
+
+        $dateTimeLogs = DateTimeLogs::latest()->first();
+        
+        if ($dateTimeLogs) {
+            $currentDate = Carbon::now();
+            $startDate = Carbon::parse($dateTimeLogs->start_date);
+            $endDate = Carbon::parse($dateTimeLogs->end_date);
+    
+            if ($currentDate->between($startDate, $endDate)) {
+                $status = 'Ongoing';
+            } else {
+                $status = 'Expired';
+            }
+    
+            return view('admin.promotion.promotion_adjustment', [
+                'rows' => $dateTimeLogs,
+                'status' => $status,
+            ]);
+        }
+    
+        // Handle the case where no DateTimeLogs record is found
+        return view('admin.promotion.promotion_adjustment', [
+            'rows' => null,
+            'status' => 'Expired', // Assuming expired status for no record
+        ]);
+    }
+
+    public function promotionAdd(Request $request)
+    {
+        // dd($request->all());
+
+        if($request->datepicker_range != null)
+        {
+            $dateRange = explode(' to ', $request->datepicker_range);
+
+            $promotion = new DateTimeLogs();
+            $promotion->name = 'promotion';
+            $promotion->start_date = $dateRange[0];
+            $promotion->end_date = $dateRange[1];
+    
+            $promotion->save();
+            Alert::success('Successful', 'Added new promotion');
+            return redirect()->back();
+        } else {
+            Alert::error('Error', 'No date selected');
+            return redirect()->back();
+        }
+        
+        
     }
 }

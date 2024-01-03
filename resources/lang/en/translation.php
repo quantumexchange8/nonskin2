@@ -52,7 +52,7 @@
         "New Topup" => "New Topup",
         "Ranking History" => "Ranking History",
         "Product Wallet Adjustment" => "Wallet Adjustment",
-
+        "Promotion Adjust" => "Promotion Adjustment",
 
         // Custom
         "Full Name" => "Full Name",

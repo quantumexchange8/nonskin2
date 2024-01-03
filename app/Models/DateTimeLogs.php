@@ -11,4 +11,10 @@ class DateTimeLogs extends Model
 
     protected $table = 'datetime_logs';
 
+    protected $fillable = [
+        'start_date',
+        'end_date',
+        'name',
+    ];
+
 }
