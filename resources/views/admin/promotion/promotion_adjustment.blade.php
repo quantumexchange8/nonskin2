@@ -73,7 +73,7 @@
                         </div>
                         
                         <div class="mt-4">
-                            <button type="submit" class="btn btn-primary btn-sm" id="updateProfile"><i class="mdi mdi-pencil me-1"></i>Update Promotion</button>
+                            <button type="submit" class="btn btn-primary btn-sm" id="updateProfile"><i class="mdi mdi-pencil me-1"></i>Add Promotion</button>
                         </div>
                     </div>
                 </div>
@@ -93,6 +93,7 @@
                                 <th>Start Date</th>
                                 <th>End Date</th>
                                 <th>Status</th>
+                                {{-- <th>Action</th> --}}
                             </tr>
                         </thead>
                         <tbody>
@@ -106,6 +107,11 @@
                                         <b style="color: red">{{$status}}</b>
                                     @endif
                                 </td>
+                                {{-- <td style="background: white">
+                                    <a href="{{ route('productWalletAdjustment', $user->id) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-bs-original-title="Edit" class="text-success">
+                                        <i class="mdi mdi-pencil font-size-18"></i>
+                                    </a>
+                                </td> --}}
                             </tr>
                         </tbody>
                     </table>
