@@ -205,6 +205,7 @@ class RegisterController extends Controller
                 'delivery_city'         => $request->city,
                 'delivery_postcode'     => $request->postcode,
                 'delivery_state'        => $request->state,
+                'status'        => 'NotActive',
                 'delivery_country'      => $request->country,
                 // 'created_at' => now(),
                 // 'updated_at' => now(),

@@ -43,7 +43,7 @@ class PaymentController extends Controller
                 'companyInfo' => $companyInfo,
             ]);
         }else if(Auth::user()->role == 'admin' || Auth::user()->role == 'superadmin'){
-            $members = User::where('role', 'user')->where('status', 'Active')->select('id', 'full_name', 'referrer_id')->orderBy('referrer_id', 'ASC')->get();
+            $members = User::where('role', 'user')->select('id', 'full_name', 'referrer_id')->orderBy('referrer_id', 'ASC')->get();
             return view('admin.purchase-wallet.new_topup', compact('companyInfo', 'members'));
         }else{
             return abort (404);

@@ -170,6 +170,7 @@
 
         var table = $('#allOrder').DataTable({
             lengthChange: false,
+            responsive: true,
             order: [[0, 'desc']],
             dom: '<"row"<"col-lg-10"f><"col-lg-2"B>>' +
                     '<"row"<"col-lg-12"t>>' +
