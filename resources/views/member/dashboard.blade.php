@@ -221,18 +221,18 @@
                         </div>
 
                         <!-- Package Requirement -->
-                        @if ($user->rank->name !== 'Chief Distributor' && $user->rank->name !== 'Exclusive Distributor')
+                        @if($user->status == 'NotActive' || $user->personal_sales == null)
                             <div class="mt-3 border-top pt-3">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="d-flex">
                                         {{-- <i class="mdi mdi-circle font-size-10 mt-1 text-secondary"></i> --}}
                                         <div class="flex-1 ">
                                             <p class="mb-0">Package Requirement</p>
-                                            <h5 class="mt-1 mb-0 font-size-14">RM {{ number_format($user->group_sales,2) }}</h5>
+                                            <h5 class="mt-1 mb-0 font-size-14">RM {{ number_format($user->personal_sales,2) }}</h5>
                                         </div>
                                     </div>
                                     <div class="flex-1 text-end">
-                                        @if(($user->group_sales == 0 ? 0 : $user->group_sales/$next_rank->package_requirement)*100 >= 100)
+                                        @if(($user->personal_sales == 0 ? 0 : $user->personal_sales/$next_rank->package_requirement)*100 >= 100)
                                             <span class="badge badge-soft-success">QUALIFIED</span>
                                         @else
                                             <span class="badge badge-soft-danger">NOT YET QUALIFIED</span>
@@ -242,48 +242,80 @@
                                 </div>
                                 <div class="progress mt-2" style="height: 15px;">
                                     <div class="progress-bar" role="progressbar"
-                                        style="width: {{ $user->group_sales > 0 ? ($user->group_sales/$next_rank->package_requirement)*100 : 0 }}%;"
-                                        aria-valuenow="{{ $user->group_sales }}"
+                                        style="width: {{ $user->personal_sales > 0 ? ($user->personal_sales/$next_rank->package_requirement)*100 : 0 }}%;"
+                                        aria-valuenow="{{ $user->personal_sales }}"
                                         aria-valuemin="0"
                                         aria-valuemax="{{ $next_rank->package_requirement }}">
-                                        {{ $user->group_sales == 0 ? 0 : number_format(($user->group_sales/$next_rank->package_requirement)*100,2) }}%
+                                        {{ $user->personal_sales == 0 ? 0 : number_format(($user->personal_sales/$next_rank->package_requirement)*100,2) }}%
                                     </div>
                                 </div>
                             </div>
-                        @endif
-
-                        <!-- Group Sales Requirement -->
-                        @if ($user->rank->name !== 'Client' && $user->rank->name !== 'Chief Distributor')
-                            <div class="mt-3 border-top pt-3">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="d-flex">
-                                        {{-- <i class="mdi mdi-circle font-size-10 mt-1 text-success"></i> --}}
-                                        <div class="flex-1 ">
-                                            <p class="mb-0">Group Sales Requirement</p>
-                                            <h5 class="mt-1 mb-0 font-size-14">RM {{ number_format($user->group_sales,2) }}</h5>
+                        @else
+                            @if ($user->rank->name !== 'Chief Distributor' && $user->rank->name !== 'Exclusive Distributor')
+                                <div class="mt-3 border-top pt-3">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="d-flex">
+                                            {{-- <i class="mdi mdi-circle font-size-10 mt-1 text-secondary"></i> --}}
+                                            <div class="flex-1 ">
+                                                <p class="mb-0">Package Requirement</p>
+                                                <h5 class="mt-1 mb-0 font-size-14">RM {{ number_format($user->group_sales,2) }}</h5>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1 text-end">
+                                            @if(($user->group_sales == 0 ? 0 : $user->group_sales/$next_rank->package_requirement)*100 >= 100)
+                                                <span class="badge badge-soft-success">QUALIFIED</span>
+                                            @else
+                                                <span class="badge badge-soft-danger">NOT YET QUALIFIED</span>
+                                            @endif
+                                            <h5 class="mt-1 mb-0 font-size-14">RM {{ number_format($next_rank->package_requirement,2) }}</h5>
                                         </div>
                                     </div>
-                                    <div class="flex-1 text-end">
-                                        @if(($user->group_sales == 0 ? 0 : $user->group_sales/$next_rank->group_sale_requirement)*100 >= 100)
-                                            <span class="badge badge-soft-success">QUALIFIED</span>
-                                        @else
-                                            <span class="badge badge-soft-danger">NOT YET QUALIFIED</span>
-                                        @endif
-                                        <h5 class="mt-1 mb-0 font-size-14">RM {{ number_format($next_rank->group_sale_requirement,2) }}</h5>
+                                    <div class="progress mt-2" style="height: 15px;">
+                                        <div class="progress-bar" role="progressbar"
+                                            style="width: {{ $user->group_sales > 0 ? ($user->group_sales/$next_rank->package_requirement)*100 : 0 }}%;"
+                                            aria-valuenow="{{ $user->group_sales }}"
+                                            aria-valuemin="0"
+                                            aria-valuemax="{{ $next_rank->package_requirement }}">
+                                            {{ $user->group_sales == 0 ? 0 : number_format(($user->group_sales/$next_rank->package_requirement)*100,2) }}%
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="progress mt-2" style="height: 15px;">
-                                    <div class="progress-bar" role="progressbar" style="width: {{ ($user->group_sales == 0 ? 0 : $user->group_sales/$next_rank->group_sale_requirement)*100 }}%;"
-                                        aria-valuenow="{{ ($user->group_sales == 0 ? 0 : $user->group_sales/$next_rank->group_sale_requirement)*100 }}"
-                                        aria-valuemin="0"
-                                        aria-valuemax="100">
-                                        @if (isset($user->group->sales))
-                                            {{ ($user->group_sales > 0 ? 0 : $user->group_sales/$next_rank->group_sale_requirement)*100 }}%
-                                        @endif
+                            @endif
+
+                            <!-- Group Sales Requirement -->
+                            @if ($user->rank->name !== 'Client' && $user->rank->name !== 'Chief Distributor')
+                                <div class="mt-3 border-top pt-3">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="d-flex">
+                                            {{-- <i class="mdi mdi-circle font-size-10 mt-1 text-success"></i> --}}
+                                            <div class="flex-1 ">
+                                                <p class="mb-0">Group Sales Requirement</p>
+                                                <h5 class="mt-1 mb-0 font-size-14">RM {{ number_format($user->group_sales,2) }}</h5>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1 text-end">
+                                            @if(($user->group_sales == 0 ? 0 : $user->group_sales/$next_rank->group_sale_requirement)*100 >= 100)
+                                                <span class="badge badge-soft-success">QUALIFIED</span>
+                                            @else
+                                                <span class="badge badge-soft-danger">NOT YET QUALIFIED</span>
+                                            @endif
+                                            <h5 class="mt-1 mb-0 font-size-14">RM {{ number_format($next_rank->group_sale_requirement,2) }}</h5>
+                                        </div>
+                                    </div>
+                                    <div class="progress mt-2" style="height: 15px;">
+                                        <div class="progress-bar" role="progressbar" style="width: {{ ($user->group_sales == 0 ? 0 : $user->group_sales/$next_rank->group_sale_requirement)*100 }}%;"
+                                            aria-valuenow="{{ ($user->group_sales == 0 ? 0 : $user->group_sales/$next_rank->group_sale_requirement)*100 }}"
+                                            aria-valuemin="0"
+                                            aria-valuemax="100">
+                                            @if (isset($user->group->sales))
+                                                {{ ($user->group_sales > 0 ? 0 : $user->group_sales/$next_rank->group_sale_requirement)*100 }}%
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endif
                         @endif
+                        
 
                         <!-- Product Discount Entitlement -->
                         <div class="mt-3 border-top pt-3">
