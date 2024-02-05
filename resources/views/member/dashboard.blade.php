@@ -190,11 +190,11 @@
                                 </div>
                                 <div class="progress mt-2" style="height: 15px;">
                                     <div class="progress-bar" role="progressbar"
-                                        style="width: {{ $user->personal_sales == 0 ? 0 : ($user->personal_sales/$user->rank->personal_sales)*100 }}%;"
+                                        style="width: {{ $user->personal_sales == 0 ? 0 : min(($user->personal_sales/$user->rank->personal_sales)*100, 100) }}%;"
                                         aria-valuenow="{{ $user->personal_sales }}"
                                         aria-valuemin="0"
                                         aria-valuemax="{{ $user->rank->personal_sales }}">
-                                        {{ $user->personal_sales == 0 ? 0 : number_format(($user->personal_sales/$user->rank->personal_sales)*100,2) }}%
+                                        {{ $user->personal_sales == 0 ? 0 : number_format(min(($user->personal_sales/$user->rank->personal_sales)*100, 100), 2) }}%
                                     </div>
                                 </div>
                             </div>
