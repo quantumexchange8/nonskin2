@@ -80,8 +80,12 @@ class OrderController extends Controller
 
                     if ($user) {
                         // Update the user's personal_sales with the order's total_amount
+                        // personal sale
                         $user->personal_sales += $price;
+                        // group sale
                         $user->group_sales += $price;
+                        // monthly group sale
+                        $user->monthly_group_sale += $price;
                         $user->save();
                     
                         // Get the hierarchy list as an array of user IDs
@@ -97,6 +101,7 @@ class OrderController extends Controller
                                 $uplineUser = User::find($userId);
                                 if ($uplineUser) {
                                     $uplineUser->group_sales += $price;
+                                    $uplineUser->monthly_group_sale += $price;
                                     $uplineUser->save();
                                 }
                             }
