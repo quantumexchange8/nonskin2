@@ -143,7 +143,7 @@
                     data: { username: username },
                     success: function(response) {
                         if (response.unique === false) {
-                            console.log(response);
+                            // console.log(response);
                             $('#username').addClass('is-invalid');
                             $('#username-error').text('Username is already taken.');
                         } else {

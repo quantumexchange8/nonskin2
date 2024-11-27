@@ -12,8 +12,8 @@ use App\Models\WalletHistory;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Okipa\Grid\DataGrid;
-use Auth;
 use DB;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {

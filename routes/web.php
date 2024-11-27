@@ -74,7 +74,8 @@ Route::group(['prefix' => 'member',  'middleware' => ['auth', 'IsUser' ]], funct
     Route::get('/products_list', [ProductController::class, 'productlist'])->name('product-list');
     Route::get('/products_details/{product}', [ProductController::class, 'showdetails'])->name('showdetails');
     Route::post('/products_details/cart/{product}', [CartController::class, 'addToCartDetails'])->name('cart_add');
-
+    Route::post('/closeAnnoucement', [UserController::class, 'closeAnnoucement'])->name('closeAnnoucement');
+    
     // profile update route
     Route::get('/my_profile', [UserController::class, 'userprofile'])->name('userprofile');
     Route::post('/my_profile/update', [UserController::class, 'updateprofile'])->name('updateprofile');

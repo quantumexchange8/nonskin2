@@ -38,7 +38,7 @@ use App\Models\{State, BankSetting};
                                         {{Session::get('error')}}
                                     </div>
                                 @endif
-                                <form action="{{ route('add.member') }}" method="post" enctype="multipart/form-data">
+                                <form action="{{ route('add.member') }}" method="post" enctype="multipart/form-data" onsubmit="return false;">
                                     @csrf
                                     <div class="card-body">
                                         <ul class="wizard-nav mb-4">
@@ -186,8 +186,8 @@ use App\Models\{State, BankSetting};
                                                     <div class="row">
                                                         <div class="col-lg-6">
                                                             <div class="mb-3">
-                                                                <label for="address_1" class="form-label required">Address Line 1</label>
-                                                                <input type="text" class="form-control" placeholder="e.g. No. 1, Jalan Api 1" name="address_1" id="address_1" required>
+                                                                <label for="address_1" class="form-label">Address Line 1 (Optional)</label>
+                                                                <input type="text" class="form-control" placeholder="e.g. No. 1, Jalan Api 1" name="address_1" id="address_1" >
                                                                 <div class="invalid-feedback" id="address-1-error">
                                                                     <!-- Error message will be displayed here -->
                                                                 </div>
@@ -196,7 +196,7 @@ use App\Models\{State, BankSetting};
 
                                                         <div class="col-lg-6">
                                                             <div class="mb-3">
-                                                                <label for="address_2" class="form-label">Address Line 2</label>
+                                                                <label for="address_2" class="form-label">Address Line 2 (Optional)</label>
                                                                 <input type="text" class="form-control" placeholder="e.g. Taman Api" name="address_2" id="address_2">
                                                                 <div class="invalid-feedback" id="address-2-error">
                                                                     <!-- Error message will be displayed here -->
@@ -207,8 +207,8 @@ use App\Models\{State, BankSetting};
                                                     <div class="row">
                                                         <div class="col-lg-6">
                                                             <div class="mb-3">
-                                                                <label for="postcode" class="form-label required">Postcode</label>
-                                                                <input type="number" class="form-control" placeholder="e.g. 81300" name="postcode" id="postcode" required min="5">
+                                                                <label for="postcode" class="form-label">Postcode (Optional)</label>
+                                                                <input type="number" class="form-control" placeholder="e.g. 81300" name="postcode" id="postcode" >
                                                                 <div class="invalid-feedback" id="postcode-error">
                                                                     <!-- Error message will be displayed here -->
                                                                 </div>
@@ -217,8 +217,8 @@ use App\Models\{State, BankSetting};
 
                                                         <div class="col-lg-6">
                                                             <div class="mb-3">
-                                                                <label for="city" class="form-label required">City</label>
-                                                                <input type="text" class="form-control" placeholder="e.g. Johor Bahru" name="city" id="city" required>
+                                                                <label for="city" class="form-label">City (Optional)</label>
+                                                                <input type="text" class="form-control" placeholder="e.g. Johor Bahru" name="city" id="city" >
                                                                 <div class="invalid-feedback" id="city-error">
                                                                     <!-- Error message will be displayed here -->
                                                                 </div>
@@ -229,8 +229,8 @@ use App\Models\{State, BankSetting};
                                                         <div class="col-lg-6">
                                                             <div class="mb-3">
                                                                 <label for="state"
-                                                                    class="form-label required">State</label>
-                                                                <select class="form-select @error('state') is-invalid @enderror" class="form-control" name="state" id="state" required>
+                                                                    class="form-label">State (Optional)</label>
+                                                                <select class="form-select @error('state') is-invalid @enderror" class="form-control" name="state" id="state" >
                                                                     <option value="">Select State</option>
                                                                     @foreach ($states as $state)
                                                                         <option value="{{ $state->name }}">{{ $state->name }}</option>
@@ -246,8 +246,8 @@ use App\Models\{State, BankSetting};
 
                                                         <div class="col-lg-6">
                                                             <div class="mb-3">
-                                                                <label for="country" class="form-label required">Country</label>
-                                                                <select class="form-select @error('country') is-invalid @enderror" name="country" id="country" required>
+                                                                <label for="country" class="form-label">Country (Optional)</label>
+                                                                <select class="form-select @error('country') is-invalid @enderror" name="country" id="country" >
                                                                     <option value="">Select Country</option>
                                                                     @foreach ($countries as $country)
                                                                         <option value="{{ $country->name }}">{{ $country->name }}</option>
@@ -276,8 +276,8 @@ use App\Models\{State, BankSetting};
                                                     <div class="row">
                                                         <div class="col-lg-6">
                                                             <div class="mb-3">
-                                                                <label class="form-label required">Bank Name</label>
-                                                                <select class="form-select" name="bank_name" id="bank_name" required>
+                                                                <label class="form-label">Bank Name (Optional)</label>
+                                                                <select class="form-select" name="bank_name" id="bank_name" >
                                                                     @foreach ($banks as $bank)
                                                                         <option class="form-select" value="{{ $bank->name }}">{{ $bank->name }}</option>
                                                                     @endforeach
@@ -287,10 +287,10 @@ use App\Models\{State, BankSetting};
                                                         <div class="col-lg-6">
                                                             <div class="mb-3">
                                                                 <span class="d-flex justify-content-between">
-                                                                    <label for="bank_holder_name" class="form-label required">Bank Holder Name</label>
+                                                                    <label for="bank_holder_name" class="form-label">Bank Holder Name (Optional)</label>
                                                                     <label for="copy-id-no font-size-12">Same as Full Name? <input class="form-checkbox" type="checkbox" id="copy-full-name" /></label>
                                                                 </span>
-                                                                <input type="text" class="form-control" placeholder="e.g. John Lee Doe" name="bank_holder_name" id="bank_holder_name" required>
+                                                                <input type="text" class="form-control" placeholder="e.g. John Lee Doe" name="bank_holder_name" id="bank_holder_name" >
                                                                 <div class="invalid-feedback" id="bank_holder_name-error">
                                                                     <!-- Error message will be displayed here -->
                                                                 </div>
@@ -300,8 +300,8 @@ use App\Models\{State, BankSetting};
                                                     <div class="row">
                                                         <div class="col-lg-6">
                                                             <div class="mb-3">
-                                                                <label for="bank_acc_no" class="form-label required">Bank Acc Number</label>
-                                                                <input type="number" class="form-control" placeholder="Enter Bank Acc Number" name="bank_acc_no" id="bank_acc_no" required>
+                                                                <label for="bank_acc_no" class="form-label">Bank Acc Number (Optional)</label>
+                                                                <input type="number" class="form-control" placeholder="Enter Bank Acc Number" name="bank_acc_no" id="bank_acc_no" >
                                                                 <div class="invalid-feedback" id="bank_acc_no-error">
                                                                     <!-- Error message will be displayed here -->
                                                                 </div>
@@ -311,10 +311,10 @@ use App\Models\{State, BankSetting};
                                                         <div class="col-lg-6">
                                                             <div class="mb-3">
                                                                 <span class="d-flex justify-content-between">
-                                                                <label for="bank_ic" class="form-label required">Bank Identification Number</label>
+                                                                <label for="bank_ic" class="form-label">Bank Identification Number (Optional)</label>
                                                                     <label for="copy-id-no font-size-12">Same as IC No? <input class="form-checkbox" type="checkbox" id="copy-id-no" /></label>
                                                                 </span>
-                                                                <input type="number" class="form-control" placeholder="Enter Bank Identification Number" name="bank_ic" id="bank_ic" required>
+                                                                <input type="number" class="form-control" placeholder="Enter Bank Identification Number" name="bank_ic" id="bank_ic" >
                                                                 <div class="invalid-feedback" id="bank_ic-error">
                                                                     <!-- Error message will be displayed here -->
                                                                 </div>
@@ -328,7 +328,7 @@ use App\Models\{State, BankSetting};
 
                                         <div class="d-flex align-items-start gap-3 mt-4">
                                             <button type="button" class="btn btn-primary w-sm" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
-                                            <button type="submit" class="btn btn-primary w-sm ms-auto" id="nextBtn" onclick="validateForm(1)">Next</button>
+                                            <button type="button" class="btn btn-primary w-sm ms-auto" id="nextBtn" onclick="nextPrev(1)">Next</button>
                                         </div>
                                     </div>
                                     {{-- <div class="row mb-4">
@@ -375,75 +375,82 @@ use App\Models\{State, BankSetting};
             let x = document.getElementsByClassName("wizard-tab");
             x[n].style.display = "block";
 
+            // Handle visibility of "Previous" button
             if (n == 0) {
-            document.getElementById("prevBtn").style.display = "none";
+                document.getElementById("prevBtn").style.display = "none";
             } else {
-            document.getElementById("prevBtn").style.display = "inline";
+                document.getElementById("prevBtn").style.display = "inline";
             }
+
+            // Handle "Next" or "Submit" button text and type
             if (n == x.length - 1) {
                 document.getElementById("nextBtn").innerHTML = "Submit";
-            document.getElementById("nextBtn").setAttribute("type", "submit");
+                document.getElementById("nextBtn").onclick = function () {
+                    let isValid = validateForm(); // Validate the last tab
+                    if (isValid) {
+                        document.querySelector("form").onsubmit = null; // Allow submission
+                        document.querySelector("form").submit();
+                    }
+                };
             } else {
                 document.getElementById("nextBtn").innerHTML = "Next";
-            document.getElementById("nextBtn").setAttribute("type", "button");
+                document.getElementById("nextBtn").onclick = function () {
+                    nextPrev(1); // Move to the next tab
+                };
             }
 
             fixStepIndicator(n);
         }
 
-        function validateForm(n) {
+        function validateForm() {
             let x = document.getElementsByClassName("wizard-tab");
-            let isValid = true;
             let inputs = x[currentTab].querySelectorAll("input[required], select[required]");
+            let isValid = true;
 
             // Validate required fields in the current tab
             for (let i = 0; i < inputs.length; i++) {
                 if (!inputs[i].value.trim()) {
                     isValid = false;
-                    inputs[i].classList.add("is-invalid");
+                    inputs[i].classList.add("is-invalid"); // Add invalid class for highlighting
                 } else {
                     inputs[i].classList.remove("is-invalid");
                 }
             }
 
-            if (isValid) {
-            x[currentTab].style.display = "none";
-            currentTab = currentTab + n;
-
-            if (currentTab >= x.length) {
-                currentTab = currentTab - n;
-                x[currentTab].style.display = "block";
-            }
-
-            showTab(currentTab);
-            }
+            return isValid; // Return true only if all fields are valid
         }
         
 
         function nextPrev(n) {
-            // This function will figure out which tab to display
             let x = document.getElementsByClassName("wizard-tab");
 
-            // Hide the current tab:
-            x[currentTab].style.display = "none";
-            // Increase or decrease the current tab by 1:
-            currentTab = currentTab + n;
-            // if you have reached the end of the form...
-            if (currentTab >= x.length) {
-                currentTab = currentTab - n;
-                x[currentTab].style.display = "block";
+            if (n === 1 && !validateForm()) {
+                // If validation fails, stop navigation
+                return false;
             }
-            // Otherwise, display the correct tab:
-            showTab(currentTab)
+
+            // Hide the current tab
+            x[currentTab].style.display = "none";
+
+            // Move to the next or previous tab
+            currentTab = currentTab + n;
+
+            // Prevent moving beyond the last or before the first tab
+            if (currentTab >= x.length) {
+                currentTab = x.length - 1;
+            }
+            if (currentTab < 0) {
+                currentTab = 0;
+            }
+
+            // Show the current tab
+            showTab(currentTab);
         }
-
-        
-
 
         function fixStepIndicator(n) {
             let i, x = document.getElementsByClassName("list-item");
             for (i = 0; i < x.length; i++) {
-            x[i].className = x[i].className.replace(" active", "");
+                x[i].className = x[i].className.replace(" active", "");
             }
             x[n].className += " active";
         }
@@ -689,121 +696,121 @@ use App\Models\{State, BankSetting};
             validatePasswordFields();
         });
 
-        $('#address_1').on('keyup', function() {
-            let address1 = $(this).val().trim();
+        // $('#address_1').on('keyup', function() {
+        //     let address1 = $(this).val().trim();
 
-            // Show error if field is blank
-            if (address1 === '') {
-                $('#address_1').addClass('is-invalid');
-                $('#address_1-error').text('This field is required.');
-                return;
-            } else {
-                $('#address_1').removeClass('is-invalid');
-                $('#address_1').addClass('is-valid');
-                $('#address_1-error').text('');
-            }
-        });
-        $('#address_2').on('keyup', function() {
-            let address2 = $(this).val().trim();
+        //     // Show error if field is blank
+        //     if (address1 === '') {
+        //         $('#address_1').addClass('is-invalid');
+        //         $('#address_1-error').text('This field is required.');
+        //         return;
+        //     } else {
+        //         $('#address_1').removeClass('is-invalid');
+        //         $('#address_1').addClass('is-valid');
+        //         $('#address_1-error').text('');
+        //     }
+        // });
+        // $('#address_2').on('keyup', function() {
+        //     let address2 = $(this).val().trim();
 
-            // Show error if field is blank
-            if (address2 !== '') {
-                $('#address_2').removeClass('is-invalid');
-                $('#address_2').addClass('is-valid');
-                $('#address_2-error').text('');
-            }
-        });
-        $('#postcode').on('keyup', function() {
-            let postcode = $(this).val().trim();
+        //     // Show error if field is blank
+        //     if (address2 !== '') {
+        //         $('#address_2').removeClass('is-invalid');
+        //         $('#address_2').addClass('is-valid');
+        //         $('#address_2-error').text('');
+        //     }
+        // });
+        // $('#postcode').on('keyup', function() {
+        //     let postcode = $(this).val().trim();
 
-            // Show error if field is blank
-            if (postcode === '') {
-                $('#postcode').addClass('is-invalid');
-                $('#postcode-error').text('This field is required.');
-                return;
-            } else if (postcode.length !== 5) {
-                $('#postcode').addClass('is-invalid');
-                $('#postcode-error').text('Check the postcode.');
-            }
-            else {
-                $('#postcode').removeClass('is-invalid');
-                $('#postcode').addClass('is-valid');
-                $('#postcode-error').text('');
-            }
-        });
-        $('#city').on('keyup', function() {
-            let city = $(this).val().trim();
+        //     // Show error if field is blank
+        //     if (postcode === '') {
+        //         $('#postcode').addClass('is-invalid');
+        //         $('#postcode-error').text('This field is required.');
+        //         return;
+        //     } else if (postcode.length !== 5) {
+        //         $('#postcode').addClass('is-invalid');
+        //         $('#postcode-error').text('Check the postcode.');
+        //     }
+        //     else {
+        //         $('#postcode').removeClass('is-invalid');
+        //         $('#postcode').addClass('is-valid');
+        //         $('#postcode-error').text('');
+        //     }
+        // });
+        // $('#city').on('keyup', function() {
+        //     let city = $(this).val().trim();
 
-            // Show error if field is blank
-            if (city === '') {
-                $('#city').addClass('is-invalid');
-                $('#city-error').text('This field is required.');
-                return;
-            } else {
-                $('#city').removeClass('is-invalid');
-                $('#city').addClass('is-valid');
-                $('#city-error').text('');
-            }
-        });
-        $('#bank_name').on('keyup', function() {
-            let bank = $(this).val().trim();
+        //     // Show error if field is blank
+        //     if (city === '') {
+        //         $('#city').addClass('is-invalid');
+        //         $('#city-error').text('This field is required.');
+        //         return;
+        //     } else {
+        //         $('#city').removeClass('is-invalid');
+        //         $('#city').addClass('is-valid');
+        //         $('#city-error').text('');
+        //     }
+        // });
+        // $('#bank_name').on('keyup', function() {
+        //     let bank = $(this).val().trim();
 
-            // Show error if field is blank
-            if (bank === '') {
-                $('#bank_name').addClass('is-invalid');
-                $('#bank_name-error').text('This field is required.');
-                return;
-            } else {
-                $('#bank_name').removeClass('is-invalid');
-                $('#bank_name').addClass('is-valid');
-                $('#bank_name-error').text('');
-            }
-        });
-        $('#bank_holder_name').on('keyup', function() {
-            let holdername = $(this).val().trim();
+        //     // Show error if field is blank
+        //     if (bank === '') {
+        //         $('#bank_name').addClass('is-invalid');
+        //         $('#bank_name-error').text('This field is required.');
+        //         return;
+        //     } else {
+        //         $('#bank_name').removeClass('is-invalid');
+        //         $('#bank_name').addClass('is-valid');
+        //         $('#bank_name-error').text('');
+        //     }
+        // });
+        // $('#bank_holder_name').on('keyup', function() {
+        //     let holdername = $(this).val().trim();
 
-            // Show error if field is blank
-            if (holdername === '') {
-                $('#bank_holder_name').addClass('is-invalid');
-                $('#bank_holder_name-error').text('This field is required.');
-                return;
-            } else {
-                $('#bank_holder_name').removeClass('is-invalid');
-                $('#bank_holder_name').addClass('is-valid');
-                $('#bank_holder_name-error').text('');
-            }
-        });
-        $('#bank_acc_no').on('keyup', function() {
-            let bankaccno = $(this).val().trim();
+        //     // Show error if field is blank
+        //     if (holdername === '') {
+        //         $('#bank_holder_name').addClass('is-invalid');
+        //         $('#bank_holder_name-error').text('This field is required.');
+        //         return;
+        //     } else {
+        //         $('#bank_holder_name').removeClass('is-invalid');
+        //         $('#bank_holder_name').addClass('is-valid');
+        //         $('#bank_holder_name-error').text('');
+        //     }
+        // });
+        // $('#bank_acc_no').on('keyup', function() {
+        //     let bankaccno = $(this).val().trim();
 
-            // Show error if field is blank
-            if (bankaccno === '') {
-                $('#bank_acc_no').addClass('is-invalid');
-                $('#bank_acc_no-error').text('This field is required.');
-                return;
-            } else {
-                $('#bank_acc_no').removeClass('is-invalid');
-                $('#bank_acc_no').addClass('is-valid');
-                $('#bank_acc_no-error').text('');
-            }
-        });
-        $('#bank_ic').on('keyup', function() {
-            let bankid = $(this).val().trim();
+        //     // Show error if field is blank
+        //     if (bankaccno === '') {
+        //         $('#bank_acc_no').addClass('is-invalid');
+        //         $('#bank_acc_no-error').text('This field is required.');
+        //         return;
+        //     } else {
+        //         $('#bank_acc_no').removeClass('is-invalid');
+        //         $('#bank_acc_no').addClass('is-valid');
+        //         $('#bank_acc_no-error').text('');
+        //     }
+        // });
+        // $('#bank_ic').on('keyup', function() {
+        //     let bankid = $(this).val().trim();
 
-            // Show error if field is blank
-            if (bankid === '') {
-                $('#bank_ic').addClass('is-invalid');
-                $('#bank_ic-error').text('This field is required.');
-                return;
-            } else if (!/^\d{8,12}$/.test(bankid)) {
-                $('#bank_ic').addClass('is-invalid');
-                $('#bank_ic-error').text('ID Number must be a number with 8 to 12 digits.');
-            } else {
-                $('#bank_ic').removeClass('is-invalid');
-                $('#bank_ic').addClass('is-valid');
-                $('#bank_ic-error').text('');
-            }
-        });
+        //     // Show error if field is blank
+        //     if (bankid === '') {
+        //         $('#bank_ic').addClass('is-invalid');
+        //         $('#bank_ic-error').text('This field is required.');
+        //         return;
+        //     } else if (!/^\d{8,12}$/.test(bankid)) {
+        //         $('#bank_ic').addClass('is-invalid');
+        //         $('#bank_ic-error').text('ID Number must be a number with 8 to 12 digits.');
+        //     } else {
+        //         $('#bank_ic').removeClass('is-invalid');
+        //         $('#bank_ic').addClass('is-valid');
+        //         $('#bank_ic-error').text('');
+        //     }
+        // });
 
         $(document).ready(function() {
             $('#copy-id-no').change(function() {

@@ -16,19 +16,33 @@
                             </div>
                             <hr />
                             <div>
-                                <img class="card-img-top img-fluid mb-3 p-1"
-                                    src="{{ asset('images/announcements/' . $row['image']) }}"
-                                    alt="{{ $row['title'] }}">
+                                @if ($row['image'])
+                                    <img class="card-img-top img-fluid mb-3 p-1"
+                                        src="{{ asset('images/announcements/' . $row['image']) }}"
+                                        alt="{{ $row['title'] }}">
+                                @endif
                                 <p class="card-text">{!! $row['content'] !!}</p>
                             </div>
                         </div>
                     </div>
                 @endforeach
             </div>
-            <div class="modal-footer">
-                <a class="btn btn-primary" href="{{ route('member.announcement') }}">@lang('translation.View All Announcement')</a>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@lang('translation.close')</button>
-            </div>
+            <form action="{{ route('closeAnnoucement') }}" method="POST">
+                @csrf
+                <div class="modal-footer">
+                    <div style="display: flex; flex-direction:column">
+                        <div>
+                            <input type="hidden" id="user_id" name="user_id" value="{{ auth()->user()->id }}">
+                            <input type="checkbox" id="showStatus" name="showStatus" value="no">
+                            <label for="showStatus"> Do not show it again today</label>
+                        </div>
+                        <div style="display: flex; gap: 5px">
+                            <a class="btn btn-primary" href="{{ route('member.announcement') }}">@lang('translation.View All Announcement')</a>
+                            <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">@lang('translation.close')</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>

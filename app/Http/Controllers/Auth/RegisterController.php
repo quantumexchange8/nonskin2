@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
@@ -69,17 +69,17 @@ class RegisterController extends Controller
             'password_confirmation' => ['min:8'],
             'avatar' => ['nullable', 'image' ,'mimes:jpg,jpeg,png','max:1024'],
 
-            'address_1' => ['required', 'string', 'max:255'],
-            'address_2' => ['required', 'string', 'max:255'],
-            'city' => ['required', 'string', 'max:255'],
-            'postcode' => ['required', 'numeric'],
-            'state' => ['required', 'string'],
-            'country' => ['required', 'string', 'max:50'],
+            // 'address_1' => ['required', 'string', 'max:255'],
+            // 'address_2' => ['required', 'string', 'max:255'],
+            // 'city' => ['required', 'string', 'max:255'],
+            // 'postcode' => ['required', 'numeric'],
+            // 'state' => ['required', 'string'],
+            // 'country' => ['required', 'string', 'max:50'],
 
-            'bank_name' => ['required', 'string', 'max:100'],
-            'bank_holder_name' => ['required', 'string', 'max:100'],
-            'bank_acc_no' => ['required', 'numeric'],
-            'bank_ic' => ['required', 'string', 'max:20'],
+            // 'bank_name' => ['required', 'string', 'max:100'],
+            // 'bank_holder_name' => ['required', 'string', 'max:100'],
+            // 'bank_acc_no' => ['required', 'numeric'],
+            // 'bank_ic' => ['required', 'string', 'max:20'],
         ]);
     }
 
@@ -140,12 +140,13 @@ class RegisterController extends Controller
         // $validator = $this->validator($request->all());
 
         // if user inputs referral in registration form
+        // dd($request->all());
 
         if($request->referral != null){
             $uplineId = User::where('referrer_id', $request->referral)->first();
 
             if(!$uplineId) {
-                Alert::error('invalid action', 'invalid_referral_code');
+                // Alert::error('invalid action', 'invalid_referral_code');
                 return back()->withInput($request->input())->withErrors(['error_messages'=>'Invalid referral code!']);
             }
 

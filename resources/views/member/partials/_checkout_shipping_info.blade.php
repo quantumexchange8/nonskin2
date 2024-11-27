@@ -32,17 +32,27 @@
                 <div>
                     <label class="card-radio-label mb-0">
                         <input type="radio" name="address" id="address{{ $v->id }}" onchange="updateShippingCharge(this)" class="card-radio-input" data-name="{{ $v->name }}"
-                            data-contact="{{ $v->contact }}" data-shipping-charge="{{ $v->shippingCharge->amount }}"
-                            value="{{ $v->address_1 }}, {{ $v->address_2 }}, {{ $v->postcode }}, {{ $v->city }}, {{ $v->state }}, {{ $v->country }}">
+                            data-contact="{{ $v->contact }}" data-shipping-charge="{{ $v->shippingCharge ? $v->shippingCharge->amount : 0 }}"
+                            value="{{ $v->address_1 }}, {{ $v->address_2 }}, {{ $v->postcode }}, {{ $v->city }}, {{ $v->state }}, {{ $v->country }}"
+                            @if (empty($v->address_1) && empty($v->address_2) && empty($v->postcode) && empty($v->city) && empty($v->state) && empty($v->country))
+                                disabled
+                            @endif
+                            >
 
                         <div class="card-radio text-truncate p-3">
                             <span class="fs-14 mb-2 d-block">
                                 {{ $v->name }}
                                 
                             </span>
-                            <span class="text-muted fw-normal text-wrap mb-1 d-block">
-                                {{ $v->address_1 }}, {{ $v->address_2 }}, {{ $v->postcode }}, {{ $v->city }}, {{ $v->state }}, {{ $v->country }}
-                            </span>
+                            @if ($v->address_1 || $v->address_2 || $v->postcode || $v->city || $v->state || $v->country)
+                                <span class="text-muted fw-normal text-wrap mb-1 d-block">
+                                    {{ $v->address_1 ? $v->address_1 : '-' }}, {{ $v->address_2 }}, {{ $v->postcode }}, {{ $v->city }}, {{ $v->state }}, {{ $v->country }}
+                                </span>
+                            @else
+                                <span class="text-muted fw-normal text-wrap mb-1 d-block">
+                                    Address: <span style="font-size: 12px"><b>Not Complete</b></span>
+                                </span>
+                            @endif
                             <span class="text-muted fw-normal d-block">Contact: {{ $v->contact }}</span>
                         </div>
                     </label>

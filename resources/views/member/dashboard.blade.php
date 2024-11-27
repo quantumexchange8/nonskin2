@@ -12,7 +12,10 @@
         @foreach ($announcements as $k => $v)
             @include('member.modals.announcement-detail')
         @endforeach
-        @if ($announcements->isNotEmpty())
+        {{-- @php
+            dd($announcements);
+        @endphp --}}
+        @if (!empty($announcements))
             @include('member.modals.announcement-popup')
         @endif
     @endif
@@ -573,7 +576,7 @@
         });
     </script>
     @if (session('show_announcement'))
-        @if ($announcements->isNotEmpty())
+        @if (!empty($announcements))
             <script>
                 $(document).ready(function() {
                     let announcementModal = new bootstrap.Modal(document.getElementById('announcementModal'));

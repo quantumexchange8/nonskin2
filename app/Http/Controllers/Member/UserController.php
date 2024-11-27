@@ -25,8 +25,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 Use Alert;
+use App\Models\AnnouncementView;
 use Session;
 use Carbon\Carbon;
 
@@ -104,29 +105,57 @@ class UserController extends Controller
                 ->first();
         }
 
-        
+        $checkUserAnnounce = AnnouncementView::where('user_id', $user->id)->first();
 
         $announcements = [];
-        if (Session::has('show_announcement')) {
-            $announcements = Announcement::query()->where('status', 1)->where('popup', true)->latest()->get();
-            if ($announcements->isNotEmpty()) {
-                $popup_once_announcements = $announcements->where('popup_once', true);
-                if ($popup_once_announcements->isNotEmpty()) {
-                    $ids = $popup_once_announcements->pluck('id');
 
-                    $readAnnouncements = AnnouncementLog::where('user', $user->id)->whereIn('announcementId', $ids)->pluck('announcementId');
+        if ($checkUserAnnounce) {
+            if ($checkUserAnnounce->view === 'yes') {
+                if (Session::has('show_announcement')) {
+                    $announcements = Announcement::query()->where('status', 1)->where('popup', true)->latest()->get();
+                    if ($announcements->isNotEmpty()) {
+                        $popup_once_announcements = $announcements->where('popup_once', true);
+                        if ($popup_once_announcements->isNotEmpty()) {
+                            $ids = $popup_once_announcements->pluck('id');
+    
+                            $readAnnouncements = AnnouncementLog::where('user', $user->id)->whereIn('announcementId', $ids)->pluck('announcementId');
+    
+                            $announcements = $announcements->whereNotIn('id', $readAnnouncements);
+    
+                            $unreadAnnouncementsIds = $popup_once_announcements->whereNotIn('id', $readAnnouncements)->pluck('id');
+    
+                            foreach ($unreadAnnouncementsIds as $id) {
+                                AnnouncementLog::create(['user' => $user->id, 'announcementId' => intval($id)]);
+                            }
+                        }
+                    }
+                }
+            }
 
-                    $announcements = $announcements->whereNotIn('id', $readAnnouncements);
+        } else {
+            if (Session::has('show_announcement')) {
+                $announcements = Announcement::query()->where('status', 1)->where('popup', true)->latest()->get();
+                if ($announcements->isNotEmpty()) {
+                    $popup_once_announcements = $announcements->where('popup_once', true);
+                    if ($popup_once_announcements->isNotEmpty()) {
+                        $ids = $popup_once_announcements->pluck('id');
 
-                    $unreadAnnouncementsIds = $popup_once_announcements->whereNotIn('id', $readAnnouncements)->pluck('id');
+                        $readAnnouncements = AnnouncementLog::where('user', $user->id)->whereIn('announcementId', $ids)->pluck('announcementId');
 
-                    foreach ($unreadAnnouncementsIds as $id) {
-                        AnnouncementLog::create(['user' => $user->id, 'announcementId' => intval($id)]);
+                        $announcements = $announcements->whereNotIn('id', $readAnnouncements);
+
+                        $unreadAnnouncementsIds = $popup_once_announcements->whereNotIn('id', $readAnnouncements)->pluck('id');
+
+                        foreach ($unreadAnnouncementsIds as $id) {
+                            AnnouncementLog::create(['user' => $user->id, 'announcementId' => intval($id)]);
+                        }
                     }
                 }
             }
         }
-        // dd($curMonthGroup);
+
+        
+        // dd($announcements);
         return view('member.dashboard', compact('user', 'next_rank', 'referral', 'announcements', 'ranking', 'curMonthPersonal', 'curMonthGroup'));
     }
 
@@ -705,5 +734,31 @@ class UserController extends Controller
     public function changepassword()
     {
         return view('member.profile.changepassword');
+    }
+
+    public function closeAnnoucement(Request $request)
+    {
+
+        $user = Auth::user();
+
+        $checkUserAnnounce = AnnouncementView::where('user_id', $user->id)->first();
+
+        if ($checkUserAnnounce) {
+            if ($request->showStatus === 'no') {
+                $checkUserAnnounce->update([
+                    'view' => 'no',
+                ]);
+            }
+        } else {
+            if ($request->showStatus === 'no') {
+                $announceView = AnnouncementView::create([
+                    'user_id' => $user->id,
+                    'view' => 'no',
+                ]);
+            }
+        }
+
+        return redirect()->back();
+
     }
 }

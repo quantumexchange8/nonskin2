@@ -40,7 +40,7 @@ class AnnouncementController extends Controller
         }
 
         $popup = $request->input('popup') === 'on' ? 1 : 0;
-        $popup_once = $request->input('popup_once') === 'on' ? 1 : 0;
+        // $popup_once = $request->input('popup_once') === 'on' ? 1 : 0;
 
         if ($request->hasFile('image')){
             $imageName = time().'.'.$request->image->extension();
@@ -55,7 +55,7 @@ class AnnouncementController extends Controller
         $announcement->start_date       = $request->input('start_date');
         $announcement->end_date       = $request->input('end_date');
         $announcement->popup       = $popup;
-        $announcement->popup_once       = $popup_once;
+        $announcement->popup_once       = 1;
         $announcement->created_by       = $announcement->created_by ?? Auth::id();
         $announcement->updated_by       = Auth::id();
         $announcement->save();

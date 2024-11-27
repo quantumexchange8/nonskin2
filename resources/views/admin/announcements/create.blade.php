@@ -125,7 +125,7 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        <div class="col-4">
+                                        {{-- <div class="col-4">
                                             <div class="mb-3">
                                                 <label class="form-label" for="status">Popup Once</label>
                                                 <div class="form-check form-switch form-switch-md mb-3" dir="ltr">
@@ -138,7 +138,7 @@
                                                     </span>
                                                 @endif
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                             </div>

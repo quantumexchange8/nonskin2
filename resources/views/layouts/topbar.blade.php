@@ -111,9 +111,9 @@
                     <i class='bx bx-cart'></i>
                     <span class="noti-dot bg-danger rounded-pill">
                         @php
-                            $cart = App\Models\Cart::where('user_id', auth()->id())->with(['product'])->first();
-
-                            $cartItemsCount = $cart->items->count()
+                            $cart = App\Models\Cart::where('user_id', Auth::user()->id)->with(['product'])->first();
+                            
+                            $cartItemsCount = $cart->cartItem->count();
 
                         @endphp
                         {{ $cartItemsCount }}

@@ -30,4 +30,9 @@ class Cart extends Model
         return $this->hasMany(CartItem::class);
     }
 
+    public function cartItem(): \Illuminate\Database\Eloquent\Relations\hasMany
+    {
+        return $this->hasMany(CartItem::class, 'cart_id', 'id');
+    }
+
 }

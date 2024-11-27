@@ -184,10 +184,12 @@ class CartController extends Controller
 
     public function addToCart(Request $request)
     {
-        // dd($request->all());
+        
         $productId = $request->input('product_id');
         $productPrice = $request->input('price');
         $quantity = $request->input('quantity');
+
+        $user = Auth::user();
         
         // Retrieve the user's cart
         $cart = Cart::where('user_id', Auth::id())->first();
@@ -210,10 +212,27 @@ class CartController extends Controller
         if ($cartItem) {
             $cartItem->increment('quantity', $quantity);
             $cartItem->updated_by = Auth::id();
+
+            if ($user->rank_id == 2) {
+                $member_discount_amount = 10;
+            } elseif ($user->rank_id == 3) {
+                $member_discount_amount = 35;
+            } elseif ($user->rank_id == 4) {
+                $member_discount_amount = 45;
+            } elseif ($user->rank_id == 5) {
+                $member_discount_amount = 50;
+            } else {
+                $member_discount_amount = 0; // Handle other ranks if needed
+            }
+
+            $discount_percent_amount = $member_discount_amount * ($productPrice / 100);
+            $total_amount = $productPrice - $discount_percent_amount;
+            
+            $cartItem->total_amount += $total_amount;
+            
             $cartItem->save();
         } else {
 
-            $user = Auth::user();
             if ($user->rank_id == 2) {
                 $member_discount_amount = 10;
             } elseif ($user->rank_id == 3) {
