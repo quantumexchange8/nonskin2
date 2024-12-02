@@ -110,7 +110,15 @@ class User extends Authenticatable
     }
     public function rank()
     {
-        return $this->hasOne(Rankings::class, 'id', 'rank_id');
+        $promo = DateTimeLogs::latest()->first();
+
+        if ($promo && $promo->status === 'active') {
+            $promoStatus = 'promotion';
+        } else {
+            $promoStatus = 'normal';
+        }
+
+        return $this->belongsTo(Rankings::class, 'rank_id', 'level')->where('category', $promoStatus);
     }
 
     public function orders()

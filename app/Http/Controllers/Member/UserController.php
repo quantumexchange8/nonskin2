@@ -155,7 +155,7 @@ class UserController extends Controller
         }
 
         
-        // dd($announcements);
+        // dd($user);
         return view('member.dashboard', compact('user', 'next_rank', 'referral', 'announcements', 'ranking', 'curMonthPersonal', 'curMonthGroup'));
     }
 
