@@ -294,22 +294,22 @@
                                         </div>
                                     </div>
                                     <div class="flex-1 text-end">
-                                        @if(($user->monthly_group_sale == 0 ? 0 : $user->monthly_group_sale/$next_rank->price_dif)*100 >= 100)
+                                        {{-- @if(($user->monthly_group_sale == 0 ? 0 : $user->monthly_group_sale/$next_rank->price_dif)*100 >= 100)
                                             <span class="badge badge-soft-success">QUALIFIED</span>
                                         @else
                                             <span class="badge badge-soft-danger">NOT YET QUALIFIED</span>
-                                        @endif
+                                        @endif --}}
                                         <h5 class="mt-1 mb-0 font-size-14">RM {{ number_format($next_rank->price_dif,2) }}</h5>
                                     </div>
                                 </div>
                                 <div class="progress mt-2" style="height: 15px;">
-                                    <div class="progress-bar" role="progressbar"
+                                    {{-- <div class="progress-bar" role="progressbar"
                                         style="width: {{ $user->monthly_group_sale > 0 ? min(($user->monthly_group_sale/$next_rank->price_dif)*100, 100) : 0 }}%;"
                                         aria-valuenow="{{ $user->monthly_group_sale }}"
                                         aria-valuemin="0"
                                         aria-valuemax="{{ $next_rank->price_dif }}">
                                         {{ $user->monthly_group_sale == 0 ? 0 : number_format(min(($user->monthly_group_sale/$next_rank->price_dif)*100, 100), 2) }}%
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
 
