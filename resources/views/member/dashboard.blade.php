@@ -294,26 +294,42 @@
                                         </div>
                                     </div>
                                     <div class="flex-1 text-end">
-                                        @if($next_rank->price_dif > 0 && ($user->monthly_group_sale / $next_rank->price_dif) * 100 >= 100)
-                                            <span class="badge badge-soft-success">QUALIFIED</span>
+                                        @if($next_rank)
+                                            @if($next_rank->price_dif > 0 && ($user->monthly_group_sale / $next_rank->price_dif) * 100 >= 100)
+                                                <span class="badge badge-soft-success">QUALIFIED</span>
+                                            @else
+                                                <span class="badge badge-soft-danger">NOT YET QUALIFIED</span>
+                                            @endif
+                                            @if($next_rank->price_dif)
+                                                <h5 class="mt-1 mb-0 font-size-14">RM {{ number_format($next_rank->price_dif,2) }}</h5>
+                                            @else
+                                                <h5 class="mt-1 mb-0 font-size-14">RM {{ number_format($next_rank->package_requirement,2) }}</h5>
+                                            @endif
                                         @else
-                                            <span class="badge badge-soft-danger">NOT YET QUALIFIED</span>
+                                            <h5 class="mt-1 mb-0 font-size-14">Max</h5>
                                         @endif
-                                        @if($next_rank->price_dif)
-                                            <h5 class="mt-1 mb-0 font-size-14">RM {{ number_format($next_rank->price_dif,2) }}</h5>
-                                        @else
-                                            <h5 class="mt-1 mb-0 font-size-14">RM {{ number_format($next_rank->package_requirement,2) }}</h5>
-                                        @endif
+                                        
                                     </div>
                                 </div>
                                 <div class="progress mt-2" style="height: 15px;">
-                                    <div class="progress-bar" role="progressbar"
-                                        style="width: {{ ($next_rank->price_dif > 0 && $user->monthly_group_sale > 0) ? min(($user->monthly_group_sale / $next_rank->price_dif) * 100, 100) : 0 }}%;"
-                                        aria-valuenow="{{ $user->monthly_group_sale }}"
-                                        aria-valuemin="0"
-                                        aria-valuemax="{{ $next_rank->price_dif > 0 ? $next_rank->price_dif : 100 }}">
-                                        {{ ($next_rank->price_dif > 0 && $user->monthly_group_sale > 0) ? number_format(min(($user->monthly_group_sale / $next_rank->price_dif) * 100, 100), 2) : '0.00' }}%
-                                    </div>
+                                    @if($next_rank)
+                                        <div class="progress-bar" role="progressbar"
+                                            style="width: {{ ($next_rank->price_dif > 0 && $user->monthly_group_sale > 0) ? min(($user->monthly_group_sale / $next_rank->price_dif) * 100, 100) : 0 }}%;"
+                                            aria-valuenow="{{ $user->monthly_group_sale }}"
+                                            aria-valuemin="0"
+                                            aria-valuemax="{{ $next_rank->price_dif > 0 ? $next_rank->price_dif : 100 }}">
+                                            {{ ($next_rank->price_dif > 0 && $user->monthly_group_sale > 0) ? number_format(min(($user->monthly_group_sale / $next_rank->price_dif) * 100, 100), 2) : '0.00' }}%
+                                        </div>
+                                    @else
+                                        <div class="progress-bar" role="progressbar"
+                                            style="width: {{ 100 }}%;"
+                                            aria-valuenow="{{ $user->monthly_group_sale }}"
+                                            aria-valuemin="0"
+                                            aria-valuemax="{{ 100 }}">
+                                            {{ 100 }}%
+                                        </div>
+                                    @endif
+                                    
                                 </div>
                             </div>
 
