@@ -74,6 +74,12 @@
                                 <input type="text" class="form-control contact-input" placeholder="e.g. 01178781515" value="{{ $user->contact ?? '-N/A-' }}" name="contact">
                             </div>
                         </div>
+                        <div class="mb-3 row">
+                            <label for="contact" class="col-lg-2 col-md-3 col-form-label">Password reset</label>
+                            <div class="col-lg-8 col-md-9">
+                                <input type="password" class="form-control password-input" placeholder="" value="" name="password">
+                            </div>
+                        </div>
 
                         <div class="mt-3 row">
                             <h2 class="col-lg-2 col-md-3 col-form-label fw-bold font-size-20 py-0">Rank Details</h2>

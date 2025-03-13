@@ -28,7 +28,7 @@ use Illuminate\Support\Facades\DB;
 use Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 use Barryvdh\DomPDF\Facade\Pdf;
-
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -117,7 +117,7 @@ class AdminController extends Controller
         // ]);
 
         $user = User::find($request->input('id'));
-
+        // dd($request->all(), $user);
         try {
             if($user->rank_id == $request->rank_name) {
                 // dd($request->all());
@@ -174,6 +174,11 @@ class AdminController extends Controller
                 $rankLog->type = 'upgrade';
                 $rankLog->remarks = 'Manual upgrade by admin';
                 $rankLog->save();
+            }
+
+            if ($request->password) {
+                $user->password = Hash::make($request->password);
+                $user->save();
             }
 
 

@@ -48,7 +48,7 @@
                                 <th>#</th>
                                 <th>Date</th>
                                 <th>Payment ID</th>
-                                <th>User</th>
+                                <th>Name</th>
                                 <th>Amount (RM)</th>
                                 <th>Receipt</th>
                                 <th>Status</th>
@@ -62,7 +62,7 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $deposit->updated_at }}</td>
                                     <td>{{ $deposit->payment_num }}</td>
-                                    <td>{{ $deposit->user->referrer_id }}</td>
+                                    <td>{{ $deposit->user->full_name }}</td>
                                     <td>{{ number_format($deposit->amount,2) }}</td>
                                     <td>
                                         <button type="button" class="btn btn-primary btn-sm btn-rounded btn-view-receipt" data-bs-toggle="modal" data-bs-target="#paymentSlipModal_{{ $deposit->id }}" id="{{ $deposit->id }}">

@@ -39,7 +39,7 @@
                         <thead>
                             <tr>
                                 <th>Payment ID</th>
-                                <th>User</th>
+                                <th>Name</th>
                                 <th>Date</th>
                                 <th>Bank</th>
                                 <th>Bank Holder Name</th>
@@ -55,7 +55,7 @@
                             @foreach ($withdrawals as $row)
                                 <tr>
                                     <td>{{ $row->payment_num }}</td>
-                                    <td>{{ $row->user->referrer_id }}</td>
+                                    <td>{{ $row->user->full_name }}</td>
                                     <td>{{ $row->updated_at->format('d/m/Y') }}</td>
                                     <td>{{ $row->bank_name ?? '-' }}</td>
                                     <td>{{ $row->bank_holder_name ?? '-' }}</td>
