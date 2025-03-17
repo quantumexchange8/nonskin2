@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -112,12 +113,17 @@ class User extends Authenticatable
     {
         $promo = DateTimeLogs::latest()->first();
 
-        if ($promo && $promo->status === 'active') {
-            $promoStatus = 'promotion';
+        $now = Carbon::now();
+
+        if ($promo->start_date <= $now && $promo->end_date >= $now) {
+            if ($promo && $promo->status === 'active') {
+                $promoStatus = 'promotion';
+            } else {
+                $promoStatus = 'normal';
+            }
         } else {
             $promoStatus = 'normal';
         }
-
         return $this->belongsTo(Rankings::class, 'rank_id', 'level')->where('category', $promoStatus);
     }
 

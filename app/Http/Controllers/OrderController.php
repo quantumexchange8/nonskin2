@@ -84,8 +84,14 @@ class OrderController extends Controller
                         $user->personal_sales += $price;
                         // group sale
                         $user->group_sales += $price;
+                        // monthly personal sale
+                        $user->monthly_personal_sale += $price;
                         // monthly group sale
                         $user->monthly_group_sale += $price;
+                        // half year personal sale
+                        $user->half_year_personal_sale += $price;
+                        // half year personal sale
+                        $user->half_year_group_sale += $price;
                         $user->save();
                     
                         // Get the hierarchy list as an array of user IDs
@@ -102,6 +108,7 @@ class OrderController extends Controller
                                 if ($uplineUser) {
                                     $uplineUser->group_sales += $price;
                                     $uplineUser->monthly_group_sale += $price;
+                                    $uplineUser->half_year_group_sale += $price;
                                     $uplineUser->save();
                                 }
                             }
