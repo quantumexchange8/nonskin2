@@ -429,7 +429,7 @@
             </div> --}}
             {{-- personal sale --}}
             <div class="col-lg-3 col-md-6 col-sm-12">
-                <div class="card">
+                {{-- <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
                             <div class="avatar">
@@ -471,18 +471,10 @@
                                     aria-valuemax="{{ $user->rank->personal_sales }}">
                                     {{ number_format($progress, 2) }}%
                                 </div>
-
-                                {{-- <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
-                                    style="width: {{ $curMonthPersonal > 0 && $user->rank->personal_sales == 0 ? '100%' : ($user->rank->personal_sales == 0 ? '0%' : (($curMonthPersonal / max($user->rank->personal_sales, 1)) <= 1 ? ($curMonthPersonal / max($user->rank->personal_sales, 1)) * 100 : '100%')) }};"
-                                    aria-valuenow="{{ $curMonthPersonal }}"
-                                    aria-valuemin="0"
-                                    aria-valuemax="{{ $user->rank->personal_sales }}">
-                                    {{ $curMonthPersonal > 0 && $user->rank->personal_sales == 0 ? '100.00%' : ($user->rank->personal_sales == 0 ? '0.00%' : number_format(min(($curMonthPersonal / max($user->rank->personal_sales, 1)) * 100, 100), 2)) }}%
-                                </div> --}}
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-4">
