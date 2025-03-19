@@ -82,6 +82,8 @@ class OrderController extends Controller
                         // Update the user's personal_sales with the order's total_amount
                         // personal sale
                         $user->personal_sales += $price;
+                        // personal sale
+                        $user->package_sales += $price;
                         // group sale
                         $user->group_sales += $price;
                         // monthly personal sale
@@ -107,6 +109,7 @@ class OrderController extends Controller
                                 $uplineUser = User::find($userId);
                                 if ($uplineUser) {
                                     $uplineUser->group_sales += $price;
+                                    $uplineUser->package_sales += $price;
                                     $uplineUser->monthly_group_sale += $price;
                                     $uplineUser->half_year_group_sale += $price;
                                     $uplineUser->save();
