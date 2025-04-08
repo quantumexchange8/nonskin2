@@ -567,7 +567,7 @@
                                     <div class="flex-1 text-end">
                                         <p class="mb-0">@lang('translation.Target')</p>
                                         @if ($next_rank)
-                                            <h5 class="mt-1 mb-0 font-size-14 text-wrap">RM {{ number_format($user->rank->personal_sales, 2) }}</h5>
+                                            <h5 class="mt-1 mb-0 font-size-14 text-wrap">RM {{ number_format($user->rank->personal_sales * 6, 2) }}</h5>
                                         @else
                                             <h5 class="mt-1 mb-0 font-size-14 text-wrap">
                                                 RM{{ number_format($user->rank->personal_sales * 6), 2 }}
@@ -580,7 +580,7 @@
                             <div class="progress mt-2" style="height: 15px;">
                                 @php
                                     if ($next_rank) {
-                                        $targetSales = max($user->rank->personal_sales, 1); // Prevent division by zero
+                                        $targetSales = max($user->rank->personal_sales * 6, 1); // Prevent division by zero
                                         $currentSales = $user->half_year_personal_sale;
                                         $progress = $currentSales == 0 ? 0 : min(100, ($currentSales / $targetSales) * 100);
                                     } else {
@@ -594,7 +594,7 @@
                                         style="width: {{ $progress }}%;"
                                         aria-valuenow="{{ $currentSales }}"
                                         aria-valuemin="0"
-                                        aria-valuemax="{{ $user->rank->personal_sales }}">
+                                        aria-valuemax="{{ $user->rank->personal_sales * 6 }}">
                                         {{ number_format($progress, 2) }}%
                                     </div>
                                 @else
@@ -638,7 +638,7 @@
                                             @if ($next_rank->level === 5)
                                                 <h5 class="mt-1 mb-0 font-size-14 text-wrap">RM {{ number_format($user->rank->group_sale_requirement * 6), 2 }}</h5>
                                             @else
-                                                <h5 class="mt-1 mb-0 font-size-14 text-wrap">RM {{ number_format($user->rank->group_sale_requirement, 2) }}</h5>
+                                                <h5 class="mt-1 mb-0 font-size-14 text-wrap">RM {{ number_format($user->rank->group_sale_requirement * 6, 2) }}</h5>
                                             @endif
                                         @else
                                             <h5 class="mt-1 mb-0 font-size-14 text-wrap">
@@ -657,7 +657,7 @@
                                             $currentSales = $user->half_year_group_sale;
                                             $progress = $currentSales == 0 ? 0 : min(100, ($currentSales / $targetSales) * 100);
                                         } else {
-                                            $targetSales = max($user->rank->group_sale_requirement, 1); // Prevent division by zero
+                                            $targetSales = max($user->rank->group_sale_requirement * 6, 1); // Prevent division by zero
                                             $currentSales = $user->half_year_group_sale;
                                             $progress = $currentSales == 0 ? 0 : min(100, ($currentSales / $targetSales) * 100);
                                         }
@@ -681,7 +681,7 @@
                                             style="width: {{ $progress }}%;"
                                             aria-valuenow="{{ $currentSales }}"
                                             aria-valuemin="0"
-                                            aria-valuemax="{{ $user->rank->group_sale_requirement }}">
+                                            aria-valuemax="{{ $user->rank->group_sale_requirement * 6 }}">
                                             {{ number_format($progress, 2) }}%
                                         </div>
                                     @endif
