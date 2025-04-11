@@ -305,11 +305,10 @@
                             </div>
 
                             <!-- Group Sales Requirement -->
-                            @if ($user->rank->name !== 'Client' && $user->rank->name !== 'Chief Distributor')
+                            {{-- @if ($user->rank->name !== 'Client' && $user->rank->name !== 'Chief Distributor')
                                 <div class="mt-3 border-top pt-3">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="d-flex">
-                                            {{-- <i class="mdi mdi-circle font-size-10 mt-1 text-success"></i> --}}
                                             <div class="flex-1 ">
                                                 <p class="mb-0">Group Sales Requirement</p>
                                                 <h5 class="mt-1 mb-0 font-size-14">RM {{ number_format($user->group_sales,2) }}</h5>
@@ -335,7 +334,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            @endif
+                            @endif --}}
                         @endif
                         
 
@@ -567,7 +566,7 @@
                                     <div class="flex-1 text-end">
                                         <p class="mb-0">@lang('translation.Target')</p>
                                         @if ($next_rank)
-                                            <h5 class="mt-1 mb-0 font-size-14 text-wrap">RM {{ number_format($user->rank->personal_sales * 6, 2) }}</h5>
+                                            <h5 class="mt-1 mb-0 font-size-14 text-wrap">RM {{ number_format($user->rank->personal_sales, 2) }}</h5>
                                         @else
                                             <h5 class="mt-1 mb-0 font-size-14 text-wrap">
                                                 RM{{ number_format($user->rank->personal_sales * 6), 2 }}
@@ -580,7 +579,7 @@
                             <div class="progress mt-2" style="height: 15px;">
                                 @php
                                     if ($next_rank) {
-                                        $targetSales = max($user->rank->personal_sales * 6, 1); // Prevent division by zero
+                                        $targetSales = max($user->rank->personal_sales, 1); // Prevent division by zero
                                         $currentSales = $user->half_year_personal_sale;
                                         $progress = $currentSales == 0 ? 0 : min(100, ($currentSales / $targetSales) * 100);
                                     } else {
@@ -594,7 +593,7 @@
                                         style="width: {{ $progress }}%;"
                                         aria-valuenow="{{ $currentSales }}"
                                         aria-valuemin="0"
-                                        aria-valuemax="{{ $user->rank->personal_sales * 6 }}">
+                                        aria-valuemax="{{ $user->rank->personal_sales }}">
                                         {{ number_format($progress, 2) }}%
                                     </div>
                                 @else
