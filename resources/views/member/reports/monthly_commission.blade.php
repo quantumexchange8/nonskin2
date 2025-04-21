@@ -112,7 +112,7 @@
                             <tr>
                                 <th>#</th>
                                 <th>Date</th>
-                                {{-- <th>Commission type</th> --}}
+                                <th>Total Sales</th>
                                 <th>Downline</th>
                                 <th>Downline Rank</th>
                                 <th>Downline Sales</th>
@@ -126,8 +126,8 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $row->commission_date }}</td>
-                                    {{-- <td>{{ $row->commissions_type }}</td> --}}
-                                    <td>{{ $row->downline_id }}</td>
+                                    <td>RM {{ number_format($row->upline_totalsales, 2) }}</td>
+                                    <td>{{ $row->user->username }}</td>
                                     <td>
                                         @if($row->downline_rankid == 1)
                                             <span>Client</span>
